@@ -1,0 +1,98 @@
+{
+  "uuid": "d3625102-9fc0-4b36-9d07-54c6ab41c4b0-tr-0-1001",
+  "historyId": "MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership",
+  "fullName": "MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-PTHM14T"
+    },
+    {
+      "name": "testClass",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "CreateNewMembership"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    }
+  ],
+  "links": [],
+  "name": "CreateNewMembership",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenQA.Selenium.NoSuchElementException : no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//button//span[contains(text(), 'Cancel')]\"}\n  (Session info: chrome=99.0.4844.51)",
+    "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.FindElement(String mechanism, String value)\r\n   at OpenQA.Selenium.By.<.ctor>b__11_0(ISearchContext context)\r\n   at OpenQA.Selenium.By.FindElement(ISearchContext context)\r\n   at OpenQA.Selenium.WebDriver.FindElement(By by)\r\n   at MCMAutomation.PageObjects.PopUp.get_cancelBtn() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\PopUp\\PopUpElements.cs:line 16\r\n   at MCMAutomation.PageObjects.PopUp.ClosePopUp() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\PopUp\\PopUpActions.cs:line 15\r\n   at MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 22"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "CreateNewMembership",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "OpenQA.Selenium.NoSuchElementException : no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//button//span[contains(text(), 'Cancel')]\"}\n  (Session info: chrome=99.0.4844.51)",
+        "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.FindElement(String mechanism, String value)\r\n   at OpenQA.Selenium.By.<.ctor>b__11_0(ISearchContext context)\r\n   at OpenQA.Selenium.By.FindElement(ISearchContext context)\r\n   at OpenQA.Selenium.WebDriver.FindElement(By by)\r\n   at MCMAutomation.PageObjects.PopUp.get_cancelBtn() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\PopUp\\PopUpElements.cs:line 16\r\n   at MCMAutomation.PageObjects.PopUp.ClosePopUp() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\PopUp\\PopUpActions.cs:line 15\r\n   at MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 22"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1646860359100,
+          "stop": 1646860360331
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1646860360332,
+          "stop": 1646860364403
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "f2b73fef2a09409fb8e866a1e7770162-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1646860351649,
+      "stop": 1646860365135
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1646860351648,
+  "stop": 1646860365140
+}
