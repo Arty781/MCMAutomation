@@ -1,4 +1,5 @@
 ﻿using MCMAutomation.Helpers;
+using NUnit.Allure.Steps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +8,19 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.PageObjects
 {
-    public partial class PopUp
+    public partial class Common
     {
-        public PopUp ClosePopUp()
+        [AllureStep("Click \"Save\" button")]
+        public Common ClickSaveBtn()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_installBtn, 60);
-            cancelBtn.Click();
+            WaitUntil.WaitSomeInterval(2);
+            saveBtn.Click();
+
 
             return this;
         }
+
+
+
     }
 }

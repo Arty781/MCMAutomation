@@ -15,7 +15,7 @@ namespace MCMAutomation.PageObjects
 
         public Sidebar OpenMemberShipPage()
         {
-            WaitUntil.ElementIsInvisible(_membershipTb);
+            /*WaitUntil.ElementIsInvisible(_membershipCard);*/
             membershipTb.Click();
 
             return this;

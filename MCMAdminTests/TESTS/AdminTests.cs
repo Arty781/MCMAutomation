@@ -13,6 +13,7 @@ namespace MCMAutomation.AdminSiteTests
     {
 
         [Test]
+        
         public void CreateNewMembership()
         {
             Pages.Login
@@ -23,8 +24,60 @@ namespace MCMAutomation.AdminSiteTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenMemberShipPage();
-            Pages.Membership
-                .CreateMembership();
+            Pages.MembershipAdmin
+                .ClickCreateBtn()
+                .EnterMembershipData();
+            
+            string membershipName = Pages.MembershipAdmin.GetMembershipName();
+
+            Pages.Common
+                .ClickSaveBtn();
+            Pages.MembershipAdmin
+                .SearchMembership(membershipName)
+                .VerifyMembershipName(membershipName)
+                .ClickAddProgramsBtn()
+                .VerifyMembershipNameCbbx(membershipName)
+                .CreatePrograms();
+            Pages.Common
+                .ClickSaveBtn();
+            Pages.MembershipAdmin
+                .CreateWorkoutsForFirstProgram();
+            Pages.Common
+                .ClickSaveBtn();
+            Pages.MembershipAdmin
+                .AddExercises();
+            Pages.Common
+                .ClickSaveBtn();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .SearchMembership(membershipName)
+                .VerifyMembershipName(membershipName)
+                .AddUserToMembership()
+                .VerifyAssignUser();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .SearchMembership(membershipName)
+                .VerifyMembershipName(membershipName)
+                .ClickDeleteBtn()
+                .VerifyDeletingMembership(membershipName);
+            Pages.Login
+                .GetAdminLogout();
+
+
+                
+
+
         }
+
+
+        [Test]
+        public void ClientLogin()
+        {
+            Pages.Login
+                .GetUserLogin();
+        }
+
     }
 }

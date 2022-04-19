@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.PageObjects
 {
-    public partial class AboutUs
+    public partial class Common
     {
+
     }
 }

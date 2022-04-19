@@ -10,12 +10,12 @@ namespace MCMAutomation.PageObjects
 {
     public partial class Sidebar
     {
-        #region SideBarMenu
+        #region SideBarMenu Admin Panel
         IWebElement sideBarLogo => Browser._Driver.FindElement(_sideBarLogo);
         public readonly By _sideBarLogo = By.XPath("//img[@class='sidebar-logo-img']");
 
         IWebElement membershipTb => Browser._Driver.FindElement(_membershipTb);
-        public readonly By _membershipTb = By.XPath("//ul//a[@href='/admin/memberships']");
+        public readonly By _membershipTb = By.XPath("//ul/li/a[@href='/admin/memberships']");
 
         IWebElement exercisesTb => Browser._Driver.FindElement(_exercisesTb);
         public readonly By _exercisesTb = By.XPath("//ul//a[@href='/admin/exercises-database']");
@@ -30,12 +30,8 @@ namespace MCMAutomation.PageObjects
         IWebElement popUpTb => Browser._Driver.FindElement(_popUpTb);
         public readonly By _popUpTb = By.XPath("//ul//a[@href='/admin/pop-up-managment']");
 
-        #endregion
-
-        #region Admin Panel
-        
         IWebElement membershipCard => Browser._Driver.FindElement(_membershipCard);
-        public readonly By _membershipCard = By.XPath("//main//a[@href='/admin/memberships']");
+        public readonly By _membershipCard = By.XPath("//div/a[@href='/admin/memberships']");
 
         IWebElement exercisesCard => Browser._Driver.FindElement(_exercisesCard);
         public readonly By _exercisesCard = By.XPath("//main//a[@href='/admin/exercises-database']");
@@ -51,7 +47,25 @@ namespace MCMAutomation.PageObjects
 
         #endregion
 
+        #region SideBarMenu User Panel
 
+        IWebElement trainingProgramTb => Browser._Driver.FindElement(_trainingProgramTb);
+        public readonly By _trainingProgramTb = By.XPath("//ul/li/a[@href='/programs/all']");
+
+        IWebElement nutritionTb => Browser._Driver.FindElement(_nutritionTb);
+        public readonly By _nutritionTb = By.XPath("//ul/li/a[@href='/nutrition/finding-tree']");
+
+        IWebElement progressTb => Browser._Driver.FindElement(_progressTb);
+        public readonly By _progressTb = By.XPath("//ul/li/a[@href='/progress/all']");
+
+        IWebElement videosTb => Browser._Driver.FindElement(_videosTb);
+        public readonly By _videosTb = By.XPath("//ul/li/a[@href='/help-videos']");
+
+        IWebElement myProgramBtn => Browser._Driver.FindElement(_myProgramBtn);
+        public readonly By _myProgramBtn = By.XPath("//a[@href='/programs/training-program']");
+
+
+        #endregion
 
 
     }

@@ -24,7 +24,7 @@ namespace MCMAutomation.Helpers
         public void GoToAllureResults()
         {
             AllureConfigFilesHelper.CreateBatFile();
-            Process.Start(Browser.RootPath() + "allure serve.bat");
+            Process.Start(Browser.RootPathReport() + "allure serve.bat");
         }
         
     }

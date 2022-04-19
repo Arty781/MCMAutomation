@@ -9,8 +9,11 @@
 
   <ItemGroup>
     <Compile Remove="MCMAdminTests\**" />
+    <Compile Remove="MCMClientTests\**" />
     <EmbeddedResource Remove="MCMAdminTests\**" />
+    <EmbeddedResource Remove="MCMClientTests\**" />
     <None Remove="MCMAdminTests\**" />
+    <None Remove="MCMClientTests\**" />
   </ItemGroup>
 
   <ItemGroup>

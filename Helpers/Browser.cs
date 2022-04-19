@@ -27,12 +27,14 @@ namespace MCMAutomation.Helpers
 
         public static void Initialize()
         {
+            AllureConfigFilesHelper.CopyJsonConfigFile();
             new DriverManager().SetUpDriver(new ChromeConfig());
             windowsDriver = new ChromeDriver();
             _Driver.Manage().Cookies.DeleteAllCookies();
             _Driver.Manage().Window.Maximize();
             
             Assert.NotNull(windowsDriver);
+            
         }
 
 
@@ -41,18 +43,15 @@ namespace MCMAutomation.Helpers
             string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\"));
             return mainpath;
         }
-        public static ISearchContext Driver { get { return windowsDriver; } }
+
+        public static string RootPathReport()
+        {
+            string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
+            return mainpath;
+        }
+        /*public static ISearchContext Driver { get { return windowsDriver; } }*/
         public static IWebDriver _Driver { get { return windowsDriver; } }
-        public static string Title
-        {
-            get { return windowsDriver.Title; }
-        }
-
-        public static string CurrentURL
-        {
-            get { return windowsDriver.Url; }
-        }
-
+        
         public static void Close()
         {
             windowsDriver.Close();
