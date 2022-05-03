@@ -1,0 +1,76 @@
+{
+  "uuid": "257ca3e2-c76f-4a75-8f21-f6494269b52a-tc-0-1000",
+  "name": "MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership",
+  "children": [
+    "d948635b-f126-47db-9f57-bdd5e3023580-tr-0-1001"
+  ],
+  "befores": [
+    {
+      "name": "OneTimeSetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1650461426293,
+      "stop": 1650461426293
+    },
+    {
+      "name": "SetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1650461426293,
+      "stop": 1650461426293
+    }
+  ],
+  "afters": [
+    {
+      "name": "TearDown",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1650461426293,
+      "stop": 1650461426293
+    },
+    {
+      "name": "OneTimeTearDown",
+      "status": "none",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "It's not possible to get status of OneTimeTearDown",
+        "trace": "See Allure.NUnit wiki"
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1650461426293,
+      "stop": 1650461426293
+    }
+  ],
+  "links": [],
+  "start": 1650461317797,
+  "stop": 1650461426322
+}

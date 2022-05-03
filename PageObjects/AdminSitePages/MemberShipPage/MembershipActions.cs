@@ -14,7 +14,7 @@ namespace MCMAutomation.PageObjects
     {
 
         [AllureStep("Click \"Create new membership\" btn")]
-        
+
         public MembershipAdmin ClickCreateBtn()
         {
             WaitUntil.ElementIsVisible(_membershipCreateBtn);
@@ -23,6 +23,7 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Enter membership data")]
+
         public MembershipAdmin EnterMembershipData()
         {
             WaitUntil.ElementIsVisible(_skuInput);
@@ -52,7 +53,7 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-       
+
 
         [AllureStep("Search Membership")]
         public MembershipAdmin SearchMembership(string membershipName)
@@ -67,14 +68,6 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-        [AllureStep("Click \"Add programs\" button")]
-        public MembershipAdmin ClickAddProgramsBtn()
-        {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipAddProgramsBtn);
-            membershipAddProgramsBtn.Click();
-
-            return this;
-        }
 
         [AllureStep("Click \"Delete\" button")]
         public MembershipAdmin ClickDeleteBtn()
@@ -88,12 +81,22 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
+        [AllureStep("Click \"Add programs\" button")]
+        public MembershipAdmin ClickAddProgramsBtn()
+        {
+            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipAddProgramsBtn);
+            membershipAddProgramsBtn.Click();
 
+            return this;
+        }
 
         [AllureStep("Enter program data")]
         public MembershipAdmin CreatePrograms()
         {
-            
+            int i = 0;
+            while (i < 5)
+            {
+                ++i;
                 WaitUntil.VisibilityOfAllElementsLocatedBy(_addProgramBtn);
                 addProgramBtn.Click();
 
@@ -108,50 +111,120 @@ namespace MCMAutomation.PageObjects
                 programAvailableDateInput.SendKeys(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                 programExpiryDateInput.SendKeys(DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                 programUploadFileInput.SendKeys(Browser.RootPath() + UploadedImages.PhaseImg1);
-                
-           
+
+                Pages.Common.ClickSaveBtn();
+            }
+            
+
+
+            return this;
+        }
+
+        [AllureStep("Create Workout for first program")]
+        public MembershipAdmin DefineProgramsList()
+        {
+            WaitUntil.VisibilityOfAllElementsLocatedBy(_programAddWorkoutsBtn, 30);
+
+            IReadOnlyCollection<IWebElement> programList = Browser._Driver.FindElements(_programAddWorkoutsBtn);
+
+            List<string> urlList = new List<string>();
+            for (int items = 1; items < programList.Count; items++)
+            {
+                string addBtn = "//div[@class='table-item'][" + items + "]//div[@class='membership-item_add add-workout']";
+                IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
+                AddWorkoutsBtn.Click();
+
+                urlList.Add(Browser._Driver.Url);
+
+                WaitUntil.WaitSomeInterval(2);
+                backBtn.Click();
+            }
             return this;
         }
 
 
 
-        [AllureStep("Create Workout for first program")]
+            [AllureStep("Create Workout for first program")]
         public MembershipAdmin CreateWorkoutsForFirstProgram()
         {
 
             WaitUntil.VisibilityOfAllElementsLocatedBy(_programAddWorkoutsBtn, 30);
+            int i = 0;
+            IReadOnlyCollection<IWebElement> programList = Browser._Driver.FindElements(_programAddWorkoutsBtn);
+            foreach (var program in programList)
+            {
+                ++i;
+                string addBtn = "//div[@class='table-item'][" + i + "]//div[@class='membership-item_add add-workout']";
+                IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
+                AddWorkoutsBtn.Click();
+
+                WaitUntil.VisibilityOfAllElementsLocatedBy(_addWorkoutBtn, 60);
+                addWorkoutBtn.Click();
+                workoutNameInput.SendKeys("Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
+                weekDayBtn.Click();
+                weekDayBtn.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
+            }
             programAddWorkoutsBtn.Click();
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_addWorkoutBtn, 60);
-            addWorkoutBtn.Click();
-            workoutNameInput.SendKeys("Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
-            weekDayBtn.Click();
-            weekDayBtn.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
+            
 
 
 
             return this;
         }
 
-
-        [AllureStep("Add exercises")]
-        public MembershipAdmin AddExercises()
+        [AllureStep("Click \"Add exercises\" btn")]
+        public MembershipAdmin ClickAddExerciseBtn()
         {
             WaitUntil.VisibilityOfAllElementsLocatedBy(_addExercisesBtn, 60);
             addExercisesBtn.Click();
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_addExerciseBtn, 60);
+            return this;
+        }
+
+            [AllureStep("Add exercises")]
+        public MembershipAdmin AddExercises()
+        {
+            WaitUntil.VisibilityOfAllElementsLocatedBy(_addExerciseBtn, 90);
             addExerciseBtn.Click();
-            seriesExerciseInput.Clear();
-            seriesExerciseInput.SendKeys("A1");
-            exercisesCbbx.SendKeys("45* Back Extension - DB Behind Head" + Keys.Enter);
-            setsExerciseInput.SendKeys("4");
-            repsExerciseInput.SendKeys("4,4,4,5");
-            restExerciseInput.SendKeys("60");
-            tempoExerciseInput.SendKeys("2010");
-            notesExerciseInput.SendKeys("1");
 
+            int x = 0;
+            while (x<15)
+            {
+                ++x;
+                
+                
+                if (x < 5)
+                {
+                    seriesExerciseInput.Clear();
+                    seriesExerciseInput.SendKeys("A" + x);
+                }
+                if(x > 4 && x < 9)
+                {
+                    seriesExerciseInput.Clear();
+                    seriesExerciseInput.SendKeys("B" + x);
+                }
+                if (x > 8 && x < 12)
+                {
+                    seriesExerciseInput.Clear();
+                    seriesExerciseInput.SendKeys("C" + x);
+                }
+                if (x > 11 && x <= 15)
+                {
+                    seriesExerciseInput.Clear();
+                    seriesExerciseInput.SendKeys("E" + x);
+                }
+                exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                setsExerciseInput.SendKeys("4");
+                repsExerciseInput.SendKeys("4,4,4,5");
+                restExerciseInput.SendKeys("60");
+                tempoExerciseInput.SendKeys("2010");
+                notesExerciseInput.SendKeys(Exersises.exercise[x]);
 
+                WaitUntil.WaitSomeInterval(1);
+                Pages.Common.saveBtn.Click();
+            }
+            
             return this;
         }
 

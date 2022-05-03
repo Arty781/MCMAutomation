@@ -25,7 +25,7 @@ namespace MCMAutomation.Helpers
                 Directory.CreateDirectory(path);
             }
             screenshot.SaveAsFile(name, ScreenshotImageFormat.Png);
-            return name;
+            return Browser.RootPath() + "\\ErrorImages\\" + timestampPath + "\\"+ name;
         }
         
     }
