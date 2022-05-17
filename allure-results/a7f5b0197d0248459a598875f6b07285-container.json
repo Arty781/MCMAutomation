@@ -1,0 +1,76 @@
+{
+  "uuid": "a1327ab7-c3d8-4dab-9c64-acffcf60e197-tc-0-1000",
+  "name": "MCMClientTests.TESTS.ClientTests.EnterWeight",
+  "children": [
+    "25b56a66-24ec-4891-8d5e-0374c3adc207-tr-0-1001"
+  ],
+  "befores": [
+    {
+      "name": "OneTimeSetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1652291679898,
+      "stop": 1652291679898
+    },
+    {
+      "name": "SetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1652291679899,
+      "stop": 1652291679899
+    }
+  ],
+  "afters": [
+    {
+      "name": "TearDown",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1652291679899,
+      "stop": 1652291679899
+    },
+    {
+      "name": "OneTimeTearDown",
+      "status": "none",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "It's not possible to get status of OneTimeTearDown",
+        "trace": "See Allure.NUnit wiki"
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1652291679899,
+      "stop": 1652291679899
+    }
+  ],
+  "links": [],
+  "start": 1652291646220,
+  "stop": 1652291679920
+}

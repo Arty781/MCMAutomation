@@ -1,0 +1,140 @@
+{
+  "uuid": "180ba40d-32c6-40e6-beec-fbaf3fe62563-tr-0-1003",
+  "historyId": "MCMAutomation.AdminSiteTests.AdminSiteTests.ClientLogin",
+  "fullName": "MCMAutomation.AdminSiteTests.AdminSiteTests.ClientLogin",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-PTHM14T"
+    },
+    {
+      "name": "testClass",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "ClientLogin"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    }
+  ],
+  "links": [],
+  "name": "ClientLogin",
+  "status": "passed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "ClientLogin"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "ClientLogin",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651589892466,
+          "stop": 1651589893702
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651589893703,
+          "stop": 1651589901822
+        },
+        {
+          "name": "Click \"Add exercises\" btn",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651589903798,
+          "stop": 1651589911439
+        },
+        {
+          "name": "Add exercises",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651589911439,
+          "stop": 1651589924186
+        },
+        {
+          "name": "Delete Exercises",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651589924186,
+          "stop": 1651589982586
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "55a1bb9c5012448284b0011a9cc06fe8-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1651589885554,
+      "stop": 1651589982658
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1651589885554,
+  "stop": 1651589982663
+}

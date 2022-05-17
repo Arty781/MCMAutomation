@@ -1,0 +1,275 @@
+{
+  "uuid": "ef946dba-5275-49e4-b733-65c4fc021c50-tr-0-1003",
+  "historyId": "MCMAutomation.AdminSiteTests.AdminSiteTests.AddWorkoutsToSubscriptionMembership",
+  "fullName": "MCMAutomation.AdminSiteTests.AdminSiteTests.AddWorkoutsToSubscriptionMembership",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "16"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-PTHM14T"
+    },
+    {
+      "name": "testClass",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "AddWorkoutsToSubscriptionMembership"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Admin"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "AddWorkoutsToSubscriptionMembership",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenQA.Selenium.WebDriverTimeoutException : Timed out after 10 seconds",
+    "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.VisibilityOfAllElementsLocatedBy(By element, Int32 seconds) in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 42\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreatePrograms_100663309_o() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 129\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreatePrograms_100663309_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreatePrograms_100663309_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.CreatePrograms()\r\n   at MCMAutomation.AdminSiteTests.AdminSiteTests.AddWorkoutsToSubscriptionMembership() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 111"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "AddWorkoutsToSubscriptionMembership",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "OpenQA.Selenium.WebDriverTimeoutException : Timed out after 10 seconds",
+        "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.VisibilityOfAllElementsLocatedBy(By element, Int32 seconds) in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 42\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreatePrograms_100663309_o() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 129\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreatePrograms_100663309_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreatePrograms_100663309_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.CreatePrograms()\r\n   at MCMAutomation.AdminSiteTests.AdminSiteTests.AddWorkoutsToSubscriptionMembership() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 111"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279365597,
+          "stop": 1652279366828
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279366828,
+          "stop": 1652279372917
+        },
+        {
+          "name": "Click \"Create new membership\" btn",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279381343,
+          "stop": 1652279385571
+        },
+        {
+          "name": "Enter membership data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279385571,
+          "stop": 1652279391242
+        },
+        {
+          "name": "Get membership name",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279391242,
+          "stop": 1652279391269
+        },
+        {
+          "name": "Click \"Save\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279391270,
+          "stop": 1652279393354
+        },
+        {
+          "name": "Search Membership",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279393355,
+          "stop": 1652279407974
+        },
+        {
+          "name": "Verify displaying membership name",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279407974,
+          "stop": 1652279408024
+        },
+        {
+          "name": "Click \"Add programs\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279408025,
+          "stop": 1652279408105
+        },
+        {
+          "name": "Verify membership name in combobox",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279408105,
+          "stop": 1652279408168
+        },
+        {
+          "name": "Enter program data",
+          "status": "failed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false,
+            "message": "Timed out after 10 seconds",
+            "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.VisibilityOfAllElementsLocatedBy(By element, Int32 seconds) in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 42\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreatePrograms_100663309_o() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 129\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreatePrograms_100663309_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)"
+          },
+          "stage": "finished",
+          "steps": [
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1652279408779,
+              "stop": 1652279410819
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652279408169,
+          "stop": 1652279438981
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "d45af5a4e57b431291176ff45a6429ca-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1652279355393,
+      "stop": 1652279443393
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1652279355392,
+  "stop": 1652279443398
+}

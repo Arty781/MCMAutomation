@@ -1,0 +1,141 @@
+{
+  "uuid": "b39199aa-a331-450f-8aa3-92f19eb6451c-tr-0-1003",
+  "historyId": "MCMAutomation.AdminSiteTests.AdminSiteTests.ClientLogin",
+  "fullName": "MCMAutomation.AdminSiteTests.AdminSiteTests.ClientLogin",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "16"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-PTHM14T"
+    },
+    {
+      "name": "testClass",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "ClientLogin"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    }
+  ],
+  "links": [],
+  "name": "ClientLogin",
+  "status": "passed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "ClientLogin"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "ClientLogin",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651584407953,
+          "stop": 1651584409182
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651584409182,
+          "stop": 1651584414770
+        },
+        {
+          "name": "Enter program data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1651584427613,
+              "stop": 1651584429734
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651584419805,
+          "stop": 1651584434177
+        },
+        {
+          "name": "Create Workout for first program",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1651584437040,
+          "stop": 1651584439306
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "4bb8848e7cfb4031a527b1fe510e877a-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1651584398486,
+      "stop": 1651584458969
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1651584398479,
+  "stop": 1651584458972
+}
