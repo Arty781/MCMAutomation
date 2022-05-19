@@ -1,0 +1,119 @@
+{
+  "uuid": "ea4cea3b-b3ee-419c-82af-0bd4ebce41f6-tr-0-1003",
+  "historyId": "MCMAutomation.AdminSiteTests.AdminSiteTests.OpenMemberShipPage",
+  "fullName": "MCMAutomation.AdminSiteTests.AdminSiteTests.OpenMemberShipPage",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-PTHM14T"
+    },
+    {
+      "name": "testClass",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "OpenMemberShipPage"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Admin"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "OpenMemberShipPage",
+  "status": "passed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenMemberShipPage"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "OpenMemberShipPage",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652950872600,
+          "stop": 1652950873847
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652950873848,
+          "stop": 1652950874897
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "5f7659a9d917495186dd267903fd05f7-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1652950864453,
+      "stop": 1652950891616
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1652950864453,
+  "stop": 1652950891621
+}

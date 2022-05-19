@@ -13,10 +13,13 @@ namespace MCMAutomation.PageObjects
     {
         #region Opening sidebar menu's tabs
 
+        [AllureStep("Open Membership page")]
         public Sidebar OpenMemberShipPage()
         {
-            /*WaitUntil.ElementIsInvisible(_membershipCard);*/
+            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipTb);
             membershipTb.Click();
+
+            WaitUntil.ElementIsVisible(Pages.MembershipAdmin._membershipCreateBtn);
 
             return this;
         }

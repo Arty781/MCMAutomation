@@ -12,11 +12,18 @@ namespace MCMAutomation.PageObjects
     {
         #region Client > Membership page
 
-        public IWebElement backBtn => Browser._Driver.FindElement(_backBtn);
-        public readonly By _backBtn = By.XPath("//div[@class='btn_back']");
+        #region YourNextProgram
 
         public IWebElement buyBtn => Browser._Driver.FindElement(_buyBtn);
         public readonly By _buyBtn = By.XPath("//a[@class='program-info_btn']");
+
+        #endregion
+
+
+        public IWebElement backBtn => Browser._Driver.FindElement(_backBtn);
+        public readonly By _backBtn = By.XPath("//div[@class='btn_back']");
+
+        
 
 
 

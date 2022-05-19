@@ -47,7 +47,6 @@ namespace MCMAutomation.PageObjects
             priceInput.SendKeys("99");
             urlInput.Clear();
             urlInput.SendKeys(Endpoints.websiteHost);
-            addPhotoInput.SendKeys(Browser.RootPath() + UploadedImages.CreateMemberImg);
             availableForPurchaseCheckbox.Click();
 
             return this;
@@ -131,6 +130,7 @@ namespace MCMAutomation.PageObjects
             for (int items = 1; items < programList.Count; items++)
             {
                 string addBtn = "//div[@class='table-item'][" + items + "]//div[@class='membership-item_add add-workout']";
+                WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(addBtn));
                 IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
                 AddWorkoutsBtn.Click();
 
@@ -155,6 +155,7 @@ namespace MCMAutomation.PageObjects
             {
                 ++i;
                 string addBtn = "//div[@class='table-item'][" + i + "]//div[@class='membership-item_add add-workout']";
+                WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(addBtn));
                 IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
                 AddWorkoutsBtn.Click();
 

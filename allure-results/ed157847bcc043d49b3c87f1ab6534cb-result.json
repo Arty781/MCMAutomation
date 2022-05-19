@@ -1,0 +1,134 @@
+{
+  "uuid": "7ffc400d-52bc-4d92-a316-9e3c1080ab77-tr-0-1003",
+  "historyId": "MCMAutomation.AdminSiteTests.AdminSiteTests.OpenMemberShipPage",
+  "fullName": "MCMAutomation.AdminSiteTests.AdminSiteTests.OpenMemberShipPage",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-PTHM14T"
+    },
+    {
+      "name": "testClass",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "OpenMemberShipPage"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Admin"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "OpenMemberShipPage",
+  "status": "passed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenMemberShipPage"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "OpenMemberShipPage",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951194925,
+          "stop": 1652951196179
+        },
+        {
+          "name": "Close PopUp",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951196179,
+          "stop": 1652951213429
+        },
+        {
+          "name": "Open Membership page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951213430,
+          "stop": 1652951217430
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "668a5da074d1458997b2aacde59b4c28-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1652951190327,
+      "stop": 1652951217500
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1652951190327,
+  "stop": 1652951217505
+}

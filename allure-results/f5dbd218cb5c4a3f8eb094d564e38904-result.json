@@ -1,0 +1,395 @@
+{
+  "uuid": "6025c15c-6f4c-4f48-9145-29d0067743f0-tr-0-1001",
+  "historyId": "MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership",
+  "fullName": "MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-PTHM14T"
+    },
+    {
+      "name": "testClass",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "CreateNewMembership"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.AdminSiteTests.AdminSiteTests"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Admin"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "CreateNewMembership",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenQA.Selenium.NoSuchElementException : no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//div[@class='table-item'][2]//div[@class='membership-item_add add-workout']\"}\n  (Session info: chrome=101.0.4951.67)",
+    "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.FindElement(String mechanism, String value)\r\n   at OpenQA.Selenium.By.<.ctor>b__11_0(ISearchContext context)\r\n   at OpenQA.Selenium.By.FindElement(ISearchContext context)\r\n   at OpenQA.Selenium.WebDriver.FindElement(By by)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreateWorkoutsForFirstProgram_100663310_o() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 158\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreateWorkoutsForFirstProgram_100663310_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreateWorkoutsForFirstProgram_100663310_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.CreateWorkoutsForFirstProgram()\r\n   at MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 55"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "CreateNewMembership",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "OpenQA.Selenium.NoSuchElementException : no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//div[@class='table-item'][2]//div[@class='membership-item_add add-workout']\"}\n  (Session info: chrome=101.0.4951.67)",
+        "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.FindElement(String mechanism, String value)\r\n   at OpenQA.Selenium.By.<.ctor>b__11_0(ISearchContext context)\r\n   at OpenQA.Selenium.By.FindElement(ISearchContext context)\r\n   at OpenQA.Selenium.WebDriver.FindElement(By by)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreateWorkoutsForFirstProgram_100663310_o() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 158\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreateWorkoutsForFirstProgram_100663310_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreateWorkoutsForFirstProgram_100663310_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.CreateWorkoutsForFirstProgram()\r\n   at MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 55"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951949600,
+          "stop": 1652951950825
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951950826,
+          "stop": 1652951951871
+        },
+        {
+          "name": "Close PopUp",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951951871,
+          "stop": 1652951963543
+        },
+        {
+          "name": "Open Membership page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951963543,
+          "stop": 1652951967401
+        },
+        {
+          "name": "Click \"Create new membership\" btn",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951967401,
+          "stop": 1652951967480
+        },
+        {
+          "name": "Enter membership data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951967480,
+          "stop": 1652951973218
+        },
+        {
+          "name": "Get membership name",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951973219,
+          "stop": 1652951973246
+        },
+        {
+          "name": "Click \"Save\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951973246,
+          "stop": 1652951975319
+        },
+        {
+          "name": "Search Membership",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951975319,
+          "stop": 1652951989954
+        },
+        {
+          "name": "Verify displaying membership name",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951989955,
+          "stop": 1652951990004
+        },
+        {
+          "name": "Click \"Add programs\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951990004,
+          "stop": 1652951990074
+        },
+        {
+          "name": "Verify membership name in combobox",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951990078,
+          "stop": 1652951990135
+        },
+        {
+          "name": "Enter program data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1652951990804,
+              "stop": 1652951992888
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1652951993556,
+              "stop": 1652951995639
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1652951996441,
+              "stop": 1652951998515
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1652951999266,
+              "stop": 1652952001343
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1652952002113,
+              "stop": 1652952004189
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652951990136,
+          "stop": 1652952004189
+        },
+        {
+          "name": "Create Workout for first program",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652952004190,
+          "stop": 1652952010679
+        },
+        {
+          "name": "Create Workout for first program",
+          "status": "failed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false,
+            "message": "no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//div[@class='table-item'][2]//div[@class='membership-item_add add-workout']\"}\n  (Session info: chrome=101.0.4951.67)",
+            "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.FindElement(String mechanism, String value)\r\n   at OpenQA.Selenium.By.<.ctor>b__11_0(ISearchContext context)\r\n   at OpenQA.Selenium.By.FindElement(ISearchContext context)\r\n   at OpenQA.Selenium.WebDriver.FindElement(By by)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreateWorkoutsForFirstProgram_100663310_o() in C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 158\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CreateWorkoutsForFirstProgram_100663310_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)"
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652952010680,
+          "stop": 1652952012208
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "d3a91feb5bb34e51bce70a2dbd4015ea-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1652951940577,
+      "stop": 1652952012621
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1652951940577,
+  "stop": 1652952012626
+}

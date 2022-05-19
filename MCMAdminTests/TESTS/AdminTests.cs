@@ -142,8 +142,29 @@ namespace MCMAutomation.AdminSiteTests
 
         }
 
-
         [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+
+        public void OpenMemberShipPage()
+        {
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            /*Pages.Sidebar
+                .VerifyIsLogoDisplayed();*/
+            
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.PopUp
+                .ClosePopUp();
+        }
+
+
+            [Test]
         public void ClientLogin()
         {
             Pages.Login
