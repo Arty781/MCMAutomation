@@ -272,40 +272,96 @@ namespace MCMAutomation.PageObjects
             addExerciseBtn.Click();
 
             int x = 0;
-            while (x<15)
+            while (x < 6)
             {
                 ++x;
                 
                 
-                if (x < 5)
+                if (x == 1)
                 {
-                    seriesExerciseInput.Clear();
-                    seriesExerciseInput.SendKeys("A" + x);
-                }
-                if(x > 4 && x < 9)
-                {
-                    seriesExerciseInput.Clear();
-                    seriesExerciseInput.SendKeys("B" + x);
-                }
-                if (x > 8 && x < 12)
-                {
-                    seriesExerciseInput.Clear();
-                    seriesExerciseInput.SendKeys("C" + x);
-                }
-                if (x > 11 && x <= 15)
-                {
-                    seriesExerciseInput.Clear();
-                    seriesExerciseInput.SendKeys("E" + x);
-                }
-                exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
-                setsExerciseInput.SendKeys("4");
-                repsExerciseInput.SendKeys("4,4,4,5");
-                restExerciseInput.SendKeys("60");
-                tempoExerciseInput.SendKeys("2010");
-                notesExerciseInput.SendKeys(Exersises.exercise[x]);
+                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                    seriesExerciseInput.SendKeys("A");
+                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                    setsExerciseInput.SendKeys("4");
+                    repsExerciseInput.SendKeys("4,4,4,5");
+                    restExerciseInput.SendKeys("60");
+                    tempoExerciseInput.SendKeys("2010");
+                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
 
-                WaitUntil.WaitSomeInterval(1);
-                Pages.Common.saveBtn.Click();
+                    WaitUntil.WaitSomeInterval(1);
+                    Pages.Common.saveBtn.Click();
+                }
+                if (x == 2)
+                {
+                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                    seriesExerciseInput.SendKeys("B");
+                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                    setsExerciseInput.SendKeys("3");
+                    repsExerciseInput.SendKeys("4,4,4");
+                    restExerciseInput.SendKeys("10");
+                    tempoExerciseInput.SendKeys("3010");
+                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                    WaitUntil.WaitSomeInterval(1);
+                    Pages.Common.saveBtn.Click();
+                }
+                if (x == 3)
+                {
+                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                    seriesExerciseInput.SendKeys("C1");
+                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                    setsExerciseInput.SendKeys("5");
+                    repsExerciseInput.SendKeys("4,4,4,5,6");
+                    restExerciseInput.SendKeys("120");
+                    tempoExerciseInput.SendKeys("2010");
+                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                    WaitUntil.WaitSomeInterval(1);
+                    Pages.Common.saveBtn.Click();
+                }
+                if (x == 4)
+                {
+                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                    seriesExerciseInput.SendKeys("C2");
+                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                    setsExerciseInput.SendKeys("4");
+                    repsExerciseInput.SendKeys("4,4,4,5");
+                    restExerciseInput.SendKeys("60");
+                    tempoExerciseInput.SendKeys("2010");
+                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                    WaitUntil.WaitSomeInterval(1);
+                    Pages.Common.saveBtn.Click();
+                }
+                if (x == 5)
+                {
+                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                    seriesExerciseInput.SendKeys("E");
+                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                    setsExerciseInput.SendKeys("4");
+                    repsExerciseInput.SendKeys("4,4,4,5");
+                    restExerciseInput.SendKeys("60");
+                    tempoExerciseInput.SendKeys("2010");
+                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                    WaitUntil.WaitSomeInterval(1);
+                    Pages.Common.saveBtn.Click();
+                }
+                if (x == 6)
+                {
+                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                    seriesExerciseInput.SendKeys("A");
+                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                    setsExerciseInput.SendKeys("4");
+                    repsExerciseInput.SendKeys("4,4,4,5");
+                    restExerciseInput.SendKeys("60");
+                    tempoExerciseInput.SendKeys("2010");
+                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                    WaitUntil.WaitSomeInterval(1);
+                    Pages.Common.saveBtn.Click();
+                }
+
             }
             
             return this;
