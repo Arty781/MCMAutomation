@@ -8,12 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="allure-results\**" />
+    <Compile Remove="ErrorImages\**" />
     <Compile Remove="MCMAdminTests\**" />
     <Compile Remove="MCMClientTests\**" />
+    <Compile Remove="MCMWebTests\**" />
+    <EmbeddedResource Remove="allure-results\**" />
+    <EmbeddedResource Remove="ErrorImages\**" />
     <EmbeddedResource Remove="MCMAdminTests\**" />
     <EmbeddedResource Remove="MCMClientTests\**" />
+    <EmbeddedResource Remove="MCMWebTests\**" />
+    <None Remove="allure-results\**" />
+    <None Remove="ErrorImages\**" />
     <None Remove="MCMAdminTests\**" />
     <None Remove="MCMClientTests\**" />
+    <None Remove="MCMWebTests\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.Helpers
 {
-    partial class RandomHelper
+    public class RandomHelper
     {
         public static string RandomNumber()
         {
@@ -15,6 +15,13 @@ namespace MCMAutomation.Helpers
             string randomNum = genRand.ToString();
 
             return randomNum;
+        }
+
+        public static string RandomEmail()
+        {
+            string email = "qatester" + DateTime.Now.ToString("yyyy-MM-d-hh-mm") + "@xitroo.com";
+
+            return email;
         }
     }
 }

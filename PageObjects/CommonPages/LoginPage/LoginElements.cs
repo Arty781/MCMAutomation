@@ -29,6 +29,9 @@ namespace MCMAutomation.PageObjects
         public IWebElement userLogoutBtn => Browser._Driver.FindElement(_userLogoutBtn);
         public readonly By _userLogoutBtn = By.XPath("//div[@class='logout']");
 
+        public IWebElement userSignUpBtn => Browser._Driver.FindElement(_userSignUpBtn);
+        public readonly By _userSignUpBtn = By.XPath("//a[@class='signin-form_signup-link']");
+
 
     }
 }

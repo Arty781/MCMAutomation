@@ -28,6 +28,7 @@ namespace MCMAutomation.PageObjects
         public static Login Login => GetPage<Login>();
         public static Sidebar Sidebar => GetPage<Sidebar>();
         public static PopUp PopUp => GetPage<PopUp>();
+        public static SignUpUser SignUpUser => GetPage<SignUpUser>();
 
     }
 }

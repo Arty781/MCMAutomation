@@ -12,7 +12,7 @@ namespace MCMAutomation.PageObjects
     {
         #region SideBarMenu Admin Panel
         IWebElement sideBarLogo => Browser._Driver.FindElement(_sideBarLogo);
-        public readonly By _sideBarLogo = By.XPath("//img[@class='sidebar-logo-img']");
+        public readonly By _sideBarLogo = By.XPath("//div[@class='sidebar-logo']");
 
         IWebElement membershipTb => Browser._Driver.FindElement(_membershipTb);
         public readonly By _membershipTb = By.XPath("//ul/li/a[@href='/admin/memberships']");

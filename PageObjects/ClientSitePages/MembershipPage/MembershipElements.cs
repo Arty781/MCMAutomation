@@ -15,7 +15,8 @@ namespace MCMAutomation.PageObjects
         public IWebElement backBtn => Browser._Driver.FindElement(_backBtn);
         public readonly By _backBtn = By.XPath("//div[@class='btn_back']");
 
-
+        public IWebElement buyBtn => Browser._Driver.FindElement(_buyBtn);
+        public readonly By _buyBtn = By.XPath("//a[@class='program-info_btn']");
 
 
 

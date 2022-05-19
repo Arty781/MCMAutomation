@@ -1,0 +1,179 @@
+{
+  "uuid": "5f4fc0db-5f23-4b17-b5f1-dc801a8b4a41-tr-0-1001",
+  "historyId": "MCMAutomation.WebTests.WebTests.RegisterNewUser",
+  "fullName": "MCMAutomation.WebTests.WebTests.RegisterNewUser",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-PTHM14T"
+    },
+    {
+      "name": "testClass",
+      "value": "MCMAutomation.WebTests.WebTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "RegisterNewUser"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.WebTests.WebTests"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Web"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "RegisterNewUser",
+  "status": "passed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "RegisterNewUser"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "RegisterNewUser",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Go to SignUp page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652892068600,
+          "stop": 1652892068672
+        },
+        {
+          "name": "Enter user data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652892068676,
+          "stop": 1652892069396
+        },
+        {
+          "name": "Click on \"SignUp\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652892069397,
+          "stop": 1652892069447
+        },
+        {
+          "name": "Go to Login page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652892070492,
+          "stop": 1652892070536
+        },
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652892070537,
+          "stop": 1652892071737
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1652892071738,
+          "stop": 1652892072275
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "a3ae54ac0e754d07a41cdf8ac8a71cbe-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1652892058901,
+      "stop": 1652892072344
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1652892058900,
+  "stop": 1652892072351
+}

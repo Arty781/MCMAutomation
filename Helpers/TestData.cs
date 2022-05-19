@@ -13,7 +13,7 @@ namespace MCMAutomation.Helpers
 
     public class Credentials
     {
-        public const string login = "qatester91311@xitroo.com!";
+        public const string login = "qatester91311@xitroo.com";
         public const string password = "Qaz11111!";
 
         public const string loginAdmin = "admin@coachmarkcarroll.com";
