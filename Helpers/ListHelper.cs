@@ -24,6 +24,7 @@ namespace MCMAutomation.Helpers
             {
                 ++items;
                 string addBtn = "//div[@class='table-item'][" + items + "]//div[@class='membership-item_add add-workout']";
+                WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(addBtn));
                 IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
                 AddWorkoutsBtn.Click();
 
@@ -39,7 +40,7 @@ namespace MCMAutomation.Helpers
             return urlList;
         }
 
-        public static List<string> DefineWorkoutList(List<string> workoutLinks)
+        public static List<string> DefineWorkoutList(IList<string> workoutLinks)
         {
             List<string> workoutsList = new List<string>();
             foreach (var link in workoutLinks) 
@@ -55,6 +56,7 @@ namespace MCMAutomation.Helpers
                 {
                     ++items;
                     string addBtn = "//div[@class='table-items']/div[" + items + "]//div[@class='membership-item_add add-workout']";
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(addBtn));
                     IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
                     AddWorkoutsBtn.Click();
 

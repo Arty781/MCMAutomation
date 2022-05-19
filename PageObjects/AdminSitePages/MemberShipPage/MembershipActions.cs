@@ -96,80 +96,160 @@ namespace MCMAutomation.PageObjects
             while (i < 5)
             {
                 ++i;
-                WaitUntil.VisibilityOfAllElementsLocatedBy(_addProgramBtn);
-                addProgramBtn.Click();
 
-                WaitUntil.VisibilityOfAllElementsLocatedBy(_programNameInput, 60);
+                if (i == 1)
+                {
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_addProgramBtn);
+                    addProgramBtn.Click();
 
-                programNameInput.Clear();
-                programNameInput.SendKeys("Phase " + DateTime.Now.ToString("hh-mm-ss"));
-                programNumOfWeeksInput.Clear();
-                programNumOfWeeksInput.SendKeys("4");
-                programStepsInput.Clear();
-                programStepsInput.SendKeys("10000");
-                programAvailableDateInput.SendKeys(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                programExpiryDateInput.SendKeys(DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
-                programUploadFileInput.SendKeys(Browser.RootPath() + UploadedImages.PhaseImg1);
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_programNameInput, 60);
 
-                Pages.Common.ClickSaveBtn();
+                    programNameInput.Clear();
+                    programNameInput.SendKeys(i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    programNumOfWeeksInput.Clear();
+                    programNumOfWeeksInput.SendKeys("4");
+                    programStepsInput.Clear();
+                    programStepsInput.SendKeys("10000");
+                    programAvailableDateInput.SendKeys(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    programExpiryDateInput.SendKeys(DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+                if (i == 2)
+                {
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_addProgramBtn);
+                    addProgramBtn.Click();
+
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_programNameInput, 60);
+
+                    programNameInput.Clear();
+                    programNameInput.SendKeys(i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    programNumOfWeeksInput.Clear();
+                    programNumOfWeeksInput.SendKeys("4");
+                    programStepsInput.Clear();
+                    programStepsInput.SendKeys("Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    programAvailableDateInput.SendKeys(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    programExpiryDateInput.SendKeys(DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+                if (i == 3)
+                {
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_addProgramBtn);
+                    addProgramBtn.Click();
+
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_programNameInput, 60);
+
+                    programNameInput.Clear();
+                    programNameInput.SendKeys(i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    programNumOfWeeksInput.Clear();
+                    programNumOfWeeksInput.SendKeys("3");
+                    programStepsInput.Clear();
+                    programStepsInput.SendKeys("Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    programAvailableDateInput.SendKeys(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    programExpiryDateInput.SendKeys(DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+                if (i == 4)
+                {
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_addProgramBtn);
+                    addProgramBtn.Click();
+
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_programNameInput, 60);
+
+                    programNameInput.Clear();
+                    programNameInput.SendKeys(i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    programNumOfWeeksInput.Clear();
+                    programNumOfWeeksInput.SendKeys("6");
+                    programStepsInput.Clear();
+                    programStepsInput.SendKeys("Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    programAvailableDateInput.SendKeys(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    programExpiryDateInput.SendKeys(DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+                if (i == 5)
+                {
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_addProgramBtn);
+                    addProgramBtn.Click();
+
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_programNameInput, 60);
+
+                    programNameInput.Clear();
+                    programNameInput.SendKeys(i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    programNumOfWeeksInput.Clear();
+                    programNumOfWeeksInput.SendKeys("7");
+                    programStepsInput.Clear();
+                    programStepsInput.SendKeys("Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    programAvailableDateInput.SendKeys(DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    programExpiryDateInput.SendKeys(DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
             }
             
-
-
             return this;
         }
 
-        [AllureStep("Create Workout for first program")]
-        public MembershipAdmin DefineProgramsList()
+
+            [AllureStep("Create Workouts")]
+        public MembershipAdmin CreateWorkouts(IList<string> workoutLinks)
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_programAddWorkoutsBtn, 30);
-
-            IReadOnlyCollection<IWebElement> programList = Browser._Driver.FindElements(_programAddWorkoutsBtn);
-
-            List<string> urlList = new List<string>();
-            for (int items = 1; items < programList.Count; items++)
+            int i= 0;
+            int y= 0;
+            foreach (var workoutLink in workoutLinks)
             {
-                string addBtn = "//div[@class='table-item'][" + items + "]//div[@class='membership-item_add add-workout']";
-                WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(addBtn));
-                IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
-                AddWorkoutsBtn.Click();
-
-                urlList.Add(Browser._Driver.Url);
-
-                WaitUntil.WaitSomeInterval(2);
-                backBtn.Click();
+                Browser._Driver.Navigate().GoToUrl(workoutLink);
+                Pages.PopUp.ClosePopUp();
+                while (i < 5)
+                {
+                    
+                    ++i;
+                    if (i == 1)
+                    {
+                        WaitUntil.VisibilityOfAllElementsLocatedBy(_addWorkoutBtn, 60);
+                        addWorkoutBtn.Click();
+                        workoutNameInput.SendKeys("Monday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
+                        weekDayBtn.Click();
+                        weekDayBtn.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
+                        Pages.Common.ClickSaveBtn();
+                    }
+                    if (i == 3)
+                    {
+                        WaitUntil.VisibilityOfAllElementsLocatedBy(_addWorkoutBtn, 60);
+                        addWorkoutBtn.Click();
+                        workoutNameInput.SendKeys("Wednesday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
+                        weekDayBtn.Click();
+                        while (y < i - 1)
+                        {
+                            ++y;
+                            weekDayBtn.SendKeys(Keys.ArrowDown);
+                        }
+                        y= 0;
+                        weekDayBtn.SendKeys(Keys.Enter);
+                        Pages.Common.ClickSaveBtn();
+                    }
+                    if (i == 5)
+                    {
+                        WaitUntil.VisibilityOfAllElementsLocatedBy(_addWorkoutBtn, 60);
+                        addWorkoutBtn.Click();
+                        workoutNameInput.SendKeys("Friday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
+                        weekDayBtn.Click();
+                        while (y < i - 1)
+                        {
+                            ++y;
+                            weekDayBtn.SendKeys(Keys.ArrowDown);
+                        }
+                        y = 0;
+                        weekDayBtn.SendKeys(Keys.Enter);
+                        Pages.Common.ClickSaveBtn();
+                    }
+                }
+                i= 0;
+                
             }
-            return this;
-        }
-
-
-
-            [AllureStep("Create Workout for first program")]
-        public MembershipAdmin CreateWorkoutsForFirstProgram()
-        {
-
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_programAddWorkoutsBtn, 30);
-            int i = 0;
-            IReadOnlyCollection<IWebElement> programList = Browser._Driver.FindElements(_programAddWorkoutsBtn);
-            foreach (var program in programList)
-            {
-                ++i;
-                string addBtn = "//div[@class='table-item'][" + i + "]//div[@class='membership-item_add add-workout']";
-                WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(addBtn));
-                IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
-                AddWorkoutsBtn.Click();
-
-                WaitUntil.VisibilityOfAllElementsLocatedBy(_addWorkoutBtn, 60);
-                addWorkoutBtn.Click();
-                workoutNameInput.SendKeys("Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
-                weekDayBtn.Click();
-                weekDayBtn.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-            }
-            programAddWorkoutsBtn.Click();
-
             
-
-
 
             return this;
         }
@@ -186,6 +266,8 @@ namespace MCMAutomation.PageObjects
             [AllureStep("Add exercises")]
         public MembershipAdmin AddExercises()
         {
+
+
             WaitUntil.VisibilityOfAllElementsLocatedBy(_addExerciseBtn, 90);
             addExerciseBtn.Click();
 

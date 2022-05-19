@@ -6,6 +6,7 @@ using NUnit.Allure.Core;
 using OpenQA.Selenium;
 using NUnit.Allure.Attributes;
 using Allure.Commons;
+using System.Collections.Generic;
 
 namespace MCMAutomation.AdminSiteTests
 {
@@ -50,14 +51,13 @@ namespace MCMAutomation.AdminSiteTests
 
             Pages.MembershipAdmin
                 .VerifyMembershipNameCbbx(membershipName)
-                .CreatePrograms()
-                .DefineProgramsList();
+                .CreatePrograms();
+            IList<string> programLinks = ListHelper.DefineProgramList(url);
+
             Pages.MembershipAdmin
-                .CreateWorkoutsForFirstProgram();
-            Pages.Common
-                .ClickSaveBtn();
+                .CreateWorkouts(programLinks);
+            IList<string> exercisesLinks = ListHelper.DefineWorkoutList(programLinks);
             Pages.MembershipAdmin
-                .ClickAddExerciseBtn()
                 .AddExercises();
             Pages.Sidebar
                 .OpenMemberShipPage();
@@ -77,7 +77,7 @@ namespace MCMAutomation.AdminSiteTests
         }
 
 
-        [Test]
+      /*  [Test]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -140,7 +140,7 @@ namespace MCMAutomation.AdminSiteTests
                 
 
 
-        }
+        }*/
 
         [Test]
         [AllureTag("Regression")]
@@ -180,8 +180,7 @@ namespace MCMAutomation.AdminSiteTests
                 .ClosePopUp();
             string url = Browser._Driver.Url;
             Pages.MembershipAdmin
-                .CreatePrograms()
-                .DefineProgramsList();
+                .CreatePrograms();
         }
 
     }
