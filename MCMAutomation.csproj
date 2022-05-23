@@ -41,6 +41,7 @@
     <PackageReference Include="Selenium.Support" Version="4.1.1" />
     <PackageReference Include="Selenium.WebDriver" Version="4.1.1" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="101.0.4951.4100" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="Telegram.Bot" Version="16.0.2" />
     <PackageReference Include="WebDriverManager" Version="2.12.4" />
   </ItemGroup>

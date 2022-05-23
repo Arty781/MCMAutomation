@@ -28,15 +28,9 @@ namespace MCMAutomation.Helpers
         public const string PhaseImg2 = $"\\Images\\will-burrard-lucas-beetlecam-23-1024x683.webp"; 
     }
 
-    public class MembershipData
+    public class DB
     {
-        public static object[] Membership()
-        {
-            return new object[]
-              {
-                  new object[] { "CP_TEST_SUB", "The challenge Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"), "Lorem ipsum dolor" },
-              };
-        }
+        public const string GetConnectionString = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethodStaging; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
     }
 
     public class Exersises

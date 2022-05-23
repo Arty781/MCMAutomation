@@ -368,13 +368,13 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Add user")]
-        public MembershipAdmin AddUserToMembership()
+        public MembershipAdmin AddUserToMembership(string email)
         {
             WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipAddUserBtn, 60);
             membershipAddUserBtn.Click();
 
             WaitUntil.VisibilityOfAllElementsLocatedBy(_addUserBtn, 60);
-            userCbbx.SendKeys("qatester92311@xitroo.com" + Keys.Enter);
+            userCbbx.SendKeys(email + Keys.Enter);
             addUserBtn.Click();
 
 
