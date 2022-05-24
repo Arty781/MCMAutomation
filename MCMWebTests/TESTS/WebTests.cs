@@ -44,5 +44,29 @@ namespace MCMAutomation.WebTests
                 .VerifyIsBuyBtnDisplayed();
         }
 
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void CompleteMembershipsWithData()
+        {
+            
+            List<User> email = AppDbContext.GetUserData();
+            
+            Pages.Login
+                .GetUserLogin(email, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.MembershipUser
+                .OpenMembership()
+                .SelectPhase();
+            
+        }
+
     }
 }

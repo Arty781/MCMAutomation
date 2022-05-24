@@ -193,7 +193,7 @@ namespace MCMAutomation.PageObjects
         }
 
 
-            [AllureStep("Create Workouts")]
+        [AllureStep("Create Workouts")]
         public MembershipAdmin CreateWorkouts(IList<string> workoutLinks)
         {
             int i= 0;
@@ -264,105 +264,143 @@ namespace MCMAutomation.PageObjects
         }
 
             [AllureStep("Add exercises")]
-        public MembershipAdmin AddExercises()
+        public MembershipAdmin AddExercises(IList<string> links)
         {
-
-
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_addExerciseBtn, 90);
-            addExerciseBtn.Click();
-
-            int x = 0;
-            while (x < 6)
+            
+            foreach (var link in links)
             {
-                ++x;
+                Browser._Driver.Navigate().GoToUrl(link);
+                Pages.PopUp.ClosePopUp();
+                WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@class='membership-item_add add-workout']"), 30);
+
+                IReadOnlyCollection<IWebElement> workoutList = Browser._Driver.FindElements(By.XPath("//div[@class='membership-item_add add-workout']"));
+
                 
-                
-                if (x == 1)
+                for (int items = 0; items < workoutList.Count;)
                 {
-                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                    seriesExerciseInput.SendKeys("A");
-                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
-                    setsExerciseInput.SendKeys("4");
-                    repsExerciseInput.SendKeys("4,4,4,5");
-                    restExerciseInput.SendKeys("60");
-                    tempoExerciseInput.SendKeys("2010");
-                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+                    ++items;
+                    string addBtn = "//div[@class='table-items']/div[" + items + "]//div[@class='membership-item_add add-workout']";
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(addBtn));
+                    IWebElement AddWorkoutsBtn = Browser._Driver.FindElement(By.XPath(addBtn));
+                    AddWorkoutsBtn.Click();
 
-                    WaitUntil.WaitSomeInterval(1);
-                    Pages.Common.saveBtn.Click();
-                }
-                if (x == 2)
-                {
-                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                    seriesExerciseInput.SendKeys("B");
-                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
-                    setsExerciseInput.SendKeys("3");
-                    repsExerciseInput.SendKeys("4,4,4");
-                    restExerciseInput.SendKeys("10");
-                    tempoExerciseInput.SendKeys("3010");
-                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(_addExerciseBtn);
+                    addExerciseBtn.Click();
 
-                    WaitUntil.WaitSomeInterval(1);
-                    Pages.Common.saveBtn.Click();
-                }
-                if (x == 3)
-                {
-                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                    seriesExerciseInput.SendKeys("C1");
-                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
-                    setsExerciseInput.SendKeys("5");
-                    repsExerciseInput.SendKeys("4,4,4,5,6");
-                    restExerciseInput.SendKeys("120");
-                    tempoExerciseInput.SendKeys("2010");
-                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+                    int x = 0;
+                    while (x < 6)
+                    {
+                        ++x;
 
-                    WaitUntil.WaitSomeInterval(1);
-                    Pages.Common.saveBtn.Click();
-                }
-                if (x == 4)
-                {
-                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                    seriesExerciseInput.SendKeys("C2");
-                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
-                    setsExerciseInput.SendKeys("4");
-                    repsExerciseInput.SendKeys("4,4,4,5");
-                    restExerciseInput.SendKeys("60");
-                    tempoExerciseInput.SendKeys("2010");
-                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+                        if (x == 1)
+                        {
 
-                    WaitUntil.WaitSomeInterval(1);
-                    Pages.Common.saveBtn.Click();
-                }
-                if (x == 5)
-                {
-                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                    seriesExerciseInput.SendKeys("E");
-                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
-                    setsExerciseInput.SendKeys("4");
-                    repsExerciseInput.SendKeys("4,4,4,5");
-                    restExerciseInput.SendKeys("60");
-                    tempoExerciseInput.SendKeys("2010");
-                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
 
-                    WaitUntil.WaitSomeInterval(1);
-                    Pages.Common.saveBtn.Click();
-                }
-                if (x == 6)
-                {
-                    seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                    seriesExerciseInput.SendKeys("A");
-                    exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
-                    setsExerciseInput.SendKeys("4");
-                    repsExerciseInput.SendKeys("4,4,4,5");
-                    restExerciseInput.SendKeys("60");
-                    tempoExerciseInput.SendKeys("2010");
-                    notesExerciseInput.SendKeys(Exersises.exercise[x]);
+                            WaitUntil.VisibilityOfAllElementsLocatedBy(_seriesInput, 20);
+                            seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                            seriesExerciseInput.SendKeys("A");
+                            exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                            setsExerciseInput.SendKeys("4");
+                            repsExerciseInput.SendKeys("4,4,4,5");
+                            restExerciseInput.SendKeys("60");
+                            tempoExerciseInput.SendKeys("2010");
+                            notesExerciseInput.SendKeys(Exersises.exercise[x]);
 
-                    WaitUntil.WaitSomeInterval(1);
-                    Pages.Common.saveBtn.Click();
+                            WaitUntil.WaitSomeInterval(1);
+                            Pages.Common.saveBtn.Click();
+                        }
+                        if (x == 2)
+                        {
+
+                            WaitUntil.VisibilityOfAllElementsLocatedBy(_seriesInput, 20);
+                            seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                            seriesExerciseInput.SendKeys("B");
+                            exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                            setsExerciseInput.SendKeys("3");
+                            repsExerciseInput.SendKeys("4,4,4");
+                            restExerciseInput.SendKeys("10");
+                            tempoExerciseInput.SendKeys("3010");
+                            notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                            WaitUntil.WaitSomeInterval(1);
+                            Pages.Common.saveBtn.Click();
+                        }
+                        if (x == 3)
+                        {
+
+                            WaitUntil.VisibilityOfAllElementsLocatedBy(_seriesInput, 20);
+                            seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                            seriesExerciseInput.SendKeys("C1");
+                            exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                            setsExerciseInput.SendKeys("5");
+                            repsExerciseInput.SendKeys("4,4,4,5,6");
+                            restExerciseInput.SendKeys("120");
+                            tempoExerciseInput.SendKeys("2010");
+                            notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                            WaitUntil.WaitSomeInterval(1);
+                            Pages.Common.saveBtn.Click();
+                        }
+                        if (x == 4)
+                        {
+
+                            WaitUntil.VisibilityOfAllElementsLocatedBy(_seriesInput, 20);
+                            seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                            seriesExerciseInput.SendKeys("C2");
+                            exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                            setsExerciseInput.SendKeys("4");
+                            repsExerciseInput.SendKeys("4,4,4,5");
+                            restExerciseInput.SendKeys("60");
+                            tempoExerciseInput.SendKeys("2010");
+                            notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                            WaitUntil.WaitSomeInterval(1);
+                            Pages.Common.saveBtn.Click();
+                        }
+                        if (x == 5)
+                        {
+
+                            WaitUntil.VisibilityOfAllElementsLocatedBy(_seriesInput, 20);
+                            seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                            seriesExerciseInput.SendKeys("E");
+                            exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                            setsExerciseInput.SendKeys("4");
+                            repsExerciseInput.SendKeys("4,4,4,5");
+                            restExerciseInput.SendKeys("60");
+                            tempoExerciseInput.SendKeys("2010");
+                            notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                            WaitUntil.WaitSomeInterval(1);
+                            Pages.Common.saveBtn.Click();
+                        }
+                        if (x == 6)
+                        {
+
+                            WaitUntil.VisibilityOfAllElementsLocatedBy(_seriesInput, 20);
+                            seriesExerciseInput.SendKeys(Keys.Control + "A" + Keys.Delete);
+                            seriesExerciseInput.SendKeys("D");
+                            exercisesCbbx.SendKeys(Exersises.exercise[x] + Keys.Enter);
+                            setsExerciseInput.SendKeys("4");
+                            repsExerciseInput.SendKeys("4,4,4,5");
+                            restExerciseInput.SendKeys("60");
+                            tempoExerciseInput.SendKeys("2010");
+                            notesExerciseInput.SendKeys(Exersises.exercise[x]);
+
+                            WaitUntil.WaitSomeInterval(1);
+                            Pages.Common.saveBtn.Click();
+                        }
+
+                    }
+
+
+                    WaitUntil.WaitSomeInterval(3);
+                    WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@class='btn_back']"));
+                    IWebElement backBtn = Browser._Driver.FindElement(By.XPath("//div[@class='btn_back']"));
+                    backBtn.Click();
                 }
 
             }
+
             
             return this;
         }

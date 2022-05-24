@@ -8,23 +8,13 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.Helpers
 {
-    public class Data
-    {
-        public object Id { get; set; }
-        public object SetDescription { get; set; } // this might be another data type
-        public object WorkoutExerciseId { get; set; }
-        public object UserId { get; set; }
-        public object IsDone { get; set; }
-        public object CreationDate { get; set; }
-        public object IsDeleted { get; set; }
-        public object UpdatedDate { get; set; }
-    }
+
     public class AppDbContext
     {
        
-        public static List<Data> GetUserExercisesList(string userEmail, string membershipName)
+        public static List<JsonUserExercises> GetUserExercisesList(string userEmail, string membershipName)
         {
-            var list = new List<Data>();
+            var list = new List<JsonUserExercises>();
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT *" +
@@ -46,7 +36,7 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-                        var row = new Data();
+                        var row = new JsonUserExercises();
                         row.Id = reader.GetValue(0);
                         row.SetDescription = reader.GetValue(1);
                         row.WorkoutExerciseId = reader.GetValue(2);
@@ -55,6 +45,33 @@ namespace MCMAutomation.Helpers
                         row.CreationDate = reader.GetValue(5);
                         row.IsDeleted = reader.GetValue(6);
                         row.UpdatedDate = reader.GetValue(7);
+
+
+                        list.Add(row);
+                    }
+                }
+
+            }
+            return list;
+        }
+
+        public static List<User> GetUserData()
+        {
+            var list = new List<User>();
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(1) *" +
+                                         "FROM [AspNetUsers] where email like 'qatester%@xitroo.com' " +
+                                         "ORDER BY DateTime DESC", db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var row = new User();
+                        row.Email = reader.GetValue(3);
 
 
                         list.Add(row);

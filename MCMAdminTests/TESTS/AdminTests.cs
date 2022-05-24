@@ -103,6 +103,15 @@ namespace MCMAutomation.AdminSiteTests
 
         public void AddWorkoutsAndExercisesToNewMembership()
         {
+            Pages.SignUpUser
+                .GoToSignUpPage();
+
+            string email = RandomHelper.RandomEmail();
+            Pages.SignUpUser
+                .EnterData(email)
+                .ClickOnSignUpBtn()
+                .VerifyDisplayingPopUp()
+                .GoToLoginPage();
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
@@ -134,9 +143,66 @@ namespace MCMAutomation.AdminSiteTests
 
             Pages.MembershipAdmin
                 .CreateWorkouts(programLinks);
+           
+            Pages.MembershipAdmin
+                .AddExercises(programLinks);
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .EditUser(membershipName);
+            
+            Pages.Login
+                .GetAdminLogout();
+
+        }
+
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+        public void CreateAndRemoveNewMembership()
+        {
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .ClickCreateBtn()
+                .EnterMembershipData();
+
+            string membershipName = Pages.MembershipAdmin.GetMembershipName();
+
+            Pages.Common
+                .ClickSaveBtn();
+            Pages.MembershipAdmin
+                .SearchMembership(membershipName)
+                .VerifyMembershipName(membershipName)
+                .ClickAddProgramsBtn()
+                .VerifyMembershipNameCbbx(membershipName)
+                .CreatePrograms();
+
+            string url = Browser._Driver.Url;
+
+            Pages.MembershipAdmin
+                 .VerifyMembershipNameCbbx(membershipName)
+                 .CreatePrograms();
+            IList<string> programLinks = ListHelper.DefineProgramList(url);
+
+            Pages.MembershipAdmin
+                .CreateWorkouts(programLinks);
             IList<string> exercisesLinks = ListHelper.DefineWorkoutList(programLinks);
             Pages.MembershipAdmin
-                .AddExercises();
+                .AddExercises(exercisesLinks);
             Pages.Sidebar
                 .OpenMemberShipPage();
             Pages.MembershipAdmin
@@ -148,77 +214,17 @@ namespace MCMAutomation.AdminSiteTests
                 .OpenMemberShipPage();
             Pages.MembershipAdmin
                 .SearchMembership(membershipName)
-                .VerifyMembershipName(membershipName);
+                .VerifyMembershipName(membershipName)
+                .ClickDeleteBtn()
+                .VerifyDeletingMembership(membershipName);
             Pages.Login
                 .GetAdminLogout();
 
+
+
+
+
         }
-
-
-        /*  [Test]
-          [AllureTag("Regression")]
-          [AllureOwner("Artem Sukharevskyi")]
-          [AllureSeverity(SeverityLevel.critical)]
-          [Author("Artem", "qatester91311@gmail.com")]
-          [AllureSuite("Admin")]
-          [AllureSubSuite("Memberships")]
-          public void CreateAndRemoveNewMembership()
-          {
-              Pages.Login
-                  .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-              Pages.Sidebar
-                  .VerifyIsLogoDisplayed();
-              Pages.PopUp
-                  .ClosePopUp();
-              Pages.Sidebar
-                  .OpenMemberShipPage();
-              Pages.MembershipAdmin
-                  .ClickCreateBtn()
-                  .EnterMembershipData();
-
-              string membershipName = Pages.MembershipAdmin.GetMembershipName();
-
-              Pages.Common
-                  .ClickSaveBtn();
-              Pages.MembershipAdmin
-                  .SearchMembership(membershipName)
-                  .VerifyMembershipName(membershipName)
-                  .ClickAddProgramsBtn()
-                  .VerifyMembershipNameCbbx(membershipName)
-                  .CreatePrograms();
-              string programsUrl = Browser._Driver.Url;
-              Pages.Common
-                  .ClickSaveBtn();
-              Pages.MembershipAdmin
-                  .CreateWorkoutsForFirstProgram();
-              Pages.Common
-                  .ClickSaveBtn();
-              Pages.MembershipAdmin
-                  .AddExercises();
-              Pages.Common
-                  .ClickSaveBtn();
-              Pages.Sidebar
-                  .OpenMemberShipPage();
-              Pages.MembershipAdmin
-                  .SearchMembership(membershipName)
-                  .VerifyMembershipName(membershipName)
-                  .AddUserToMembership()
-                  .VerifyAssignUser();
-              Pages.Sidebar
-                  .OpenMemberShipPage();
-              Pages.MembershipAdmin
-                  .SearchMembership(membershipName)
-                  .VerifyMembershipName(membershipName)
-                  .ClickDeleteBtn()
-                  .VerifyDeletingMembership(membershipName);
-              Pages.Login
-                  .GetAdminLogout();
-
-
-
-
-
-          }*/
 
         [Test]
         [AllureTag("Regression")]
@@ -273,6 +279,14 @@ namespace MCMAutomation.AdminSiteTests
             Pages.Sidebar
                 .OpenMemberShipPage();
 
+        }
+
+        [Test]
+
+        public void RestRequest()
+        {
+            RestSharpHelper
+                .GetLoginAdmin();
         }
 
     }

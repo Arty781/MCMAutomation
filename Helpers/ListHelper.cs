@@ -78,4 +78,54 @@ namespace MCMAutomation.Helpers
 
         }
     }
+
+    public class JsonUserExercises
+    {
+        public object? Id { get; set; } // this might be another data type
+        public object? SetDescription { get; set; } 
+        public object? WorkoutExerciseId { get; set; }
+        public object? UserId { get; set; }
+        public object? IsDone { get; set; }
+        public object? CreationDate { get; set; }
+        public object? IsDeleted { get; set; }
+        public object? UpdatedDate { get; set; }
+    }
+
+    public class User
+    {
+        public object? Id { get; set; } // this might be another data type
+        public object? FirstName { get; set; }
+        public object? LastName { get; set; }
+        public object? Email { get; set; }
+        public object? ConversionSystem { get; set; }
+        public object? Gender { get; set; }
+        public object? BirthDate { get; set; }
+        public object? Weight { get; set; }
+        public object? Height { get; set; }
+        public object? ActivityLevel { get; set; }
+        public object? Bodyfat { get; set; }
+        public object? Calories { get; set; }
+        public object? Active { get; set; }
+        public object? DateTime { get; set; }
+        public object? UserName { get; set; }
+        public object? NormalizedUserName { get; set; }
+        public object? NormalizedEmail { get; set; }
+        public object? EmailConfirmed { get; set; }
+        public object? PasswordHash { get; set; }
+        public object? SecurityStamp { get; set; }
+        public object? ConcurrencyStamp { get; set; }
+        public object? PhoneNumber { get; set; }
+        public object? PhoneNumberConfirmed { get; set; }
+        public object? TwoFactorEnabled { get; set; }
+        public object? LockoutEnd { get; set; }
+        public object? LockoutEnabled { get; set; }
+        public object? AccessFailedCount { get; set; }
+        public object? IsDeleted { get; set; }
+        public object? IsMainAdmin { get; set; }
+        public object? LastGeneratedIdentityToken { get; set; }
+        public object? Carbs { get; set; }
+        public object? Fats { get; set; }
+        public object? MaintenanceCalories { get; set; }
+        public object? Protein { get; set; }
+    }
 }

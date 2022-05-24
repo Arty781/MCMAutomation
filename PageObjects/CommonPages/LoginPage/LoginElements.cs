@@ -21,7 +21,7 @@ namespace MCMAutomation.PageObjects
         public readonly By _signInBtn = By.XPath("//button[@type='submit']");
 
         public IWebElement adminLogOutBtn => Browser._Driver.FindElement(_adminLogOutBtn);
-        public readonly By _adminLogOutBtn = By.XPath("//div[@class='sidebar-btn']");
+        public readonly By _adminLogOutBtn = By.XPath("//button[@class='sidebar-btn']");
 
         public IWebElement userContextMenu => Browser._Driver.FindElement(_userContextMenu);
         public readonly By _userContextMenu = By.XPath("//h3[@class='sidebar-info_name']");

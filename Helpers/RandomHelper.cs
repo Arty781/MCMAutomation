@@ -8,13 +8,29 @@ namespace MCMAutomation.Helpers
 {
     public class RandomHelper
     {
-        public static string RandomNumber()
+        public static string RandomNumber(int maxWeight)
         {
             Random r = new Random();
-            int genRand = r.Next(10, 50);
+            int genRand = r.Next(1, maxWeight);
             string randomNum = genRand.ToString();
 
             return randomNum;
+        }
+
+        public static string RandomText(int size)
+        {
+            var chars = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[size];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
+
+            return finalString;
         }
 
         public static string RandomEmail()

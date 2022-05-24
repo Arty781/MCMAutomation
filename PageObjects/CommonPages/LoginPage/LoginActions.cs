@@ -16,11 +16,13 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Login as admin")]
         public Login GetLogin(string login, string password)
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_loginInput, 30);
-            loginInput.SendKeys(login);
-            passwordInput.SendKeys(password);
-            WaitUntil.WaitSomeInterval(1);
-            signInBtn.Click();
+            
+                WaitUntil.VisibilityOfAllElementsLocatedBy(_loginInput, 30);
+                loginInput.SendKeys(login);
+                passwordInput.SendKeys(password);
+                WaitUntil.WaitSomeInterval(1);
+                signInBtn.Click();
+            
             return this;
         }
 
@@ -39,13 +41,18 @@ namespace MCMAutomation.PageObjects
         #region User login
 
         [AllureStep("Login as user")]
-        public Login GetUserLogin()
+        public Login GetUserLogin(List<User> login, string password)
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_loginInput, 30);
-            loginInput.SendKeys("qatester92311@xitroo.com");
-            passwordInput.SendKeys("Qwerty123!");
-            WaitUntil.WaitSomeInterval(1);
-            signInBtn.Click();
+            foreach (var user in login)
+            {
+                string log = user.Email.ToString();
+                WaitUntil.VisibilityOfAllElementsLocatedBy(_loginInput, 30);
+                loginInput.SendKeys(log);
+                passwordInput.SendKeys(password);
+                WaitUntil.WaitSomeInterval(1);
+                signInBtn.Click();
+
+            }
             return this;
         }
 

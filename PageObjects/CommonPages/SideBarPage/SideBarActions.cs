@@ -24,10 +24,21 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-        
+        [AllureStep("Open Users page")]
+        public Sidebar OpenUsersPage()
+        {
+            WaitUntil.VisibilityOfAllElementsLocatedBy(_usersTb);
+            usersTb.Click();
+
+            WaitUntil.VisibilityOfAllElementsLocatedBy(Pages.MembershipAdmin._searchInput);
+
+            return this;
+        }
+
+
 
         #endregion
 
-       
+
     }
 }
