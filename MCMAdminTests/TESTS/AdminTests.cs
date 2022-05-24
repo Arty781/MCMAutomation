@@ -281,13 +281,7 @@ namespace MCMAutomation.AdminSiteTests
 
         }
 
-        [Test]
-
-        public void RestRequest()
-        {
-            RestSharpHelper
-                .GetLoginAdmin();
-        }
+       
 
     }
 }
