@@ -82,6 +82,34 @@ namespace MCMAutomation.Helpers
             return list;
         }
 
+        public static string[] GetExercisesData()
+        {
+            var list = new List<string>();
+            
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT *" +
+                                         "FROM [Exercises] WHERE IsDeleted=0", db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        string str = reader.GetString(1);
+
+                        list.Add(str);
+                        
+                    }
+                }
+                
+            }
+
+            string[] exercise = list.ToArray();
+            return exercise;
+        }
+
 
     }
 }

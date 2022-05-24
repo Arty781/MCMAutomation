@@ -128,4 +128,17 @@ namespace MCMAutomation.Helpers
         public object? MaintenanceCalories { get; set; }
         public object? Protein { get; set; }
     }
+
+    public class Exercises
+    {
+        public object? Id { get; set; }
+        public string? Name { get; set; }
+        public object? CreationDate { get; set; }
+        public object? IsDeleted { get; set; }
+        public object? VideoURL { get; set; }
+        public object? TempoBold { get; set; }
+        public object? Type { get; set; }
+
+    }
+
 }

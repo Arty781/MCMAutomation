@@ -49,12 +49,12 @@ namespace MCMAutomation.PageObjects
             foreach (var weightInput in weightInputsList)
             {
                 weightInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                weightInput.SendKeys(RandomHelper.RandomNumber(150));
+                weightInput.SendKeys(RandomHelper.RandomNumber(150).ToString());
             }
             foreach(var repsInput in repsInputsList)
             {
                 repsInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                repsInput.SendKeys(RandomHelper.RandomNumber(10));
+                repsInput.SendKeys(RandomHelper.RandomNumber(10).ToString());
             }
             foreach (var checkboxesInput in checkboxesInputsList)
             {
@@ -94,12 +94,12 @@ namespace MCMAutomation.PageObjects
                     foreach (var weightInput in weightInputList)
                     {
                         weightInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                        weightInput.SendKeys(RandomHelper.RandomNumber(150));
+                        weightInput.SendKeys(RandomHelper.RandomNumber(150).ToString());
                     }
                     foreach (var repsInput in repsInputList)
                     {
                         repsInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                        repsInput.SendKeys(RandomHelper.RandomNumber(10));
+                        repsInput.SendKeys(RandomHelper.RandomNumber(10).ToString());
                     }
                     foreach (var checkboxesInput in checkboxInputsList)
                     {
@@ -133,6 +133,7 @@ namespace MCMAutomation.PageObjects
             while(i < 4)
             {
                 ++i;
+                WaitUntil.WaitSomeInterval(3);
                 if (i == 1)
                 {
                     WaitUntil.VisibilityOfAllElementsLocatedBy(_weekSelectorCbbx);
@@ -154,6 +155,7 @@ namespace MCMAutomation.PageObjects
 
                     Pages.MembershipUser.OpenWorkoutsAndEnterWeight();
                 }
+                
                 if (i == 3)
                 {
                     weekSelector.Click();
@@ -182,6 +184,7 @@ namespace MCMAutomation.PageObjects
 
                     Pages.MembershipUser.OpenWorkoutsAndEnterWeight();
                 }
+
             }
             
             return this;
@@ -211,6 +214,7 @@ namespace MCMAutomation.PageObjects
                 Browser._Driver.Navigate().GoToUrl("https://mcmstaging-ui.azurewebsites.net/programs/training-program");
                 
                 Pages.PopUp.ClosePopUp();
+                WaitUntil.WaitSomeInterval(3);
 
             }
 

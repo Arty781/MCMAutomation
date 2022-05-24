@@ -139,13 +139,12 @@ namespace MCMAutomation.AdminSiteTests
             Pages.MembershipAdmin
                 .VerifyMembershipNameCbbx(membershipName)
                 .CreatePrograms();
-            IList<string> programLinks = ListHelper.DefineProgramList(url);
-
             Pages.MembershipAdmin
-                .CreateWorkouts(programLinks);
-           
+                .CreateWorkouts(url);
+            string[] exercise = AppDbContext.GetExercisesData();
+            
             Pages.MembershipAdmin
-                .AddExercises(programLinks);
+                .AddExercises(url, exercise);
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.MembershipAdmin
@@ -199,10 +198,13 @@ namespace MCMAutomation.AdminSiteTests
             IList<string> programLinks = ListHelper.DefineProgramList(url);
 
             Pages.MembershipAdmin
-                .CreateWorkouts(programLinks);
+                .CreateWorkouts(url);
+
             IList<string> exercisesLinks = ListHelper.DefineWorkoutList(programLinks);
+            string[] exercise = AppDbContext.GetExercisesData();
+
             Pages.MembershipAdmin
-                .AddExercises(exercisesLinks);
+                .AddExercises(url, exercise);
             Pages.Sidebar
                 .OpenMemberShipPage();
             Pages.MembershipAdmin

@@ -179,7 +179,7 @@ namespace MCMAutomation.PageObjects
         public readonly By _weekDayBtn = By.XPath("//div[@class='add-workouts-form_items']//input[@role='combobox']");
 
         public IWebElement workoutNameRow => Browser._Driver.FindElement(_workoutNameRow);
-        public readonly By _workoutNameRow = By.XPath("//p[@class='table-item-name']");
+        public readonly By _workoutNameRow = By.XPath("//div[@class='table-item-name']");
 
         public IWebElement addExercisesBtn => Browser._Driver.FindElement(_addExercisesBtn);
         public readonly By _addExercisesBtn = By.XPath("//div[@class='membership-item_add add-workout']");
@@ -203,6 +203,9 @@ namespace MCMAutomation.PageObjects
 
         public IWebElement exercisesCbbx => Browser._Driver.FindElement(_exersizeCbbx);
         public readonly By _exersizeCbbx = By.XPath("//input[@id='exercises-form-items_exerciseId']");
+
+        public IWebElement exercisesTitle => Browser._Driver.FindElement(_exercisesTitle);
+        public readonly By _exercisesTitle = By.XPath("//div[@class='top-inputs']//span[@class='ant-select-selection-item']");
 
         public IWebElement setsExerciseInput => Browser._Driver.FindElement(_setsInput);
         public readonly By _setsInput = By.XPath("//input[@id='exercises-form-items_weekWorkoutExercises_0_sets']");
