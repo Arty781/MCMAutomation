@@ -11,25 +11,65 @@ namespace MCMAutomation.PageObjects
 {
     public partial class Login
     {
-        #region Opening sidebar menu's tabs
+        #region Admin login
 
-        [AllureStep("Login")]
+        [AllureStep("Login as admin")]
         public Login GetLogin(string login, string password)
         {
-            WaitUntil.ElementIsVisible(_loginFld);
-            loginFld.SendKeys(login);
-            passwordFld.SendKeys(password);
-            WaitUntil.WaitSomeInterval(1);
-            signInBtn.Click();
+
+            InputBox.Element(loginInput, 30, login);
+            InputBox.Element(passwordInput, 30, password);
+
+            Button.Click(signInBtn);
+
             return this;
         }
 
-       
+        [AllureStep("Logout as admin")]
+        public Login GetAdminLogout()
+        {
+            WaitUntil.CustomElevemtIsVisible(adminLogOutBtn, 30);
+            Button.Click(adminLogOutBtn);
+
+            return this;
+        }
 
 
         #endregion
 
-       
+        #region User login
+
+        [AllureStep("Login as user")]
+        public Login GetUserLogin(List<User> login, string password)
+        {
+            foreach (var user in login)
+            {
+                string log = user.Email.ToString();
+                InputBox.Element(loginInput, 30, log);
+                InputBox.Element(passwordInput, 30, password);
+                
+                Button.Click(signInBtn);
+
+            }
+            return this;
+        }
+
+        [AllureStep("Logout as user")]
+        public Login GetUserLogout()
+        {
+            WaitUntil.CustomElevemtIsVisible(userContextMenu, 30);
+            Button.Click(userContextMenu);
+
+            WaitUntil.CustomElevemtIsVisible(adminLogOutBtn, 30);
+            Button.Click(adminLogOutBtn);
+
+            return this;
+        }
+
+
+        #endregion
+
+
 
 
     }

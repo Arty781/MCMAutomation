@@ -15,7 +15,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify is login successfully")]
         public Sidebar VerifyIsLogoDisplayed()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_sideBarLogo);
+            WaitUntil.CustomElevemtIsVisible(sideBarLogo, 30);
             Assert.IsTrue(sideBarLogo.Displayed);
             return this;
         }

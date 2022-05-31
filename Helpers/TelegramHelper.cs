@@ -16,9 +16,9 @@ namespace MCMAutomation.Helpers
     public partial class TelegramHelper
     {
         private static string token = "5130591097:AAF6jNtd1H3l9baweL7QQsD5npn2ODqmlhk";
-        private static TelegramBotClient _clientM;
-        private static TelegramBotClient _clientI;
-            private static string _id = "595478648";
+        private static TelegramBotClient? _clientM;
+        private static TelegramBotClient? _clientI;
+        private static readonly string _id = "595478648";
 
         public static async Task SendMessage()
         {

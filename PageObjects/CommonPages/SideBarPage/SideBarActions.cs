@@ -13,18 +13,35 @@ namespace MCMAutomation.PageObjects
     {
         #region Opening sidebar menu's tabs
 
+        [AllureStep("Open Membership page")]
         public Sidebar OpenMemberShipPage()
         {
-            WaitUntil.ElementIsInvisible(_membershipTb);
-            membershipTb.Click();
+            
+            Button.Click(membershipTb);
 
             return this;
         }
 
-        
+        [AllureStep("Open Users page")]
+        public Sidebar OpenUsersPage()
+        {
+            
+            Button.Click(usersTb);
+
+            return this;
+        }
+
+        [AllureStep("Open Exercises page")]
+        public Sidebar OpenExercisesPage()
+        {
+            
+            Button.Click(exercisesTb);
+
+            return this;
+        }
 
         #endregion
 
-       
+
     }
 }

@@ -19,7 +19,7 @@ namespace AdminSiteTests.BASE
 
         public void SetUp()
         {
-            AllureConfigFilesHelper.CopyJsonConfigFile();
+            
             Browser._Driver.Navigate().GoToUrl(Endpoints.websiteHost);
         }
         

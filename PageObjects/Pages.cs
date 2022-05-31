@@ -22,10 +22,14 @@ namespace MCMAutomation.PageObjects
             return page;
         }
 
-        public static Membership Membership => GetPage<Membership>();
+        public static Common Common => GetPage<Common>();
+        public static MembershipAdmin MembershipAdmin => GetPage<MembershipAdmin>();
+        public static MembershipUser MembershipUser => GetPage<MembershipUser>();
         public static Login Login => GetPage<Login>();
         public static Sidebar Sidebar => GetPage<Sidebar>();
         public static PopUp PopUp => GetPage<PopUp>();
+        public static SignUpUser SignUpUser => GetPage<SignUpUser>();
+        public static ExercisesAdmin ExercisesAdmin => GetPage<ExercisesAdmin>();
 
     }
 }

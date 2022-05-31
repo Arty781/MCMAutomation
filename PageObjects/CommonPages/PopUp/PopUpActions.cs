@@ -1,4 +1,5 @@
 ﻿using MCMAutomation.Helpers;
+using NUnit.Allure.Steps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,12 @@ namespace MCMAutomation.PageObjects
 {
     public partial class PopUp
     {
+        [AllureStep("Close PopUp")]
         public PopUp ClosePopUp()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_installBtn);
-            cancelBtn.Click();
+            
+            WaitUntil.VisibilityOfAllElementsLocatedBy(_cancelBtn, 30);
+            Button.Click(popupYesNoBtnLinq);
 
             return this;
         }

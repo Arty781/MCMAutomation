@@ -12,14 +12,14 @@ namespace MCMAutomation.Helpers
         public static string CreateBatFile()
         {
             string path = Browser.RootPath() + "allure serve.bat";
-            string allureResultsDirectory = Browser.RootPath() + @"\allure-results";
+            string allureResultsDirectory = Browser.RootPath() + @"allure-results";
             string allureResults = @"allure serve " + allureResultsDirectory;
             FileInfo fileInf = new FileInfo(path);
-            if (fileInf.Exists)
+            if (fileInf.Exists == true)
             {
                 fileInf.Delete();
             }
-            else if (!Directory.Exists(allureResultsDirectory))
+            if (!Directory.Exists(allureResultsDirectory) == true)
             {
                 Directory.CreateDirectory(allureResultsDirectory);
             }

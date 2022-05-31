@@ -8,15 +8,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="allure-results\**" />
+    <Compile Remove="ErrorImages\**" />
     <Compile Remove="MCMAdminTests\**" />
+    <Compile Remove="MCMClientTests\**" />
+    <Compile Remove="MCMWebTests\**" />
+    <EmbeddedResource Remove="allure-results\**" />
+    <EmbeddedResource Remove="ErrorImages\**" />
     <EmbeddedResource Remove="MCMAdminTests\**" />
+    <EmbeddedResource Remove="MCMClientTests\**" />
+    <EmbeddedResource Remove="MCMWebTests\**" />
+    <None Remove="allure-results\**" />
+    <None Remove="ErrorImages\**" />
     <None Remove="MCMAdminTests\**" />
+    <None Remove="MCMClientTests\**" />
+    <None Remove="MCMWebTests\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core" Version="4.0.1" />
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NUnit" Version="3.13.2" />
     <PackageReference Include="NUnit.Allure" Version="1.0.14" />
     <PackageReference Include="NUnit.Allure.Steps" Version="1.0.9" />
@@ -25,11 +38,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Selenium.Support" Version="4.1.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.1.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="98.0.4758.10200" />
+    <PackageReference Include="RestSharp" Version="107.3.0" />
+    <PackageReference Include="Selenium.Support" Version="4.1.1" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.1.1" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="101.0.4951.4100" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="Telegram.Bot" Version="16.0.2" />
-    <PackageReference Include="WebDriverManager" Version="2.12.3" />
+    <PackageReference Include="WebDriverManager" Version="2.12.4" />
   </ItemGroup>
 
 </Project>

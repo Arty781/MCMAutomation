@@ -6,15 +6,45 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.Helpers
 {
-    partial class RandomHelper
+    public class RandomHelper
     {
-        public static string RandomNumber()
+        public static string RandomNumber(int maxWeight)
         {
             Random r = new Random();
-            int genRand = r.Next(10, 50);
-            string randomNum = genRand.ToString();
+            int genRand = r.Next(1, maxWeight);
 
-            return randomNum;
+            return genRand.ToString();
+        }
+
+        public static int RandomExercise(int maxWeight)
+        {
+            Random r = new Random();
+            int genRand = r.Next(1, maxWeight);
+
+            return genRand;
+        }
+
+        public static string RandomText(int size)
+        {
+            var chars = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[size];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
+
+            return finalString;
+        }
+
+        public static string RandomEmail()
+        {
+            string email = "qatester" + DateTime.Now.ToString("yyyy-MM-d-hh-mm") + "@xitroo.com";
+
+            return email;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MCMAutomation.Helpers
     {
         public static string MakeScreenShot()
         {
-            ITakesScreenshot ssdriver = Browser.Driver as ITakesScreenshot;
+            ITakesScreenshot ssdriver = Browser._Driver as ITakesScreenshot;
             Screenshot screenshot = ssdriver.GetScreenshot();
             string timestampPath = DateTime.Now.ToString("yyyy-MM-dd");
             string timestampName = DateTime.UtcNow.ToString("dd-MMMM-yyyy' 'HH-mm-ss");
@@ -25,7 +25,7 @@ namespace MCMAutomation.Helpers
                 Directory.CreateDirectory(path);
             }
             screenshot.SaveAsFile(name, ScreenshotImageFormat.Png);
-            return name;
+            return Browser.RootPath() + "\\ErrorImages\\" + timestampPath + "\\"+ name;
         }
         
     }

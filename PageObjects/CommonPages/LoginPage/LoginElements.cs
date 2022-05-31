@@ -5,20 +5,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeleniumExtras.PageObjects;
 
 namespace MCMAutomation.PageObjects
 {
     public partial class Login
     {
-       
-        public IWebElement loginFld => Browser._Driver.FindElement(_loginFld);
-        public readonly By _loginFld = By.XPath("//input[@name='email']");
+        [FindsBy(How = How.XPath, Using = "//input[@name='email']")]
+        public IWebElement loginInput;
 
-        public IWebElement passwordFld => Browser._Driver.FindElement(_passwordFld);
-        public readonly By _passwordFld = By.XPath("//input[@name='password']");
+        [FindsBy(How = How.XPath, Using = "//input[@name='password']")]
+        public IWebElement passwordInput;
 
-        public IWebElement signInBtn => Browser._Driver.FindElement(_signInBtn);
-        public readonly By _signInBtn = By.XPath("//button[@type='submit']");
+        [FindsBy(How = How.XPath, Using = "//button[@type='submit']")]
+        public IWebElement signInBtn;
+
+        [FindsBy(How = How.XPath, Using = "//button[@class='sidebar-btn']")]
+        public IWebElement adminLogOutBtn;
+
+        [FindsBy(How = How.XPath, Using = "//h3[@class='sidebar-info_name']")]
+        public IWebElement userContextMenu;
+
+        [FindsBy(How = How.XPath, Using = "//div[@class='logout']")]
+        public IWebElement userLogoutBtn;
+
+        [FindsBy(How = How.XPath, Using = "//a[@class='signin-form_signup-link']")]
+        public IWebElement userSignUpBtn;
+
+        
 
 
     }
