@@ -16,10 +16,8 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Open Membership page")]
         public Sidebar OpenMemberShipPage()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipTb);
-            membershipTb.Click();
-
-            WaitUntil.ElementIsVisible(Pages.MembershipAdmin._membershipCreateBtn);
+            
+            Button.Click(membershipTb);
 
             return this;
         }
@@ -27,15 +25,20 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Open Users page")]
         public Sidebar OpenUsersPage()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_usersTb);
-            usersTb.Click();
-
-            WaitUntil.VisibilityOfAllElementsLocatedBy(Pages.MembershipAdmin._searchInput);
+            
+            Button.Click(usersTb);
 
             return this;
         }
 
+        [AllureStep("Open Exercises page")]
+        public Sidebar OpenExercisesPage()
+        {
+            
+            Button.Click(exercisesTb);
 
+            return this;
+        }
 
         #endregion
 

@@ -13,8 +13,8 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Click \"Save\" button")]
         public Common ClickSaveBtn()
         {
-            WaitUntil.WaitSomeInterval(2);
-            saveBtn.Click();
+            
+            Button.Click(saveBtn);
 
 
             return this;

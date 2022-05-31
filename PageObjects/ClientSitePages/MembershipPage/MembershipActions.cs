@@ -15,11 +15,10 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Activate membership")]
         public MembershipUser ActivateMembership()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_selectProgramBtn, 20);
-            selectProgramBtn.Click();
+            
+            Button.Click(selectProgramBtn);
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_popupYesBtn, 20);
-            popupYesBtn.Click();
+            Button.Click(popupYesBtn);
 
             return this;
         }
@@ -27,199 +26,138 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Open membership")]
         public MembershipUser OpenMembership()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_programTitle, 20);
-            programTitle.Click();
+            
+            Button.Click(programTitle, 20);
 
             return this;
         }
 
-        [AllureStep("Open workout")]
-        public MembershipUser OpenWorkoutsAndEnterWeight()
+        [AllureStep("Select Phase")]
+        public MembershipUser SelectPhase()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_workoutBtn, 20);
-            workoutBtn.Click();
 
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_weightInput, 20);
-            IReadOnlyCollection<IWebElement> weightInputsList = Browser._Driver.FindElements(_weightInput);
-            IReadOnlyCollection<IWebElement> repsInputsList = Browser._Driver.FindElements(_repsInput);
-            IReadOnlyCollection<IWebElement> checkboxesInputsList = Browser._Driver.FindElements(_checkboxInput);
-            IReadOnlyCollection<IWebElement> openNotesBtnList = Browser._Driver.FindElements(_openNotesBtn);
+            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
 
-            foreach (var weightInput in weightInputsList)
-            {
-                weightInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                weightInput.SendKeys(RandomHelper.RandomNumber(150).ToString());
-            }
-            foreach(var repsInput in repsInputsList)
-            {
-                repsInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                repsInput.SendKeys(RandomHelper.RandomNumber(10).ToString());
-            }
-            foreach (var checkboxesInput in checkboxesInputsList)
-            {
-                checkboxesInput.Click();
-            }
-            foreach (var openNotesBtn in openNotesBtnList)
-            {
-                openNotesBtn.Click();
-                WaitUntil.VisibilityOfAllElementsLocatedBy(_notesInput, 20);
-                notesInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                notesInput.SendKeys(RandomHelper.RandomText(25));
-                saveNotesBtn.Click();
-            }
-            completeWorkoutBtn.Click();
+            
+                Button.Click(selectPhaseBtn[1]);
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_workoutBtn, 20);
-            IReadOnlyCollection<IWebElement> workoutsList = Browser._Driver.FindElements(_workoutBtn);
-            int i = 0;
-            while(workoutsList.Count >= 1)
-            {
-                ++i;
-                
-                if (i % 2 != 0)
-                {
-                    i = i + 2;
-                    string workoutBtn = "//div[@class='program-overview_days '][" + i + "]//div[@class='program-overview_days-btn ']";
-                    WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(workoutBtn));
-                    IWebElement WorkoutsBtn = Browser._Driver.FindElement(By.XPath(workoutBtn));
-                    WorkoutsBtn.Click();
 
-                    WaitUntil.VisibilityOfAllElementsLocatedBy(_weightInput, 20);
-                    IReadOnlyCollection<IWebElement> weightInputList = Browser._Driver.FindElements(_weightInput);
-                    IReadOnlyCollection<IWebElement> repsInputList = Browser._Driver.FindElements(_repsInput);
-                    IReadOnlyCollection<IWebElement> checkboxInputsList = Browser._Driver.FindElements(_checkboxInput);
-                    IReadOnlyCollection<IWebElement> openNoteBtnList = Browser._Driver.FindElements(_openNotesBtn);
+                Button.Click(weekSelectorInput);
+                weekSelectorInput.SendKeys(Keys.Enter);
 
-                    foreach (var weightInput in weightInputList)
-                    {
-                        weightInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                        weightInput.SendKeys(RandomHelper.RandomNumber(150).ToString());
-                    }
-                    foreach (var repsInput in repsInputList)
-                    {
-                        repsInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                        repsInput.SendKeys(RandomHelper.RandomNumber(10).ToString());
-                    }
-                    foreach (var checkboxesInput in checkboxInputsList)
-                    {
-                        checkboxesInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                        checkboxesInput.Click();
-                    }
-                    foreach (var openNotesBtn in openNoteBtnList)
-                    {
-                        openNotesBtn.Click();
-                        WaitUntil.VisibilityOfAllElementsLocatedBy(_notesInput, 20);
-                        notesInput.SendKeys(Keys.Control + "A" + Keys.Delete);
-                        notesInput.SendKeys(RandomHelper.RandomText(25));
-                        saveNotesBtn.Click();
-                    }
-                    completeWorkoutBtn.Click();
-                    i = i - 1;
-                }
-                WaitUntil.WaitSomeInterval(3);
-                workoutsList = Browser._Driver.FindElements(_workoutBtn);
-            }
-                
-           
+                Button.Click(viewTrainingProgramBtn);
+
+
+
+
             return this;
         }
 
         [AllureStep("Select Week number")]
         public MembershipUser SelectWeekNumber()
         {
-            int i = 0;
-            int y = 0;
-            while(i < 4)
-            {
-                ++i;
-                WaitUntil.WaitSomeInterval(3);
-                if (i == 1)
-                {
-                    WaitUntil.VisibilityOfAllElementsLocatedBy(_weekSelectorCbbx);
-                    weekSelector.Click();
-                    weekSelectorInputEx.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-                    Pages.MembershipUser.OpenWorkoutsAndEnterWeight();
-                }
-                if (i == 2)
-                {
-                    weekSelector.Click();
-                    while (y < i - 1)
-                    {
-                        ++y;
-                        WaitUntil.VisibilityOfAllElementsLocatedBy(_weekSelectorCbbx);
-                        weekSelectorInputEx.SendKeys(Keys.ArrowDown);
-                    }
-                    y = 0;
-                    weekSelectorInputEx.SendKeys(Keys.Enter);
+            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
 
-                    Pages.MembershipUser.OpenWorkoutsAndEnterWeight();
-                }
-                
-                if (i == 3)
-                {
-                    weekSelector.Click();
-                    while (y < i - 1)
-                    {
-                        ++y;
-                        WaitUntil.VisibilityOfAllElementsLocatedBy(_weekSelectorCbbx);
-                        weekSelectorInputEx.SendKeys(Keys.ArrowDown);
-                    }
-                    y = 0;
-                    weekSelectorInputEx.SendKeys(Keys.Enter);
+            weekSelectorInputEx.SendKeys(Keys.ArrowDown+Keys.Enter);
 
-                    Pages.MembershipUser.OpenWorkoutsAndEnterWeight();
-                }
-                if (i == 4)
-                {
-                    weekSelector.Click();
-                    while (y < i - 1)
-                    {
-                        ++y;
-                        WaitUntil.VisibilityOfAllElementsLocatedBy(_weekSelectorCbbx);
-                        weekSelectorInputEx.SendKeys(Keys.ArrowDown);
-                    }
-                    y = 0;
-                    weekSelectorInputEx.SendKeys(Keys.Enter);
 
-                    Pages.MembershipUser.OpenWorkoutsAndEnterWeight();
-                }
-
-            }
-            
             return this;
         }
 
-        [AllureStep("Select Week number")]
-        public MembershipUser SelectPhase()
+        [AllureStep("Open workout")]
+        public MembershipUser OpenWorkouts()
         {
-            int i = 0;
-            IReadOnlyCollection<IWebElement> phasesList = Browser._Driver.FindElements(_selectPhaseBtn);
-            while(i < phasesList.Count)
+           
+            Button.Click(workoutBtn[0]);
+
+            return this;
+        }
+
+        [AllureStep("Enter Weight")]
+        public MembershipUser EnterWeight()
+        {
+            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.CustomElevemtIsVisible(weightInputElem);
+            var weightList1 = weightInput.Where(x => x.Displayed).ToList();
+            for (int w = 0; w < weightList1.Count; w++)
             {
-                ++i;
-                
-                string phase = "//div[@class='phase'][" + i + "]";
 
-                WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath(phase));
-                IWebElement PhaseBtn = Browser._Driver.FindElement(By.XPath(phase));
-                PhaseBtn.Click();
-                weekSelectorInput.Click();
-                weekSelectorInput.SendKeys(Keys.ArrowDown + Keys.ArrowUp + Keys.Enter);
-
-                viewTrainingProgramBtn.Click();
-
-                Pages.MembershipUser.SelectWeekNumber();
-
-                Browser._Driver.Navigate().GoToUrl("https://mcmstaging-ui.azurewebsites.net/programs/training-program");
-                
-                Pages.PopUp.ClosePopUp();
-                WaitUntil.WaitSomeInterval(3);
-
+                WaitUntil.CustomElevemtIsVisible(weightInputElem);
+                var weightList = weightInput.Where(x => x.Displayed).ToList();
+                InputBox.Element(weightList[w], 10, RandomHelper.RandomNumber(150));
             }
 
 
             return this;
         }
+
+        [AllureStep("Enter Reps")]
+        public MembershipUser EnterReps()
+        {
+            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.CustomElevemtIsVisible(repsInputElem);
+            var repsList1 = repsInput.Where(x => x.Displayed).ToList();
+            for (int w = 0; w < repsList1.Count; w++)
+            {
+                
+                WaitUntil.CustomElevemtIsVisible(repsInputElem);
+                var repsList = repsInput.Where(x => x.Displayed).ToList();
+                InputBox.Element(repsList[w], 10, RandomHelper.RandomNumber(10));
+            }
+
+
+            return this;
+        }
+
+        [AllureStep("Mark Checkboxes")]
+        public MembershipUser MarkCheckboxes()
+        {
+            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.CustomElevemtIsVisible(checkboxInputElem);
+            var checkboxesList1 = checkboxInput.Where(x => x.Enabled).ToList();
+            for (int w = 0; w < checkboxesList1.Count; w++)
+            {
+                
+                WaitUntil.CustomElevemtIsVisible(checkboxInputElem);
+                var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
+                checkboxesList[w].Click();
+            }
+
+            return this;
+        }
+
+        [AllureStep("Enter Notes")]
+        public MembershipUser EnterNotes()
+        {
+            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.CustomElevemtIsVisible(openNotesBtnelem);
+            var notesList1 = openNotesBtn.Where(x => x.Enabled).ToList();
+            for (int w = 0; w < notesList1.Count; w++)
+            {
+                WaitUntil.WaitSomeInterval(2);
+                WaitUntil.CustomElevemtIsVisible(openNotesBtnelem);
+                var notesList = openNotesBtn.Where(x => x.Enabled).ToList();
+                openNotesBtnelem.Click();
+                InputBox.Element(notesInputelem, 10, RandomHelper.RandomText(25));
+                Button.Click(saveNotesBtnElem);
+            }
+
+
+            return this;
+        }
+
+        [AllureStep("Click Complete Workout Btn")]
+        public MembershipUser ClickCompleteWorkoutBtn()
+        {
+           
+            Button.Click(completeWorkoutBtn);
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 20);
+
+            return this;
+        }
+
+
     }
 }

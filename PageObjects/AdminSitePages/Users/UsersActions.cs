@@ -16,7 +16,7 @@ namespace MCMAutomation.PageObjects
 
         public MembershipAdmin SearchUser(string email)
         {
-            WaitUntil.ElementIsVisible(_searchInput);
+            WaitUntil.CustomElevemtIsVisible(searchInput);
             searchInput.SendKeys(email + Keys.Enter);
             
 
@@ -26,18 +26,18 @@ namespace MCMAutomation.PageObjects
 
         [AllureStep("Edit User")]
 
-        public MembershipAdmin EditUser(string membershipName)
+        public MembershipAdmin EditUser(string[] membershipName)
         {
             editBtn.Click();
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_emailInput);
+            WaitUntil.CustomElevemtIsVisible(emailInput);
             
-            addUserMembershipCbbx.SendKeys(membershipName + Keys.Enter);
-            addUserMembershipBtn.Click();
+            addUserMembershipCbbx.SendKeys(membershipName[0] + Keys.Enter);
+            Button.Click(addUserMembershipBtn);
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipItem, 20);
+            WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
 
-            selectUserActiveMembershipCbbx.SendKeys(membershipName + Keys.Enter);
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipItem, 20);
+            selectUserActiveMembershipCbbx.SendKeys(membershipName[0] + Keys.Enter);
+            WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
 
             return this;
         }

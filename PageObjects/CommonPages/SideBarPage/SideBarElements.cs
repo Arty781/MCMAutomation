@@ -5,64 +5,65 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeleniumExtras.PageObjects;
 
 namespace MCMAutomation.PageObjects
 {
     public partial class Sidebar
     {
         #region SideBarMenu Admin Panel
-        IWebElement sideBarLogo => Browser._Driver.FindElement(_sideBarLogo);
-        public readonly By _sideBarLogo = By.XPath("//div[@class='sidebar-logo']");
 
-        IWebElement membershipTb => Browser._Driver.FindElement(_membershipTb);
-        public readonly By _membershipTb = By.XPath("//ul/li/a[@href='/admin/memberships']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='sidebar-logo']")]
+        public IWebElement sideBarLogo;
 
-        IWebElement exercisesTb => Browser._Driver.FindElement(_exercisesTb);
-        public readonly By _exercisesTb = By.XPath("//ul//a[@href='/admin/exercises-database']");
+        [FindsBy(How = How.XPath, Using = "//ul/li/a[@href='/admin/memberships']")]
+        public IWebElement membershipTb;
 
+        [FindsBy(How = How.XPath, Using = "//ul//a[@href='/admin/exercises-database']")]
+        public IWebElement exercisesTb;
 
-        IWebElement usersTb => Browser._Driver.FindElement(_usersTb);
-        public readonly By _usersTb = By.XPath("//ul//a[@href='/admin/users']");
+        [FindsBy(How = How.XPath, Using = "//ul//a[@href='/admin/users']")]
+        public IWebElement usersTb;
 
-        IWebElement educationTb => Browser._Driver.FindElement(_educationTb);
-        public readonly By _educationTb = By.XPath("//ul//a[@href='/admin/pages']");
+        [FindsBy(How = How.XPath, Using = "//ul//a[@href='/admin/pages']")]
+        public IWebElement educationTb;
 
-        IWebElement popUpTb => Browser._Driver.FindElement(_popUpTb);
-        public readonly By _popUpTb = By.XPath("//ul//a[@href='/admin/pop-up-managment']");
+        [FindsBy(How = How.XPath, Using = "//ul//a[@href='/admin/pop-up-managment']")]
+        public IWebElement popUpTb;
 
-        IWebElement membershipCard => Browser._Driver.FindElement(_membershipCard);
-        public readonly By _membershipCard = By.XPath("//div/a[@href='/admin/memberships']");
+        [FindsBy(How = How.XPath, Using = "//div/a[@href='/admin/memberships']")]
+        public IWebElement membershipCard;
 
-        IWebElement exercisesCard => Browser._Driver.FindElement(_exercisesCard);
-        public readonly By _exercisesCard = By.XPath("//main//a[@href='/admin/exercises-database']");
+        [FindsBy(How = How.XPath, Using = "//main//a[@href='/admin/exercises-database']")]
+        public IWebElement exercisesCard;
 
-        IWebElement usersCard => Browser._Driver.FindElement(_usersCard);
-        public readonly By _usersCard = By.XPath("//main//a[@href='/admin/users']");
+        [FindsBy(How = How.XPath, Using = "//main//a[@href='/admin/users']")]
+        public IWebElement usersCard;
 
-        IWebElement educationCard => Browser._Driver.FindElement(_educationCard);
-        public readonly By _educationCard = By.XPath("//main//a[@href='/admin/pages']");
+        [FindsBy(How = How.XPath, Using = "//main//a[@href='/admin/pages']")]
+        public IWebElement educationCard;
 
-        IWebElement popUpCard => Browser._Driver.FindElement(_popUpCard);
-        public readonly By _popUpCard = By.XPath("//main//a[@href='/admin/pop-up-managment']");
+        [FindsBy(How = How.XPath, Using = "//main//a[@href='/admin/pop-up-managment']")]
+        public IWebElement popUpCard;
 
         #endregion
 
         #region SideBarMenu User Panel
 
-        IWebElement trainingProgramTb => Browser._Driver.FindElement(_trainingProgramTb);
-        public readonly By _trainingProgramTb = By.XPath("//ul/li/a[@href='/programs/all']");
+        [FindsBy(How = How.XPath, Using = "//ul/li/a[@href='/programs/all']")]
+        public IWebElement trainingProgramTb;
 
-        IWebElement nutritionTb => Browser._Driver.FindElement(_nutritionTb);
-        public readonly By _nutritionTb = By.XPath("//ul/li/a[@href='/nutrition/finding-tree']");
+        [FindsBy(How = How.XPath, Using = "//ul/li/a[@href='/nutrition/finding-tree']")]
+        public IWebElement nutritionTb;
 
-        IWebElement progressTb => Browser._Driver.FindElement(_progressTb);
-        public readonly By _progressTb = By.XPath("//ul/li/a[@href='/progress/all']");
+        [FindsBy(How = How.XPath, Using = "//ul/li/a[@href='/progress/all']")]
+        public IWebElement progressTb;
 
-        IWebElement videosTb => Browser._Driver.FindElement(_videosTb);
-        public readonly By _videosTb = By.XPath("//ul/li/a[@href='/help-videos']");
+        [FindsBy(How = How.XPath, Using = "//ul/li/a[@href='/help-videos']")]
+        public IWebElement videosTb;
 
-        IWebElement myProgramBtn => Browser._Driver.FindElement(_myProgramBtn);
-        public readonly By _myProgramBtn = By.XPath("//a[@href='/programs/training-program']");
+        [FindsBy(How = How.XPath, Using = "//a[@href='/programs/training-program']")]
+        public IWebElement myProgramBtn;
 
 
         #endregion

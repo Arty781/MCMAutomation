@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MCMAutomation.PageObjects;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -110,6 +111,65 @@ namespace MCMAutomation.Helpers
             return exercise;
         }
 
+        public static string[] GetLastMembership()
+        {
+            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitle, 90);
+            var list = new List<string>();
 
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(1)*" +
+                                         "FROM [Memberships] WHERE IsDeleted=0" +
+                                         "ORDER BY CreationDate DESC", db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        string str = reader.GetString(2);
+
+                        list.Add(str);
+
+                    }
+                }
+
+            }
+
+            string[] exercise = list.ToArray();
+            return exercise;
+        }
+
+        public static string[] GetExerciseStatus()
+        {
+
+            var list = new List<string>();
+
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(1)*" +
+                                         "FROM [Exercises] " +
+                                         "ORDER BY CreationDate DESC", db);
+                
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var str = reader.GetValue(3).ToString();
+
+                        list.Add(str);
+
+                    }
+                }
+
+            }
+            string[] status = list.ToArray();
+
+            return status;
+        }
     }
 }

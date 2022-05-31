@@ -15,7 +15,7 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.VisibilityOfAllElementsLocatedBy(_signUpBtn);
 
-            signUpLink.Click();
+            Button.Click(signUpLink);
 
             return this;
         }
@@ -23,20 +23,13 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter user data")]
         public SignUpUser EnterData(string email)
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_firstNameInput);
-
-            firstNameInput.Clear();
-            firstNameInput.SendKeys("Jane");
-            lastNameInput.Clear();
-            lastNameInput.SendKeys("Doe");
-            emailInput.Clear();
-            emailInput.SendKeys(email);
-            confirmEmailInput.Clear();
-            confirmEmailInput.SendKeys(email);
-            passwordInput.Clear();
-            passwordInput.SendKeys("Qaz11111!");
-            confirmPasswordInput.Clear();
-            confirmPasswordInput.SendKeys("Qaz11111!");
+            InputBox.Element(firstNameInput,10, "Jane");
+            InputBox.Element(lastNameInput, 10, "Doe");
+            InputBox.Element(emailInput, 10, email);
+            InputBox.Element(confirmEmailInput, 10, email);
+            InputBox.Element(passwordInput, 10, "Qaz11111!");
+            InputBox.Element(confirmPasswordInput, 10, "Qaz11111!");
+            
 
             return this;
         }
@@ -45,7 +38,7 @@ namespace MCMAutomation.PageObjects
         public SignUpUser ClickOnSignUpBtn()
         {
             WaitUntil.VisibilityOfAllElementsLocatedBy(_signUpBtn);
-            signUpBtn.Click();
+            Button.Click(signUpBtn);
 
             return this;
         }
@@ -56,7 +49,7 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.VisibilityOfAllElementsLocatedBy(_loginBtn);
 
-            loginBtn.Click();
+            Button.Click(loginBtn);
 
             return this;
         }

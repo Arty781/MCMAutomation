@@ -13,8 +13,9 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Close PopUp")]
         public PopUp ClosePopUp()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_installBtn, 60);
-            cancelBtn.Click();
+            
+            WaitUntil.VisibilityOfAllElementsLocatedBy(_cancelBtn, 30);
+            Button.Click(popupYesNoBtnLinq);
 
             return this;
         }

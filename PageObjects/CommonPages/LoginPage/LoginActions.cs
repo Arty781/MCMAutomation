@@ -16,21 +16,20 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Login as admin")]
         public Login GetLogin(string login, string password)
         {
-            
-                WaitUntil.VisibilityOfAllElementsLocatedBy(_loginInput, 30);
-                loginInput.SendKeys(login);
-                passwordInput.SendKeys(password);
-                WaitUntil.WaitSomeInterval(1);
-                signInBtn.Click();
-            
+
+            InputBox.Element(loginInput, 30, login);
+            InputBox.Element(passwordInput, 30, password);
+
+            Button.Click(signInBtn);
+
             return this;
         }
 
         [AllureStep("Logout as admin")]
         public Login GetAdminLogout()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_adminLogOutBtn, 30);
-            adminLogOutBtn.Click();
+            WaitUntil.CustomElevemtIsVisible(adminLogOutBtn, 30);
+            Button.Click(adminLogOutBtn);
 
             return this;
         }
@@ -46,11 +45,10 @@ namespace MCMAutomation.PageObjects
             foreach (var user in login)
             {
                 string log = user.Email.ToString();
-                WaitUntil.VisibilityOfAllElementsLocatedBy(_loginInput, 30);
-                loginInput.SendKeys(log);
-                passwordInput.SendKeys(password);
-                WaitUntil.WaitSomeInterval(1);
-                signInBtn.Click();
+                InputBox.Element(loginInput, 30, log);
+                InputBox.Element(passwordInput, 30, password);
+                
+                Button.Click(signInBtn);
 
             }
             return this;
@@ -59,11 +57,11 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Logout as user")]
         public Login GetUserLogout()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy (_userContextMenu, 30);
-            userContextMenu.Click();
+            WaitUntil.CustomElevemtIsVisible(userContextMenu, 30);
+            Button.Click(userContextMenu);
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_adminLogOutBtn, 30);
-            adminLogOutBtn.Click();
+            WaitUntil.CustomElevemtIsVisible(adminLogOutBtn, 30);
+            Button.Click(adminLogOutBtn);
 
             return this;
         }

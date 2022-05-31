@@ -1,5 +1,6 @@
 ﻿using MCMAutomation.Helpers;
 using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,37 +15,41 @@ namespace MCMAutomation.PageObjects
 
         #region YourNextProgram
 
-        public IWebElement buyBtn => Browser._Driver.FindElement(_buyBtn);
-        public readonly By _buyBtn = By.XPath("//a[@class='program-info_btn']");
+        [FindsBy(How = How.XPath, Using = "//a[@class='program-info_btn']")]
+        public IWebElement buyBtn;
 
         #endregion
 
         #region MainMembershipPage
-        public IWebElement programTitle => Browser._Driver.FindElement(_programTitle);
-        public readonly By _programTitle = By.XPath("//a[@class='program-info_title']");
 
-        public IWebElement selectProgramBtn => Browser._Driver.FindElement(_selectProgramBtn);
-        public readonly By _selectProgramBtn = By.XPath("//button[@class='program-button']");
+        [FindsBy(How = How.XPath, Using = "//a[@class='program-info_title']")]
+        public IWebElement programTitle;
 
-        public IWebElement popupYesBtn => Browser._Driver.FindElement(_popupYesBtn);
-        public readonly By _popupYesBtn = By.XPath("//button[contains(@class,'modal-controls-btn_yes')]");
+        [FindsBy(How = How.XPath, Using = "//button[@class='program-button']")]
+        public IWebElement selectProgramBtn;
 
-        public IWebElement popupNoBtn => Browser._Driver.FindElement(_popupNoBtn);
-        public readonly By _popupNoBtn = By.XPath("//button[contains(@class,'modal-controls-btn_no')]");
+        [FindsBy(How = How.XPath, Using = "//button[contains(@class,'modal-controls-btn_yes')]")]
+        public IWebElement popupYesBtn;
+
+        [FindsBy(How = How.XPath, Using = "//button[contains(@class,'modal-controls-btn_no')]")]
+        public IWebElement popupNoBtn;
+
 
 
         #endregion
 
         #region Phase page
 
-        public IWebElement selectPhaseBtn => Browser._Driver.FindElement(_selectPhaseBtn);
-        public readonly By _selectPhaseBtn = By.XPath("//div[@class='phase']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='phase']")]
+        public IList<IWebElement> selectPhaseBtn;
+        [FindsBy(How = How.XPath, Using = "//div[@class='phase']")]
+        public IWebElement selectPhaseBtnElem;
 
-        public IWebElement weekSelectorInput => Browser._Driver.FindElement(_weekSelectorInput);
-        public readonly By _weekSelectorInput = By.XPath("//input[@type='search']");
+        [FindsBy(How = How.XPath, Using = "//input[@type='search']")]
+        public IWebElement weekSelectorInput;
 
-        public IWebElement viewTrainingProgramBtn => Browser._Driver.FindElement(_viewTrainingProgramBtn);
-        public readonly By _viewTrainingProgramBtn = By.XPath("//button[@class='ant-btn modal-controls-btn_view']");
+        [FindsBy(How = How.XPath, Using = "//button[@class='ant-btn modal-controls-btn_view']")]
+        public IWebElement viewTrainingProgramBtn;
 
 
 
@@ -52,49 +57,67 @@ namespace MCMAutomation.PageObjects
 
         #region Workouts page
 
-        public IWebElement workoutBtn => Browser._Driver.FindElement(_workoutBtn);
-        public readonly By _workoutBtn = By.XPath("//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
+        public IList<IWebElement> workoutBtn;
+        [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
+        public IWebElement workoutBtnelem;
 
-        public IWebElement weekSelectorInputEx => Browser._Driver.FindElement(_weekSelectorInputEx);
-        public readonly By _weekSelectorInputEx = By.XPath("//input[@type='search']");
+        [FindsBy(How = How.XPath, Using = "//input[@type='search']")]
+        public IWebElement weekSelectorInputEx;
 
-        public IWebElement weekSelector => Browser._Driver.FindElement(_weekSelector);
-        public readonly By _weekSelector = By.XPath("//span[@class='ant-select-selection-item']");
+        [FindsBy(How = How.XPath, Using = "//span[@class='ant-select-selection-item']")]
+        public IWebElement weekSelector;
 
-        public IWebElement weekSelectorCbbx => Browser._Driver.FindElement(_weekSelectorCbbx);
-        public readonly By _weekSelectorCbbx = By.XPath("//div[@class='ant-select-selector']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='ant-select-selector']")]
+        public IWebElement weekSelectorCbbx;
 
 
         #endregion
 
         #region Exercises page
 
-        public IWebElement weightInput => Browser._Driver.FindElement(_weightInput);
-        public readonly By _weightInput = By.XPath("//tr//td[4]//input[@class='view-workout_table_input']");
+        [FindsBy(How = How.XPath, Using = "//tr//td[4]//input[@class='view-workout_table_input']")]
+        public IList<IWebElement> weightInput;
+        [FindsBy(How = How.XPath, Using = "//tr//td[4]//input[@class='view-workout_table_input']")]
+        public IWebElement weightInputElem;
 
-        public IWebElement repsInput => Browser._Driver.FindElement(_repsInput);
-        public readonly By _repsInput = By.XPath("//tr//td[5]//input[@class='view-workout_table_input']");
+        [FindsBy(How = How.XPath, Using = "//tr//td[5]//input[@class='view-workout_table_input']")]
+        public IList<IWebElement> repsInput;
+        [FindsBy(How = How.XPath, Using = "//tr//td[5]//input[@class='view-workout_table_input']")]
+        public IWebElement repsInputElem;
 
-        public IWebElement checkboxInput => Browser._Driver.FindElement(_checkboxInput);
-        public readonly By _checkboxInput = By.XPath("//tr//td[6]//input[@type='checkbox']");
+        [FindsBy(How = How.XPath, Using = "//tr//td[6]//input[@type='checkbox']")]
+        public IList<IWebElement> checkboxInput;
+        
+        public IWebElement checkboxInputElem;
 
-        public IWebElement openNotesBtn => Browser._Driver.FindElement(_openNotesBtn);
-        public readonly By _openNotesBtn = By.XPath("//div[@class='open-btn']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='open-btn']")]
+        public IList<IWebElement> openNotesBtn;
+        public IWebElement openNotesBtnelem => Browser._Driver.FindElement(By.XPath("//div[@class='open-btn']"));
 
-        public IWebElement editNotesBtn => Browser._Driver.FindElement(_editNotesBtn);
-        public readonly By _editNotesBtn = By.XPath("//div[@class='open-btn']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='open-btn']")]
+        public IList<IWebElement> editNotesBtn;
+        [FindsBy(How = How.XPath, Using = "//div[@class='open-btn']")]
+        public IWebElement editNotesBtnelem;
 
-        public IWebElement notesInput => Browser._Driver.FindElement(_notesInput);
-        public readonly By _notesInput = By.XPath("//textarea[@class='ant-input']");
+        [FindsBy(How = How.XPath, Using = "//textarea[@class='ant-input']")]
+        public IList <IWebElement> notesInput;
+        [FindsBy(How = How.XPath, Using = "//textarea[@class='ant-input']")]
+        public IWebElement notesInputelem;
 
-        public IWebElement saveNotesBtn => Browser._Driver.FindElement(_saveNotesBtn);
-        public readonly By _saveNotesBtn = By.XPath("//div[@class='save-btn']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='save-btn']")]
+        public IList<IWebElement> saveNotesBtn;
+        [FindsBy(How = How.XPath, Using = "//div[@class='save-btn']")]
+        public IWebElement saveNotesBtnElem;
 
-        public IWebElement cancelNotesBtn => Browser._Driver.FindElement(_cancelNotesBtn);
-        public readonly By _cancelNotesBtn = By.XPath("//div[@class='cancel-btn']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='cancel-btn']")]
+        public IList<IWebElement> cancelNotesBtn;
+        [FindsBy(How = How.XPath, Using = "//div[@class='cancel-btn']")]
+        public IWebElement cancelNotesBtnElem;
 
-        public IWebElement completeWorkoutBtn => Browser._Driver.FindElement(_completeWorkoutBtn);
-        public readonly By _completeWorkoutBtn = By.XPath("//div[@class='workout-btn']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='workout-btn']")]        
+        public IWebElement completeWorkoutBtn;
+
         #endregion
 
 

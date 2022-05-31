@@ -14,7 +14,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify is login successfully")]
         public MembershipUser VerifyIsBuyBtnDisplayed()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_buyBtn, 20);
+            WaitUntil.CustomElevemtIsVisible(buyBtn, 20);
             Assert.IsTrue(buyBtn.Displayed);
 
             return this;

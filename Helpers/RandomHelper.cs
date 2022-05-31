@@ -8,7 +8,15 @@ namespace MCMAutomation.Helpers
 {
     public class RandomHelper
     {
-        public static int RandomNumber(int maxWeight)
+        public static string RandomNumber(int maxWeight)
+        {
+            Random r = new Random();
+            int genRand = r.Next(1, maxWeight);
+
+            return genRand.ToString();
+        }
+
+        public static int RandomExercise(int maxWeight)
         {
             Random r = new Random();
             int genRand = r.Next(1, maxWeight);

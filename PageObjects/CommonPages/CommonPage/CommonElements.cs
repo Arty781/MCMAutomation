@@ -1,5 +1,6 @@
 ﻿using MCMAutomation.Helpers;
 using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,17 @@ namespace MCMAutomation.PageObjects
 {
     public partial class Common
     {
-        public IWebElement saveBtn => Browser._Driver.FindElement(_saveBtn);
-        public readonly By _saveBtn = By.XPath("//button[@type='submit']");
+        [FindsBy(How = How.XPath, Using = "//button[@type='submit']")]
+        public IWebElement saveBtn;
+
 
 
 
         #region Alerts
 
-        public IWebElement deleteMessage => Browser._Driver.FindElement(_deleteMessage);
-        public readonly By _deleteMessage = By.XPath("//div[contains(text(),'Item has been deleted' )]");
+        [FindsBy(How = How.XPath, Using = "//div[contains(text(),'Item has been deleted' )]")]
+        public IWebElement deleteMessage;
+        
 
         #endregion
     }

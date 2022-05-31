@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCMAutomation", "MCMAutomat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCMAdminTests", "MCMAdminTests\MCMAdminTests.csproj", "{BF7DDA73-2DDA-43FF-B6D5-E543B2449DA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCMWebTests", "MCMWebTests\MCMWebTests.csproj", "{24E57495-02A4-4667-9D65-195D49E22DA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCMWebTests", "MCMWebTests\MCMWebTests.csproj", "{24E57495-02A4-4667-9D65-195D49E22DA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5282C88E-2506-4CF6-B440-ADD94AEF4F5E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

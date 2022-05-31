@@ -15,19 +15,49 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get membership name")]
         public string GetMembershipName()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_nameInput,30);
-            string membershipName = nameInput.GetAttribute("value");
+            string membershipName = TextBox.GetAttribute(membershipNameInput, "value");
             return membershipName;
         }
 
-        [AllureStep("Verify displaying membership name")]
-        public MembershipAdmin VerifyMembershipName(string membership)
+        [AllureStep("Get Program names")]
+        public string[] GetProgramNames()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipTitle);
-            Assert.AreEqual(membership, membershipTitle.Text);
-            if (membership != membershipTitle.Text)
+            WaitUntil.WaitSomeInterval(3);
+            var list = new List<string>();
+            var programNames = nameProgramTitle.Where(x => x.Displayed).ToList();
+            for(int i=0; i<programNames.Count; i++)
             {
-                Console.WriteLine("Membership \"" + membership + "\" is not found");
+                string programName = TextBox.GetText(programNames[i]);
+                list.Add(programName);
+            }
+            
+            string[] namesList = list.ToArray();
+            return namesList;
+        }
+
+        [AllureStep("Get Workout names")]
+        public string[] GetWorkoutNames()
+        {
+            WaitUntil.WaitSomeInterval(3);
+            var list = new List<string>();
+            var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).ToList();
+            for (int i = 0; i < workoutNames.Count; i++)
+            {
+                string workoutName = TextBox.GetText(workoutNames[i]);
+                list.Add(workoutName);
+            }
+
+            string[] namesList = list.ToArray();
+            return namesList;
+        }
+
+        [AllureStep("Verify displaying membership name")]
+        public MembershipAdmin VerifyMembershipName(string[] membership)
+        {
+            TextBox.GetText(membershipTitle);
+            if (membership[0] != membershipTitle.Text)
+            {
+                Console.WriteLine("Membership \"" + membership[0] + "\" is not found");
             }
             
 
@@ -35,29 +65,25 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Verify deleting membership")]
-        public MembershipAdmin VerifyDeletingMembership(string membership)
+        public MembershipAdmin VerifyDeletingMembership(string[] membership)
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(Pages.Common._deleteMessage);
-            WaitUntil.ElementIsInvisible(Pages.Common._deleteMessage, 20);
+            WaitUntil.CustomElevemtIsVisible(Pages.Common.deleteMessage);
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipTitle, 90);
-            membershipSearchInput.Clear();
-            membershipSearchInput.SendKeys(membership);
-
-            Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership)));
+            InputBox.Element(membershipSearchInput,30, membership[0]);
+            Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership[0])));
             
 
             return this;
         }
 
         [AllureStep("Verify membership name in combobox")]
-        public MembershipAdmin VerifyMembershipNameCbbx(string membership)
+        public MembershipAdmin VerifyMembershipNameCbbx(string[] membership)
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_membershipNameCbbx);
-            Assert.AreEqual(membership, membershipNameCbbx.Text);
-            if (membership != membershipNameCbbx.Text)
+            TextBox.GetText(cbbxMembershipName);
+            Assert.AreEqual(membership[0], cbbxMembershipName.Text);
+            if (membership[0] != cbbxMembershipName.Text)
             {
-                Console.WriteLine("Membership \"" + membership + "\" is not found");
+                Console.WriteLine("Membership \"" + membership[0] + "\" is not found");
             }
 
 
@@ -67,7 +93,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify that assign user is displayed in table")]
         public MembershipAdmin VerifyAssignUser()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_emailColumn, 60);
+            WaitUntil.CustomElevemtIsVisible(emailColumn, 60);
             Assert.AreEqual("qatester92311@xitroo.com", emailColumn.Text);
 
 

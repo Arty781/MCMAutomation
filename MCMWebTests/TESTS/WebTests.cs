@@ -64,7 +64,14 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.MembershipUser
                 .OpenMembership()
-                .SelectPhase();
+                .SelectPhase()
+                .SelectWeekNumber()
+                .OpenWorkouts()
+                .EnterWeight()
+                .EnterReps()
+                .MarkCheckboxes()
+                .EnterNotes()
+                .ClickCompleteWorkoutBtn();
             
         }
 

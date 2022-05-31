@@ -5,32 +5,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeleniumExtras.PageObjects;
 
 namespace MCMAutomation.PageObjects
 {
     public partial class Login
     {
-       
-        public IWebElement loginInput => Browser._Driver.FindElement(_loginInput);
-        public readonly By _loginInput = By.XPath("//input[@name='email']");
+        [FindsBy(How = How.XPath, Using = "//input[@name='email']")]
+        public IWebElement loginInput;
 
-        public IWebElement passwordInput => Browser._Driver.FindElement(_passwordInput);
-        public readonly By _passwordInput = By.XPath("//input[@name='password']");
+        [FindsBy(How = How.XPath, Using = "//input[@name='password']")]
+        public IWebElement passwordInput;
 
-        public IWebElement signInBtn => Browser._Driver.FindElement(_signInBtn);
-        public readonly By _signInBtn = By.XPath("//button[@type='submit']");
+        [FindsBy(How = How.XPath, Using = "//button[@type='submit']")]
+        public IWebElement signInBtn;
 
-        public IWebElement adminLogOutBtn => Browser._Driver.FindElement(_adminLogOutBtn);
-        public readonly By _adminLogOutBtn = By.XPath("//button[@class='sidebar-btn']");
+        [FindsBy(How = How.XPath, Using = "//button[@class='sidebar-btn']")]
+        public IWebElement adminLogOutBtn;
 
-        public IWebElement userContextMenu => Browser._Driver.FindElement(_userContextMenu);
-        public readonly By _userContextMenu = By.XPath("//h3[@class='sidebar-info_name']");
+        [FindsBy(How = How.XPath, Using = "//h3[@class='sidebar-info_name']")]
+        public IWebElement userContextMenu;
 
-        public IWebElement userLogoutBtn => Browser._Driver.FindElement(_userLogoutBtn);
-        public readonly By _userLogoutBtn = By.XPath("//div[@class='logout']");
+        [FindsBy(How = How.XPath, Using = "//div[@class='logout']")]
+        public IWebElement userLogoutBtn;
 
-        public IWebElement userSignUpBtn => Browser._Driver.FindElement(_userSignUpBtn);
-        public readonly By _userSignUpBtn = By.XPath("//a[@class='signin-form_signup-link']");
+        [FindsBy(How = How.XPath, Using = "//a[@class='signin-form_signup-link']")]
+        public IWebElement userSignUpBtn;
+
+        
 
 
     }
