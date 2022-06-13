@@ -54,8 +54,8 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify displaying membership name")]
         public MembershipAdmin VerifyMembershipName(string[] membership)
         {
-            TextBox.GetText(membershipTitle);
-            if (membership[0] != membershipTitle.Text)
+            TextBox.GetText(membershipTitle[0]);
+            if (membership[0] != membershipTitle[0].Text)
             {
                 Console.WriteLine("Membership \"" + membership[0] + "\" is not found");
             }

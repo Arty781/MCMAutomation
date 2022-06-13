@@ -1,1 +1,1 @@
-allure serve C:\Users\sucha\source\repos\Arty781\MCMAutomation\allure-results
+allure serve C:\Users\ARTY\Source\Repos\Arty781\MCMAutomation\allure-results

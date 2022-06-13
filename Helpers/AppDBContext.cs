@@ -113,7 +113,7 @@ namespace MCMAutomation.Helpers
 
         public static string[] GetLastMembership()
         {
-            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitle, 90);
+            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitle[0], 90);
             var list = new List<string>();
 
             using (SqlConnection db = new(DB.GetConnectionString))

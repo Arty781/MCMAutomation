@@ -17,8 +17,10 @@ namespace MCMAutomation.PageObjects
 
         public MembershipAdmin ClickCreateBtn()
         {
+           
             WaitUntil.VisibilityOfAllElementsLocatedBy(_CreateBtn);
             Button.Click(membershipCreateBtn);
+           
             return this;
         }
 

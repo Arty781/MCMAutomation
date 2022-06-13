@@ -16,8 +16,14 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Open Membership page")]
         public Sidebar OpenMemberShipPage()
         {
-            
+            var dateBefore = DateTime.Now;
             Button.Click(membershipTb);
+
+            WaitUntil.VisibilityOfAllElementsLocatedBy(Pages.MembershipAdmin._CreateBtn, 30);
+            var lastMembership = Pages.MembershipAdmin.membershipTitle.Last();
+            WaitUntil.CustomElevemtIsVisible(lastMembership, 30);
+            var dateAfter = DateTime.Now;
+            Console.WriteLine("Load time is: " + (dateAfter - dateBefore));
 
             return this;
         }

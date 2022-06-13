@@ -399,7 +399,21 @@ namespace MCMAutomation.AdminSiteTests
 
         public void Test()
         {
-            AppDbContext.GetExerciseStatus();
+            //AppDbContext.GetExerciseStatus();
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+           
+
+            Pages.Sidebar
+                .OpenMemberShipPage();
+
+            Pages.MembershipAdmin
+                .ClickCreateBtn();
+            Pages.PopUp
+               .ClosePopUp();
         }
     }
 }

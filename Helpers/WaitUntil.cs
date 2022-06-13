@@ -11,9 +11,9 @@ namespace MCMAutomation.Helpers
 {
     class WaitUntil
     {
-        public static void WaitSomeInterval(int seconds = 2)
+        public static void WaitSomeInterval(int milliseconds = 2000)
         {
-            Task.Delay(TimeSpan.FromSeconds(seconds)).Wait();
+            Task.Delay(TimeSpan.FromMilliseconds(milliseconds)).Wait();
         }
 
         public static void ElementIsClickable(IWebElement element, int seconds = 10)

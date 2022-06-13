@@ -1,6 +1,6 @@
 {
   "allure": {
-    "directory": "C:\\Users\\sucha\\source\\repos\\Arty781\\MCMAutomation\\allure-results",
+    "directory": "C:\\Users\\ARTY\\source\\repos\\Arty781\\MCMAutomation\\allure-results",
     "links": [
       "{link}",
       "https://testrail.com/browse/{tms}",

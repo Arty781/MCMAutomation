@@ -67,11 +67,7 @@ namespace MCMAutomation.WebTests
                 .SelectPhase()
                 .SelectWeekNumber()
                 .OpenWorkouts()
-                .EnterWeight()
-                .EnterReps()
-                .MarkCheckboxes()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn();
+                .AddWeight();
             
         }
 

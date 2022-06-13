@@ -88,8 +88,9 @@ namespace MCMAutomation.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//tr//td[6]//input[@type='checkbox']")]
         public IList<IWebElement> checkboxInput;
-        
-        public IWebElement checkboxInputElem;
+
+        [FindsBy(How=How.XPath,Using = "//span[@class='view-workout_table_readonly']")]
+        public IList<IWebElement> inputWeightReadonly;
 
         [FindsBy(How = How.XPath, Using = "//div[@class='open-btn']")]
         public IList<IWebElement> openNotesBtn;
