@@ -166,48 +166,6 @@ namespace MCMAutomation.WebTests
 
         [Test]
 
-        public void VerifyCaloriesForCutTier2Phase2()
-        {
-            Pages.Login
-                .GetUserLoginForTdee(Credentials.login, Credentials.password);
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenNutritionPage();
-            Pages.Nutrition
-                .SelectActivityLevel(4);
-            string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData();
-            Pages.Nutrition
-                .ClickCalculateBtn();
-
-            double maintanceCalories = Pages.Nutrition.GetCalories();
-
-            Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level)
-                .ClickNextBtn();
-            //.Step02SelectCut();
-            string goal = Pages.Nutrition.textActiveGoal.Text;
-            Pages.Nutrition
-                .ClickNextBtn()
-            .Step03SelectTier2();
-            string tier = Pages.Nutrition.textActiveTier.Text;
-            Pages.Nutrition
-                .ClickNextBtn()
-            .Step04SelectPhase2();
-            string phase = Pages.Nutrition.textActivePhase.Text;
-            Pages.Nutrition
-                .ClickNextBtn()
-            .Step05SelectDiet2();
-            string diet = Pages.Nutrition.textActiveDiet.Text;
-            Pages.Nutrition
-                .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
-        }
-
-
-        [Test]
-
         public void VerifyCaloriesForCutTier2Phase3()
         {
             Pages.Login
@@ -240,7 +198,211 @@ namespace MCMAutomation.WebTests
             string phase = Pages.Nutrition.textActivePhase.Text;
             Pages.Nutrition
                 .ClickNextBtn()
+            .Step05SelectDiet2();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+        }
+
+
+        [Test]
+
+        public void VerifyCaloriesForCutTier3Phase1()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn();
+            //.Step02SelectCut();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step03SelectTier3();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step05SelectDiet2();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForCutTier1Phase2()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn();
+            //.Step02SelectCut();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step04SelectPhase2();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
             .Step05SelectDiet3();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForBuildTier1Phase3()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn()
+                .Step02SelectBuild();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step03SelectTier1();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase3();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step05SelectDiet1();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForBuildTier3Phase2()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn()
+                .Step02SelectBuild();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier3();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase2();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet2();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForBuildTier2Phase1()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn()
+                .Step02SelectBuild();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier2();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+                //.Step04SelectPhase3();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet3();
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
