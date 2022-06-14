@@ -177,5 +177,46 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             return this;
         }
+
+        public Nutrition VerifyProteinCarbsFats(string[] values, string goal, string tier, string SKU, string gender)
+        {
+            var weight = double.Parse(values[1]);
+            var bodyFat = double.Parse(values[3]);
+            var protein = 0.0;
+
+            if (goal == Goals.goal[1] || goal == Goals.goal[2] || goal == Goals.goal[3]) {
+                protein = weight * 2;
+            } else
+            {
+                if (
+                    (gender == "Female" && bodyFat > 35) ||
+                    (gender == "Male" && bodyFat > 20)
+                )
+                {
+                    protein = weight * 1.6;
+                }
+                else if (SKU == "PP-1")
+                {
+                    protein = weight * 2;
+                }
+                else if (tier == Tiers.tier[0])
+                {
+                    protein = weight * 2;
+                }
+                else if (tier == Tiers.tier[1])
+                {
+                    protein = weight * 2;
+                }
+                else if (tier == Tiers.tier[0])
+                {
+                    protein = weight * 2.2;
+                }
+            }
+            protein = Math.Round(protein , 0, MidpointRounding.AwayFromZero);
+            
+
+            return this;
+        }
+
     }
 }

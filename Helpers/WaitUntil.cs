@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.Helpers
 {
-    class WaitUntil
+    public class WaitUntil
     {
         public static void WaitSomeInterval(int milliseconds = 2000)
         {

@@ -171,17 +171,17 @@ namespace MCMAutomation.Helpers
             return status;
         }
 
-        public static string[] GetMembershipsBySKU(string SKU)
+        public static string[] GetActiveMembershipsByEmail(string email)
         {
-            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitle[0], 90);
+            
             var list = new List<string>();
 
             using (SqlConnection db = new(DB.GetConnectionString))
             {
-                SqlCommand command = new("SELECT TOP(1)*" +
-                                         "FROM [Memberships] WHERE IsDeleted=0 and SKU=@SKU" +
-                                         "ORDER BY CreationDate DESC", db);
-                command.Parameters.AddWithValue("@SKU", DbType.String).Value = SKU;
+                SqlCommand command = new("SELECT Name, SKU " +
+                                         "FROM Memberships WHERE Id in (Select MembershipId from UserMemberships " +
+                                         "WHERE UserId in (select Id from[AspNetUsers] where Email like @email) and isDeleted = 0 and active = 1)", db);
+                command.Parameters.AddWithValue("@email", DbType.String).Value = email;
                 db.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -189,10 +189,8 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-                        string str = reader.GetString(2);
-
-                        list.Add(str);
-
+                        list.Add(reader.GetString(0));
+                        list.Add(reader.GetString(1));
                     }
                 }
 
@@ -217,10 +215,12 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
+                        
                         list.Add(reader.GetValue(6).ToString());
                         list.Add(reader.GetValue(7).ToString());
                         list.Add(reader.GetValue(8).ToString());
                         list.Add(reader.GetValue(10).ToString());
+                        list.Add(reader.GetValue(3).ToString());
                     }
                 }
 

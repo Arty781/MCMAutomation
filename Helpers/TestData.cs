@@ -109,4 +109,12 @@ namespace MCMAutomation.Helpers
             "HIGH FAT / LOW CARB"
         };
     }
+
+    public class Memberships
+    {
+        public static string[] membership =
+        {
+            "PP-1"
+        };
+    }
 }

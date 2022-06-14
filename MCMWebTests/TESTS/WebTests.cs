@@ -86,14 +86,14 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
 
-            string[] nameMembership = AppDbContext.GetMembershipsBySKU("PP-1");
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(Credentials.login);
 
             Pages.PopUp
                 .ClosePopUp();
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(nameMembership);
+                .EditUser(membershipData);
             Pages.Login
                 .GetAdminLogout();
 
@@ -137,6 +137,8 @@ namespace MCMAutomation.WebTests
                 .SelectActivityLevel(4);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -145,23 +147,28 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyMaintainCaloriesStep01(userData, level)
                 .ClickNextBtn();
-                //.Step02SelectCut();
+            //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
             string goal = Pages.Nutrition.textActiveGoal.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-                //.Step03SelectTier1();
+            //.Step03SelectTier1();
+            WaitUntil.WaitSomeInterval(1500);
             string tier = Pages.Nutrition.textActiveTier.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-                //.Step04SelectPhase1();
+            //.Step04SelectPhase1();
+            WaitUntil.WaitSomeInterval(1500);
             string phase = Pages.Nutrition.textActivePhase.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-                //.Step05SelectDiet1();
+            //.Step05SelectDiet1();
+            WaitUntil.WaitSomeInterval(1500);
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
         }
 
         [Test]
@@ -178,6 +185,8 @@ namespace MCMAutomation.WebTests
                 .SelectActivityLevel(4);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -187,22 +196,27 @@ namespace MCMAutomation.WebTests
                 .VerifyMaintainCaloriesStep01(userData, level)
                 .ClickNextBtn();
             //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
             string goal = Pages.Nutrition.textActiveGoal.Text;
             Pages.Nutrition
                 .ClickNextBtn()
             .Step03SelectTier2();
+            WaitUntil.WaitSomeInterval(1500);
             string tier = Pages.Nutrition.textActiveTier.Text;
             Pages.Nutrition
                 .ClickNextBtn()
             .Step04SelectPhase3();
+            WaitUntil.WaitSomeInterval(1500);
             string phase = Pages.Nutrition.textActivePhase.Text;
             Pages.Nutrition
                 .ClickNextBtn()
             .Step05SelectDiet2();
+            WaitUntil.WaitSomeInterval(1500);
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
         }
 
 
@@ -220,6 +234,8 @@ namespace MCMAutomation.WebTests
                 .SelectActivityLevel(4);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -229,21 +245,26 @@ namespace MCMAutomation.WebTests
                 .VerifyMaintainCaloriesStep01(userData, level)
                 .ClickNextBtn();
             //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
             string goal = Pages.Nutrition.textActiveGoal.Text;
             Pages.Nutrition
                 .ClickNextBtn()
             .Step03SelectTier3();
+            WaitUntil.WaitSomeInterval(1500);
             string tier = Pages.Nutrition.textActiveTier.Text;
             Pages.Nutrition
                 .ClickNextBtn();
+            WaitUntil.WaitSomeInterval(1500);
             string phase = Pages.Nutrition.textActivePhase.Text;
             Pages.Nutrition
                 .ClickNextBtn()
             .Step05SelectDiet2();
+            WaitUntil.WaitSomeInterval(1500);
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
         }
 
         [Test]
@@ -260,6 +281,8 @@ namespace MCMAutomation.WebTests
                 .SelectActivityLevel(4);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -269,26 +292,31 @@ namespace MCMAutomation.WebTests
                 .VerifyMaintainCaloriesStep01(userData, level)
                 .ClickNextBtn();
             //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
             string goal = Pages.Nutrition.textActiveGoal.Text;
             Pages.Nutrition
                 .ClickNextBtn();
+            WaitUntil.WaitSomeInterval(1500);
             string tier = Pages.Nutrition.textActiveTier.Text;
             Pages.Nutrition
                 .ClickNextBtn()
             .Step04SelectPhase2();
+            WaitUntil.WaitSomeInterval(1500);
             string phase = Pages.Nutrition.textActivePhase.Text;
             Pages.Nutrition
                 .ClickNextBtn()
             .Step05SelectDiet3();
+            WaitUntil.WaitSomeInterval(1500);
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
         }
 
         [Test]
 
-        public void VerifyCaloriesForBuildTier1Phase3()
+        public void VerifyCaloriesForBuildTier1Phase1()
         {
             Pages.Login
                 .GetUserLoginForTdee(Credentials.login, Credentials.password);
@@ -300,6 +328,8 @@ namespace MCMAutomation.WebTests
                 .SelectActivityLevel(4);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -309,22 +339,27 @@ namespace MCMAutomation.WebTests
                 .VerifyMaintainCaloriesStep01(userData, level)
                 .ClickNextBtn()
                 .Step02SelectBuild();
+            WaitUntil.WaitSomeInterval(1500);
             string goal = Pages.Nutrition.textActiveGoal.Text;
             Pages.Nutrition
                 .ClickNextBtn();
             //.Step03SelectTier1();
+            WaitUntil.WaitSomeInterval(1500);
             string tier = Pages.Nutrition.textActiveTier.Text;
             Pages.Nutrition
-                .ClickNextBtn()
-                .Step04SelectPhase3();
+                .ClickNextBtn();
+            //.Step04SelectPhase3();
+            WaitUntil.WaitSomeInterval(1500);
             string phase = Pages.Nutrition.textActivePhase.Text;
             Pages.Nutrition
                 .ClickNextBtn();
             //.Step05SelectDiet1();
+            WaitUntil.WaitSomeInterval(1500);
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
         }
 
         [Test]
@@ -341,6 +376,8 @@ namespace MCMAutomation.WebTests
                 .SelectActivityLevel(4);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -350,22 +387,27 @@ namespace MCMAutomation.WebTests
                 .VerifyMaintainCaloriesStep01(userData, level)
                 .ClickNextBtn()
                 .Step02SelectBuild();
+            WaitUntil.WaitSomeInterval(1500);
             string goal = Pages.Nutrition.textActiveGoal.Text;
             Pages.Nutrition
                 .ClickNextBtn()
                 .Step03SelectTier3();
+            WaitUntil.WaitSomeInterval(1500);
             string tier = Pages.Nutrition.textActiveTier.Text;
             Pages.Nutrition
                 .ClickNextBtn()
                 .Step04SelectPhase2();
+            WaitUntil.WaitSomeInterval(1500);
             string phase = Pages.Nutrition.textActivePhase.Text;
             Pages.Nutrition
                 .ClickNextBtn()
                 .Step05SelectDiet2();
+            WaitUntil.WaitSomeInterval(1500);
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
         }
 
         [Test]
@@ -382,6 +424,8 @@ namespace MCMAutomation.WebTests
                 .SelectActivityLevel(4);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -391,22 +435,27 @@ namespace MCMAutomation.WebTests
                 .VerifyMaintainCaloriesStep01(userData, level)
                 .ClickNextBtn()
                 .Step02SelectBuild();
+            WaitUntil.WaitSomeInterval(1500);
             string goal = Pages.Nutrition.textActiveGoal.Text;
             Pages.Nutrition
                 .ClickNextBtn()
                 .Step03SelectTier2();
+            WaitUntil.WaitSomeInterval(1500);
             string tier = Pages.Nutrition.textActiveTier.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-                //.Step04SelectPhase3();
+            //.Step04SelectPhase3();
+            WaitUntil.WaitSomeInterval(1500);
             string phase = Pages.Nutrition.textActivePhase.Text;
             Pages.Nutrition
                 .ClickNextBtn()
                 .Step05SelectDiet3();
+            WaitUntil.WaitSomeInterval(1500);
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
         }
     }
 }

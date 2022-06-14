@@ -78,7 +78,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #region Step02
 
-        public Nutrition Step02SelectBuild()
+        public Nutrition Step02SelectCut()
         {
             WaitUntil.CustomElevemtIsVisible(btnCut);
             btnCut.Click();
@@ -92,7 +92,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public Nutrition Step02SelectBuld()
+        public Nutrition Step02SelectBuild()
         {
             WaitUntil.CustomElevemtIsVisible(btnBuild);
             btnBuild.Click();
