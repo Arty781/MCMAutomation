@@ -68,4 +68,45 @@ namespace MCMAutomation.Helpers
             "Athlete (2x per day)"
         };
     }
+
+    public class Goals
+    {
+        public static string[] goal =
+        {
+            "CUT",
+            "MAINTAIN",
+            "BUILD",
+            "REVERSE"
+        };
+    }
+
+    public class Tiers
+    {
+        public static string[] tier =
+        {
+            "TIER 1",
+            "TIER 2",
+            "TIER 3"
+        };
+    }
+
+    public class Phases
+    {
+        public static string[] phase =
+        {
+            "Phase 1",
+            "Phase 2",
+            "Phase 3"
+        };
+    }
+
+    public class Diets
+    {
+        public static string[] diet =
+        {
+            "LOW FAT / HIGH CARB",
+            "MODERATE FAT / MODERATE CARB",
+            "HIGH FAT / LOW CARB"
+        };
+    }
 }

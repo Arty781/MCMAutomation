@@ -144,7 +144,19 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #endregion
 
-        
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'active')]/p")]
+        public IWebElement textActiveGoal;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'active')]/div/p")]
+        public IWebElement textActiveTier;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'active')]/div/p")]
+        public IWebElement textActivePhase;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'active')]/div/p")]
+        public IWebElement textActiveDiet;
+
+
 
 
     }
