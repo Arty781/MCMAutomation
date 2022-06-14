@@ -20,7 +20,7 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//button[@type='submit']")]
         public IWebElement signInBtn;
 
-        [FindsBy(How = How.XPath, Using = "//button[@class='sidebar-btn']")]
+        [FindsBy(How = How.XPath, Using = "//div[@class='sidebar-btn']")]
         public IWebElement adminLogOutBtn;
 
         [FindsBy(How = How.XPath, Using = "//h3[@class='sidebar-info_name']")]

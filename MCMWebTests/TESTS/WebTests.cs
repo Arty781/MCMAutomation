@@ -56,7 +56,7 @@ namespace MCMAutomation.WebTests
         public void CompleteMembershipsWithData()
         {
             
-            List<User> email = AppDbContext.GetUserData();
+           string[] email = AppDbContext.GetUserData();
             
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
@@ -67,13 +67,395 @@ namespace MCMAutomation.WebTests
                 .SelectPhase()
                 .SelectWeekNumber()
                 .OpenWorkouts()
-                .EnterWeight()
-                .EnterReps()
-                .MarkCheckboxes()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn();
+                .AddWeight();
             
         }
 
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void CheckTdeeForPP1()
+        {
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(Credentials.login);
+
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membershipData);
+            Pages.Login
+                .GetAdminLogout();
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            //Pages.Sidebar
+            //    .Open()
+            //    .SelectPhase()
+            //    .SelectWeekNumber()
+            //    .OpenWorkouts()
+            //    .AddWeight();
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForCutTier1Phase1()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn();
+            //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step03SelectTier1();
+            WaitUntil.WaitSomeInterval(1500);
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step04SelectPhase1();
+            WaitUntil.WaitSomeInterval(1500);
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step05SelectDiet1();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForCutTier2Phase3()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn();
+            //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step03SelectTier2();
+            WaitUntil.WaitSomeInterval(1500);
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step04SelectPhase3();
+            WaitUntil.WaitSomeInterval(1500);
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step05SelectDiet2();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+        }
+
+
+        [Test]
+
+        public void VerifyCaloriesForCutTier3Phase1()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn();
+            //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step03SelectTier3();
+            WaitUntil.WaitSomeInterval(1500);
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            WaitUntil.WaitSomeInterval(1500);
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step05SelectDiet2();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForCutTier1Phase2()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn();
+            //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            WaitUntil.WaitSomeInterval(1500);
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step04SelectPhase2();
+            WaitUntil.WaitSomeInterval(1500);
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step05SelectDiet3();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForBuildTier1Phase1()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn()
+                .Step02SelectBuild();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step03SelectTier1();
+            WaitUntil.WaitSomeInterval(1500);
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step04SelectPhase3();
+            WaitUntil.WaitSomeInterval(1500);
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step05SelectDiet1();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForBuildTier3Phase2()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn()
+                .Step02SelectBuild();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier3();
+            WaitUntil.WaitSomeInterval(1500);
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase2();
+            WaitUntil.WaitSomeInterval(1500);
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet2();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+        }
+
+        [Test]
+
+        public void VerifyCaloriesForBuildTier2Phase1()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] userData = AppDbContext.GetUserData();
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string selectedGender = Pages.Nutrition.selectedgender.Text;
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level)
+                .ClickNextBtn()
+                .Step02SelectBuild();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier2();
+            WaitUntil.WaitSomeInterval(1500);
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step04SelectPhase3();
+            WaitUntil.WaitSomeInterval(1500);
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet3();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
+                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+        }
     }
 }

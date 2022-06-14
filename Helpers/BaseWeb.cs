@@ -16,7 +16,7 @@ namespace MCMAutomation.Helpers
         public static void OneTimeSetUp()
         {
             AllureConfigFilesHelper.CreateBatFile();
-            Browser.Initialize();
+            
         } 
 
 

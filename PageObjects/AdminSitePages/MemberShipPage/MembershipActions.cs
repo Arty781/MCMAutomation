@@ -17,8 +17,10 @@ namespace MCMAutomation.PageObjects
 
         public MembershipAdmin ClickCreateBtn()
         {
+           
             WaitUntil.VisibilityOfAllElementsLocatedBy(_CreateBtn);
             Button.Click(membershipCreateBtn);
+           
             return this;
         }
 
@@ -134,7 +136,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Click \"Add Workout\" button")]
         public MembershipAdmin ClickAddWorkoutBtn()
         {
-            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.WaitSomeInterval(1000);
             WaitUntil.CustomElevemtIsVisible(btnProgramAddWorkoutsElem);
             var listPrograms = btnProgramAddWorkouts.Where(x => x.Displayed).ToList();
             Button.Click(listPrograms[0]);
@@ -168,7 +170,7 @@ namespace MCMAutomation.PageObjects
                         InputBox.Element(inputWorkoutName, 10, "Wednesday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
                         //Button.Click(weekDayBtn);
 
-                        for (int y = 0; y < (i); ++y)
+                        for (int y = 0; y < i; ++y)
                         {
 
                             btnWeekDayElem.SendKeys(Keys.ArrowDown);
@@ -183,7 +185,7 @@ namespace MCMAutomation.PageObjects
                         InputBox.Element(inputWorkoutName, 10, "Friday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
                         //Button.Click(weekDayBtn);
 
-                        for (int y = 0; y < (i); ++y)
+                        for (int y = 0; y < i; ++y)
                         {
 
                             btnWeekDayElem.SendKeys(Keys.ArrowDown);
@@ -210,7 +212,7 @@ namespace MCMAutomation.PageObjects
             foreach (string programName in programNames)
             {
                 InputBox.CbbxElement(cbbxPhaseName, 10, programName + Keys.Enter);
-                WaitUntil.WaitSomeInterval(2);
+                WaitUntil.WaitSomeInterval(1000);
                 WaitUntil.CustomElevemtIsVisible(btnAddExercisesElement);
                 var listWorkouts = btnAddExercises.Where(x => x.Displayed).ToList();
 

@@ -20,7 +20,7 @@ namespace MCMAutomation.PageObjects
             searchInput.SendKeys(email + Keys.Enter);
             
 
-            WaitUntil.WaitSomeInterval(10);
+            WaitUntil.WaitSomeInterval(15000);
             return this;
         }
 
@@ -38,6 +38,25 @@ namespace MCMAutomation.PageObjects
 
             selectUserActiveMembershipCbbx.SendKeys(membershipName[0] + Keys.Enter);
             WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
+
+            return this;
+        }
+
+        [AllureStep("Delete membership from User")]
+
+        public MembershipAdmin DeleteMemebershipFromUser()
+        {
+            editBtn.Click();
+            WaitUntil.CustomElevemtIsVisible(emailInput);
+
+            WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
+            var listAddedmemberships = btnDeleteAddedMemberships.Where(x=>x.Displayed).ToList();
+
+            foreach (var membership in listAddedmemberships)
+            {
+                membership.Click();
+            }
+
 
             return this;
         }

@@ -22,7 +22,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Program names")]
         public string[] GetProgramNames()
         {
-            WaitUntil.WaitSomeInterval(3);
+            WaitUntil.WaitSomeInterval(1000);
             var list = new List<string>();
             var programNames = nameProgramTitle.Where(x => x.Displayed).ToList();
             for(int i=0; i<programNames.Count; i++)
@@ -38,7 +38,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Workout names")]
         public string[] GetWorkoutNames()
         {
-            WaitUntil.WaitSomeInterval(3);
+            WaitUntil.WaitSomeInterval(1000);
             var list = new List<string>();
             var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).ToList();
             for (int i = 0; i < workoutNames.Count; i++)
@@ -54,8 +54,8 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify displaying membership name")]
         public MembershipAdmin VerifyMembershipName(string[] membership)
         {
-            TextBox.GetText(membershipTitle);
-            if (membership[0] != membershipTitle.Text)
+            TextBox.GetText(membershipTitle[0]);
+            if (membership[0] != membershipTitle[0].Text)
             {
                 Console.WriteLine("Membership \"" + membership[0] + "\" is not found");
             }

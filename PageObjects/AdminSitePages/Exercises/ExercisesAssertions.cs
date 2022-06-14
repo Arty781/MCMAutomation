@@ -16,7 +16,7 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin VerifyExerciseIsCreated(string exercise)
         {
-            WaitUntil.WaitSomeInterval(5);
+            WaitUntil.WaitSomeInterval(2500);
             InputBox.Element(fieldSearchExercise, 5, exercise);
 
             var exerciseList = nameExerciseTitle.Where(x => x.Displayed).ToList();
@@ -30,7 +30,7 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin VerifyExerciseIsRemoved()
         {
-            WaitUntil.WaitSomeInterval(3);
+            WaitUntil.WaitSomeInterval(1000);
             string[] status = AppDbContext.GetExerciseStatus();
             Assert.That("True" == status[0]);
 

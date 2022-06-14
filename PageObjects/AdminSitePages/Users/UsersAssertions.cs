@@ -16,7 +16,7 @@ namespace MCMAutomation.PageObjects
 
         public MembershipAdmin VerifyDisplayingOfUser(string email)
         {
-            WaitUntil.WaitSomeInterval(3);
+            WaitUntil.WaitSomeInterval(1000);
             Assert.AreEqual(email, emailRow.GetAttribute("title"));
             return this;
         }

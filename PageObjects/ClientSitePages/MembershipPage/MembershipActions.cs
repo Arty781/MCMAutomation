@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MCMAutomation.PageObjects
+namespace MCMAutomation.PageObjects.ClientSitePages
 {
     public partial class MembershipUser
     {
@@ -27,7 +27,7 @@ namespace MCMAutomation.PageObjects
         public MembershipUser OpenMembership()
         {
             
-            Button.Click(programTitle, 20);
+            Button.Click(programTitle);
 
             return this;
         }
@@ -57,7 +57,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Select Week number")]
         public MembershipUser SelectWeekNumber()
         {
-            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.WaitSomeInterval(1000);
             WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
 
             weekSelectorInputEx.SendKeys(Keys.ArrowDown+Keys.Enter);
@@ -75,68 +75,65 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-        [AllureStep("Enter Weight")]
-        public MembershipUser EnterWeight()
+        [AllureStep("Add Weight")]
+        public MembershipUser AddWeight()
         {
-            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.WaitSomeInterval(1000);
             WaitUntil.CustomElevemtIsVisible(weightInputElem);
-            var weightList1 = weightInput.Where(x => x.Displayed).ToList();
-            for (int w = 0; w < weightList1.Count; w++)
+
+            var weightList = weightInput.Where(x => x.Displayed).ToList();
+            var repsList = repsInput.Where(x => x.Displayed).ToList();
+            var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
+            for (int i=0; i<weightList.Count; i++)
             {
-
-                WaitUntil.CustomElevemtIsVisible(weightInputElem);
-                var weightList = weightInput.Where(x => x.Displayed).ToList();
-                InputBox.Element(weightList[w], 10, RandomHelper.RandomNumber(150));
+                InputBox.Element(weightList[i], 10, RandomHelper.RandomNumber(150));
+                InputBox.Element(repsList[i], 10, RandomHelper.RandomNumber(10));
+                checkboxesList[i].Click();
+                WaitUntil.WaitSomeInterval(500);
             }
-
-
+               
             return this;
         }
 
-        [AllureStep("Enter Reps")]
-        public MembershipUser EnterReps()
-        {
-            WaitUntil.WaitSomeInterval(2);
-            WaitUntil.CustomElevemtIsVisible(repsInputElem);
-            var repsList1 = repsInput.Where(x => x.Displayed).ToList();
-            for (int w = 0; w < repsList1.Count; w++)
-            {
+        //[AllureStep("Enter Reps")]
+        //public MembershipUser EnterReps()
+        //{
+        //    WaitUntil.WaitSomeInterval(2);
+        //    WaitUntil.CustomElevemtIsVisible(repsInputElem);
+
+        //    var repsList = repsInput.Where(x => x.Displayed).ToList();
+        //    foreach(var reps in repsList)
+        //    {
+        //        InputBox.Element(reps, 10, RandomHelper.RandomNumber(10));
+        //    }
+            
+        //    return this;
+        //}
+
+        //[AllureStep("Mark Checkboxes")]
+        //public MembershipUser MarkCheckboxes()
+        //{
+        //    WaitUntil.WaitSomeInterval(2);
+        //    WaitUntil.CustomElevemtIsVisible(checkboxInputElem);
+
+        //    var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
+        //    foreach( var checkbox in checkboxesList)
+        //    {
+        //        checkbox.Click();
+        //    }
                 
-                WaitUntil.CustomElevemtIsVisible(repsInputElem);
-                var repsList = repsInput.Where(x => x.Displayed).ToList();
-                InputBox.Element(repsList[w], 10, RandomHelper.RandomNumber(10));
-            }
-
-
-            return this;
-        }
-
-        [AllureStep("Mark Checkboxes")]
-        public MembershipUser MarkCheckboxes()
-        {
-            WaitUntil.WaitSomeInterval(2);
-            WaitUntil.CustomElevemtIsVisible(checkboxInputElem);
-            var checkboxesList1 = checkboxInput.Where(x => x.Enabled).ToList();
-            for (int w = 0; w < checkboxesList1.Count; w++)
-            {
-                
-                WaitUntil.CustomElevemtIsVisible(checkboxInputElem);
-                var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
-                checkboxesList[w].Click();
-            }
-
-            return this;
-        }
+        //    return this;
+        //}
 
         [AllureStep("Enter Notes")]
         public MembershipUser EnterNotes()
         {
-            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.WaitSomeInterval(1000);
             WaitUntil.CustomElevemtIsVisible(openNotesBtnelem);
             var notesList1 = openNotesBtn.Where(x => x.Enabled).ToList();
             for (int w = 0; w < notesList1.Count; w++)
             {
-                WaitUntil.WaitSomeInterval(2);
+                WaitUntil.WaitSomeInterval(1000);
                 WaitUntil.CustomElevemtIsVisible(openNotesBtnelem);
                 var notesList = openNotesBtn.Where(x => x.Enabled).ToList();
                 openNotesBtnelem.Click();

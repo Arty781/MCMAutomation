@@ -13,7 +13,7 @@ namespace MCMAutomation.Helpers
 
     public class Credentials
     {
-        public const string login = "qatester91311@xitroo.com";
+        public const string login = "qatester91323@xitroo.com";
         public const string password = "Qaz11111!";
 
         public const string loginAdmin = "admin@coachmarkcarroll.com";
@@ -54,6 +54,67 @@ namespace MCMAutomation.Helpers
                 "65* DB Arnold Press - 1 & 1/4 Reps",
                 "65* Incline DB Bench Press - Neutral",
                 "65* Incline DB Bench Press - Pronated"
+        };
+    }
+
+    public class ActivityLevel
+    {
+        public static string[] level =
+        {
+            "Sedentary (office job)",
+            "Light Exercise (1-2 days/week)",
+            "Moderate Exercise (3-5 days/week)",
+            "Heavy Exercise (6-7 days/week)",
+            "Athlete (2x per day)"
+        };
+    }
+
+    public class Goals
+    {
+        public static string[] goal =
+        {
+            "CUT",
+            "MAINTAIN",
+            "BUILD",
+            "REVERSE"
+        };
+    }
+
+    public class Tiers
+    {
+        public static string[] tier =
+        {
+            "TIER 1",
+            "TIER 2",
+            "TIER 3"
+        };
+    }
+
+    public class Phases
+    {
+        public static string[] phase =
+        {
+            "Phase 1",
+            "Phase 2",
+            "Phase 3"
+        };
+    }
+
+    public class Diets
+    {
+        public static string[] diet =
+        {
+            "LOW FAT / HIGH CARB",
+            "MODERATE FAT / MODERATE CARB",
+            "HIGH FAT / LOW CARB"
+        };
+    }
+
+    public class Memberships
+    {
+        public static string[] membership =
+        {
+            "PP-1"
         };
     }
 }

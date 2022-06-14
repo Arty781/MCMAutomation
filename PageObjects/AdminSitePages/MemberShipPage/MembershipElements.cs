@@ -16,7 +16,7 @@ namespace MCMAutomation.PageObjects
 
         #region Membership Page
 
-        public IWebElement CreateBtn => Browser._Driver.FindElement(_CreateBtn);
+        public IWebElement btnCreate => Browser._Driver.FindElement(_CreateBtn);
         public readonly By _CreateBtn = By.XPath("//a[text()='Create Membership']");
 
         [FindsBy(How = How.XPath, Using = "//a[text()='Create Membership']")]
@@ -29,7 +29,10 @@ namespace MCMAutomation.PageObjects
         public IWebElement membershipSearchBtn;
 
         [FindsBy(How = How.XPath, Using = "//h2[@class='membership-item_title']")]
-        public IWebElement membershipTitle;
+        public IList<IWebElement> membershipTitle;
+
+        [FindsBy(How = How.XPath, Using = "//h2[@class='membership-item_title']")]
+        public IWebElement membershipTitleElem;
 
         [FindsBy(How = How.XPath, Using = "//div[@class='membership-item_add']")]
         public IWebElement membershipAddProgramsBtn;
