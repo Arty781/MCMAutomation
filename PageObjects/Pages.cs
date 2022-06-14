@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MCMAutomation.PageObjects.ClientSitePages;
 
 namespace MCMAutomation.PageObjects
 {
@@ -30,6 +31,7 @@ namespace MCMAutomation.PageObjects
         public static PopUp PopUp => GetPage<PopUp>();
         public static SignUpUser SignUpUser => GetPage<SignUpUser>();
         public static ExercisesAdmin ExercisesAdmin => GetPage<ExercisesAdmin>();
+        public static Nutrition Nutrition => GetPage<Nutrition>();
 
     }
 }

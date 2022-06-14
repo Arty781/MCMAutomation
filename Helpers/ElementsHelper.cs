@@ -9,12 +9,17 @@ namespace MCMAutomation.Helpers
 {
     public class Button
     {
-        public static void Click(IWebElement element, int seconds = 10)
+        public static void Click(IWebElement element)
         {
-            WaitUntil.WaitSomeInterval(2);
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
+            try
+            {
+                WaitUntil.WaitSomeInterval(1000);
+                WaitUntil.CustomElevemtIsVisible(element, 20);
 
-            element.Click();
+                element.Click();
+            }
+            catch (InvalidElementStateException) { }
+            
         }
 
         
@@ -69,7 +74,7 @@ namespace MCMAutomation.Helpers
     {
         public static void ClickRemoveExerciseBtn(string name, int seconds = 10)
         {
-            WaitUntil.WaitSomeInterval(5);
+            WaitUntil.WaitSomeInterval(2500);
 
             IWebElement btnRemove = Browser._Driver.FindElement(By.XPath($"//p[text()='{name}']/parent::div/following::div/div[@class='delete']"));
             WaitUntil.CustomElevemtIsVisible(btnRemove, seconds);

@@ -254,46 +254,6 @@ namespace MCMAutomation.AdminSiteTests
                 .ClosePopUp();
         }
 
-
-        [Test]
-        public void AddProgramsWorkoutsAndExercises()
-        {
-            
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenMemberShipPage();
-
-            string[] memberName = AppDbContext.GetLastMembership();
-
-            Pages.MembershipAdmin
-                .SearchMembership(memberName)
-                .VerifyMembershipName(memberName);
-            Pages.MembershipAdmin
-                .ClickAddProgramsBtn();
-
-            string url = Browser._Driver.Url;
-
-            /*Pages.MembershipAdmin
-                .VerifyMembershipNameCbbx(memberName)
-                .CreatePrograms();*/
-           /* Pages.MembershipAdmin
-                .CreateWorkouts(url);*/
-            string[] exercise = AppDbContext.GetExercisesData();
-
-            //Pages.MembershipAdmin
-            //    .AddExercises(url, exercise);
-            
-
-            Pages.Login
-                .GetAdminLogout();
-
-        }
-
         [Test]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]

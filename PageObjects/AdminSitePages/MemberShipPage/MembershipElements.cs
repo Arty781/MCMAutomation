@@ -31,6 +31,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//h2[@class='membership-item_title']")]
         public IList<IWebElement> membershipTitle;
 
+        [FindsBy(How = How.XPath, Using = "//h2[@class='membership-item_title']")]
+        public IWebElement membershipTitleElem;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='membership-item_add']")]
         public IWebElement membershipAddProgramsBtn;
 

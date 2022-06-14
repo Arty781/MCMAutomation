@@ -40,12 +40,25 @@ namespace MCMAutomation.PageObjects
         #region User login
 
         [AllureStep("Login as user")]
-        public Login GetUserLogin(List<User> login, string password)
+        public Login GetUserLoginForTdee(string login, string password)
+        {
+           
+                InputBox.Element(loginInput, 30, login);
+                InputBox.Element(passwordInput, 30, password);
+
+                Button.Click(signInBtn);
+
+           
+            return this;
+        }
+
+        [AllureStep("Login as user")]
+        public Login GetUserLogin(string[] login, string password)
         {
             foreach (var user in login)
             {
-                string log = user.Email.ToString();
-                InputBox.Element(loginInput, 30, log);
+                
+                InputBox.Element(loginInput, 30, user);
                 InputBox.Element(passwordInput, 30, password);
                 
                 Button.Click(signInBtn);

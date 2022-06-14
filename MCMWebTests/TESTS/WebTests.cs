@@ -56,7 +56,7 @@ namespace MCMAutomation.WebTests
         public void CompleteMembershipsWithData()
         {
             
-            List<User> email = AppDbContext.GetUserData();
+           string[] email = AppDbContext.GetUserData();
             
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
@@ -69,6 +69,87 @@ namespace MCMAutomation.WebTests
                 .OpenWorkouts()
                 .AddWeight();
             
+        }
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void CheckTdeeForPP1()
+        {
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] nameMembership = AppDbContext.GetMembershipsBySKU("PP-1");
+
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(nameMembership);
+            Pages.Login
+                .GetAdminLogout();
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            //Pages.Sidebar
+            //    .Open()
+            //    .SelectPhase()
+            //    .SelectWeekNumber()
+            //    .OpenWorkouts()
+            //    .AddWeight();
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+        }
+
+        [Test]
+
+        public void test()
+        {
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+            Pages.Nutrition
+                .SelectActivityLevel(4);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+            string[] str = AppDbContext.GetUserData();
+            Pages.Nutrition
+                .ClickCalculateBtn();
+            Pages.Nutrition
+                .VerifyMaintainCalories(str, level)
+                .ClickNextBtn()
+                .Step02SelectBuld()
+                .ClickNextBtn()
+                .Step03SelectTier1()
+                .ClickNextBtn()
+                .Step04SelectPhase1()
+                .ClickNextBtn()
+                .Step05SelectDiet1()
+                .ClickNextBtn();
         }
 
     }

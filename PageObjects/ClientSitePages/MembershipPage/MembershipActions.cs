@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MCMAutomation.PageObjects
+namespace MCMAutomation.PageObjects.ClientSitePages
 {
     public partial class MembershipUser
     {
@@ -27,7 +27,7 @@ namespace MCMAutomation.PageObjects
         public MembershipUser OpenMembership()
         {
             
-            Button.Click(programTitle, 20);
+            Button.Click(programTitle);
 
             return this;
         }
@@ -57,7 +57,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Select Week number")]
         public MembershipUser SelectWeekNumber()
         {
-            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.WaitSomeInterval(1000);
             WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
 
             weekSelectorInputEx.SendKeys(Keys.ArrowDown+Keys.Enter);
@@ -78,7 +78,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Add Weight")]
         public MembershipUser AddWeight()
         {
-            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.WaitSomeInterval(1000);
             WaitUntil.CustomElevemtIsVisible(weightInputElem);
 
             var weightList = weightInput.Where(x => x.Displayed).ToList();
@@ -128,12 +128,12 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter Notes")]
         public MembershipUser EnterNotes()
         {
-            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.WaitSomeInterval(1000);
             WaitUntil.CustomElevemtIsVisible(openNotesBtnelem);
             var notesList1 = openNotesBtn.Where(x => x.Enabled).ToList();
             for (int w = 0; w < notesList1.Count; w++)
             {
-                WaitUntil.WaitSomeInterval(2);
+                WaitUntil.WaitSomeInterval(1000);
                 WaitUntil.CustomElevemtIsVisible(openNotesBtnelem);
                 var notesList = openNotesBtn.Where(x => x.Enabled).ToList();
                 openNotesBtnelem.Click();

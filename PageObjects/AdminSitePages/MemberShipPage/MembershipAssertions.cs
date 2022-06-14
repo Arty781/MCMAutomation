@@ -22,7 +22,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Program names")]
         public string[] GetProgramNames()
         {
-            WaitUntil.WaitSomeInterval(3);
+            WaitUntil.WaitSomeInterval(1000);
             var list = new List<string>();
             var programNames = nameProgramTitle.Where(x => x.Displayed).ToList();
             for(int i=0; i<programNames.Count; i++)
@@ -38,7 +38,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Workout names")]
         public string[] GetWorkoutNames()
         {
-            WaitUntil.WaitSomeInterval(3);
+            WaitUntil.WaitSomeInterval(1000);
             var list = new List<string>();
             var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).ToList();
             for (int i = 0; i < workoutNames.Count; i++)

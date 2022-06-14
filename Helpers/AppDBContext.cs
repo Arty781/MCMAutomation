@@ -56,9 +56,9 @@ namespace MCMAutomation.Helpers
             return list;
         }
 
-        public static List<User> GetUserData()
+        public static string[] GetUsersData()
         {
-            var list = new List<User>();
+            var list = new List<string>();
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) *" +
@@ -71,16 +71,14 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-                        var row = new User();
-                        row.Email = reader.GetValue(3);
-
-
-                        list.Add(row);
+                        list.Add(reader.GetValue(3).ToString());
                     }
                 }
 
             }
-            return list;
+            string[] data = list.ToArray();
+
+            return data;
         }
 
         public static string[] GetExercisesData()
@@ -113,7 +111,8 @@ namespace MCMAutomation.Helpers
 
         public static string[] GetLastMembership()
         {
-            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitle[0], 90);
+            
+            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitleElem, 90);
             var list = new List<string>();
 
             using (SqlConnection db = new(DB.GetConnectionString))
@@ -170,6 +169,65 @@ namespace MCMAutomation.Helpers
             string[] status = list.ToArray();
 
             return status;
+        }
+
+        public static string[] GetMembershipsBySKU(string SKU)
+        {
+            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitle[0], 90);
+            var list = new List<string>();
+
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(1)*" +
+                                         "FROM [Memberships] WHERE IsDeleted=0 and SKU=@SKU" +
+                                         "ORDER BY CreationDate DESC", db);
+                command.Parameters.AddWithValue("@SKU", DbType.String).Value = SKU;
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        string str = reader.GetString(2);
+
+                        list.Add(str);
+
+                    }
+                }
+
+            }
+
+            string[] nameMembership = list.ToArray();
+            return nameMembership;
+        }
+
+        public static string[] GetUserData()
+        {
+            var list = new List<string>();
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(1) *" +
+                                         "FROM [AspNetUsers] where email like 'qatester91323@xitroo.com' " +
+                                         "ORDER BY DateTime DESC", db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader.GetValue(6).ToString());
+                        list.Add(reader.GetValue(7).ToString());
+                        list.Add(reader.GetValue(8).ToString());
+                        list.Add(reader.GetValue(10).ToString());
+                    }
+                }
+
+            }
+            string[] data = list.ToArray();
+
+            return data;
         }
     }
 }
