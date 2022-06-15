@@ -142,7 +142,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[@class='last-step-content_top_block']/p[2]")]
         public IWebElement valueCalories;
 
-        [FindsBy(How = How.XPath, Using = "last-step-content_bottom_block-weight")]
+        [FindsBy(How = How.XPath, Using = "//p[@class='last-step-content_bottom_block-weight']")]
         public IList<IWebElement> valueOfProteinCarbsFat;
 
         #endregion

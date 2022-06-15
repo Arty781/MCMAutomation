@@ -48,7 +48,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 maintainCalories = Math.Round((calories * 1.9), 0, MidpointRounding.AwayFromZero);
 
             }
-            Console.WriteLine(maintainCalories);
+            Console.WriteLine($"maintain calories are \"{maintainCalories}\"");
             double caloriesWeb = int.Parse(TextBox.GetAttribute(inputCalories, "value"));
 
             Assert.AreEqual(maintainCalories, caloriesWeb);
@@ -169,16 +169,125 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 }
             }
 
-            Console.WriteLine(finishcalories);
+            
 
-            string actualCalories = valueCalories.Text;
+            var actualCalories = double.Parse(valueCalories.Text);
 
-            Assert.AreEqual(finishcalories.ToString(), actualCalories);
+            Console.WriteLine($"Expected calories are \"{finishcalories}\", actual are \"{actualCalories}\"");
+
+            Assert.IsTrue((finishcalories - actualCalories) <= 3);
 
             return this;
         }
 
-        public Nutrition VerifyProteinCarbsFats(string[] values, string goal, string tier, string SKU, string gender)
+        public double GetCaloriesStep06(double calories, string goal, string tier, string phase)
+        {
+            var finishcalories = 0.0;
+
+            if (goal == Goals.goal[0])
+            {
+                if (tier == Tiers.tier[0])
+                {
+                    if (phase == Phases.phase[0])
+                    {
+                        finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[1])
+                    {
+                        finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[2])
+                    {
+                        finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
+                    }
+                }
+
+                if (tier == Tiers.tier[1])
+                {
+                    if (phase == Phases.phase[0])
+                    {
+                        finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[1])
+                    {
+                        finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[2])
+                    {
+                        finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
+                    }
+                }
+
+                if (tier == Tiers.tier[2])
+                {
+                    if (phase == Phases.phase[0])
+                    {
+                        finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[1])
+                    {
+                        finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[2])
+                    {
+                        finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
+                    }
+                }
+            }
+
+            if (goal == Goals.goal[1])
+            {
+                finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
+
+            }
+
+            if (goal == Goals.goal[2])
+            {
+                if (tier == Tiers.tier[0])
+                {
+                    if (phase == Phases.phase[0])
+                    {
+                        finishcalories = Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero);
+                    }
+                }
+
+                if (tier == Tiers.tier[1])
+                {
+                    if (phase == Phases.phase[0])
+                    {
+                        finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[1])
+                    {
+                        finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[2])
+                    {
+                        finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
+                    }
+                }
+
+                if (tier == Tiers.tier[2])
+                {
+                    if (phase == Phases.phase[0])
+                    {
+                        finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[1])
+                    {
+                        finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
+                    }
+                    if (phase == Phases.phase[2])
+                    {
+                        finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
+                    }
+                }
+            }
+
+            return finishcalories;
+        }
+
+        public Nutrition VerifyProtein(string[] values, string goal, string tier, string SKU, string gender)
         {
             var weight = double.Parse(values[1]);
             var bodyFat = double.Parse(values[3]);
@@ -207,13 +316,140 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 {
                     protein = weight * 2;
                 }
-                else if (tier == Tiers.tier[0])
+                else if (tier == Tiers.tier[2])
                 {
                     protein = weight * 2.2;
                 }
             }
             protein = Math.Round(protein , 0, MidpointRounding.AwayFromZero);
+
+            var actualProtein = valueOfProteinCarbsFat[0].Text;
+            actualProtein = actualProtein.Trim(new char[] { 'g' });
+
+            Console.WriteLine($"Expected protein is \"{protein}\", actual is \"{actualProtein}\"");
+            Assert.AreEqual(protein.ToString(), actualProtein);
+
+            return this;
+
+        }
+
+        public double GetProtein(string[] values, string goal, string tier, string SKU, string gender)
+        {
+            var weight = double.Parse(values[1]);
+            var bodyFat = double.Parse(values[3]);
+            var protein = 0.0;
+
+            if (goal == Goals.goal[1] || goal == Goals.goal[2] || goal == Goals.goal[3])
+            {
+                protein = weight * 2;
+            }
+            else
+            {
+                if (
+                    (gender == "Female" && bodyFat > 35) ||
+                    (gender == "Male" && bodyFat > 20)
+                )
+                {
+                    protein = weight * 1.6;
+                }
+                else if (SKU == "PP-1")
+                {
+                    protein = weight * 2;
+                }
+                else if (tier == Tiers.tier[0])
+                {
+                    protein = weight * 2;
+                }
+                else if (tier == Tiers.tier[1])
+                {
+                    protein = weight * 2;
+                }
+                else if (tier == Tiers.tier[2])
+                {
+                    protein = weight * 2.2;
+                }
+            }
+            protein = Math.Round(protein, 0, MidpointRounding.AwayFromZero);
+
+            return protein;
+        }
+
+        public Nutrition VerifyFat(string[] values, string diet)
+        {
+            var weight = double.Parse(values[1]);
+            var fat = 0.0;
+
+            if (diet == Diets.diet[0])
+            {
+                fat = weight * 0.8;
+            }
+            else if (diet == Diets.diet[1])
+            {
+                fat = weight * 1;
+            }
+            else if (diet == Diets.diet[2])
+            {
+                fat = weight * 1.2;
+            }
+            fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
+
+            var actualFat = valueOfProteinCarbsFat[2].Text;
+            actualFat = actualFat.Trim(new char[] { 'g' });
+
+            Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");
+            Assert.AreEqual(fat.ToString(), actualFat);
+
             
+
+            return this;
+        }
+
+        public double GetFat(string[] values, string diet)
+        {
+            var weight = double.Parse(values[1]);
+            var fat = 0.0;
+
+            if (diet == Diets.diet[0])
+            {
+                fat = weight * 0.8;
+            }
+            else if (diet == Diets.diet[1])
+            {
+                fat = weight * 1;
+            }
+            else if (diet == Diets.diet[2])
+            {
+                fat = weight * 1.2;
+            }
+            fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
+
+            return fat;
+        }
+
+
+        public Nutrition VerifyCarbs(double protein, double fat, double actualCalories)
+        {
+         
+            var remainderCarbs = actualCalories - protein * 4 - fat * 9;
+            var carbs = remainderCarbs / 4;
+            carbs = Math.Round(carbs, 0, MidpointRounding.AwayFromZero);
+            if (carbs < 30)
+            {
+                carbs = 30;
+                remainderCarbs = actualCalories - protein * 4 - carbs * 4;
+                fat = remainderCarbs / 9;
+                fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
+
+                var adjustedCals = (carbs * 4) + (protein * 4) + (fat * 9);
+            }
+
+            var actualCarbs = valueOfProteinCarbsFat[1].Text;
+            actualCarbs = actualCarbs.Trim(new char[] { 'g' });
+
+            Console.WriteLine($"Expected Carbs is \"{carbs}\", actual is \"{actualCarbs}\"");
+            Assert.AreEqual(carbs.ToString(), actualCarbs);
+
+
 
             return this;
         }

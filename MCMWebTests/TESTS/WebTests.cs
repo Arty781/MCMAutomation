@@ -134,7 +134,7 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenNutritionPage();
             Pages.Nutrition
-                .SelectActivityLevel(4);
+                .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
@@ -167,8 +167,22 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
-                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetFat(userData, diet);
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories);
         }
 
         [Test]
@@ -182,7 +196,7 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenNutritionPage();
             Pages.Nutrition
-                .SelectActivityLevel(4);
+                .SelectActivityLevel(1);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
@@ -215,8 +229,22 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
-                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetFat(userData, diet);
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories);
         }
 
 
@@ -231,7 +259,7 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenNutritionPage();
             Pages.Nutrition
-                .SelectActivityLevel(4);
+                .SelectActivityLevel(2);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
@@ -263,8 +291,22 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
-                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetFat(userData, diet);
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories);
         }
 
         [Test]
@@ -278,7 +320,7 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenNutritionPage();
             Pages.Nutrition
-                .SelectActivityLevel(4);
+                .SelectActivityLevel(3);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
@@ -310,8 +352,22 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
-                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetFat(userData, diet);
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories);
         }
 
         [Test]
@@ -358,8 +414,22 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
-                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetFat(userData, diet);
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories);
         }
 
         [Test]
@@ -373,7 +443,7 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenNutritionPage();
             Pages.Nutrition
-                .SelectActivityLevel(4);
+                .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
@@ -406,8 +476,22 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
-                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetFat(userData, diet);
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories);
         }
 
         [Test]
@@ -421,7 +505,7 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenNutritionPage();
             Pages.Nutrition
-                .SelectActivityLevel(4);
+                .SelectActivityLevel(1);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
             string[] userData = AppDbContext.GetUserData();
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
@@ -453,9 +537,23 @@ namespace MCMAutomation.WebTests
             WaitUntil.WaitSomeInterval(1500);
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
-                .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase)
-                .VerifyProteinCarbsFats(userData, goal, tier, membershipData[1], selectedGender);
+                 .ClickNextBtn()
+                 .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetFat(userData, diet);
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories);
         }
     }
 }
