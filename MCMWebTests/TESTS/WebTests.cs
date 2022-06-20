@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace MCMAutomation.WebTests
 {
@@ -17,6 +19,7 @@ namespace MCMAutomation.WebTests
     [AllureNUnit]
     public class WebTests : TestBaseWeb
     {
+        #region Register
 
         [Test]
         [AllureTag("Regression")]
@@ -45,6 +48,10 @@ namespace MCMAutomation.WebTests
         }
 
 
+        #endregion
+
+        #region Complete workouts
+
         [Test]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
@@ -56,7 +63,7 @@ namespace MCMAutomation.WebTests
         public void CompleteMembershipsWithData()
         {
             
-           string[] email = AppDbContext.GetUserData();
+           string[] email = AppDbContext.GetUsersData();
             
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
@@ -67,9 +74,14 @@ namespace MCMAutomation.WebTests
                 .SelectPhase()
                 .SelectWeekNumber()
                 .OpenWorkouts()
-                .AddWeight();
+                .AddWeight()
+                .ClickCompleteWorkoutBtn();
             
         }
+
+
+        #endregion
+
 
         [Test]
         [AllureTag("Regression")]
@@ -79,41 +91,126 @@ namespace MCMAutomation.WebTests
         [AllureSuite("Web")]
         [AllureSubSuite("Memberships")]
 
-        public void CheckTdeeForPP1()
+        public void CheckTdeeForPP1ForFemale()
         {
+            #region AdminActions
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
 
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(Credentials.login);
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
 
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membershipData);
+                .EditUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
+            #endregion
+
             Pages.Login
                 .GetUserLoginForTdee(Credentials.login, Credentials.password);
-            Pages.PopUp
-                .ClosePopUp();
-            //Pages.Sidebar
-            //    .Open()
-            //    .SelectPhase()
-            //    .SelectWeekNumber()
-            //    .OpenWorkouts()
-            //    .AddWeight();
+            Pages.Sidebar
+                .OpenNutritionPage();
+
+            #region Select Activity lvl
+            Pages.Nutrition
+                .SelectActivityLevel(0);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectImperial(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalPpOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .ClickNextBtn();
+            //.Step02SelectCut();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            //.Step03SelectTier1();
+            //WaitUntil.WaitSomeInterval(1500);
+            //string tier = Pages.Nutrition.textActiveTier.Text;
+            //Pages.Nutrition
+            //    .ClickNextBtn();
+            ////.Step04SelectPhase1();
+            //WaitUntil.WaitSomeInterval(1500);
+            //string phase = Pages.Nutrition.textActivePhase.Text;
+            //Pages.Nutrition
+            //    .ClickNextBtn();
+            //.Step05SelectDiet1();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetFat(userData, diet);
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories);
+
+            #region AdminActions
 
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
+
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
@@ -121,9 +218,19 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetAdminLogout();
 
+            #endregion
+
         }
 
+        #region Checks for Carbs, Fats, Proteins
+
         [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
 
         public void VerifyCaloriesForCutTier1Phase1()
         {
@@ -133,19 +240,51 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
+            #region Select Activity lvl
             Pages.Nutrition
                 .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData();
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string selectedGender = Pages.Nutrition.selectedgender.Text;
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectImperial(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
             Pages.Nutrition
                 .ClickCalculateBtn();
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn();
             //.Step02SelectCut();
             WaitUntil.WaitSomeInterval(1500);
@@ -167,9 +306,9 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
             Pages.Nutrition
             .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
@@ -186,6 +325,12 @@ namespace MCMAutomation.WebTests
         }
 
         [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
 
         public void VerifyCaloriesForCutTier2Phase3()
         {
@@ -195,19 +340,51 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
+            #region Select Activity lvl
             Pages.Nutrition
-                .SelectActivityLevel(1);
+                .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData();
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string selectedGender = Pages.Nutrition.selectedgender.Text;
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectImperial(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
             Pages.Nutrition
                 .ClickCalculateBtn();
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn();
             //.Step02SelectCut();
             WaitUntil.WaitSomeInterval(1500);
@@ -229,9 +406,9 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
             Pages.Nutrition
             .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
@@ -249,6 +426,12 @@ namespace MCMAutomation.WebTests
 
 
         [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
 
         public void VerifyCaloriesForCutTier3Phase1()
         {
@@ -258,19 +441,51 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
+            #region Select Activity lvl
             Pages.Nutrition
-                .SelectActivityLevel(2);
+                .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData();
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string selectedGender = Pages.Nutrition.selectedgender.Text;
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectImperial(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
             Pages.Nutrition
                 .ClickCalculateBtn();
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn();
             //.Step02SelectCut();
             WaitUntil.WaitSomeInterval(1500);
@@ -291,9 +506,9 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
             Pages.Nutrition
             .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
@@ -310,6 +525,12 @@ namespace MCMAutomation.WebTests
         }
 
         [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
 
         public void VerifyCaloriesForCutTier1Phase2()
         {
@@ -319,19 +540,51 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
+            #region Select Activity lvl
             Pages.Nutrition
-                .SelectActivityLevel(3);
+                .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData();
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string selectedGender = Pages.Nutrition.selectedgender.Text;
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectImperial(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
             Pages.Nutrition
                 .ClickCalculateBtn();
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn();
             //.Step02SelectCut();
             WaitUntil.WaitSomeInterval(1500);
@@ -352,9 +605,9 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
             Pages.Nutrition
             .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
@@ -371,6 +624,12 @@ namespace MCMAutomation.WebTests
         }
 
         [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
 
         public void VerifyCaloriesForBuildTier1Phase1()
         {
@@ -380,19 +639,51 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
+            #region Select Activity lvl
             Pages.Nutrition
-                .SelectActivityLevel(4);
+                .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData();
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string selectedGender = Pages.Nutrition.selectedgender.Text;
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectImperial(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
             Pages.Nutrition
                 .ClickCalculateBtn();
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn()
                 .Step02SelectBuild();
             WaitUntil.WaitSomeInterval(1500);
@@ -414,9 +705,9 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
             Pages.Nutrition
             .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
@@ -433,6 +724,12 @@ namespace MCMAutomation.WebTests
         }
 
         [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
 
         public void VerifyCaloriesForBuildTier3Phase2()
         {
@@ -442,19 +739,51 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
+            #region Select Activity lvl
             Pages.Nutrition
                 .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData();
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string selectedGender = Pages.Nutrition.selectedgender.Text;
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectImperial(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
             Pages.Nutrition
                 .ClickCalculateBtn();
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn()
                 .Step02SelectBuild();
             WaitUntil.WaitSomeInterval(1500);
@@ -476,9 +805,9 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
             Pages.Nutrition
             .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
@@ -495,6 +824,12 @@ namespace MCMAutomation.WebTests
         }
 
         [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
 
         public void VerifyCaloriesForBuildTier2Phase1()
         {
@@ -504,19 +839,51 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
+            #region Select Activity lvl
             Pages.Nutrition
-                .SelectActivityLevel(1);
+                .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData();
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string selectedGender = Pages.Nutrition.selectedgender.Text;
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectImperial(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
             Pages.Nutrition
                 .ClickCalculateBtn();
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn()
                 .Step02SelectBuild();
             WaitUntil.WaitSomeInterval(1500);
@@ -538,9 +905,9 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                  .ClickNextBtn()
-                 .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase);
+                 .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1]);
 
             Pages.Nutrition
             .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
@@ -555,5 +922,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyCarbs(protein, fat, expectedCalories);
         }
+
+        #endregion
     }
 }

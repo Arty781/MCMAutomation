@@ -66,6 +66,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//textarea[@name='description']")]
         public IWebElement membershipDescriptionInput;
 
+        [FindsBy(How = How.Name, Using = "accessWeekLength")]
+        public IWebElement inputAccessWeek;
+
         [FindsBy(How = How.XPath, Using = "//input[@placeholder='Choose Start Date']")]
         public IWebElement startDateInput;
 

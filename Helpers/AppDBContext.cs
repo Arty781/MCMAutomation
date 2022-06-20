@@ -200,14 +200,43 @@ namespace MCMAutomation.Helpers
             return nameMembership;
         }
 
-        public static string[] GetUserData()
+        public static string[] GetActiveMembershipsBySKU(string SKU)
+        {
+
+            var list = new List<string>();
+
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(1) Name, SKU " +
+                                         "FROM Memberships WHERE SKU LIKE @SKU", db);
+                command.Parameters.AddWithValue("@SKU", DbType.String).Value = SKU + "%";
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader.GetString(0));
+                        list.Add(reader.GetString(1));
+                    }
+                }
+
+            }
+
+            string[] nameMembership = list.ToArray();
+            return nameMembership;
+        }
+
+        public static string[] GetUserData(string userEmail)
         {
             var list = new List<string>();
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) *" +
-                                         "FROM [AspNetUsers] where email like 'qatester91323@xitroo.com' " +
+                                         "FROM [AspNetUsers] where email like @userEmail " +
                                          "ORDER BY DateTime DESC", db);
+                command.Parameters.AddWithValue("@userEmail", DbType.String).Value = userEmail;
                 db.Open();
 
                 SqlDataReader reader = command.ExecuteReader();

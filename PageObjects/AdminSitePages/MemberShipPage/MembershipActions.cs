@@ -31,9 +31,7 @@ namespace MCMAutomation.PageObjects
             InputBox.Element(skuInput, 20, "CP_TEST_SUB");
             InputBox.Element(membershipNameInput, 20, "Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
             InputBox.Element(membershipDescriptionInput, 20, "Lorem ipsum dolor");
-
-            InputBox.Element(startDateInput, 10, DateTime.Now.ToString("yyyy-MM-d") + Keys.Enter);
-            InputBox.Element(endDateInput, 10, DateTime.Now.AddMonths(2).ToString("yyyy-MM-d") + Keys.Enter);
+            InputBox.Element(inputAccessWeek, 10, "16");
 
             Button.Click(genderBothToggle);
             Button.Click(productToggleType);

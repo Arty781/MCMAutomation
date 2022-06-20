@@ -13,7 +13,7 @@ namespace MCMAutomation.Helpers
 
     public class Credentials
     {
-        public const string login = "qatester91323@xitroo.com";
+        public const string login = "qatester91311@gmail.com";
         public const string password = "Qaz11111!";
 
         public const string loginAdmin = "admin@coachmarkcarroll.com";
@@ -110,11 +110,30 @@ namespace MCMAutomation.Helpers
         };
     }
 
-    public class Memberships
+    public class MembershipsSKU
     {
-        public static string[] membership =
+        public static string[] membershipSKU =
         {
             "PP-1"
+        };
+    }
+
+    public class AdditionalOptions
+    {
+        public static string[] additionalCommonOption =
+        {
+            "Have you been dieting long term?"
+        };
+
+        public static string[] additionalPgOption =
+        {
+            "Are you in the third trimester of pregnancy?"
+        };
+
+        public static string[] additionalPpOption =
+        {
+            "Are you breastfeeding (less than 5 months postpartum)?",
+            "Are you breastfeeding (5-12 months postpartum)?"
         };
     }
 }

@@ -76,6 +76,48 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        public Nutrition SelectMale(IList<IWebElement> genderBtns)
+        {
+            Button.Click(genderBtns[0]);
+
+            return this;
+        }
+
+        public Nutrition SelectFemale(IList<IWebElement> genderBtns)
+        {
+            Button.Click(genderBtns[1]);
+
+            return this;
+        }
+
+        public Nutrition SelectImperial(IList<IWebElement> conversionSystem)
+        {
+            Button.Click(conversionSystem[0]);
+
+            return this;
+        }
+
+        public Nutrition SelectMetric(IList<IWebElement> conversionSystem)
+        {
+            Button.Click(conversionSystem[1]);
+
+            return this;
+        }
+
+        public Nutrition SelectYesOfAdditionalOptions(IList<IWebElement> additionalOptions)
+        {
+            Button.Click(additionalOptions[0]);
+
+            return this;
+        }
+
+        public Nutrition SelectNoOfAdditionalOptions(IList<IWebElement> additionalOptions)
+        {
+            Button.Click(additionalOptions[1]);
+
+            return this;
+        }
+
         #region Step02
 
         public Nutrition Step02SelectCut()

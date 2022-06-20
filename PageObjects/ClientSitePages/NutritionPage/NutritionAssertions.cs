@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using MCMAutomation.Helpers;
 using NUnit.Framework;
+using OpenQA.Selenium;
 
 namespace MCMAutomation.PageObjects.ClientSitePages
 {
     public partial class Nutrition
     {
-        public Nutrition VerifyMaintainCaloriesStep01(string[] values, string level)
+        public Nutrition VerifyMaintainCaloriesStep01(string[] values, string level, string[] gender, string[] textOfSelectedAdditionalOption, string selectedAdditionalOption)
         {
             DateTime birthdate = DateTime.Parse(values[0]);
             var currentTime = DateTime.Now;
@@ -29,29 +30,72 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 maintainCalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
 
             }
-            if (level == ActivityLevel.level[1])
+            else if (level == ActivityLevel.level[1])
             {
                 maintainCalories = Math.Round((calories * 1.375), 0, MidpointRounding.AwayFromZero);
             }
-            if (level == ActivityLevel.level[2])
+            else if (level == ActivityLevel.level[2])
             {
                 maintainCalories = Math.Round((calories * 1.55), 0, MidpointRounding.AwayFromZero);
 
             }
-            if (level == ActivityLevel.level[3])
+            else if (level == ActivityLevel.level[3])
             {
                 maintainCalories = Math.Round((calories * 1.725), 0, MidpointRounding.AwayFromZero);
 
             }
-            if (level == ActivityLevel.level[4])
+            else if (level == ActivityLevel.level[4])
             {
                 maintainCalories = Math.Round((calories * 1.9), 0, MidpointRounding.AwayFromZero);
 
             }
+
+            if (gender[0] == "Male")
+            {
+                if (selectedAdditionalOption == AdditionalOptions.additionalCommonOption[0])
+                {
+                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    {
+                        maintainCalories = Math.Round((maintainCalories + 500), 0, MidpointRounding.AwayFromZero);
+                    }
+                    maintainCalories *= 1;
+                }
+                maintainCalories *= 1;
+
+            }
+            else if (gender[0] == "Female")
+            {
+                if (selectedAdditionalOption == AdditionalOptions.additionalPpOption[0])
+                {
+                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    {
+                        maintainCalories = Math.Round((maintainCalories + 500), 0, MidpointRounding.AwayFromZero);
+                    }
+                    maintainCalories *= 1;
+                }
+                else if (selectedAdditionalOption == AdditionalOptions.additionalPpOption[1])
+                {
+                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    {
+                        maintainCalories = Math.Round((maintainCalories + 300), 0, MidpointRounding.AwayFromZero);
+                    }
+                    maintainCalories *= 1;
+                }
+                else if (selectedAdditionalOption == AdditionalOptions.additionalPgOption[0])
+                {
+                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    {
+                        maintainCalories = Math.Round((maintainCalories + 200), 0, MidpointRounding.AwayFromZero);
+                    }
+                    maintainCalories *= 1;
+                }
+            }
+
+
             Console.WriteLine($"maintain calories are \"{maintainCalories}\"");
             double caloriesWeb = int.Parse(TextBox.GetAttribute(inputCalories, "value"));
 
-            Assert.AreEqual(maintainCalories, caloriesWeb);
+            Assert.IsTrue((maintainCalories - caloriesWeb) <=3);
 
 
 
@@ -65,68 +109,73 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return caloriesWeb;
         }
 
-        public Nutrition VerifyCaloriesStep06(double calories, string goal, string tier, string phase)
+        public Nutrition VerifyCaloriesStep06(double calories, string goal, string tier, string phase, string SKU)
         {
             var finishcalories = 0.0;
 
             if (goal== Goals.goal[0])
             {
-                if(tier == Tiers.tier[0])
+                if (SKU == MembershipsSKU.membershipSKU[0])
                 {
-                    if(phase == Phases.phase[0])
+                    finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
+                }
+                else if (tier == Tiers.tier[0])
+                {
+                    
+                    if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                if (tier == Tiers.tier[1])
+                else if (tier == Tiers.tier[1])
                 {
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                if (tier == Tiers.tier[2])
+                else if (tier == Tiers.tier[2])
                 {
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
                     }
                 }
             }
 
-            if (goal == Goals.goal[1])
+            else if (goal == Goals.goal[1])
             {
                 finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
                
             }
 
-            if (goal == Goals.goal[2])
+            else if (goal == Goals.goal[2])
             {
                 if (tier == Tiers.tier[0])
                 {
@@ -136,33 +185,33 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     }
                 }
 
-                if (tier == Tiers.tier[1])
+                else if (tier == Tiers.tier[1])
                 {
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                if (tier == Tiers.tier[2])
+                else if (tier == Tiers.tier[2])
                 {
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
                     }
@@ -180,68 +229,73 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public double GetCaloriesStep06(double calories, string goal, string tier, string phase)
+        public double GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU)
         {
             var finishcalories = 0.0;
 
             if (goal == Goals.goal[0])
             {
-                if (tier == Tiers.tier[0])
+                if (SKU == MembershipsSKU.membershipSKU[0])
                 {
+                    finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
+                }
+                else if (tier == Tiers.tier[0])
+                {
+
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                if (tier == Tiers.tier[1])
+                else if (tier == Tiers.tier[1])
                 {
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                if (tier == Tiers.tier[2])
+                else if (tier == Tiers.tier[2])
                 {
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
                     }
                 }
             }
 
-            if (goal == Goals.goal[1])
+            else if (goal == Goals.goal[1])
             {
                 finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
 
             }
 
-            if (goal == Goals.goal[2])
+            else if (goal == Goals.goal[2])
             {
                 if (tier == Tiers.tier[0])
                 {
@@ -251,33 +305,33 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     }
                 }
 
-                if (tier == Tiers.tier[1])
+                else if (tier == Tiers.tier[1])
                 {
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                if (tier == Tiers.tier[2])
+                else if (tier == Tiers.tier[2])
                 {
                     if (phase == Phases.phase[0])
                     {
                         finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[1])
+                    else if (phase == Phases.phase[1])
                     {
                         finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
                     }
-                    if (phase == Phases.phase[2])
+                    else if (phase == Phases.phase[2])
                     {
                         finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
                     }
@@ -287,7 +341,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return finishcalories;
         }
 
-        public Nutrition VerifyProtein(string[] values, string goal, string tier, string SKU, string gender)
+        public Nutrition VerifyProtein(string[] values, string goal, string tier, string SKU, string[] gender)
         {
             var weight = double.Parse(values[1]);
             var bodyFat = double.Parse(values[3]);
@@ -298,8 +352,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             } else
             {
                 if (
-                    (gender == "Female" && bodyFat > 35) ||
-                    (gender == "Male" && bodyFat > 20)
+                    (gender[0] == "Female" && bodyFat > 35) ||
+                    (gender[0] == "Male" && bodyFat > 20)
                 )
                 {
                     protein = weight * 1.6;
@@ -333,7 +387,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         }
 
-        public double GetProtein(string[] values, string goal, string tier, string SKU, string gender)
+        public double GetProtein(string[] values, string goal, string tier, string SKU, string[] gender)
         {
             var weight = double.Parse(values[1]);
             var bodyFat = double.Parse(values[3]);
@@ -346,8 +400,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             else
             {
                 if (
-                    (gender == "Female" && bodyFat > 35) ||
-                    (gender == "Male" && bodyFat > 20)
+                    (gender[0] == "Female" && bodyFat > 35) ||
+                    (gender[0] == "Male" && bodyFat > 20)
                 )
                 {
                     protein = weight * 1.6;
