@@ -89,7 +89,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//div[contains(@class,'reverse')]")]
         public IWebElement btnReverse;
-        
+
         [FindsBy(How = How.XPath, Using = "//div[@class='previous']")]
         public IWebElement btnPreviousStep2AndMore;
 
@@ -120,6 +120,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[contains(@class,'phase-three')]")]
         public IWebElement btnPhase3;
 
+        #region ARD sku
+
+        [FindsBy(How=How.XPath,Using = "//p[contains(text(), '3-4')]/ancestor::div[contains(@class,'week  ')]")]
+        public IList<IWebElement> btnNumberOfWeek;
+
+        #endregion
+
 
         #endregion
 
@@ -133,6 +140,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//div[contains(@class,'diet-three')]")]
         public IWebElement btnDiet3;
+
+        #region ARD calories
+
+        [FindsBy(How = How.XPath, Using = "//input")]
+        public IWebElement inputPrevCalories;
+
+        #endregion
 
 
 

@@ -109,7 +109,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return caloriesWeb;
         }
 
-        public Nutrition VerifyCaloriesStep06(double calories, string goal, string tier, string phase, string SKU)
+        public Nutrition VerifyCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories)
         {
             var finishcalories = 0.0;
 
@@ -218,9 +218,41 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 }
             }
 
-            
+            else if(goal == Goals.goal[3])
+            {
+                
+                    if (phase == ArdPhases.ardPhase[0])
+                    {
+                        finishcalories = Math.Round((previousCalories + 300), 0, MidpointRounding.AwayFromZero);
+                    }
+                    else
+                    {
+                        if (valuMoreThan2Kg == "No")
+                        {
+                            if (tier == Tiers.tier[3])
+                            {
+                            //conservative
+                            finishcalories = Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero);
+                            }
+                            else if (tier == Tiers.tier[4])
+                            {
+                            //aggressive
+                            finishcalories = Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero);
+                            }
+                        }
+                        else if (valuMoreThan2Kg == "Yes")
+                        {
+                        //weight increased more than 2kg
+                        finishcalories = Math.Round((previousCalories), 0, MidpointRounding.AwayFromZero);
+                        }
 
-            var actualCalories = double.Parse(valueCalories.Text);
+                    }
+                
+            }
+
+
+
+                var actualCalories = double.Parse(valueCalories.Text);
 
             Console.WriteLine($"Expected calories are \"{finishcalories}\", actual are \"{actualCalories}\"");
 
@@ -229,7 +261,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public double GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU)
+        public double GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories)
         {
             var finishcalories = 0.0;
 
@@ -336,6 +368,38 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                         finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
                     }
                 }
+            }
+
+            else if (goal == Goals.goal[3])
+            {
+
+                if (phase == ArdPhases.ardPhase[0])
+                {
+                    finishcalories = Math.Round((previousCalories + 300), 0, MidpointRounding.AwayFromZero);
+                }
+                else
+                {
+                    if (valuMoreThan2Kg == "No")
+                    {
+                        if (tier == Tiers.tier[3])
+                        {
+                            //conservative
+                            finishcalories = Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero);
+                        }
+                        else if (tier == Tiers.tier[4])
+                        {
+                            //aggressive
+                            finishcalories = Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero);
+                        }
+                    }
+                    else if (valuMoreThan2Kg == "Yes")
+                    {
+                        //weight increased more than 2kg
+                        finishcalories = Math.Round((previousCalories), 0, MidpointRounding.AwayFromZero);
+                    }
+
+                }
+
             }
 
             return finishcalories;
@@ -507,6 +571,20 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             return this;
         }
+
+
+        #region
+
+        public Nutrition VerifyCaloriesOfArdSku(double calories, string goal, string tier, string phase, string SKU)
+        {
+            
+
+
+                return this;
+        }
+
+
+        #endregion
 
     }
 }

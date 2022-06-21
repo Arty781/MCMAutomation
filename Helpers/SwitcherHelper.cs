@@ -36,5 +36,20 @@ namespace MCMAutomation.Helpers
 
             return gen;
         }
+
+        public static void SelectNumberOfWeekForARD(string week)
+        {
+            WaitUntil.WaitSomeInterval(1500);
+            IList<IWebElement> btnNumberOfWeek = Browser._Driver.FindElements(By.XPath($"//p[contains(text(), '{week}')]/ancestor::div[contains(@class,'week  ')]"));
+            btnNumberOfWeek[0].Click();
+        }
+
+        public static string GetTextOfSelectNumberOfWeekForARD()
+        {
+
+            string str = Browser._Driver.FindElement(By.XPath("//div[contains(@class,'week  active')]//p[2]")).Text.ToString();
+
+            return str;
+        }
     }
 }

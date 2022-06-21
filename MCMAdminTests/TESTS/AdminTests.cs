@@ -250,8 +250,20 @@ namespace MCMAutomation.AdminSiteTests
 
             Pages.Sidebar
                 .OpenMemberShipPage();
-            Pages.PopUp
-                .ClosePopUp();
+            Pages.Login
+                .GetAdminLogout();
+
+            Browser._Driver.Navigate().GoToUrl("https://markcarrollmethod.com/");
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.Login
+                .GetAdminLogout();
         }
 
         [Test]

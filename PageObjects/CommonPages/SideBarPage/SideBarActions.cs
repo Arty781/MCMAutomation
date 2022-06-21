@@ -23,7 +23,7 @@ namespace MCMAutomation.PageObjects
             var lastMembership = Pages.MembershipAdmin.membershipTitle.Last();
             WaitUntil.CustomElevemtIsVisible(lastMembership, 30);
             var dateAfter = DateTime.Now;
-            Console.WriteLine("Load time is: " + (dateAfter - dateBefore));
+            Console.WriteLine($"Load time for {Browser._Driver.Url} is: " + (dateAfter - dateBefore));
 
             return this;
         }

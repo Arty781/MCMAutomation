@@ -86,7 +86,9 @@ namespace MCMAutomation.Helpers
         {
             "TIER 1",
             "TIER 2",
-            "TIER 3"
+            "TIER 3",
+            "CONSERVATIVE",
+            "AGGRESSIVE"
         };
     }
 
@@ -134,6 +136,19 @@ namespace MCMAutomation.Helpers
         {
             "Are you breastfeeding (less than 5 months postpartum)?",
             "Are you breastfeeding (5-12 months postpartum)?"
+        };
+    }
+
+    public class ArdPhases
+    {
+        public static string[] ardPhase =
+        {
+            "1-2",
+            "3-4",
+            "5-6",
+            "7-8",
+            "9-10",
+            "11-12"
         };
     }
 }
