@@ -89,6 +89,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     }
                     maintainCalories *= 1;
                 }
+                else if (selectedAdditionalOption == AdditionalOptions.additionalCommonOption[0])
+                {
+                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    {
+                        maintainCalories = Math.Round((maintainCalories - 100), 0, MidpointRounding.AwayFromZero);
+                    }
+                    maintainCalories *= 1;
+                }
             }
 
 
@@ -107,6 +115,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             double caloriesWeb = int.Parse(TextBox.GetAttribute(inputCalories, "value"));
 
             return caloriesWeb;
+        }
+
+        public Nutrition SetCalories()
+        {
+            InputBox.Element(inputCalories, 10, "000");
+
+            return this;
         }
 
         public Nutrition VerifyCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories)
@@ -514,15 +529,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var actualFat = valueOfProteinCarbsFat[2].Text;
             actualFat = actualFat.Trim(new char[] { 'g' });
 
-            Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");
-            Assert.AreEqual(fat.ToString(), actualFat);
+            //Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");
+            //Assert.AreEqual(fat.ToString(), actualFat);
 
             
 
             return this;
         }
 
-        public double GetFat(string[] values, string diet)
+        public double GetExpectedFat(string[] values, string diet)
         {
             var weight = double.Parse(values[1]);
             var fat = 0.0;
@@ -544,27 +559,45 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return fat;
         }
 
-
-        public Nutrition VerifyCarbs(double protein, double fat, double actualCalories)
+        public double GetActualFat()
         {
-         
+
+            var str = valueOfProteinCarbsFat[2].Text;
+            var fat = double.Parse(str.Trim(new char[] { 'g' }));
+
+            return fat;
+        }
+
+
+        public Nutrition VerifyCarbs(double protein, double fat, double actualCalories, string[] values)
+        {
+
+            var weight = double.Parse(values[1]);
+
+            var expectedFat = fat;
+
             var remainderCarbs = actualCalories - protein * 4 - fat * 9;
             var carbs = remainderCarbs / 4;
             carbs = Math.Round(carbs, 0, MidpointRounding.AwayFromZero);
             if (carbs < 30)
             {
                 carbs = 30;
-                remainderCarbs = actualCalories - protein * 4 - carbs * 4;
-                fat = remainderCarbs / 9;
+                fat = weight * 0.6;
                 fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
 
-                var adjustedCals = (carbs * 4) + (protein * 4) + (fat * 9);
+                Console.WriteLine($"Expected fat is \"{expectedFat}\", actual is \"{fat}\"");
+                Assert.AreEqual(expectedFat, fat );
             }
 
             var actualCarbs = valueOfProteinCarbsFat[1].Text;
             actualCarbs = actualCarbs.Trim(new char[] { 'g' });
 
+            actualCalories = double.Parse(valueCalories.Text);
+            var ExpCalories = (carbs*4) + (protein*4) + (fat*9) ;
+
+            
             Console.WriteLine($"Expected Carbs is \"{carbs}\", actual is \"{actualCarbs}\"");
+            Console.WriteLine($"Expected calories is \"{ExpCalories}\", actual is \"{actualCalories}\"");
             Assert.AreEqual(carbs.ToString(), actualCarbs);
 
 

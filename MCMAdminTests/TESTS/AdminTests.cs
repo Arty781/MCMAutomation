@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using NUnit.Allure.Attributes;
 using Allure.Commons;
 using System.Collections.Generic;
+using System;
 
 namespace MCMAutomation.AdminSiteTests
 {
@@ -75,6 +76,7 @@ namespace MCMAutomation.AdminSiteTests
                 .ClickSaveBtn();
 
             string[] memberName = AppDbContext.GetLastMembership();
+            string[] email = AppDbContext.GetUsersData();
 
             Pages.MembershipAdmin
                 .SearchMembership(memberName)
@@ -87,6 +89,10 @@ namespace MCMAutomation.AdminSiteTests
             Pages.MembershipAdmin
                 .VerifyMembershipNameCbbx(memberName)
                 .CreatePrograms();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .AddUserToMembership(email[0]);
 
             Pages.Login
                 .GetAdminLogout();
@@ -373,19 +379,23 @@ namespace MCMAutomation.AdminSiteTests
         {
             //AppDbContext.GetExerciseStatus();
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-           
+            //Pages.Login
+            //    .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            //Pages.Sidebar
+            //    .VerifyIsLogoDisplayed();
 
-            Pages.Sidebar
-                .OpenMemberShipPage();
 
-            Pages.MembershipAdmin
-                .ClickCreateBtn();
-            Pages.PopUp
-               .ClosePopUp();
+            //Pages.Sidebar
+            //    .OpenMemberShipPage();
+
+            //Pages.MembershipAdmin
+            //    .ClickCreateBtn();
+            //Pages.PopUp
+            //   .ClosePopUp();
+
+            Console.WriteLine(DateTime.Now.AddMonths(-1).AddDays(8).ToString("yyyy-MM-d"));
+            Console.WriteLine(DateTime.Now.AddMonths(-1).AddDays(4).ToString("yyyy-MM-d"));
+            Console.WriteLine(DateTime.Now.AddMonths(-1).AddDays(2).ToString("yyyy-MM-d"));
         }
     }
 }

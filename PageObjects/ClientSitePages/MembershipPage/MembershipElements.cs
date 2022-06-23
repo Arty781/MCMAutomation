@@ -59,6 +59,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IList<IWebElement> workoutBtn;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IWebElement workoutBtnelem;
 

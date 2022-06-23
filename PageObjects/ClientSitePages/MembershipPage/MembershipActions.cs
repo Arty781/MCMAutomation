@@ -40,7 +40,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
 
             
-                Button.Click(selectPhaseBtn[1]);
+                Button.Click(selectPhaseBtn[0]);
 
 
                 Button.Click(weekSelectorInput);
@@ -150,7 +150,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
            
             Button.Click(completeWorkoutBtn);
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 20);
+            WaitUntil.CustomElevemtIsVisible(viewTrainingProgramBtn, 20);
 
             return this;
         }

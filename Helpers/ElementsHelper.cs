@@ -31,8 +31,10 @@ namespace MCMAutomation.Helpers
         {
             WaitUntil.CustomElevemtIsVisible(element, seconds);
             try 
-            { 
+            {
+                
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
+                WaitUntil.WaitSomeInterval(500);
                 element.SendKeys(data);
             }
             catch(InvalidElementStateException) { }

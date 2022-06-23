@@ -11,9 +11,9 @@ namespace MCMAutomation.Helpers
     {
         public static string CreateBatFile()
         {
-            string path = Browser.RootPath() + "allure serve.bat";
-            string allureResultsDirectory = Browser.RootPath() + @"allure-results";
-            string allureResults = @"allure serve " + allureResultsDirectory;
+            string path = Browser.RootPathReport() + "allure serve.bat";
+            string allureResultsDirectory = Browser.RootPathReport() + "allure-results";
+            string allureResults = "allure serve " + allureResultsDirectory;
             FileInfo fileInf = new FileInfo(path);
             if (fileInf.Exists == true)
             {

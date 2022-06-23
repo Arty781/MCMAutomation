@@ -321,6 +321,7 @@ namespace MCMAutomation.PageObjects
         {
 
             Button.Click(membershipAddUserBtn);
+            WaitUntil.CustomElevemtIsVisible(userCbbx);
             InputBox.Element(userCbbx, 60, email + Keys.Enter);
 
             Button.Click(addUserBtn);

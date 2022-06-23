@@ -64,11 +64,30 @@ namespace MCMAutomation.WebTests
         {
             
            string[] email = AppDbContext.GetUsersData();
-            
+
+            #region AdminActions
             Pages.Login
-                .GetUserLogin(email, Credentials.password);
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(email[0])
+                .VerifyDisplayingOfUser(email[0])
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLogin(email, Credentials.password);
             Pages.MembershipUser
                 .OpenMembership()
                 .SelectPhase()
@@ -204,10 +223,10 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
 
             Pages.Login
                 .GetUserLogout();
@@ -352,10 +371,10 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
 
             Pages.Login
                 .GetUserLogout();
@@ -491,10 +510,10 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
 
             Pages.Login
                 .GetUserLogout();
@@ -644,10 +663,10 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
 
             Pages.Login
                 .GetUserLogout();
@@ -684,10 +703,31 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForCutTier1Phase1()
         {
+            #region AdminActions
             Pages.Login
-                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            //Pages.PopUp
+            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -773,10 +813,30 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
         }
 
         [Test]
@@ -789,10 +849,31 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForCutTier2Phase3()
         {
+            #region AdminActions
             Pages.Login
-                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            //Pages.PopUp
+            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -878,10 +959,30 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
         }
 
 
@@ -895,10 +996,31 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForCutTier3Phase1()
         {
+            #region AdminActions
             Pages.Login
-                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            //Pages.PopUp
+            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -982,10 +1104,30 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
         }
 
         [Test]
@@ -998,10 +1140,31 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForCutTier1Phase2()
         {
+            #region AdminActions
             Pages.Login
-                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            //Pages.PopUp
+            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1085,10 +1248,30 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
         }
 
         [Test]
@@ -1101,10 +1284,31 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForBuildTier1Phase1()
         {
+            #region AdminActions
             Pages.Login
-                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            //Pages.PopUp
+            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1189,10 +1393,30 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
         }
 
         [Test]
@@ -1205,10 +1429,31 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForBuildTier3Phase2()
         {
+            #region AdminActions
             Pages.Login
-                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            //Pages.PopUp
+            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1293,10 +1538,30 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
         }
 
         [Test]
@@ -1309,10 +1574,31 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForBuildTier2Phase1()
         {
+            #region AdminActions
             Pages.Login
-                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            //Pages.PopUp
+            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1397,10 +1683,177 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .VerifyFat(userData, diet);
 
-            double fat = Pages.Nutrition.GetFat(userData, diet);
+            double fat = Pages.Nutrition.GetExpectedFat(userData, diet);
 
             Pages.Nutrition
-                .VerifyCarbs(protein, fat, expectedCalories);
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+        }
+
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void VerifyCarbsAndFatsFor1000Calories()
+        {
+            #region AdminActions
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .EditUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(Credentials.login, Credentials.password);
+            //Pages.PopUp
+            //    .ClosePopUp();
+            Pages.Sidebar
+                .OpenNutritionPage();
+
+            string textOfMoreThan2KgSelected = null;
+            double previousCalories = 0.0;
+
+            #region Select Activity lvl
+            Pages.Nutrition
+                .SelectActivityLevel(0);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+
+            #endregion
+
+            #region Select User data
+            string[] userData = AppDbContext.GetUserData(Credentials.login);
+            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select Conversion System
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            Pages.Nutrition
+                .SelectMetric(conversionsBtn);
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectNoOfAdditionalOptions(additionalOption);
+
+            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
+            Pages.Nutrition
+                .ClickCalculateBtn()
+                .SetCalories();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                //.VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .ClickNextBtn();
+                //.Step02SelectBuild();
+            WaitUntil.WaitSomeInterval(1500);
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+                //.Step03SelectTier3();
+            WaitUntil.WaitSomeInterval(1500);
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step04SelectPhase3();
+            WaitUntil.WaitSomeInterval(1500);
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet3();
+            WaitUntil.WaitSomeInterval(1500);
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                 .ClickNextBtn()
+                 .VerifyCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+
+            Pages.Nutrition
+            .VerifyProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            double protein = Pages.Nutrition.GetProtein(userData, goal, tier, membershipData[1], selectedGender);
+
+            Pages.Nutrition
+                .VerifyFat(userData, diet);
+
+            double fat = Pages.Nutrition.GetActualFat();
+
+            Pages.Nutrition
+                .VerifyCarbs(protein, fat, expectedCalories, userData);
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(Credentials.login)
+                .VerifyDisplayingOfUser(Credentials.login)
+                .DeleteMemebershipFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
         }
 
         #endregion

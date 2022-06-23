@@ -1,0 +1,42 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="MCMAdminTests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="MCMAutomation.AdminSiteTests" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AdminSiteTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.CreateExerciseWithoutRelated" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateExerciseWithoutRelated" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.EditExercise" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="EditExercise" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.RemoveExercise" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="RemoveExercise" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>
