@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,17 @@ namespace MCMAutomation.Helpers
             
         }
 
-        
+        public static void ScrollTo(int xPosition, int yPosition)
+        {
+            try
+            {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)Browser._Driver;
+            js.ExecuteScript("window.scrollTo({0}, {1})", xPosition, yPosition);
+            }
+            catch (Exception) { }
+        }
+
+
     }
 
     public class InputBox
@@ -34,10 +45,10 @@ namespace MCMAutomation.Helpers
             {
                 
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
-                WaitUntil.WaitSomeInterval(500);
+                WaitUntil.WaitSomeInterval(200);
                 element.SendKeys(data);
             }
-            catch(InvalidElementStateException) { }
+            catch(Exception) { }
 
 
             return element;
@@ -49,7 +60,7 @@ namespace MCMAutomation.Helpers
             {
                 element.SendKeys(data);
             }
-            catch (InvalidElementStateException) { }
+            catch (Exception) { }
 
 
             return element;

@@ -118,6 +118,36 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        public Nutrition EnterAge(string age)
+        {
+            InputBox.Element(inputAge, 10, age);
+
+            return this;
+        }
+
+        public Nutrition SelectHeight(int num)
+        {
+            Button.Click(inputHeight);
+            Button.Click(popupHeight[num]);
+            Button.Click(btnOk);
+
+            return this;
+        }
+
+        public Nutrition EnterWeight(string weight)
+        {
+            InputBox.Element(inputWeight, 10, weight);
+
+            return this;
+        }
+
+        public Nutrition EnterBodyFat(string fat)
+        {
+            InputBox.Element(inputBodyFat, 10, fat);
+
+            return this;
+        }
+
         #region Step02
 
         public Nutrition Step02SelectCut()

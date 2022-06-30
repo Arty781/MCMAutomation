@@ -63,6 +63,19 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
+        [AllureStep("Open Nutrition page")]
+        public Sidebar OpenMyAccount()
+        {
+            
+            Button.Click(btnUserName);
+
+            WaitUntil.CustomElevemtIsVisible(btnMyAccount, 30);
+            Button.Click(btnMyAccount);
+            WaitUntil.CustomElevemtIsVisible(Pages.UserProfile.inputFirstName, 30);
+
+            return this;
+        }
+
 
 
 

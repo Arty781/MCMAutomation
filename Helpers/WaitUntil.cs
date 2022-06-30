@@ -50,7 +50,7 @@ namespace MCMAutomation.Helpers
             {
                 wait.Until(e =>
                 {
-                    if (!element.Displayed == true)
+                    if (!element.Displayed)
                         return null;
                     else
                         return element;

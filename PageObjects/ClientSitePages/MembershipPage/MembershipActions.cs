@@ -75,6 +75,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        [AllureStep("Open completed workout")]
+        public MembershipUser OpenCompletedWorkouts()
+        {
+
+            Button.Click(btnCompletedWorkouts[0]);
+
+            return this;
+        }
+
         [AllureStep("Add Weight")]
         public MembershipUser AddWeight()
         {

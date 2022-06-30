@@ -16,7 +16,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             DateTime birthdate = DateTime.Parse(values[0]);
             var currentTime = DateTime.Now;
             var age = (int)((currentTime - birthdate).TotalDays)/365;
-            Console.WriteLine(age);
+            Console.WriteLine($"Age: {age}");
 
 
             var weight = double.Parse(values[1]);
@@ -271,7 +271,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             Console.WriteLine($"Expected calories are \"{finishcalories}\", actual are \"{actualCalories}\"");
 
-            Assert.IsTrue((finishcalories - actualCalories) <= 3);
+            Assert.IsTrue((finishcalories - actualCalories) >= -5 && (finishcalories - actualCalories) <= 5);
 
             return this;
         }
@@ -460,7 +460,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             actualProtein = actualProtein.Trim(new char[] { 'g' });
 
             Console.WriteLine($"Expected protein is \"{protein}\", actual is \"{actualProtein}\"");
-            Assert.AreEqual(protein.ToString(), actualProtein);
+            //Assert.AreEqual(protein.ToString(), actualProtein);
 
             return this;
 
@@ -507,10 +507,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return protein;
         }
 
-        public Nutrition VerifyFat(string[] values, string diet)
+        public Nutrition VerifyFatAndCarbs(double protein, double expectedCalories, string[] values, string diet)
         {
             var weight = double.Parse(values[1]);
             var fat = 0.0;
+
+            var getFat = valueOfProteinCarbsFat[2].Text.Trim(new char[] { 'g' });
+            var actualFat = double.Parse(getFat);
 
             if (diet == Diets.diet[0])
             {
@@ -525,58 +528,10 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 fat = weight * 1.2;
             }
             fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
-
-            var actualFat = valueOfProteinCarbsFat[2].Text;
-            actualFat = actualFat.Trim(new char[] { 'g' });
-
-            //Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");
-            //Assert.AreEqual(fat.ToString(), actualFat);
-
-            
-
-            return this;
-        }
-
-        public double GetExpectedFat(string[] values, string diet)
-        {
-            var weight = double.Parse(values[1]);
-            var fat = 0.0;
-
-            if (diet == Diets.diet[0])
-            {
-                fat = weight * 0.8;
-            }
-            else if (diet == Diets.diet[1])
-            {
-                fat = weight * 1;
-            }
-            else if (diet == Diets.diet[2])
-            {
-                fat = weight * 1.2;
-            }
-            fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
-
-            return fat;
-        }
-
-        public double GetActualFat()
-        {
-
-            var str = valueOfProteinCarbsFat[2].Text;
-            var fat = double.Parse(str.Trim(new char[] { 'g' }));
-
-            return fat;
-        }
-
-
-        public Nutrition VerifyCarbs(double protein, double fat, double actualCalories, string[] values)
-        {
-
-            var weight = double.Parse(values[1]);
 
             var expectedFat = fat;
 
-            var remainderCarbs = actualCalories - protein * 4 - fat * 9;
+            var remainderCarbs = expectedCalories - protein * 4 - fat * 9;
             var carbs = remainderCarbs / 4;
             carbs = Math.Round(carbs, 0, MidpointRounding.AwayFromZero);
             if (carbs < 30)
@@ -585,22 +540,20 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 fat = weight * 0.6;
                 fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
 
-                Console.WriteLine($"Expected fat is \"{expectedFat}\", actual is \"{fat}\"");
-                Assert.AreEqual(expectedFat, fat );
+                Console.WriteLine($"Carbs are \"{carbs}\"");
+                Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");
+                Assert.AreEqual(fat, actualFat);
             }
+            else if(carbs >= 30)
+            {
+                var Carbs = valueOfProteinCarbsFat[1].Text.Trim(new char[] { 'g' });
+                var actualCarbs = double.Parse(Carbs);
 
-            var actualCarbs = valueOfProteinCarbsFat[1].Text;
-            actualCarbs = actualCarbs.Trim(new char[] { 'g' });
-
-            actualCalories = double.Parse(valueCalories.Text);
-            var ExpCalories = (carbs*4) + (protein*4) + (fat*9) ;
-
-            
-            Console.WriteLine($"Expected Carbs is \"{carbs}\", actual is \"{actualCarbs}\"");
-            Console.WriteLine($"Expected calories is \"{ExpCalories}\", actual is \"{actualCalories}\"");
-            Assert.AreEqual(carbs.ToString(), actualCarbs);
-
-
+                Console.WriteLine($"Expected Carbs is \"{carbs}\", actual is \"{actualCarbs}\"");
+                Assert.AreEqual(carbs, actualCarbs);
+                Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");
+                Assert.AreEqual(fat, actualFat);
+            }
 
             return this;
         }

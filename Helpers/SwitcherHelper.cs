@@ -28,13 +28,13 @@ namespace MCMAutomation.Helpers
             WaitUntil.WaitSomeInterval(1500);
             var str = $".//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']";
             _element = Browser._Driver.FindElement(By.XPath(str));
-            IWebElement gender = _element.FindElement(By.XPath(".//input[@type='radio']/ancestor::label[contains(@class,'checked')]/span[2]"));
+            IWebElement element = _element.FindElement(By.XPath(".//input[@type='radio']/ancestor::label[contains(@class,'checked')]/span[2]"));
 
-            list.Add(gender.Text);
+            list.Add(element.Text);
 
-            string[] gen = list.ToArray();
+            string[] selectedElement = list.ToArray();
 
-            return gen;
+            return selectedElement;
         }
 
         public static void SelectNumberOfWeekForARD(string week)

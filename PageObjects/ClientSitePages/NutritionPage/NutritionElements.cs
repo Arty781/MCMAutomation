@@ -50,6 +50,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//input[@name='height']")]
         public IWebElement inputHeight;
 
+        [FindsBy(How=How.XPath,Using = "//div[@class='height-slider_item']")]
+        public IList<IWebElement> popupHeight;
+
+        [FindsBy(How=How.XPath,Using ="//button[contains(text(),'Ok')]")]
+        public IWebElement btnOk;
+
         [FindsBy(How = How.XPath, Using = "//input[@name='weight']")]
         public IWebElement inputWeight;
 

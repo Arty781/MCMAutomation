@@ -14,7 +14,7 @@ namespace MCMAutomation.PageObjects
         public PopUp ClosePopUp()
         {
             
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_cancelBtn, 30);
+            WaitUntil.VisibilityOfAllElementsLocatedBy(_cancelBtn, 60);
             Button.Click(popupYesNoBtnLinq);
 
             return this;

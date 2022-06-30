@@ -84,6 +84,30 @@
                         <Property Name="DisplayName" Value="VerifyCarbsAndFatsFor1000Calories" />
                       </Rule>
                     </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCalories" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCalories" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesDiet1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesDiet1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesDiet2" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesDiet2" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesDiet3" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesDiet3" />
+                      </Rule>
+                    </Rule>
                   </Rule>
                 </Rule>
               </Rule>

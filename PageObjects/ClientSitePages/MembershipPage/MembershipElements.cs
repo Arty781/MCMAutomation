@@ -60,6 +60,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IList<IWebElement> workoutBtn;
 
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'completed')]")]
+        public IList<IWebElement> btnCompletedWorkouts;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IWebElement workoutBtnelem;
 
@@ -79,8 +82,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//tr//td[4]//input[@class='view-workout_table_input']")]
         public IList<IWebElement> weightInput;
+
         [FindsBy(How = How.XPath, Using = "//tr//td[4]//input[@class='view-workout_table_input']")]
         public IWebElement weightInputElem;
+
+        [FindsBy(How=How.XPath,Using = "//tbody//td//span[@class='view-workout_table_readonly']")]
+        public IList<IWebElement> outputWeight;
 
         [FindsBy(How = How.XPath, Using = "//tr//td[5]//input[@class='view-workout_table_input']")]
         public IList<IWebElement> repsInput;

@@ -63,6 +63,9 @@ namespace MCMAutomation.PageObjects
             foreach (IWebElement exercise in exercisesList)
             {
                 Button.Click(exercise);
+
+                Pages.Common
+                    .ClickSaveBtn();
                 
             }
             
