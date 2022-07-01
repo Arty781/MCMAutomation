@@ -40,8 +40,20 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.Name, Using = "height")]
         public IWebElement inputHeight;
 
-        [FindsBy(How=How.XPath,Using = "//div[@class='height-slider_item']")]
-        public IList<IWebElement> itemHeight;
+        [FindsBy(How=How.XPath,Using = "//div[contains(@class,'swiper-slide-prev')]")]
+        public IWebElement itemHeightPrev;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'swiper-slide-active')]")]
+        public IWebElement itemHeightActive;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'swiper-slide-next')]")]
+        public IWebElement itemHeightNext;
+
+        [FindsBy(How = How.XPath, Using = "//button[contains(text(),'Ok')]")]
+        public IWebElement btnOk;
+
+        [FindsBy(How = How.XPath, Using = "//button[contains(text(),'Cancel')]")]
+        public IWebElement btnCancel;
 
         [FindsBy(How = How.Name, Using = "weight")]
         public IWebElement inputWeight;

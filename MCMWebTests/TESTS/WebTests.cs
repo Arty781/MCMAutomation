@@ -2231,7 +2231,29 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenMyAccount();
             Pages.UserProfile
-                .EnterHeight();
+                .AddFirstName()
+                .AddLastName()
+                .EnterDOB()
+                .EnterProteins()
+                .EnterCalories()
+                .EnterMaintenanceCalories()
+                .EnterCarbs()
+                .EnterFats()
+                .EnterHeight()
+                .EnterWeight()
+                .EnterNewEmail()
+                .EnterOldPass()
+                .EnterNewPass()
+                .EnterConfirmPass();
+
+            string[] dataBeforeSaving = Pages.UserProfile.GetUserDataBeforeSaving();
+
+            Pages.Common
+                .ClickSaveBtn();
+            Pages.Sidebar
+                .OpenMyAccount();
+            Pages.UserProfile
+                .VerifyUserDataBeforeSaving(dataBeforeSaving);
 
         }
 
