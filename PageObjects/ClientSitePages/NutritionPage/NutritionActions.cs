@@ -76,6 +76,78 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        public Nutrition SelectMale(IList<IWebElement> genderBtns)
+        {
+            Button.Click(genderBtns[0]);
+
+            return this;
+        }
+
+        public Nutrition SelectFemale(IList<IWebElement> genderBtns)
+        {
+            Button.Click(genderBtns[1]);
+
+            return this;
+        }
+
+        public Nutrition SelectImperial(IList<IWebElement> conversionSystem)
+        {
+            Button.Click(conversionSystem[0]);
+
+            return this;
+        }
+
+        public Nutrition SelectMetric(IList<IWebElement> conversionSystem)
+        {
+            Button.Click(conversionSystem[1]);
+
+            return this;
+        }
+
+        public Nutrition SelectYesOfAdditionalOptions(IList<IWebElement> additionalOptions)
+        {
+            Button.Click(additionalOptions[0]);
+
+            return this;
+        }
+
+        public Nutrition SelectNoOfAdditionalOptions(IList<IWebElement> additionalOptions)
+        {
+            Button.Click(additionalOptions[1]);
+
+            return this;
+        }
+
+        public Nutrition EnterAge(string age)
+        {
+            InputBox.Element(inputAge, 10, age);
+
+            return this;
+        }
+
+        public Nutrition SelectHeight(int num)
+        {
+            Button.Click(inputHeight);
+            Button.Click(popupHeight[num]);
+            Button.Click(btnOk);
+
+            return this;
+        }
+
+        public Nutrition EnterWeight(string weight)
+        {
+            InputBox.Element(inputWeight, 10, weight);
+
+            return this;
+        }
+
+        public Nutrition EnterBodyFat(string fat)
+        {
+            InputBox.Element(inputBodyFat, 10, fat);
+
+            return this;
+        }
+
         #region Step02
 
         public Nutrition Step02SelectCut()

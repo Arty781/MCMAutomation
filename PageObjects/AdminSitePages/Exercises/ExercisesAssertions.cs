@@ -30,7 +30,7 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin VerifyExerciseIsRemoved()
         {
-            WaitUntil.WaitSomeInterval(1000);
+            WaitUntil.WaitSomeInterval(5000);
             string[] status = AppDbContext.GetExerciseStatus();
             Assert.That("True" == status[0]);
 

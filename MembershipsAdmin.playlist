@@ -1,0 +1,48 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="MCMAdminTests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="MCMAutomation.AdminSiteTests" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AdminSiteTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.AddProgramsToNewMembership" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="AddProgramsToNewMembership" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.AddWorkoutsAndExercisesToNewMembership" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="AddWorkoutsAndExercisesToNewMembership" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.CreateNewMembership" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateNewMembership" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.OpenMemberShipPage" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="OpenMemberShipPage" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>

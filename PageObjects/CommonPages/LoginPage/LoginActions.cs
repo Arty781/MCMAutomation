@@ -73,8 +73,8 @@ namespace MCMAutomation.PageObjects
             WaitUntil.CustomElevemtIsVisible(userContextMenu, 30);
             Button.Click(userContextMenu);
 
-            WaitUntil.CustomElevemtIsVisible(adminLogOutBtn, 30);
-            Button.Click(adminLogOutBtn);
+            WaitUntil.CustomElevemtIsVisible(userLogoutBtn, 30);
+            Button.Click(userLogoutBtn);
 
             return this;
         }

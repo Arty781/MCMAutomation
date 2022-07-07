@@ -46,5 +46,15 @@ namespace MCMAutomation.Helpers
 
             return email;
         }
+
+        public static string RandomAge()
+        {
+            Random r = new Random();
+            int genRand = r.Next(18, 65);
+
+            string age = DateTime.Now.AddYears(-genRand).ToString("yyyy-MM-d");
+
+            return age;
+        }
     }
 }

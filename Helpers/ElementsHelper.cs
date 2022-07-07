@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace MCMAutomation.Helpers
         {
             try
             {
-                WaitUntil.WaitSomeInterval(1000);
+                WaitUntil.WaitSomeInterval(250);
                 WaitUntil.CustomElevemtIsVisible(element, 20);
 
                 element.Click();
@@ -22,7 +23,17 @@ namespace MCMAutomation.Helpers
             
         }
 
-        
+        public static void ScrollTo(int xPosition, int yPosition)
+        {
+            try
+            {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)Browser._Driver;
+            js.ExecuteScript("window.scrollTo({0}, {1})", xPosition, yPosition);
+            }
+            catch (Exception) { }
+        }
+
+
     }
 
     public class InputBox
@@ -31,11 +42,13 @@ namespace MCMAutomation.Helpers
         {
             WaitUntil.CustomElevemtIsVisible(element, seconds);
             try 
-            { 
+            {
+                
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
+                WaitUntil.WaitSomeInterval(200);
                 element.SendKeys(data);
             }
-            catch(InvalidElementStateException) { }
+            catch(Exception) { }
 
 
             return element;
@@ -47,11 +60,13 @@ namespace MCMAutomation.Helpers
             {
                 element.SendKeys(data);
             }
-            catch (InvalidElementStateException) { }
+            catch (Exception) { }
 
 
             return element;
         }
+
+       
     }
     public class TextBox
     {
@@ -80,6 +95,51 @@ namespace MCMAutomation.Helpers
             WaitUntil.CustomElevemtIsVisible(btnRemove, seconds);
 
             btnRemove.Click();
+        }
+
+        
+    }
+
+    public class Membership
+    {
+        public static void ClickEditMembershipBtn(string title)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnEditMember = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_edit']"));
+            WaitUntil.CustomElevemtIsVisible(btnEditMember, 60);
+
+            btnEditMember.Click();
+        }
+
+        public static void ClickAddUserBtn(string title)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add-user ']"));
+            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+
+            btnAddUsers.Click();
+        }
+
+        public static void ClickAddProgramBtn(string title)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']"));
+            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+
+            btnAddUsers.Click();
+        }
+
+        public static void ClickDeleteBtn(string title)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_delete']"));
+            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+
+            btnAddUsers.Click();
         }
     }
 }

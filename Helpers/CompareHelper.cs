@@ -8,7 +8,7 @@ namespace MCMAutomation.Helpers
 {
     public class CompareHelper
     {
-        public static bool Comparator(string actTitle, string expectedTitle)
+        public static bool Trimer(string actTitle, string expectedTitle)
         {
             bool compar = actTitle.Contains(expectedTitle);
 
