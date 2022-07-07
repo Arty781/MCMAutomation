@@ -33,7 +33,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         }
 
         [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase()
+        public MembershipUser SelectPhase1()
         {
 
 
@@ -54,11 +54,77 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        [AllureStep("Select Week number")]
-        public MembershipUser SelectWeekNumber()
+        [AllureStep("Select Phase")]
+        public MembershipUser SelectPhase2()
         {
-            WaitUntil.WaitSomeInterval(1000);
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
+
+
+            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
+
+
+            Button.Click(selectPhaseBtn[1]);
+
+
+            Button.Click(weekSelectorInput);
+            weekSelectorInput.SendKeys(Keys.Enter);
+
+            Button.Click(viewTrainingProgramBtn);
+
+
+
+
+            return this;
+        }
+
+        [AllureStep("Select Phase")]
+        public MembershipUser SelectPhase3()
+        {
+
+
+            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
+
+
+            Button.Click(selectPhaseBtn[2]);
+
+
+            Button.Click(weekSelectorInput);
+            weekSelectorInput.SendKeys(Keys.Enter);
+
+            Button.Click(viewTrainingProgramBtn);
+
+
+
+
+            return this;
+        }
+
+        [AllureStep("Select Phase")]
+        public MembershipUser SelectPhase4()
+        {
+
+
+            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
+
+
+            Button.Click(selectPhaseBtn[3]);
+
+
+            Button.Click(weekSelectorInput);
+            weekSelectorInput.SendKeys(Keys.Enter);
+
+            Button.Click(viewTrainingProgramBtn);
+
+
+
+
+            return this;
+        }
+
+        [AllureStep("Select Week number")]
+        public MembershipUser SelectWeekNumber1()
+        {
+            WaitUntil.WaitSomeInterval(500);
+            WaitUntil.CustomElevemtIsVisible(viewTrainingProgramBtn, 10);
 
             weekSelectorInputEx.SendKeys(Keys.ArrowDown+Keys.Enter);
 
@@ -66,10 +132,51 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        [AllureStep("Open workout")]
-        public MembershipUser OpenWorkouts()
+        [AllureStep("Select Week number")]
+        public MembershipUser SelectWeekNumber2()
         {
-           
+            
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
+
+            weekSelectorInputEx.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
+            WaitUntil.WaitSomeInterval(5000);
+
+
+            return this;
+        }
+
+        [AllureStep("Select Week number")]
+        public MembershipUser SelectWeekNumber3()
+        {
+
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
+
+            weekSelectorInputEx.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
+            WaitUntil.WaitSomeInterval(5000);
+
+
+            return this;
+        }
+
+        [AllureStep("Select Week number")]
+        public MembershipUser SelectWeekNumber4()
+        {
+
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
+
+            weekSelectorInputEx.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
+            WaitUntil.WaitSomeInterval(5000);
+
+
+            return this;
+        }
+
+        [AllureStep("Open workout")]
+        public MembershipUser OpenWorkout()
+        {
+            WaitUntil.CustomElevemtIsVisible(textDayTitle[0]);
+            WaitUntil.WaitSomeInterval(2500);
+            WaitUntil.CustomElevemtIsVisible(workoutBtn[0]);
             Button.Click(workoutBtn[0]);
 
             return this;
@@ -95,10 +202,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
             for (int i=0; i<weightList.Count; i++)
             {
-                InputBox.Element(weightList[i], 10, RandomHelper.RandomNumber(150));
-                InputBox.Element(repsList[i], 10, RandomHelper.RandomNumber(10));
-                checkboxesList[i].Click();
-                WaitUntil.WaitSomeInterval(500);
+                WaitUntil.CustomElevemtIsVisible(weightList[i], 10);
+                InputBox.Element(weightList[i], 5, RandomHelper.RandomNumber(150));
+                WaitUntil.WaitSomeInterval(150);
             }
                
             return this;
@@ -159,7 +265,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
            
             Button.Click(completeWorkoutBtn);
-            WaitUntil.CustomElevemtIsVisible(viewTrainingProgramBtn, 20);
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 20);
 
             return this;
         }

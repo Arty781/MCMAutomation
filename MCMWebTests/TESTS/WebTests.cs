@@ -71,7 +71,7 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
 
-            string[] membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            string[] membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
 
             Pages.PopUp
                 .ClosePopUp();
@@ -88,19 +88,201 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
+            #region Phase 1
             Pages.MembershipUser
                 .OpenMembership()
-                .SelectPhase()
-                .SelectWeekNumber()
-                .OpenWorkouts()
-                .AddWeight();
+                .SelectPhase1()
+                .SelectWeekNumber1()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber2()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber3()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber4()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn();
+            #endregion
 
-            string[] weightList = Pages.MembershipUser.GetEnteredWeight();
+            #region Phase 2
+            Pages.Sidebar
+                .OpenMemberShipPageUser();
+            Pages.MembershipUser
+                .OpenMembership()
+                .SelectPhase2()
+                .SelectWeekNumber1()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber2()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber3()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber4()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn();
+            #endregion
+
+            #region Phase 3
+            Pages.Sidebar
+                .OpenMemberShipPageUser();
+            Pages.MembershipUser
+                  .OpenMembership()
+                  .SelectPhase3()
+                  .SelectWeekNumber1()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .SelectWeekNumber2()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .SelectWeekNumber3()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .SelectWeekNumber4()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn()
+                  .OpenWorkout()
+                  .AddWeight()
+                  .ClickCompleteWorkoutBtn();
+            #endregion
+
+            #region Phase 4
+            Pages.Sidebar
+                .OpenMemberShipPageUser();
+            Pages.MembershipUser
+                .OpenMembership()
+                .SelectPhase4()
+                .SelectWeekNumber1()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber2()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber3()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .SelectWeekNumber4()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight()
+                .ClickCompleteWorkoutBtn()
+                .OpenWorkout()
+                .AddWeight();
+            #endregion
+
+            //string[] weightList = Pages.MembershipUser.GetEnteredWeight();
 
             Pages.MembershipUser
-                .ClickCompleteWorkoutBtn()
-                .OpenCompletedWorkouts()
-                .VerifySavingWeight(weightList);
+                .ClickCompleteWorkoutBtn();
+                //.OpenCompletedWorkouts()
+                //.VerifySavingWeight(weightList);
 
             Pages.Login
                 .GetUserLogout();

@@ -19,11 +19,23 @@ namespace MCMAutomation.PageObjects
             var dateBefore = DateTime.Now;
             Button.Click(membershipTb);
 
-            WaitUntil.VisibilityOfAllElementsLocatedBy(Pages.MembershipAdmin._CreateBtn, 30);
+            WaitUntil.VisibilityOfAllElementsLocatedBy(Pages.MembershipAdmin._btnCreateMembership, 30);
             var lastMembership = Pages.MembershipAdmin.membershipTitle.Last();
             WaitUntil.CustomElevemtIsVisible(lastMembership, 30);
             var dateAfter = DateTime.Now;
             Console.WriteLine($"Load time for {Browser._Driver.Url} is: " + (dateAfter - dateBefore));
+
+            return this;
+        }
+
+        [AllureStep("Open Membership page")]
+        public Sidebar OpenMemberShipPageUser()
+        {
+            
+            Button.Click(trainingProgramTb);
+
+            WaitUntil.CustomElevemtIsVisible(Pages.MembershipUser.programTitle, 30);
+            
 
             return this;
         }

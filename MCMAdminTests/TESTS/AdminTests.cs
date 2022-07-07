@@ -59,6 +59,49 @@ namespace MCMAutomation.AdminSiteTests
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
 
+        public void EditMembership()
+        {
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .ClickCreateBtn()
+                .EnterMembershipData();
+            Pages.Common
+                .ClickSaveBtn();
+
+            string[] memberName = AppDbContext.GetLastMembership();
+
+            Pages.MembershipAdmin
+                .ClickEditMembershipBtn(memberName[0])
+                .EditMembershipData();
+            Pages.Common
+                .ClickSaveBtn();
+
+            string[] memberNameAfterEditing = AppDbContext.GetLastMembership();
+
+            Pages.MembershipAdmin
+                .SearchMembership(memberNameAfterEditing)
+                .VerifyMembershipName(memberNameAfterEditing);
+
+            Pages.Login
+                .GetAdminLogout();
+
+        }
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+
         public void AddProgramsToNewMembership()
         {
             Pages.Login
@@ -169,75 +212,83 @@ namespace MCMAutomation.AdminSiteTests
         }
 
 
-        //[Test]
-        //[AllureTag("Regression")]
-        //[AllureOwner("Artem Sukharevskyi")]
-        //[AllureSeverity(SeverityLevel.critical)]
-        //[Author("Artem", "qatester91311@gmail.com")]
-        //[AllureSuite("Admin")]
-        //[AllureSubSuite("Memberships")]
-        //public void CreateAndRemoveNewMembership()
-        //{
-        //    Pages.Login
-        //        .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-        //    Pages.Sidebar
-        //        .VerifyIsLogoDisplayed();
-        //    Pages.PopUp
-        //        .ClosePopUp();
-        //    Pages.Sidebar
-        //        .OpenMemberShipPage();
-        //    Pages.MembershipAdmin
-        //        .ClickCreateBtn()
-        //        .EnterMembershipData();
-        //    Pages.Common
-        //        .ClickSaveBtn();
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+        public void CreateAndRemoveNewMembership()
+        {
+            Pages.SignUpUser
+                .GoToSignUpPage();
 
-        //    string[] memberName = AppDbContext.GetLastMembership();
+            string email = RandomHelper.RandomEmail();
+            Pages.SignUpUser
+                .EnterData(email)
+                .ClickOnSignUpBtn()
+                .VerifyDisplayingPopUp()
+                .GoToLoginPage();
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .ClickCreateBtn()
+                .EnterMembershipData();
+            Pages.Common
+                .ClickSaveBtn();
 
-        //    Pages.MembershipAdmin
-        //        .SearchMembership(memberName)
-        //        .VerifyMembershipName(memberName)
-        //        .ClickAddProgramsBtn()
-        //        .VerifyMembershipNameCbbx(memberName)
-        //        .CreatePrograms();
+            string[] memberName = AppDbContext.GetLastMembership();
 
-        //    string url = Browser._Driver.Url;
+            Pages.MembershipAdmin
+                .SearchMembership(memberName)
+                .VerifyMembershipName(memberName);
+            Pages.MembershipAdmin
+                .ClickAddProgramsBtn();
 
-        //    Pages.MembershipAdmin
-        //         .VerifyMembershipNameCbbx(memberName)
-        //         .CreatePrograms();
-        //    IList<IWebElement> programLinks = ListHelper.DefineProgramList(url);
+            string url = Browser._Driver.Url;
 
-        //    Pages.MembershipAdmin
-        //        .CreateWorkouts(programLinks);
+            Pages.MembershipAdmin
+                .VerifyMembershipNameCbbx(memberName)
+                .CreatePrograms();
 
-        //    IList<string> exercisesLinks = ListHelper.DefineWorkoutList(programLinks);
-        //    string[] exercise = AppDbContext.GetExercisesData();
+            string[] programList = Pages.MembershipAdmin.GetProgramNames();
 
-        //    Pages.MembershipAdmin
-        //        .AddExercises(url, exercise);
-        //    Pages.Sidebar
-        //        .OpenMemberShipPage();
-        //    Pages.MembershipAdmin
-        //        .SearchMembership(memberName)
-        //        .VerifyMembershipName(memberName)
-        //        .AddUserToMembership("qatester91323@xitroo.com")
-        //        .VerifyAssignUser();
-        //    Pages.Sidebar
-        //        .OpenMemberShipPage();
-        //    Pages.MembershipAdmin
-        //        .SearchMembership(memberName)
-        //        .VerifyMembershipName(memberName)
-        //        .ClickDeleteBtn()
-        //        .VerifyDeletingMembership(memberName);
-        //    Pages.Login
-        //        .GetAdminLogout();
+            Pages.MembershipAdmin
+                .ClickAddWorkoutBtn()
+                .CreateWorkouts(programList);
 
+            string[] exercise = AppDbContext.GetExercisesData();
 
-
+            Pages.MembershipAdmin
+                .AddExercises(programList, exercise);
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .EditUser(memberName);
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .SearchMembership(memberName)
+                .VerifyMembershipName(memberName)
+                .ClickDeleteBtn()
+                .VerifyDeletingMembership(memberName);
+            Pages.Login
+                .GetAdminLogout();
 
 
-        //}
+
+
+
+        }
 
         [Test]
         [AllureTag("Regression")]

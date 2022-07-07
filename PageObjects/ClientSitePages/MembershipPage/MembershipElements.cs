@@ -66,14 +66,17 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IWebElement workoutBtnelem;
 
-        [FindsBy(How = How.XPath, Using = "//input[@type='search']")]
+        [FindsBy(How = How.XPath, Using = "//p[text()='Week']/parent::div//input[@type='search']")]
         public IWebElement weekSelectorInputEx;
 
         [FindsBy(How = How.XPath, Using = "//span[@class='ant-select-selection-item']")]
         public IWebElement weekSelector;
 
-        [FindsBy(How = How.XPath, Using = "//div[@class='ant-select-selector']")]
+        [FindsBy(How = How.XPath, Using = "//p[text()='Week']/parent::div//input[@type='search']/ancestor::div[@class='ant-select-selector']")]
         public IWebElement weekSelectorCbbx;
+
+        [FindsBy(How = How.XPath, Using = "//h2")]
+        public IList<IWebElement> textDayTitle;
 
 
         #endregion

@@ -62,7 +62,7 @@ namespace MCMAutomation.Helpers
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) *" +
-                                         "FROM [AspNetUsers] where email like 'qatester%@xitroo.com' " +
+                                         "FROM [AspNetUsers] where email like 'qatester2022%@xitroo.com' " +
                                          "ORDER BY DateTime DESC", db);
                 db.Open();
 
@@ -208,7 +208,7 @@ namespace MCMAutomation.Helpers
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) Name, SKU " +
-                                         "FROM Memberships WHERE SKU LIKE @SKU", db);
+                                         "FROM Memberships WHERE SKU LIKE @SKU ORDER BY CreationDate DESC", db);
                 command.Parameters.AddWithValue("@SKU", DbType.String).Value = SKU + "%";
                 db.Open();
 
