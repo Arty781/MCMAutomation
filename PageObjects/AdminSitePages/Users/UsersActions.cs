@@ -18,26 +18,23 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.CustomElevemtIsVisible(searchInput);
             searchInput.SendKeys(email + Keys.Enter);
-            
-
-            WaitUntil.WaitSomeInterval(15000);
             return this;
         }
 
         [AllureStep("Edit User")]
 
-        public MembershipAdmin EditUser(string[] membershipName)
+        public MembershipAdmin EditUser(string[] membershipName, string email)
         {
-            editBtn.Click();
+            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
+            SwitcherHelper.ClickEditUserBtn(email);
             WaitUntil.CustomElevemtIsVisible(emailInput);
-            
-            addUserMembershipCbbx.SendKeys(membershipName[0] + Keys.Enter);
+            InputBox.CbbxElement(addUserMembershipCbbx, 30, membershipName[0] + Keys.Enter);
             Button.Click(addUserMembershipBtn);
 
             WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
 
             selectUserActiveMembershipCbbx.SendKeys(membershipName[0] + Keys.Enter);
-            WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
+            WaitUntil.WaitSomeInterval(2500);
 
             return this;
         }
@@ -51,11 +48,19 @@ namespace MCMAutomation.PageObjects
 
             WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
             var listAddedmemberships = btnDeleteAddedMemberships.Where(x=>x.Displayed).ToList();
-
-            foreach (var membership in listAddedmemberships)
+            for(int i = 0; i <= listAddedmemberships.Count; i++)
             {
-                membership.Click();
+                
+                Button.Click(listAddedmemberships[0]);
+                WaitUntil.WaitSomeInterval(1000);
+                WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
+                listAddedmemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
+
+                
             }
+
+            WaitUntil.InvisibilityOfAllElementsLocatedBy(By.XPath("//p/parent::div[@class='user-memberships-item']/img"));
+            Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($"//p/parent::div[@class='user-memberships-item']/img")));
 
 
             return this;

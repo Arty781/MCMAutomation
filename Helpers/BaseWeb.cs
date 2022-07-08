@@ -39,8 +39,9 @@ namespace MCMAutomation.Helpers
             {
                 _ = TelegramHelper.SendMessage();
                 _ = TelegramHelper.SendImage();
+
+                Browser.Close();
             }
-            Browser.Close();
         }
     }
 }

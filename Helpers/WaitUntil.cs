@@ -42,6 +42,11 @@ namespace MCMAutomation.Helpers
             new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
         }
 
+        public static void InvisibilityOfAllElementsLocatedBy(By element, int seconds = 10)
+        {
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.InvisibilityOfElementLocated(element));
+        }
+
         public static void CustomElevemtIsVisible(IWebElement element, int seconds = 10)
         {
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));

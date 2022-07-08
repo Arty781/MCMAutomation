@@ -69,6 +69,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//p[text()='Week']/parent::div//input[@type='search']")]
         public IWebElement weekSelectorInputEx;
 
+        [FindsBy(How = How.XPath, Using = "//p[@class='modal-body_info']")]
+        public IWebElement titleModalWindow;
+
         [FindsBy(How = How.XPath, Using = "//span[@class='ant-select-selection-item']")]
         public IWebElement weekSelector;
 
@@ -114,6 +117,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//textarea[@class='ant-input']")]
         public IList <IWebElement> notesInput;
+
         [FindsBy(How = How.XPath, Using = "//textarea[@class='ant-input']")]
         public IWebElement notesInputelem;
 

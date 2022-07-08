@@ -71,6 +71,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='user-memberships-item']")]
         public IWebElement membershipItem;
 
+        [FindsBy(How = How.XPath, Using = "//p[contains(text(),'Active Membership')]/parent::div//div[@class='user-membership-select']//span[@title]")]
+        public IWebElement titleActiveMembership;
+
         [FindsBy(How=How.XPath,Using = "//p/parent::div[@class='user-memberships-item']/img")]
         public IList<IWebElement> btnDeleteAddedMemberships;
 

@@ -45,7 +45,7 @@ namespace MCMAutomation.Helpers
             {
                 
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
-                WaitUntil.WaitSomeInterval(200);
+                WaitUntil.WaitSomeInterval(100);
                 element.SendKeys(data);
             }
             catch(Exception) { }

@@ -50,6 +50,7 @@ namespace MCMAutomation.PageObjects
             
             InputBox.Element(priceInput, 10, "");
             InputBox.Element(urlInput, 10, Endpoints.websiteHost);
+            Button.Click(subscriptionToggleType);
             availableForPurchaseCheckboxElem.Click();
             
 
@@ -127,7 +128,7 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin CreatePrograms()
         {
             
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < 30; ++i)
             {
                
 
@@ -142,7 +143,7 @@ namespace MCMAutomation.PageObjects
 
                     Pages.Common.ClickSaveBtn();
                 }
-                if (i == 2)
+                else if (i == 2)
                 {
                     Button.Click(btnAddProgram);
                     InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
@@ -153,7 +154,7 @@ namespace MCMAutomation.PageObjects
 
                     Pages.Common.ClickSaveBtn();
                 }
-                if (i == 3)
+                else if (i == 3)
                 {
                     Button.Click(btnAddProgram);
                     InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
@@ -164,7 +165,7 @@ namespace MCMAutomation.PageObjects
 
                     Pages.Common.ClickSaveBtn();
                 }
-                if (i == 4)
+                else if (i == 4)
                 {
                     Button.Click(btnAddProgram);
                     InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
@@ -175,7 +176,18 @@ namespace MCMAutomation.PageObjects
 
                     Pages.Common.ClickSaveBtn();
                 }
-                
+                else if (i > 4)
+                {
+                    Button.Click(btnAddProgram);
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.Element(inputProgramSteps, 10, "10000");
+                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+
             }
             
             return this;

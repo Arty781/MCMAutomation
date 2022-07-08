@@ -108,6 +108,12 @@
                         <Property Name="DisplayName" Value="VerifyCaloriesDiet3" />
                       </Rule>
                     </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.CheckTdeeForARDForFemaleWeek2" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CheckTdeeForARDForFemaleWeek2" />
+                      </Rule>
+                    </Rule>
                   </Rule>
                 </Rule>
               </Rule>

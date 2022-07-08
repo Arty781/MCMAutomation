@@ -204,7 +204,7 @@ namespace MCMAutomation.AdminSiteTests
             Pages.MembershipAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
-                .EditUser(memberName);
+                .EditUser(memberName, email);
 
             Pages.Login
                 .GetAdminLogout();
@@ -273,7 +273,7 @@ namespace MCMAutomation.AdminSiteTests
             Pages.MembershipAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
-                .EditUser(memberName);
+                .EditUser(memberName, email);
             Pages.Sidebar
                 .OpenMemberShipPage();
             Pages.MembershipAdmin
