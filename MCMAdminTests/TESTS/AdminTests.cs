@@ -102,7 +102,7 @@ namespace MCMAutomation.AdminSiteTests
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
 
-        public void AddProgramsToNewMembership()
+        public void AddProgramsToNewMembershipMega()
         {
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
@@ -119,7 +119,7 @@ namespace MCMAutomation.AdminSiteTests
                 .ClickSaveBtn();
 
             string[] memberName = AppDbContext.GetLastMembership();
-            string[] email = AppDbContext.GetUsersData();
+            string[] email = AppDbContext.GetUserEmail();
 
             Pages.MembershipAdmin
                 .SearchMembership(memberName)
@@ -131,12 +131,9 @@ namespace MCMAutomation.AdminSiteTests
 
             Pages.MembershipAdmin
                 .VerifyMembershipNameCbbx(memberName)
-                .CreatePrograms();
+                .CreateProgramsMega();
             Pages.Sidebar
                 .OpenMemberShipPage();
-            Pages.MembershipAdmin
-                .AddUserToMembership(email[0]);
-
             Pages.Login
                 .GetAdminLogout();
 

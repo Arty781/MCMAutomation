@@ -36,23 +36,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         #region Select phase
 
         [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase1()
+        public MembershipUser SelectPhase(int i)
         {
-
-
             WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-
-            
-                Button.Click(selectPhaseBtn[0]);
-
-
-                Button.Click(weekSelectorInput);
-                weekSelectorInput.SendKeys(Keys.Enter);
-
-                Button.Click(viewTrainingProgramBtn);
-
-
-
+            Button.Click(selectPhaseBtn[i]);
+            WaitUntil.WaitSomeInterval(500);
+            weekSelectorInput.Click();
+            weekSelectorInput.SendKeys(Keys.Enter);
+            Button.Click(viewTrainingProgramBtn);
 
             return this;
         }

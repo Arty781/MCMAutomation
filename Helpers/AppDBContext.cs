@@ -56,30 +56,6 @@ namespace MCMAutomation.Helpers
             return list;
         }
 
-        public static string[] GetUsersData()
-        {
-            var list = new List<string>();
-            using (SqlConnection db = new(DB.GetConnectionString))
-            {
-                SqlCommand command = new("SELECT TOP(1) *" +
-                                         "FROM [AspNetUsers] where email like 'qatester2022%@xitroo.com' " +
-                                         "ORDER BY DateTime DESC", db);
-                db.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        list.Add(reader.GetValue(3).ToString());
-                    }
-                }
-
-            }
-            string[] data = list.ToArray();
-
-            return data;
-        }
 
         public static string[] GetExercisesData()
         {
@@ -228,6 +204,28 @@ namespace MCMAutomation.Helpers
             return nameMembership;
         }
 
+        public static void UpdateUserProgress(string userId)
+        {
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("UPDATE [Progress] set " +
+                                         "CreationDate = DateAdd(DD, -7, CreationDate) where UserId = @userId " +
+                                         "Select * from [Progress] where UserId = @userId", db);
+                command.Parameters.AddWithValue("@userId", DbType.String).Value = userId;
+                db.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+
+                        reader.GetValue(6).ToString();
+                    }
+                }
+            }
+        }
+
+        #region UserOptions
         public static string[] GetUserData(string userEmail)
         {
             var list = new List<string>();
@@ -258,5 +256,58 @@ namespace MCMAutomation.Helpers
 
             return data;
         }
+
+        public static string[] GetUserEmail()
+        {
+            var list = new List<string>();
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(1) *" +
+                                         "FROM [AspNetUsers] where email like 'qatester2022%@xitroo.com' " +
+                                         "ORDER BY DateTime DESC", db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader.GetValue(3).ToString());
+                    }
+                }
+
+            }
+            string[] data = list.ToArray();
+
+            return data;
+        }
+
+        public static string[] GetUserId(string email)
+        {
+            var list = new List<string>();
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(1) *" +
+                                         "FROM [AspNetUsers] where email = @email " +
+                                         "ORDER BY DateTime DESC", db);
+                command.Parameters.AddWithValue("@email", DbType.String).Value = email;
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader.GetValue(0).ToString());
+                    }
+                }
+
+            }
+            string[] data = list.ToArray();
+
+            return data;
+        }
+
+        #endregion
     }
 }

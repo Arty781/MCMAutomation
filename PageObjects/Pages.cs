@@ -33,6 +33,7 @@ namespace MCMAutomation.PageObjects
         public static ExercisesAdmin ExercisesAdmin => GetPage<ExercisesAdmin>();
         public static Nutrition Nutrition => GetPage<Nutrition>();
         public static UserProfile UserProfile => GetPage<UserProfile>();
+        public static Progress Progress => GetPage<Progress>();
 
     }
 }

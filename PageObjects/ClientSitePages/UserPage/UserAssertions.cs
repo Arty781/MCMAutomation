@@ -52,6 +52,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             string[] data2 = userData.ToArray();
 
+
             var list1 = dataBeforeSaving.Except(data2);
             var list2 = data2.Except(dataBeforeSaving);
 

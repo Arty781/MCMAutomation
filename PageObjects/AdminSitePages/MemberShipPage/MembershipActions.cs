@@ -128,7 +128,7 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin CreatePrograms()
         {
             
-            for (int i = 0; i < 30; ++i)
+            for (int i = 0; i < 6; ++i)
             {
                
 
@@ -190,6 +190,75 @@ namespace MCMAutomation.PageObjects
 
             }
             
+            return this;
+        }
+
+        [AllureStep("Create Programs")]
+        public MembershipAdmin CreateProgramsMega()
+        {
+
+            for (int i = 0; i < 30; ++i)
+            {
+
+
+                if (i == 1)
+                {
+                    Button.Click(btnAddProgram);
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.Element(inputProgramSteps, 10, "10000");
+                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+                else if (i == 2)
+                {
+                    Button.Click(btnAddProgram);
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+                else if (i == 3)
+                {
+                    Button.Click(btnAddProgram);
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+                else if (i == 4)
+                {
+                    Button.Click(btnAddProgram);
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.Element(inputProgramSteps, 10, "10000");
+                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+                else if (i > 4)
+                {
+                    Button.Click(btnAddProgram);
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.Element(inputProgramSteps, 10, "10000");
+                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+
+                    Pages.Common.ClickSaveBtn();
+                }
+
+            }
+
             return this;
         }
 

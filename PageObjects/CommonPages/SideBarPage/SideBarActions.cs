@@ -75,7 +75,7 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-        [AllureStep("Open Nutrition page")]
+        [AllureStep("Open MyAccount")]
         public Sidebar OpenMyAccount()
         {
             
@@ -88,7 +88,16 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
+        [AllureStep("Open MyAccount")]
+        public Sidebar OpenProgressPage()
+        {
 
+            Button.Click(progressTb);
+
+            WaitUntil.CustomElevemtIsVisible(Pages.Progress.titleProgressPage, 30);
+
+            return this;
+        }
 
 
         #endregion

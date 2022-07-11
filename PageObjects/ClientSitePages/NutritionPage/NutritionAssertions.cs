@@ -561,15 +561,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #region
 
-        public Nutrition VerifyCaloriesOfArdSku(double calories, string goal, string tier, string phase, string SKU)
-        {
-            
-
-
-                return this;
-        }
-
-
+       
         #endregion
 
     }

@@ -62,8 +62,8 @@ namespace MCMAutomation.WebTests
 
         public void CompleteMembershipsWithData()
         {
-            
-           string[] email = AppDbContext.GetUsersData();
+
+            string[] email = AppDbContext.GetUserEmail();
 
             #region AdminActions
             Pages.Login
@@ -88,201 +88,66 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
-            #region Phase 1
             Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase1()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn();
-            #endregion
+                .OpenMembership();
 
-            #region Phase 2
+            int countPhases = Pages.MembershipUser.GetPhasesCount();
+
             Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase2()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn();
-            #endregion
+                    .OpenMemberShipPageUser();
 
-            #region Phase 3
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                  .OpenMembership()
-                  .SelectPhase3()
-                  .SelectWeekNumber1()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .SelectWeekNumber2()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .SelectWeekNumber3()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .SelectWeekNumber4()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight()
-                  .ClickCompleteWorkoutBtn();
-            #endregion
+            for (int i = 0; i < countPhases; i++)
+            {
+                Pages.MembershipUser
+                    .OpenMembership()
+                    .SelectPhase(i);
+                WaitUntil.WaitSomeInterval(3000);
+                int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber2();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber3();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber4();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.Sidebar
+                    .OpenMemberShipPageUser();
 
-            #region Phase 4
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase4()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight();
-            #endregion
-
-            //string[] weightList = Pages.MembershipUser.GetEnteredWeight();
-
-            Pages.MembershipUser
-                .ClickCompleteWorkoutBtn();
-                //.OpenCompletedWorkouts()
-                //.VerifySavingWeight(weightList);
+            }
 
             Pages.Login
                 .GetUserLogout();
@@ -301,7 +166,7 @@ namespace MCMAutomation.WebTests
         public void CompleteMembershipsWithDataMega()
         {
 
-            string[] email = AppDbContext.GetUsersData();
+            string[] email = AppDbContext.GetUserEmail();
 
             #region AdminActions
             Pages.Login
@@ -326,1412 +191,66 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
-
-            #region Phase 1
             Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase1()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
+                .OpenMembership();
 
-            #region Phase 2
+            int countPhases = Pages.MembershipUser.GetPhasesCount();
+
             Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase2()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight()
-                .EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
+                    .OpenMemberShipPageUser();
 
-            #region Phase 3
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                  .OpenMembership()
-                  .SelectPhase3()
-                  .SelectWeekNumber1()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .SelectWeekNumber2()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .SelectWeekNumber3()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .SelectWeekNumber4()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn()
-                  .OpenWorkout()
-                  .AddWeight().EnterNotes()
-                  .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 4
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase4()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 5
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase5()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 6
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase6()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 7
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase7()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 8
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase8()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 9
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase9()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 10
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase10()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 11
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase11()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 12
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase12()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 13
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase13()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 14
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase14()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 15
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase15()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 16
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase16()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 17
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase17()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 18
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase18()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 19
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase19()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 20
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase20()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 21
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase21()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 22
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase22()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 23
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase23()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 24
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase24()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 25
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase25()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 26
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase26()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 27
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase27()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 28
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase28()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
-            #region Phase 29
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
-            Pages.MembershipUser
-                .OpenMembership()
-                .SelectPhase29()
-                .SelectWeekNumber1()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber2()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber3()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .SelectWeekNumber4()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn()
-                .OpenWorkout()
-                .AddWeight().EnterNotes()
-                .ClickCompleteWorkoutBtn();
-            #endregion
-
+            for (int i = 0; i < countPhases; i++)
+            {
+                Pages.MembershipUser
+                    .OpenMembership()
+                    .SelectPhase(i);
+                
+                int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for(int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber2();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber3();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber4();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.Sidebar
+                    .OpenMemberShipPageUser();
+               
+            }
 
             Pages.Login
                 .GetUserLogout();
@@ -3991,7 +2510,7 @@ namespace MCMAutomation.WebTests
 
         public void EditUser()
         {
-            string[] email = AppDbContext.GetUsersData();
+            string[] email = AppDbContext.GetUserEmail();
 
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
@@ -4027,5 +2546,145 @@ namespace MCMAutomation.WebTests
         }
 
         #endregion
+
+        #region Progress
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void AddProgressToCheckingTheGraph()
+        {
+            string[] email = AppDbContext.GetUserEmail();
+            string[] userId = AppDbContext.GetUserId(email[0]);
+
+            Pages.Login
+                .GetUserLogin(email, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenProgressPage();
+            for(int i = 0; i < 10; i++)
+            {
+                Pages.Progress
+                .ClickAddProgressBtnA()
+                .EnterWeight()
+                .EnterWaist()
+                .EnterThigh()
+                .EnterChest()
+                .EnterArm()
+                .EnterHips();
+
+                string[] progressBeforeSaving = Pages.Progress.GetProgressData();
+
+                Pages.Progress
+                    .ClickSubmitBtn()
+                    .VerifyAddedProgress(progressBeforeSaving);
+
+                AppDbContext.UpdateUserProgress(userId[0]);
+
+                Browser._Driver.Navigate().Refresh();
+                Pages.PopUp
+                    .ClosePopUp();
+            }
+
+        }
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void AddProgress()
+        {
+            string[] email = AppDbContext.GetUserEmail();
+            string[] userId = AppDbContext.GetUserId(email[0]);
+
+            Pages.Login
+                .GetUserLogin(email, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenProgressPage();
+            Pages.Progress
+                .ClickAddProgressBtnA()
+                .EnterWeight()
+                .EnterWaist()
+                .EnterThigh()
+                .EnterChest()
+                .EnterArm()
+                .EnterHips();
+
+                string[] progressBeforeSaving = Pages.Progress.GetProgressData();
+
+                Pages.Progress
+                    .ClickSubmitBtn()
+                    .VerifyAddedProgress(progressBeforeSaving);
+            
+
+        }
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void EditProgress()
+        {
+            string[] email = AppDbContext.GetUserEmail();
+            string[] userId = AppDbContext.GetUserId(email[0]);
+
+            Pages.Login
+                .GetUserLogin(email, Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenProgressPage();
+            Pages.Progress
+                .ClickAddProgressBtnA()
+                .EnterWeight()
+                .EnterWaist()
+                .EnterThigh()
+                .EnterChest()
+                .EnterArm()
+                .EnterHips();
+
+            string[] progressBeforeSaving = Pages.Progress.GetProgressData();
+
+            Pages.Progress
+                .ClickSubmitBtn()
+                .VerifyAddedProgress(progressBeforeSaving);
+
+            Pages.Progress
+                .ClickEditProgressBtnA()
+                .EnterWeight()
+                .EnterWaist()
+                .EnterThigh()
+                .EnterChest()
+                .EnterArm()
+                .EnterHips();
+
+            progressBeforeSaving = Pages.Progress.GetProgressData();
+
+            Pages.Progress
+                .ClickSubmitBtn()
+                .VerifyAddedProgress(progressBeforeSaving);
+
+
+        }
+
+
+        #endregion
+
     }
 }

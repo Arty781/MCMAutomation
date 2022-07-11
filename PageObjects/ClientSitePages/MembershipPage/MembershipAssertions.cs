@@ -56,5 +56,21 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             Assert.IsTrue(!listOne.Any() && !listTwo.Any());
             return this;
         }
+
+        [AllureStep("Get Phases count")]
+        public int GetPhasesCount()
+        {
+            var count = selectPhaseBtn.Where(x=>x.Displayed).Count();
+
+            return count;
+        }
+
+        [AllureStep("Get Workouts count")]
+        public int GetWorkoutsCount()
+        {
+            var count = workoutBtn.Where(x => x.Displayed).Count();
+
+            return count;
+        }
     }
 }
