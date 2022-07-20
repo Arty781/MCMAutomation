@@ -28,13 +28,31 @@ namespace MCMAutomation.PageObjects
 
         [AllureStep("Verify exercise is removed")]
 
-        public ExercisesAdmin VerifyExerciseIsRemoved()
+        public ExercisesAdmin VerifyExerciseIsRemoved(string exercise)
         {
-            WaitUntil.WaitSomeInterval(5000);
-            string[] status = AppDbContext.GetExerciseStatus();
-            Assert.That("True" == status[0]);
+            WaitUntil.WaitSomeInterval(500);
+            WaitUntil.CustomElevemtIsVisible(nameExerciseTitle.Where(x => x.Displayed).Last());
+
+            Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($".//div[@class='table-item-row']/p[contains(text(), '{exercise}')]")));
+            
 
             return this;
+        }
+
+        public static List<string> GetExercisesList()
+        {
+            WaitUntil.CustomElevemtIsVisible(nameExerciseTitle.Where(x => x.Displayed).Last());
+
+            var exerciseList = new List<string>();
+
+            var list = nameExerciseTitle.Where(x => x.Enabled).ToList();
+
+            foreach (var exercise in list)
+            {
+                exerciseList.Add(exercise.Text);
+            }
+
+            return exerciseList;
         }
 
     }

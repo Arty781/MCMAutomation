@@ -53,17 +53,12 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Login as user")]
-        public Login GetUserLogin(string[] login, string password)
+        public Login GetUserLogin(string login, string password)
         {
-            foreach (var user in login)
-            {
-                
-                InputBox.Element(loginInput, 30, user);
-                InputBox.Element(passwordInput, 30, password);
-                
-                Button.Click(signInBtn);
-
-            }
+            InputBox.Element(loginInput, 30, login);
+            InputBox.Element(passwordInput, 30, password);
+            
+            Button.Click(signInBtn);
             return this;
         }
 

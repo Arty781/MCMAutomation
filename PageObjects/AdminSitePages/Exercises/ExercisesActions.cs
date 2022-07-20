@@ -39,7 +39,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Add Related exercises")]
         public ExercisesAdmin AddRelatedExercises(string[] relatedExercisesList)
         {
-            Button.Click(btnAddRelatedExercise);
+            Button.Click(btnAddRelatedGymExercise);
 
 
             return this;
@@ -56,18 +56,9 @@ namespace MCMAutomation.PageObjects
 
         [AllureStep("Edit Exercise")]
 
-        public ExercisesAdmin ClickEditExercise()
+        public ExercisesAdmin ClickEditExercise(string exerciseName)
         {
-            var exercisesList = btnEditExercise.Where(x=>x.Enabled).ToList();
-
-            foreach (IWebElement exercise in exercisesList)
-            {
-                Button.Click(exercise);
-
-                Pages.Common
-                    .ClickSaveBtn();
-                
-            }
+            SwitcherHelper.ClickEditExerciseBtn(exerciseName);
             
             return this;
         }
@@ -76,11 +67,10 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin ClickAddRelatedExercisesBtn(int i)
         {
-            int q = 0;
-            while (q < i)
+            for (int q = 0; q < i; q++)
             {
-                q++;
-                Button.Click(btnAddRelatedExercise);
+                Button.Click(btnAddRelatedGymExercise);
+                Button.Click(btnAddRelatedHomeExercise);
             }
             
 
@@ -91,12 +81,11 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin AddRelatedExercises(int i, string exercise)
         {
-            int q = 0;
-            while (q < i)
+            
+            for (int q = 0; q < i; q++)
             {
-                q++;
                 Button.Click(fieldRelatedExercise[q]);
-                InputBox.CbbxElement(fieldRelatedExercise[q],5, exercise);
+                InputBox.CbbxElement(fieldRelatedExercise[q], 5, exercise);
             }
 
             return this;
@@ -125,7 +114,7 @@ namespace MCMAutomation.PageObjects
         {
 
 
-            RemoveBtn.ClickRemoveExerciseBtn(exercise);
+            SwitcherHelper.ClickRemoveExerciseBtn(exercise);
             Button.Click(btnConfirmationYes);
             
 

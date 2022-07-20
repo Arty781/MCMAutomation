@@ -538,24 +538,24 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //    {
         //        InputBox.Element(reps, 10, RandomHelper.RandomNumber(10));
         //    }
-            
+
         //    return this;
         //}
 
-        //[AllureStep("Mark Checkboxes")]
-        //public MembershipUser MarkCheckboxes()
-        //{
-        //    WaitUntil.WaitSomeInterval(2);
-        //    WaitUntil.CustomElevemtIsVisible(checkboxInputElem);
+        [AllureStep("Mark Checkboxes")]
+        public MembershipUser MarkCheckboxes()
+        {
+            WaitUntil.WaitSomeInterval(1000);
+            WaitUntil.CustomElevemtIsVisible(checkboxInput[0]);
 
-        //    var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
-        //    foreach( var checkbox in checkboxesList)
-        //    {
-        //        checkbox.Click();
-        //    }
-                
-        //    return this;
-        //}
+            var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
+            foreach (var checkbox in checkboxesList)
+            {
+                checkbox.Click();
+            }
+
+            return this;
+        }
 
         [AllureStep("Enter Notes")]
         public MembershipUser EnterNotes()

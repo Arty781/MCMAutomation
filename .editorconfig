@@ -17,3 +17,6 @@ dotnet_diagnostic.CS8602.severity = none
 
 # CS0618: Type or member is obsolete
 dotnet_diagnostic.CS0618.severity = none
+
+# CS4014: Because this call is not awaited, execution of the current method continues before the call is completed
+dotnet_diagnostic.CS4014.severity = none

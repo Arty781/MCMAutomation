@@ -159,6 +159,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
         public IList<IWebElement> nameProgramTitle;
 
+        [FindsBy(How = How.XPath, Using = "//h3[text()='Next Phase']/parent::div//input")]
+        public IWebElement inputNextPhase;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item_controls']//div[text()='Add Workouts']")]
         public IList<IWebElement> btnProgramAddWorkouts;
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item_controls']//div[text()='Add Workouts']")]

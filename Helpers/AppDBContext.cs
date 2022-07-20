@@ -85,12 +85,11 @@ namespace MCMAutomation.Helpers
             return exercise;
         }
 
-        public static string[] GetLastMembership()
+        public static string GetLastMembership()
         {
             
             WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitleElem, 90);
-            var list = new List<string>();
-
+            string exercise = null;
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1)*" +
@@ -103,16 +102,11 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-                        string str = reader.GetString(2);
-
-                        list.Add(str);
-
+                        exercise = reader.GetString(2).ToString();
                     }
                 }
-
             }
 
-            string[] exercise = list.ToArray();
             return exercise;
         }
 
@@ -176,10 +170,10 @@ namespace MCMAutomation.Helpers
             return nameMembership;
         }
 
-        public static string[] GetActiveMembershipsBySKU(string SKU)
+        public static string GetActiveMembershipsBySKU(string SKU)
         {
 
-            var list = new List<string>();
+            string nameMembership = null;
 
             using (SqlConnection db = new(DB.GetConnectionString))
             {
@@ -193,14 +187,13 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-                        list.Add(reader.GetString(0));
-                        list.Add(reader.GetString(1));
+
+                        nameMembership = reader.GetString(1).ToString();
                     }
                 }
 
             }
 
-            string[] nameMembership = list.ToArray();
             return nameMembership;
         }
 
@@ -218,7 +211,6 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-
                         reader.GetValue(6).ToString();
                     }
                 }
@@ -257,9 +249,9 @@ namespace MCMAutomation.Helpers
             return data;
         }
 
-        public static string[] GetUserEmail()
+        public static string GetUserEmail()
         {
-            var list = new List<string>();
+            string data = null;
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) *" +
@@ -272,19 +264,16 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-                        list.Add(reader.GetValue(3).ToString());
+                        data = reader.GetValue(3).ToString();
                     }
                 }
-
             }
-            string[] data = list.ToArray();
-
             return data;
         }
 
-        public static string[] GetUserId(string email)
+        public static string GetUserId(string email)
         {
-            var list = new List<string>();
+            string data = null;
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) *" +
@@ -298,12 +287,11 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-                        list.Add(reader.GetValue(0).ToString());
+                        data = reader.GetValue(0).ToString();
                     }
                 }
 
             }
-            string[] data = list.ToArray();
 
             return data;
         }

@@ -13,8 +13,11 @@ namespace MCMAutomation.PageObjects
 {
     public partial class ExercisesAdmin
     {
-        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-row']/child::p")]
-        public IList<IWebElement> nameExerciseTitle;
+        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-row']/p")]
+        public static IList<IWebElement> nameExerciseTitle;
+
+        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-row']/p")]
+        public IWebElement nameExerciseTitleElem;
 
         [FindsBy(How = How.XPath, Using = "//div[@class='exercises-database-btn']")]
         public IWebElement btnAddExercise;
@@ -31,8 +34,11 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='delete']")]
         public IList<IWebElement> btnDdeleteExercise;
 
-        [FindsBy(How = How.XPath, Using = "//button[@class='exercises-database-form_add-btn']")]
-        public IWebElement btnAddRelatedExercise;
+        [FindsBy(How = How.XPath, Using = "//button[text()='Add Related Gym Exercise']")]
+        public IWebElement btnAddRelatedGymExercise;
+
+        [FindsBy(How = How.XPath, Using = "//button[text()='Add Related Home Exercise']")]
+        public IWebElement btnAddRelatedHomeExercise;
 
         [FindsBy(How = How.Id, Using = "name")]
         public IWebElement fieldExerciseName;

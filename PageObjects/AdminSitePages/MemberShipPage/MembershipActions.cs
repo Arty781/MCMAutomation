@@ -15,7 +15,6 @@ namespace MCMAutomation.PageObjects
     {
 
         [AllureStep("Click \"Create new membership\" btn")]
-
         public MembershipAdmin ClickCreateBtn()
         {
 
@@ -26,39 +25,32 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Click \"Edit membership\" btn")]
-
         public MembershipAdmin ClickEditMembershipBtn(string title)
         {
 
             WaitUntil.CustomElevemtIsVisible(membershipTitle[0]);
 
-            Membership.ClickEditMembershipBtn(title);
+            SwitcherHelper.ClickEditMembershipBtn(title);
 
             return this;
         }
 
         [AllureStep("Enter membership data")]
-
         public MembershipAdmin EnterMembershipData()
         {
-            InputBox.Element(skuInput, 20, "CP_TEST_SUB");
-            InputBox.Element(membershipNameInput, 20, "Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
-            InputBox.Element(membershipDescriptionInput, 20, "Lorem ipsum dolor");
-            InputBox.Element(inputAccessWeek, 10, "16");
-
-            
-            
+            InputBox.Element(skuInput, 20, "CMC_TEST_SUB");
+            InputBox.Element(membershipNameInput, 20, "Created New Membership SUB " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
+            InputBox.Element(membershipDescriptionInput, 20, Lorem.Paragraph());
             InputBox.Element(priceInput, 10, "");
             InputBox.Element(urlInput, 10, Endpoints.websiteHost);
             Button.Click(subscriptionToggleType);
-            availableForPurchaseCheckboxElem.Click();
+            availableForPurchaseCheckbox.Click();
             
 
             return this;
         }
 
         [AllureStep("Select gender")]
-
         public MembershipAdmin SelectGender()
         {
             Button.Click(genderBothToggle);
@@ -67,7 +59,6 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Select type")]
-
         public MembershipAdmin SelectType()
         {
             Button.Click(productToggleType);
@@ -76,7 +67,6 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Enter membership data edited")]
-
         public MembershipAdmin EditMembershipData()
         {
             InputBox.Element(skuInput, 20, "CP_TEST_SUB");
@@ -94,12 +84,10 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-
-
         [AllureStep("Search Membership")]
-        public MembershipAdmin SearchMembership(string[] membershipName)
+        public MembershipAdmin SearchMembership(string membershipName)
         {
-            InputBox.Element(membershipSearchInput, 10, membershipName[0]);
+            InputBox.Element(membershipSearchInput, 10, membershipName);
             Button.Click(membershipSearchBtn);
 
             return this;
@@ -128,14 +116,14 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin CreatePrograms()
         {
             
-            for (int i = 0; i < 6; ++i)
+            for (int i = 0; i < 5; ++i)
             {
                
 
                 if (i == 1)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, Lorem.Sentence() + i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "10000");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -146,7 +134,7 @@ namespace MCMAutomation.PageObjects
                 else if (i == 2)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, Lorem.Sentence() + i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -157,7 +145,7 @@ namespace MCMAutomation.PageObjects
                 else if (i == 3)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, Lorem.Sentence() + i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -168,7 +156,7 @@ namespace MCMAutomation.PageObjects
                 else if (i == 4)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, Lorem.Sentence() + i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "10000");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -179,7 +167,7 @@ namespace MCMAutomation.PageObjects
                 else if (i > 4)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, Lorem.Sentence() + i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "10000");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -457,6 +445,24 @@ namespace MCMAutomation.PageObjects
 
             Button.Click(addUserBtn);
 
+
+            return this;
+        }
+
+        [AllureStep("Add next phases dependency")]
+        public MembershipAdmin AddNextPhaseDependency(string[] programs)
+        {
+            for (int i=0; i < programs.Length; i++)
+            {
+                nameProgramTitle[i].Click();
+                WaitUntil.WaitSomeInterval(1200);
+                inputNextPhase.Click();
+                inputNextPhase.SendKeys(Keys.ArrowDown + Keys.Enter);
+
+                Pages.Common.ClickSaveBtn();
+                WaitUntil.WaitSomeInterval(500);
+
+            }
 
             return this;
         }

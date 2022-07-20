@@ -52,10 +52,10 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Verify displaying membership name")]
-        public MembershipAdmin VerifyMembershipName(string[] membership)
+        public MembershipAdmin VerifyMembershipName(string membership)
         {
             TextBox.GetText(membershipTitle[0]);
-            if (membership[0] != membershipTitle[0].Text)
+            if (membership != membershipTitle[0].Text)
             {
                 Console.WriteLine("Membership \"" + membership[0] + "\" is not found");
             }
@@ -65,25 +65,25 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Verify deleting membership")]
-        public MembershipAdmin VerifyDeletingMembership(string[] membership)
+        public MembershipAdmin VerifyDeletingMembership(string membership)
         {
             WaitUntil.CustomElevemtIsVisible(Pages.Common.deleteMessage);
 
-            InputBox.Element(membershipSearchInput,30, membership[0]);
-            Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership[0])));
+            InputBox.Element(membershipSearchInput,30, membership);
+            Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership)));
             
 
             return this;
         }
 
         [AllureStep("Verify membership name in combobox")]
-        public MembershipAdmin VerifyMembershipNameCbbx(string[] membership)
+        public MembershipAdmin VerifyMembershipNameCbbx(string membership)
         {
             TextBox.GetText(cbbxMembershipName);
-            Assert.AreEqual(membership[0], cbbxMembershipName.Text);
-            if (membership[0] != cbbxMembershipName.Text)
+            Assert.AreEqual(membership, cbbxMembershipName.Text);
+            if (membership != cbbxMembershipName.Text)
             {
-                Console.WriteLine("Membership \"" + membership[0] + "\" is not found");
+                Console.WriteLine("Membership \"" + membership + "\" is not found");
             }
 
 

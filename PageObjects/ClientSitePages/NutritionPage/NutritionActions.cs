@@ -11,10 +11,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 {
     public partial class Nutrition
     {
+        #region FINDING YOUR ESTIMATED TDEE page
         public Nutrition ClickCalculateBtn()
         {
 
             Button.Click(btnCalculate);
+            WaitUntil.WaitSomeInterval(1500);
 
             return this;
         }
@@ -73,12 +75,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public Nutrition ClickNextBtn()
         {
             Button.Click(btnNext);
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
         public Nutrition SelectMale(IList<IWebElement> genderBtns)
         {
             Button.Click(genderBtns[0]);
+            WaitUntil.WaitSomeInterval(1500);
 
             return this;
         }
@@ -86,6 +90,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public Nutrition SelectFemale(IList<IWebElement> genderBtns)
         {
             Button.Click(genderBtns[1]);
+            WaitUntil.WaitSomeInterval(1500);
 
             return this;
         }
@@ -93,6 +98,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public Nutrition SelectImperial(IList<IWebElement> conversionSystem)
         {
             Button.Click(conversionSystem[0]);
+            WaitUntil.WaitSomeInterval(1500);
 
             return this;
         }
@@ -100,6 +106,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public Nutrition SelectMetric(IList<IWebElement> conversionSystem)
         {
             Button.Click(conversionSystem[1]);
+            WaitUntil.WaitSomeInterval(1500);
 
             return this;
         }
@@ -107,6 +114,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public Nutrition SelectYesOfAdditionalOptions(IList<IWebElement> additionalOptions)
         {
             Button.Click(additionalOptions[0]);
+            WaitUntil.WaitSomeInterval(1500);
 
             return this;
         }
@@ -114,6 +122,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public Nutrition SelectNoOfAdditionalOptions(IList<IWebElement> additionalOptions)
         {
             Button.Click(additionalOptions[1]);
+            WaitUntil.WaitSomeInterval(1500);
 
             return this;
         }
@@ -148,12 +157,16 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        #endregion
+
         #region Step02
 
         public Nutrition Step02SelectCut()
         {
             WaitUntil.CustomElevemtIsVisible(btnCut);
             btnCut.Click();
+            btnCut.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -161,6 +174,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnMaintain);
             btnMaintain.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -168,12 +182,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnBuild);
             btnBuild.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
         public Nutrition Step02SelectReverse()
         {
             WaitUntil.CustomElevemtIsVisible(btnReverse);
             btnReverse.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
         #endregion
@@ -184,6 +200,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnTier1);
             btnTier1.Click();
+            btnTier1.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -191,6 +209,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnTier2);
             btnTier2.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -198,6 +217,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnTier3);
             btnTier3.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -209,6 +229,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnPhase1);
             btnPhase1.Click();
+            btnPhase1.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -216,6 +238,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnPhase2);
             btnPhase2.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -223,6 +246,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnPhase3);
             btnPhase3.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -234,6 +258,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnDiet1);
             btnDiet1.Click();
+            btnDiet1.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -241,6 +267,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnDiet2);
             btnDiet2.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 
@@ -248,6 +275,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(btnDiet3);
             btnDiet3.Click();
+            WaitUntil.WaitSomeInterval(1500);
             return this;
         }
 

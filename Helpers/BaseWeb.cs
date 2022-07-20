@@ -37,8 +37,7 @@ namespace MCMAutomation.Helpers
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                _ = TelegramHelper.SendMessage();
-                _ = TelegramHelper.SendImage();
+                TelegramHelper.SendMessage();
 
                 Browser.Close();
             }

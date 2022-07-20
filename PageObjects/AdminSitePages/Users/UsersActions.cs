@@ -23,17 +23,17 @@ namespace MCMAutomation.PageObjects
 
         [AllureStep("Edit User")]
 
-        public MembershipAdmin EditUser(string[] membershipName, string email)
+        public MembershipAdmin EditUser(string membershipName, string email)
         {
             WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
             SwitcherHelper.ClickEditUserBtn(email);
             WaitUntil.CustomElevemtIsVisible(emailInput);
-            InputBox.CbbxElement(addUserMembershipCbbx, 30, membershipName[0] + Keys.Enter);
+            InputBox.CbbxElement(addUserMembershipCbbx, 30, membershipName + Keys.Enter);
             Button.Click(addUserMembershipBtn);
 
             WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
 
-            selectUserActiveMembershipCbbx.SendKeys(membershipName[0] + Keys.Enter);
+            selectUserActiveMembershipCbbx.SendKeys(membershipName + Keys.Enter);
             WaitUntil.WaitSomeInterval(2500);
 
             return this;

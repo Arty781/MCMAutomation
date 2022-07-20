@@ -95,7 +95,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             string[] selectedConversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
             if (selectedConversionSystem[0] == "Imperial")
             {
-                string activeElem = null;
+                string activeElem = itemHeightActive.Text;
                 while (activeElem != "4 ft 9 in")
                 {
                     WaitUntil.WaitSomeInterval(200);
@@ -105,7 +105,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             }
             else if(selectedConversionSystem[0] == "Metric")
             {
-                string activeElem = null;
+                string activeElem = itemHeightActive.Text;
                 while (activeElem != "150 cm")
                 {
                     WaitUntil.WaitSomeInterval(200);

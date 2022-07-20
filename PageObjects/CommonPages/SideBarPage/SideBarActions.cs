@@ -78,7 +78,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Open MyAccount")]
         public Sidebar OpenMyAccount()
         {
-            
+            WaitUntil.WaitSomeInterval(3000);
             Button.Click(btnUserName);
 
             WaitUntil.CustomElevemtIsVisible(btnMyAccount, 30);

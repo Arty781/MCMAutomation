@@ -10,7 +10,8 @@ namespace MCMAutomation.Helpers
 {
     public class SwitcherHelper
     {
-        
+        #region TDEE actions
+
         private static IWebElement _element;
         public static IList<IWebElement> NutritionSelector(string title)
         {
@@ -52,6 +53,9 @@ namespace MCMAutomation.Helpers
             return str;
         }
 
+        #endregion
+
+        #region User actions
         public static void ClickEditUserBtn(string email)
         {
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(10));
@@ -108,5 +112,74 @@ namespace MCMAutomation.Helpers
 
             return _element;
         }
+
+        #endregion
+
+        #region Membership actions
+        public static void ClickEditMembershipBtn(string title)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnEditMember = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_edit']"));
+            WaitUntil.CustomElevemtIsVisible(btnEditMember, 60);
+
+            btnEditMember.Click();
+        }
+
+        public static void ClickAddUserBtn(string title)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add-user ']"));
+            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+
+            btnAddUsers.Click();
+        }
+
+        public static void ClickAddProgramBtn(string title)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']"));
+            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+
+            btnAddUsers.Click();
+        }
+
+        public static void ClickDeleteBtn(string title)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_delete']"));
+            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+
+            btnAddUsers.Click();
+        }
+
+        #endregion
+
+        #region Exercise actions
+
+        public static void ClickRemoveExerciseBtn(string exercise)
+        {
+            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath("//div[@class='delete']")));
+
+            IWebElement btnRemove = Browser._Driver.FindElement(By.XPath($"//p[text()='{exercise}']/ancestor::div[@class='table-item']//div[@class='delete']"));
+            WaitUntil.CustomElevemtIsVisible(btnRemove);
+
+            btnRemove.Click();
+        }
+
+        public static void ClickEditExerciseBtn(string exercise)
+        {
+            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath("//div[@class='edit']")));
+
+            IWebElement btnRemove = Browser._Driver.FindElement(By.XPath($"//p[text()='{exercise}']/ancestor::div[@class='table-item']//div[@class='edit']"));
+            WaitUntil.CustomElevemtIsVisible(btnRemove);
+
+            btnRemove.Click();
+        }
+
+        #endregion
     }
 }

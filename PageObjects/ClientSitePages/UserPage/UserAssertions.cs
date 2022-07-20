@@ -12,7 +12,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
     public partial class UserProfile
     {
         [AllureStep("Get User data before saving")]
-        public string[] GetUserDataBeforeSaving()
+        public List<string> GetUserDataBeforeSaving()
         {
             var userData = new List<string>();
 
@@ -28,14 +28,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             userData.Add(TextBox.GetAttribute(inputWeight, "value"));
             userData.Add(TextBox.GetAttribute(inputEmail, "value"));
 
-            string[] data1 = userData.ToArray();
+            
 
-            return data1;
+            return userData;
         }
 
-        [AllureStep("Verify User data before saving")]
-        public UserProfile VerifyUserDataBeforeSaving(string[] dataBeforeSaving)
+        [AllureStep("Verify User data after saving")]
+        public List<string> GetUserDataAfterSaving()
         {
+            WaitUntil.WaitSomeInterval(500);
             var userData = new List<string>();
 
             userData.Add(TextBox.GetAttribute(inputFirstName, "value"));
@@ -50,15 +51,17 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             userData.Add(TextBox.GetAttribute(inputWeight, "value"));
             userData.Add(TextBox.GetAttribute(inputEmail, "value"));
 
-            string[] data2 = userData.ToArray();
-
-
-            var list1 = dataBeforeSaving.Except(data2);
-            var list2 = data2.Except(dataBeforeSaving);
-
-            Assert.IsTrue(!list1.Any() && !list2.Any());
-
-            return this;
+            return userData;
         }
+
+        [AllureStep("Verify User data")]
+        public void VerifyUserData(List<string> dataBeforeSaving, List<string> dataAfterSaving)
+        {
+            var list1 = dataAfterSaving.Except(dataBeforeSaving);
+            var list2 = dataBeforeSaving.Except(dataAfterSaving);
+
+            Assert.Equals(!list1.Any(), !list2.Any());
+        }
+        
     }
 }

@@ -15,11 +15,11 @@ namespace MCMAutomation.Helpers
             try
             {
                 WaitUntil.WaitSomeInterval(250);
-                WaitUntil.CustomElevemtIsVisible(element, 20);
+                WaitUntil.CustomElevemtIsVisible(element, 30);
 
                 element.Click();
             }
-            catch (InvalidElementStateException) { }
+            catch (Exception) { }
             
         }
 
@@ -45,7 +45,7 @@ namespace MCMAutomation.Helpers
             {
                 
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
-                WaitUntil.WaitSomeInterval(100);
+                WaitUntil.WaitSomeInterval(200);
                 element.SendKeys(data);
             }
             catch(Exception) { }
@@ -85,61 +85,11 @@ namespace MCMAutomation.Helpers
         }
     }
 
-    public class RemoveBtn
+
+    public class ButtonActionsMembership
     {
-        public static void ClickRemoveExerciseBtn(string name, int seconds = 10)
-        {
-            WaitUntil.WaitSomeInterval(2500);
-
-            IWebElement btnRemove = Browser._Driver.FindElement(By.XPath($"//p[text()='{name}']/parent::div/following::div/div[@class='delete']"));
-            WaitUntil.CustomElevemtIsVisible(btnRemove, seconds);
-
-            btnRemove.Click();
-        }
-
         
-    }
 
-    public class Membership
-    {
-        public static void ClickEditMembershipBtn(string title)
-        {
-            WaitUntil.WaitSomeInterval(200);
-
-            IWebElement btnEditMember = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_edit']"));
-            WaitUntil.CustomElevemtIsVisible(btnEditMember, 60);
-
-            btnEditMember.Click();
-        }
-
-        public static void ClickAddUserBtn(string title)
-        {
-            WaitUntil.WaitSomeInterval(200);
-
-            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add-user ']"));
-            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
-
-            btnAddUsers.Click();
-        }
-
-        public static void ClickAddProgramBtn(string title)
-        {
-            WaitUntil.WaitSomeInterval(200);
-
-            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']"));
-            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
-
-            btnAddUsers.Click();
-        }
-
-        public static void ClickDeleteBtn(string title)
-        {
-            WaitUntil.WaitSomeInterval(200);
-
-            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_delete']"));
-            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
-
-            btnAddUsers.Click();
-        }
+       
     }
 }
