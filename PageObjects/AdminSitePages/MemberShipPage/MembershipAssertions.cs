@@ -67,7 +67,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify deleting membership")]
         public MembershipAdmin VerifyDeletingMembership(string membership)
         {
-            WaitUntil.CustomElevemtIsVisible(Pages.Common.deleteMessage);
+            WaitUntil.CustomElevemtIsVisible(Pages.Common.messageDeleted);
 
             InputBox.Element(membershipSearchInput,30, membership);
             Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership)));

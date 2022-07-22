@@ -14,14 +14,24 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//button[@type='submit']")]
         public IWebElement saveBtn;
 
+        [FindsBy(How = How.XPath, Using = "//span[text()='Yes']")]
+        public IWebElement btnConfirmationYes;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='loading-spin']")]
+        public IWebElement loader;
+
+        [FindsBy(How = How.XPath, Using = "//div[@class='ant-empty']")]
+        public IWebElement itemsNoData;
 
 
         #region Alerts
 
         [FindsBy(How = How.XPath, Using = "//div[contains(text(),'Item has been deleted' )]")]
-        public IWebElement deleteMessage;
-        
+        public IWebElement messageDeleted;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(text(),'Item has been added' )]")]
+        public IWebElement messageAdded;
+
 
         #endregion
     }

@@ -420,7 +420,7 @@ namespace MCMAutomation.AdminSiteTests
             Pages.PopUp
                 .ClosePopUp();
 
-            //List<string> relatedExerciseList = ExercisesAdmin.GetExercisesList();
+            List<string> relatedExerciseList = Pages.ExercisesAdmin.GetExercisesList();
 
             Pages.ExercisesAdmin
                 .ClickCreateExerciseBtn()
@@ -436,7 +436,59 @@ namespace MCMAutomation.AdminSiteTests
 
             Pages.ExercisesAdmin
                 .ClickEditExercise(exerciseName)
-                .ClickAddRelatedExercisesBtn(5);
+                .ClickAddRelatedExercisesBtn(5)
+                .AddRelatedExercises(relatedExerciseList);
+            Pages.Common
+                .ClickSaveBtn();
+            Pages.Login
+                .GetAdminLogout();
+        }
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+
+        public void DeleteRelatedExercises()
+        {
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenExercisesPage();
+            Pages.PopUp
+                .ClosePopUp();
+
+            List<string> relatedExerciseList = Pages.ExercisesAdmin.GetExercisesList();
+
+            Pages.ExercisesAdmin
+                .ClickCreateExerciseBtn()
+                .EnterExerciseData();
+
+            string exerciseName = TextBox.GetAttribute(Pages.ExercisesAdmin.fieldExerciseName, "value");
+
+            Pages.Common
+                .ClickSaveBtn();
+
+            Pages.ExercisesAdmin
+                .VerifyExerciseIsCreated(exerciseName);
+
+            Pages.ExercisesAdmin
+                .ClickEditExercise(exerciseName)
+                .ClickAddRelatedExercisesBtn(5)
+                .AddRelatedExercises(relatedExerciseList);
+            Pages.Common
+                .ClickSaveBtn();
+            Pages.ExercisesAdmin
+                .ClickEditExercise(exerciseName)
+                .RemoveRelatedExercises();
+            Pages.Common
+                .ClickSaveBtn();
             Pages.Login
                 .GetAdminLogout();
         }
@@ -461,8 +513,6 @@ namespace MCMAutomation.AdminSiteTests
             Pages.PopUp
                 .ClosePopUp();
 
-            List<string> relatedExerciseList = ExercisesAdmin.GetExercisesList();
-
             Pages.ExercisesAdmin
                 .ClickCreateExerciseBtn()
                 .EnterExerciseData();
@@ -476,6 +526,45 @@ namespace MCMAutomation.AdminSiteTests
                 .VerifyExerciseIsCreated(exerciseName);
             
             
+            Pages.Login
+                .GetAdminLogout();
+        }
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+
+        public void CreateExerciseWithRelated()
+        {
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenExercisesPage();            
+            Pages.PopUp
+                .ClosePopUp();
+            List<string> relatedExerciseList = Pages.ExercisesAdmin.GetExercisesList();
+            Pages.ExercisesAdmin
+                .ClickCreateExerciseBtn()
+                .EnterExerciseData()
+                .ClickAddRelatedExercisesBtn(5)
+                .AddRelatedExercises(relatedExerciseList); ;
+
+            string exerciseName = TextBox.GetAttribute(Pages.ExercisesAdmin.fieldExerciseName, "value");
+
+            Pages.Common
+                .ClickSaveBtn();
+
+            Pages.ExercisesAdmin
+                .VerifyExerciseIsCreated(exerciseName);
+
+
             Pages.Login
                 .GetAdminLogout();
         }

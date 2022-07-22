@@ -15,7 +15,7 @@ namespace MCMAutomation.PageObjects
         {
             
             WaitUntil.VisibilityOfAllElementsLocatedBy(_cancelBtn, 60);
-            Button.Click(popupYesNoBtnLinq);
+            popupYesNoBtnLinq.Click();
 
             return this;
         }

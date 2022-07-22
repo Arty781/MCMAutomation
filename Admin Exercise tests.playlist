@@ -30,6 +30,18 @@
                         <Property Name="DisplayName" Value="RemoveExercise" />
                       </Rule>
                     </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.CreateExerciseWithRelated" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateExerciseWithRelated" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.AdminSiteTests.AdminSiteTests.DeleteRelatedExercises" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DeleteRelatedExercises" />
+                      </Rule>
+                    </Rule>
                   </Rule>
                 </Rule>
               </Rule>

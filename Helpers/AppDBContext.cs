@@ -178,7 +178,7 @@ namespace MCMAutomation.Helpers
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) Name, SKU " +
-                                         "FROM Memberships WHERE SKU LIKE @SKU ORDER BY CreationDate DESC", db);
+                                         "FROM Memberships WHERE SKU LIKE @SKU AND IsDeleted = 0 ORDER BY CreationDate DESC", db);
                 command.Parameters.AddWithValue("@SKU", DbType.String).Value = SKU + "%";
                 db.Open();
 
@@ -188,7 +188,7 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
 
-                        nameMembership = reader.GetString(1).ToString();
+                        nameMembership = reader.GetString(0).ToString();
                     }
                 }
 
@@ -197,7 +197,7 @@ namespace MCMAutomation.Helpers
             return nameMembership;
         }
 
-        public static void UpdateUserProgress(string userId)
+        public static void UpdateUserProgressDate(string userId)
         {
             using (SqlConnection db = new(DB.GetConnectionString))
             {
@@ -255,7 +255,7 @@ namespace MCMAutomation.Helpers
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) *" +
-                                         "FROM [AspNetUsers] where email like 'qatester2022%@xitroo.com' " +
+                                         "FROM [AspNetUsers] where email like 'qatester2022%@xitroo.com' AND IsDeleted = 0" +
                                          "ORDER BY DateTime DESC", db);
                 db.Open();
 
@@ -277,7 +277,7 @@ namespace MCMAutomation.Helpers
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) *" +
-                                         "FROM [AspNetUsers] where email = @email " +
+                                         "FROM [AspNetUsers] where email = @email  AND IsDeleted = 0" +
                                          "ORDER BY DateTime DESC", db);
                 command.Parameters.AddWithValue("@email", DbType.String).Value = email;
                 db.Open();

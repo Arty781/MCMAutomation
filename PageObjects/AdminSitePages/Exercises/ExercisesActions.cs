@@ -30,7 +30,7 @@ namespace MCMAutomation.PageObjects
             InputBox.Element(fieldExerciseName, 5, "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss"));
             InputBox.Element(fieldExerciseUrl, 5, "https://player.vimeo.com/video/478282179");
 
-            Button.Click(btnTempoStart[0]);
+            btnTempoStart[0].Click();
 
 
             return this;
@@ -55,7 +55,6 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Edit Exercise")]
-
         public ExercisesAdmin ClickEditExercise(string exerciseName)
         {
             SwitcherHelper.ClickEditExerciseBtn(exerciseName);
@@ -64,7 +63,6 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Click Add related exercises button")]
-
         public ExercisesAdmin ClickAddRelatedExercisesBtn(int i)
         {
             for (int q = 0; q < i; q++)
@@ -78,14 +76,15 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Add related exercises")]
-
-        public ExercisesAdmin AddRelatedExercises(int i, string exercise)
+        public ExercisesAdmin AddRelatedExercises(IList<string> exercise)
         {
-            
+            int i = fieldRelatedGymExercise.Count;
             for (int q = 0; q < i; q++)
             {
-                Button.Click(fieldRelatedExercise[q]);
-                InputBox.CbbxElement(fieldRelatedExercise[q], 5, exercise);
+                Button.Click(fieldRelatedGymExercise[0]);
+                InputBox.CbbxElement(fieldRelatedGymExercise[0], 5, exercise[RandomHelper.RandomExercise(exercise.Count)]);
+                Button.Click(fieldRelatedHomeExercise[0]);
+                InputBox.CbbxElement(fieldRelatedHomeExercise[0], 5, exercise[RandomHelper.RandomExercise(exercise.Count)]);
             }
 
             return this;
@@ -95,14 +94,12 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin RemoveRelatedExercises()
         {
-            int q = 0;
             WaitUntil.CustomElevemtIsVisible(btnRemoveRelatedExeciseElem);
             var removeRelatedbtnList = btnRemoveRelatedExecise.Where(x=>x.Enabled).ToList();
 
-            while (q < removeRelatedbtnList.Count)
+            for (int i=0; i < removeRelatedbtnList.Count; i++)
             {
-                q++;
-                Button.Click(btnRemoveRelatedExecise[q]);
+                Button.Click(btnRemoveRelatedExecise[0]);
             }
 
             return this;

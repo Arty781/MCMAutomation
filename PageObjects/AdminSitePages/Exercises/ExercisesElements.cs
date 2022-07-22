@@ -14,7 +14,7 @@ namespace MCMAutomation.PageObjects
     public partial class ExercisesAdmin
     {
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item-row']/p")]
-        public static IList<IWebElement> nameExerciseTitle;
+        public IList<IWebElement> nameExerciseTitle;
 
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item-row']/p")]
         public IWebElement nameExerciseTitleElem;
@@ -47,7 +47,10 @@ namespace MCMAutomation.PageObjects
         public IWebElement fieldExerciseUrl;
 
         [FindsBy(How = How.XPath, Using = "//span[text()='Select Related Exercise']/parent::div//input")]
-        public IList<IWebElement> fieldRelatedExercise;
+        public IList<IWebElement> fieldRelatedGymExercise;
+
+        [FindsBy(How = How.XPath, Using = "//span[text()='Select Home Exercise']/parent::div//input")]
+        public IList<IWebElement> fieldRelatedHomeExercise;
 
         [FindsBy(How = How.XPath, Using = "//span[@title='Remove Relataed Exercise']")]
         public IList<IWebElement> btnRemoveRelatedExecise;

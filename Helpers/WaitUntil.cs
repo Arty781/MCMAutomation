@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using MCMAutomation.PageObjects;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
@@ -55,16 +56,63 @@ namespace MCMAutomation.Helpers
             {
                 wait.Until(e =>
                 {
-                    if (!element.Displayed)
-                        return null;
-                    else
-                        return element;
+                    try
+                    {
+                        if (element.Enabled == true)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    catch (NoSuchElementException)
+                    {
+                        return false;
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return false;
+                    }
+
                 });
             }
-            catch (Exception) { }
+            catch (NoSuchElementException) { }
+            catch (StaleElementReferenceException) { }
 
         }
 
-       
+        public static void CustomElevemtIsInvisible(IWebElement element, int seconds = 10)
+        {
+            WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
+            wait.PollingInterval = TimeSpan.FromMilliseconds(100);
+            try
+            {
+                wait.Until(e =>
+                {
+                    try
+                    {
+                        if (!element.Enabled == true)
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                    catch (NoSuchElementException)
+                    {
+                        return true;
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return true;
+                    }
+
+                });
+            }
+            catch (NoSuchElementException) { }
+            catch (StaleElementReferenceException) { }
+
+        }
+
+
+
     }
 }

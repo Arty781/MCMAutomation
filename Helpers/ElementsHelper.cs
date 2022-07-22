@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using MCMAutomation.PageObjects;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
@@ -14,21 +15,22 @@ namespace MCMAutomation.Helpers
         {
             try
             {
-                WaitUntil.WaitSomeInterval(250);
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.WaitSomeInterval(500);
                 WaitUntil.CustomElevemtIsVisible(element, 30);
 
                 element.Click();
             }
             catch (Exception) { }
-            
+
         }
 
         public static void ScrollTo(int xPosition, int yPosition)
         {
             try
             {
-            IJavaScriptExecutor js = (IJavaScriptExecutor)Browser._Driver;
-            js.ExecuteScript("window.scrollTo({0}, {1})", xPosition, yPosition);
+                IJavaScriptExecutor jsi = (IJavaScriptExecutor)Browser._Driver;
+                jsi.ExecuteScript("window.scrollTo({0}, {1})", xPosition, yPosition);
             }
             catch (Exception) { }
         }
@@ -40,29 +42,29 @@ namespace MCMAutomation.Helpers
     {
         public static IWebElement Element(IWebElement element, int seconds, string data)
         {
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
+            
             try 
             {
-                
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.CustomElevemtIsVisible(element, seconds);
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
                 WaitUntil.WaitSomeInterval(200);
                 element.SendKeys(data);
             }
-            catch(Exception) { }
-
+            catch (Exception) { }
 
             return element;
         }
         public static IWebElement CbbxElement(IWebElement element, int seconds, string data)
         {
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
+
             try
             {
-                element.SendKeys(data);
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.CustomElevemtIsVisible(element, seconds);
+                element.SendKeys(data + Keys.Enter);
             }
             catch (Exception) { }
-
-
             return element;
         }
 
@@ -70,26 +72,20 @@ namespace MCMAutomation.Helpers
     }
     public class TextBox
     {
-        public static string GetText(IWebElement element, int seconds = 30)
+        public static string GetText(IWebElement element)
         {
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
-
-            return element.Text;
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.CustomElevemtIsVisible(element);
+           return element.Text;
         }
 
-        public static string GetAttribute(IWebElement element, string attribute, int seconds = 30)
+        public static string GetAttribute(IWebElement element, string attribute)
         {
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
-
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.CustomElevemtIsVisible(element);
             return element.GetAttribute(attribute);
+            
         }
     }
 
-
-    public class ButtonActionsMembership
-    {
-        
-
-       
-    }
 }

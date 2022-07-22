@@ -80,7 +80,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
-                .EditUser(membership, email);
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -187,7 +188,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
-                .EditUser(membership, email);
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -291,8 +293,9 @@ namespace MCMAutomation.WebTests
                 .OpenUsersPage();
             Pages.MembershipAdmin
                 .SearchUser(email)
-                .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -389,7 +392,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -422,7 +425,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -519,7 +523,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -552,7 +556,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -651,7 +656,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -683,7 +688,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -773,7 +779,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -806,7 +812,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
-                .EditUser(membership, email);
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -904,7 +911,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -939,7 +946,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1044,7 +1052,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1076,7 +1084,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1183,7 +1192,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1216,7 +1225,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1319,7 +1329,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1351,7 +1361,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1454,7 +1465,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1486,7 +1497,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1590,7 +1602,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1622,7 +1634,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1726,7 +1739,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1758,7 +1771,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1862,7 +1876,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1895,7 +1909,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1997,7 +2012,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -2029,7 +2044,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -2127,7 +2143,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -2159,7 +2175,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -2259,7 +2276,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -2291,7 +2308,8 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .EditUser(membership, Credentials.login);
+                .ClickEditUser(Credentials.login)
+                .AddMembershipToUser(membership);
             Pages.Login
                 .GetAdminLogout();
 
@@ -2388,7 +2406,7 @@ namespace MCMAutomation.WebTests
             Pages.MembershipAdmin
                 .SearchUser(Credentials.login)
                 .VerifyDisplayingOfUser(Credentials.login)
-                .DeleteMemebershipFromUser();
+                .DeleteMemebershipFromUser(Credentials.login);
             Pages.Login
                 .GetAdminLogout();
 
@@ -2489,7 +2507,7 @@ namespace MCMAutomation.WebTests
                     .ClickSubmitBtn()
                     .VerifyAddedProgress(progressBeforeSaving);
 
-                AppDbContext.UpdateUserProgress(userId);
+                AppDbContext.UpdateUserProgressDate(userId);
 
                 Browser._Driver.Navigate().Refresh();
                 Pages.PopUp
@@ -2508,13 +2526,32 @@ namespace MCMAutomation.WebTests
 
         public void AddProgress()
         {
+            #region Preconditions
+            
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
             string email = AppDbContext.GetUserEmail();
-            string userId = AppDbContext.GetUserId(email);
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
 
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
-            Pages.PopUp
-                .ClosePopUp();
             Pages.Sidebar
                 .OpenProgressPage();
             Pages.Progress
@@ -2531,7 +2568,27 @@ namespace MCMAutomation.WebTests
                 Pages.Progress
                     .ClickSubmitBtn()
                     .VerifyAddedProgress(progressBeforeSaving);
-            
+            Pages.Login
+                .GetUserLogout();
+
+            #region Postconditions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .DeleteMemebershipFromUser(email)
+                .DeleteProgressFromUser();
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
 
         }
 

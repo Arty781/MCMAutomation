@@ -17,11 +17,8 @@ namespace MCMAutomation.PageObjects
         public ExercisesAdmin VerifyExerciseIsCreated(string exercise)
         {
             WaitUntil.WaitSomeInterval(2500);
-            InputBox.Element(fieldSearchExercise, 5, exercise);
-
-            var exerciseList = nameExerciseTitle.Where(x => x.Displayed).ToList();
-
-            Assert.AreEqual(exercise, TextBox.GetText(exerciseList[0]));
+            var list = nameExerciseTitle.Where(x=>x.Text.Contains(exercise)).First();
+            Assert.AreEqual(exercise, list.Text);
 
             return this;
         }
@@ -30,8 +27,8 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin VerifyExerciseIsRemoved(string exercise)
         {
-            WaitUntil.WaitSomeInterval(500);
-            WaitUntil.CustomElevemtIsVisible(nameExerciseTitle.Where(x => x.Displayed).Last());
+            WaitUntil.WaitSomeInterval(2500);
+            WaitUntil.CustomElevemtIsVisible(nameExerciseTitle.Where(x => x.Displayed).First());
 
             Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($".//div[@class='table-item-row']/p[contains(text(), '{exercise}')]")));
             
@@ -39,17 +36,18 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-        public static List<string> GetExercisesList()
+        public List<string> GetExercisesList()
         {
-            WaitUntil.CustomElevemtIsVisible(nameExerciseTitle.Where(x => x.Displayed).Last());
+            WaitUntil.CustomElevemtIsVisible(nameExerciseTitleElem);
 
             var exerciseList = new List<string>();
 
             var list = nameExerciseTitle.Where(x => x.Enabled).ToList();
 
-            foreach (var exercise in list)
+            for (int i = 0; i < list.Count; i++)
             {
-                exerciseList.Add(exercise.Text);
+                string exerciseName = list[i].Text;
+                exerciseList.Add(exerciseName);
             }
 
             return exerciseList;

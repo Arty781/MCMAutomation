@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using MCMAutomation.PageObjects;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace MCMAutomation.Helpers
         #endregion
 
         #region User actions
-        public static void ClickEditUserBtn(string email)
+        public static void ClickEditUserBtn(string email, IWebElement inputEmail)
         {
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(10));
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
@@ -65,15 +66,8 @@ namespace MCMAutomation.Helpers
                 var list = Browser._Driver.FindElements(By.XPath($".//td[@title='{email}']"));
                 wait.Until(e =>
                 {
-                    
-                    foreach (var element in list)
-                    {
-                        if (!element.Displayed && element.Text == email)
-                            return null;
-                        else
-                            return element;
-                    }
-                    return Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']"));
+                    try { return Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']")).Enabled; }
+                    catch (Exception) { return false; }
 
                 });
             }
@@ -81,6 +75,8 @@ namespace MCMAutomation.Helpers
 
             _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']/parent::tr/td//div[@class='edit-btn']"));
             _element.Click();
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.CustomElevemtIsVisible(inputEmail, 60);
 
         }
 
@@ -93,6 +89,28 @@ namespace MCMAutomation.Helpers
                 var list = Browser._Driver.FindElements(By.XPath($".//td[@title='{email}']"));
                 wait.Until(e =>
                 {
+                    try { return Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']")).Enabled; }
+                    catch (Exception) { return false; }
+
+                });
+            }
+            catch (Exception) { }
+
+            _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']"));
+
+
+            return _element;
+        }
+
+        public static void ClickDeleteUserBtn(string email)
+        {
+            WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(10));
+            wait.PollingInterval = TimeSpan.FromMilliseconds(100);
+            try
+            {
+                var list = Browser._Driver.FindElements(By.XPath($".//td[@title='{email}']"));
+                wait.Until(e =>
+                {
 
                     foreach (var element in list)
                     {
@@ -107,10 +125,10 @@ namespace MCMAutomation.Helpers
             }
             catch (Exception) { }
 
-            _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']"));
+            _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']/parent::tr/td//div[@class='delete-btn']"));
+            _element.Click();
+            Button.Click(Pages.Common.btnConfirmationYes);
 
-
-            return _element;
         }
 
         #endregion
