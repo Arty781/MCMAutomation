@@ -1,6 +1,7 @@
 ﻿using MCMAutomation.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -129,31 +130,107 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition EnterAge(string age)
         {
-            InputBox.Element(inputAge, 10, age);
-
+            if(inputAge.GetAttribute("value") == "")
+            {
+                InputBox.Element(inputAge, 10, age);
+            }
+            
             return this;
         }
 
-        public Nutrition SelectHeight(int num)
+        public Nutrition SelectHeight()
         {
             Button.Click(inputHeight);
-            Button.Click(popupHeight[num]);
-            Button.Click(btnOk);
+
+
+            string[] selectedConversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
+            if (selectedConversionSystem[0] == "Imperial")
+            {
+                string activeElem = itemHeightActive.Text;
+                IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));
+                IList<IWebElement> heightsAfterActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]"));
+                for (int i = 0; i < heightsAfterActive.Count; i++)
+                {
+                    WaitUntil.WaitSomeInterval(200);
+                    itemHeightNext.Click();
+                    activeElem = itemHeightActive.Text;
+                    if (activeElem == "5 ft 9 in")
+                    {
+                        break;
+                    }
+                }
+                if (activeElem != "5 ft 9 in")
+                {
+                    IList<IWebElement> heightsBeforeActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]"));
+                    for (int i = 0; i < heightsBeforeActive.Count; i++)
+                    {
+                        WaitUntil.WaitSomeInterval(200);
+                        itemHeightPrev.Click();
+                        activeElem = itemHeightActive.Text;
+                        if (activeElem == "5 ft 9 in")
+                        {
+                            break;
+                        }
+                    }
+
+                }
+
+            }
+            else if (selectedConversionSystem[0] == "Metric")
+            {
+                string activeElem = itemHeightActive.Text;
+                IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));
+                IList<IWebElement> heightsAfterActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]"));
+                for (int i = 0; i < heightsAfterActive.Count; i++)
+                {
+                    WaitUntil.WaitSomeInterval(200);
+                    itemHeightNext.Click();
+                    activeElem = itemHeightActive.Text;
+                    if (activeElem == "175 cm")
+                    {
+                        break;
+                    }
+                }
+                if (activeElem != "175 cm")
+                {
+                    IList<IWebElement> heightsBeforeActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]"));
+                    for (int i = 0; i < heightsBeforeActive.Count; i++)
+                    {
+                        WaitUntil.WaitSomeInterval(200);
+                        itemHeightPrev.Click();
+                        activeElem = itemHeightActive.Text;
+                        if (activeElem == "175 cm")
+                        {
+                            break;
+                        }
+                    }
+
+                }
+
+            }
+
+            btnOk.Click();
 
             return this;
         }
 
         public Nutrition EnterWeight(string weight)
         {
-            InputBox.Element(inputWeight, 10, weight);
-
+            if(inputWeight.GetAttribute("value") == "")
+            {
+                InputBox.Element(inputWeight, 10, weight);
+            }
+            
             return this;
         }
 
         public Nutrition EnterBodyFat(string fat)
         {
-            InputBox.Element(inputBodyFat, 10, fat);
-
+            if(inputBodyFat.GetAttribute("value") == "")
+            {
+                InputBox.Element(inputBodyFat, 10, fat);
+            }
+            
             return this;
         }
 
@@ -279,9 +356,34 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        #region Step05 for ARD
+
+        public double GetPreviousCalories(double previousCalories, double maintanceCalories)
+        {
+            
+            if (inputPrevCalories.GetAttribute("value") == "")
+            {
+                InputBox.Element(inputPrevCalories, 5, RandomNumber.Next(1000, (int)maintanceCalories).ToString());
+                previousCalories = double.Parse(TextBox.GetAttribute(inputPrevCalories, "value"));
+            }
+            previousCalories = double.Parse(TextBox.GetAttribute(inputPrevCalories, "value"));
+            
+
+            return previousCalories;
+        }
+
+        public string GetTextOnStep06()
+        {
+            string selectedText = Browser._Driver.FindElement(By.XPath("//label[contains(@class,'checked')]/span[2]")).Text;
+
+            return selectedText;
+        }
+
         #endregion
 
-        
+        #endregion
+
+
 
     }
 }

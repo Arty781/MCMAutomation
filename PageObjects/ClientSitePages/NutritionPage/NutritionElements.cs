@@ -47,7 +47,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//input[@name='age']")]
         public IWebElement inputAge;
 
-        [FindsBy(How = How.XPath, Using = "//input[@name='height']")]
+        [FindsBy(How = How.Name, Using = "height")]
         public IWebElement inputHeight;
 
         [FindsBy(How=How.XPath,Using = "//div[@class='height-slider_item']")]
@@ -67,6 +67,16 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//span[@class='ant-radio ant-radio-checked']/parent::label/span[text()]")]
         public IWebElement selectedgender;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'swiper-slide-prev')]")]
+        public IWebElement itemHeightPrev;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'swiper-slide-active')]")]
+        public IWebElement itemHeightActive;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'swiper-slide-next')]")]
+        public IWebElement itemHeightNext;
+
         #endregion
 
         #region Step01

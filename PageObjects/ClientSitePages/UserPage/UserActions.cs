@@ -90,28 +90,70 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
 
             Button.Click(inputHeight);
-            
-
             string[] selectedConversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
             if (selectedConversionSystem[0] == "Imperial")
             {
                 string activeElem = itemHeightActive.Text;
-                while (activeElem != "4 ft 9 in")
+                IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));
+                IList<IWebElement> heightsAfterActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]"));
+                for (int i = 0; i < heightsAfterActive.Count; i++)
                 {
                     WaitUntil.WaitSomeInterval(200);
                     itemHeightNext.Click();
                     activeElem = itemHeightActive.Text;
+                    if(activeElem == "5 ft 9 in")
+                    {
+                        break;
+                    }
                 }
+                if (activeElem != "5 ft 9 in")
+                {
+                    IList<IWebElement> heightsBeforeActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]"));
+                    for (int i = 0; i < heightsBeforeActive.Count; i++)
+                    {
+                        WaitUntil.WaitSomeInterval(200);
+                        itemHeightPrev.Click();
+                        activeElem = itemHeightActive.Text;
+                        if (activeElem == "5 ft 9 in")
+                        {
+                            break;
+                        }
+                    }
+                        
+                }
+
             }
             else if(selectedConversionSystem[0] == "Metric")
             {
                 string activeElem = itemHeightActive.Text;
-                while (activeElem != "150 cm")
+                IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));
+                IList<IWebElement> heightsAfterActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]"));
+                for (int i = 0; i < heightsAfterActive.Count; i++)
                 {
                     WaitUntil.WaitSomeInterval(200);
                     itemHeightNext.Click();
                     activeElem = itemHeightActive.Text;
+                    if (activeElem == "175 cm")
+                    {
+                        break;
+                    }
                 }
+                if (activeElem != "175 cm")
+                {
+                    IList<IWebElement> heightsBeforeActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]"));
+                    for (int i = 0; i < heightsBeforeActive.Count; i++)
+                    {
+                        WaitUntil.WaitSomeInterval(200);
+                        itemHeightPrev.Click();
+                        activeElem = itemHeightActive.Text;
+                        if (activeElem == "175 cm")
+                        {
+                            break;
+                        }
+                    }
+
+                }
+
             }
 
             btnOk.Click();
@@ -124,6 +166,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
 
             InputBox.Element(inputWeight, 10, RandomHelper.RandomNumber(250));
+
+            return this;
+        }
+
+        [AllureStep("Enter Estimated Body Fat (%)")]
+        public UserProfile EnterEstimatedBodyFat()
+        {
+            InputBox.Element(inputBodyfat, 10, RandomHelper.RandomNumber(30));
 
             return this;
         }

@@ -52,7 +52,7 @@ namespace MCMAutomation.Helpers
             Random r = new Random();
             int genRand = r.Next(18, 65);
 
-            string age = DateTime.Now.AddYears(-genRand).ToString("yyyy-MM-d");
+            string age = DateTime.Now.AddYears(-genRand).ToString("yyyy-MM-dd");
 
             return age;
         }

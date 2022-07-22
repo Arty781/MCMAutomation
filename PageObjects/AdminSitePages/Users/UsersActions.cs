@@ -31,37 +31,24 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-        [AllureStep("Remove Progress")]
+        [AllureStep("Add membership to user")]
         public MembershipAdmin AddMembershipToUser(string membershipName)
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-            if (itemMembership.Count >= 1)
-            {
-                WaitUntil.WaitSomeInterval(500);
-                var progressList = btnDeleteProgress.Where(x => x.Enabled).ToList();
-                for (int i = 0; i < progressList.Count; i++)
-                {
-                    Button.Click(btnDeleteProgress[0]);
-                    WaitUntil.WaitSomeInterval(500);
-                    Pages.Common.btnConfirmationYes.Click();
-                }
-            }
-            else if(itemMembership.Count == 0)
-            {
-                InputBox.CbbxElement(cbbxAddUserMembership, 30, membershipName);
-                WaitUntil.WaitSomeInterval(1000);
-                Button.Click(btnAddUserMembership);
-                InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, "" + membershipName);
-                WaitUntil.WaitSomeInterval(2500);
-            }
-            
-
+            InputBox.CbbxElement(cbbxAddUserMembership, 30, membershipName);
+            WaitUntil.WaitSomeInterval(500);
+            Button.Click(btnAddUserMembership);
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, membershipName);
+            WaitUntil.WaitSomeInterval(2500);
+           
             return this;
         }
 
-        [AllureStep("Remove Progress")]
+        [AllureStep("Delete Progress")]
         public MembershipAdmin DeleteProgressFromUser()
         {
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
             WaitUntil.WaitSomeInterval(500);
             var progressList = btnDeleteProgress.Where(x => x.Enabled).ToList();
             for (int i = 0; i < progressList.Count; i++)
@@ -103,7 +90,7 @@ namespace MCMAutomation.PageObjects
                     WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
                     listAddedmemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
                 }
-
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
                 WaitUntil.CustomElevemtIsVisible(Pages.Common.itemsNoData);
                 Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($"//p/parent::div[@class='user-memberships-item']/img")));
             }
