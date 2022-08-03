@@ -38,10 +38,17 @@ namespace MCMAutomation.PageObjects
             InputBox.CbbxElement(cbbxAddUserMembership, 30, membershipName);
             WaitUntil.WaitSomeInterval(500);
             Button.Click(btnAddUserMembership);
-            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-            InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, membershipName);
-            WaitUntil.WaitSomeInterval(2500);
            
+            return this;
+        }
+
+        [AllureStep("Add membership to user")]
+        public MembershipAdmin SelectActiveMembership(string membershipName)
+        {
+            WaitUntil.WaitSomeInterval(2000);
+            WaitUntil.CustomElevemtIsVisible(btnDeleteAddedMembershipsElem);
+            InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, membershipName);
+
             return this;
         }
 
@@ -62,7 +69,6 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Delete User")]
-
         public MembershipAdmin DeleteUser(string email)
         {
             WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
@@ -74,25 +80,24 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Delete membership from User")]
-
         public MembershipAdmin DeleteMemebershipFromUser(string email)
         {
             WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
             SwitcherHelper.ClickEditUserBtn(email, inputEmail);
             if (itemMembership.Count >= 1)
             {
-                var listAddedmemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
-                for (int i = 0; i <= listAddedmemberships.Count; i++)
+                var listOfMemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
+                for (int i = 0; i <= listOfMemberships.Count; i++)
                 {
 
-                    Button.Click(listAddedmemberships[0]);
+                    Button.Click(listOfMemberships[0]);
                     WaitUntil.WaitSomeInterval(1000);
                     WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-                    listAddedmemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
+                    listOfMemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
                 }
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
                 WaitUntil.CustomElevemtIsVisible(Pages.Common.itemsNoData);
-                Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($"//p/parent::div[@class='user-memberships-item']/img")));
+                Assert.IsTrue(Pages.Common.itemsNoData.Text == "No Data");
             }
             return this;
         }

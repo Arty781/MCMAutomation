@@ -99,12 +99,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 for (int i = 0; i < heightsAfterActive.Count; i++)
                 {
                     WaitUntil.WaitSomeInterval(200);
-                    itemHeightNext.Click();
                     activeElem = itemHeightActive.Text;
                     if(activeElem == "5 ft 9 in")
                     {
                         break;
                     }
+                    itemHeightNext.Click();
                 }
                 if (activeElem != "5 ft 9 in")
                 {
@@ -112,12 +112,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     for (int i = 0; i < heightsBeforeActive.Count; i++)
                     {
                         WaitUntil.WaitSomeInterval(200);
-                        itemHeightPrev.Click();
                         activeElem = itemHeightActive.Text;
                         if (activeElem == "5 ft 9 in")
                         {
                             break;
                         }
+                        itemHeightPrev.Click();
                     }
                         
                 }
@@ -165,7 +165,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterWeight()
         {
 
-            InputBox.Element(inputWeight, 10, RandomHelper.RandomNumber(250));
+            InputBox.Element(inputWeight, 10, "70");
 
             return this;
         }
@@ -173,7 +173,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Estimated Body Fat (%)")]
         public UserProfile EnterEstimatedBodyFat()
         {
-            InputBox.Element(inputBodyfat, 10, RandomHelper.RandomNumber(30));
+            InputBox.Element(inputBodyfat, 10, "15");
 
             return this;
         }

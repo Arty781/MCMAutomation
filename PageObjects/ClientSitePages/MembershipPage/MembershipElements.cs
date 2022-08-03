@@ -60,8 +60,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IList<IWebElement> workoutBtn;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
+        public IWebElement workoutBtnElem;
+
         [FindsBy(How = How.XPath, Using = "//div[contains(@class,'completed')]")]
         public IList<IWebElement> btnCompletedWorkouts;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'completed')]")]
+        public IWebElement btnCompletedWorkoutsElem;
 
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IWebElement workoutBtnelem;
@@ -80,6 +86,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//h2")]
         public IList<IWebElement> textDayTitle;
+
+        [FindsBy(How = How.XPath, Using = "//h2")]
+        public IWebElement textDayTitleElem;
 
 
         #endregion
@@ -133,6 +142,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//div[@class='workout-btn']")]        
         public IWebElement completeWorkoutBtn;
+
+        [FindsBy(How = How.XPath, Using = "//span[@class='view-workout_table_readonly']")]
+        public IList<IWebElement> inputAddedWeight;
+
+        [FindsBy(How = How.XPath, Using = "//span[@class='view-workout_table_readonly']")]
+        public IWebElement inputAddedWeightElem;
+
+        [FindsBy(How = How.XPath, Using = "//a[text()='Back']")]
+        public IWebElement btnBack;
 
         #endregion
 

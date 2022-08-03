@@ -85,6 +85,39 @@ namespace MCMAutomation.Helpers
             return exercise;
         }
 
+        public static List<string> GetMembershipProgramWorkoutData()
+        {
+            var list = new List<string>();
+
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("Select top(1) m.Name, p.Name, w.Name from Programs p " + 
+                    "inner join Memberships m on m.Id = p.MembershipId " +
+                    "inner join Workouts w on w.ProgramId = p.Id " +
+                    "where p.NumberOfWeeks = 4 " +
+                    "and m.name like 'The Challenge%' " +
+                    "and p.IsDeleted = 0 " +
+                    "and m.IsDeleted = 0 " +
+                    "and w.IsDeleted = 0;", db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader.GetString(0));
+                        list.Add(reader.GetString(1));
+                        list.Add(reader.GetString(2));
+
+                    }
+                }
+
+            }
+
+            return list;
+        }
+
         public static string GetLastMembership()
         {
             

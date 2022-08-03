@@ -9,6 +9,7 @@ namespace MCMAutomation.Helpers
     public class Endpoints
     {
         public const string websiteHost = "https://mcmstaging-ui.azurewebsites.net/";
+        public const string apiHost = "https://mcmstaging-api.azurewebsites.net";
     }
 
     public class Credentials
@@ -19,7 +20,6 @@ namespace MCMAutomation.Helpers
         public const string loginAdmin = "admin@coachmarkcarroll.com";
         public const string passwordAdmin = "Upgr@de21";
     }
-
 
     public class UploadedImages
     {
@@ -150,5 +150,22 @@ namespace MCMAutomation.Helpers
             "9-10",
             "11-12"
         };
+    }
+
+    public class Headers
+    {
+        public static ICollection<KeyValuePair<string, string>> HeadersCommon()
+
+        {
+            var headersCommon = new List<KeyValuePair<string, string>>();
+
+            headersCommon.Add(new KeyValuePair<string, string>("accept", "application/json, text/plain, /"));
+            headersCommon.Add(new KeyValuePair<string, string>("accept-encoding", "gzip, deflate, br"));
+            headersCommon.Add(new KeyValuePair<string, string>("content-type", "application/json"));
+
+            return headersCommon;
+            //    {"accept:", "application/json, text/plain, /" },
+            //    { "accept-encoding:", "gzip, deflate, br"}
+        }
     }
 }

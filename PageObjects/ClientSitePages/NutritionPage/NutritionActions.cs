@@ -152,12 +152,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 for (int i = 0; i < heightsAfterActive.Count; i++)
                 {
                     WaitUntil.WaitSomeInterval(200);
-                    itemHeightNext.Click();
                     activeElem = itemHeightActive.Text;
                     if (activeElem == "5 ft 9 in")
                     {
                         break;
                     }
+                    itemHeightNext.Click();
                 }
                 if (activeElem != "5 ft 9 in")
                 {
@@ -184,12 +184,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 for (int i = 0; i < heightsAfterActive.Count; i++)
                 {
                     WaitUntil.WaitSomeInterval(200);
-                    itemHeightNext.Click();
                     activeElem = itemHeightActive.Text;
                     if (activeElem == "175 cm")
                     {
                         break;
                     }
+                    itemHeightNext.Click();
                 }
                 if (activeElem != "175 cm")
                 {
@@ -249,9 +249,24 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step02SelectMainTain()
         {
-            WaitUntil.CustomElevemtIsVisible(btnMaintain);
-            btnMaintain.Click();
-            WaitUntil.WaitSomeInterval(1500);
+            try
+            {
+                if (btnCut.Displayed == true)
+                {
+                    WaitUntil.CustomElevemtIsVisible(btnMaintain);
+                    btnMaintain.Click();
+                    WaitUntil.WaitSomeInterval(1500);
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                WaitUntil.CustomElevemtIsVisible(btnMaintain);
+                btnMaintain.Click();
+                btnMaintain.Click();
+                WaitUntil.WaitSomeInterval(1500);
+            }
+            
+
             return this;
         }
 

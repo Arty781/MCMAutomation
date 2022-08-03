@@ -77,6 +77,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How=How.XPath,Using = "//div[@class='user-memberships-item']/img")]
         public IList<IWebElement> btnDeleteAddedMemberships;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='user-memberships-item']/img")]
+        public IWebElement btnDeleteAddedMembershipsElem;
+
         #region ProgramData section
 
         [FindsBy(How = How.XPath, Using = "//h2[text()='Progress Data']/parent::div//div[@class='your-progress-block_control edit']")]

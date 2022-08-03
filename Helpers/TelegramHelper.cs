@@ -29,7 +29,7 @@ namespace MCMAutomation.Helpers
             Message message1 = await _clientM.SendTextMessageAsync(
                 chatId: _id,
                 text: "The test-case \"" + TestContext.CurrentContext.Test.Name.ToString() +
-                "\" has failed" + "\n" + "\n" + TestContext.CurrentContext.Result.Message.ToString());
+                "\" has failed" + "\n" + "\n" + TestContext.CurrentContext.Result.Message);
 
             Message message2 = await _clientM.SendPhotoAsync(
                 chatId: _id, 

@@ -60,7 +60,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var list1 = dataAfterSaving.Except(dataBeforeSaving);
             var list2 = dataBeforeSaving.Except(dataAfterSaving);
 
-            Assert.Equals(!list1.Any(), !list2.Any());
+            Assert.AreEqual(!list1.Any(), !list2.Any());
         }
         
     }

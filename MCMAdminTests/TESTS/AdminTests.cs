@@ -23,7 +23,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void CreateNewMembership()
         {
             Pages.Login
@@ -58,8 +57,7 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
-        public void CreateNewPrograms()
+        public void AddProgramsToExistingMembership()
         {
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
@@ -78,10 +76,7 @@ namespace MCMAutomation.AdminSiteTests
             string memberName = AppDbContext.GetLastMembership();
 
             Pages.MembershipAdmin
-                .SearchMembership(memberName)
-                .VerifyMembershipName(memberName);
-            Pages.MembershipAdmin
-               .ClickAddProgramsBtn();
+               .ClickAddProgramsBtn(memberName);
 
             string url = Browser._Driver.Url;
 
@@ -101,7 +96,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void EditPrograms()
         {
             Pages.Login
@@ -116,9 +110,7 @@ namespace MCMAutomation.AdminSiteTests
             string memberName = AppDbContext.GetLastMembership();
 
             Pages.MembershipAdmin
-                .SearchMembership(memberName)
-                .VerifyMembershipName(memberName)
-                .ClickAddProgramsBtn();
+                .ClickAddProgramsBtn(memberName);
             Pages.MembershipAdmin
                 .VerifyMembershipNameCbbx(memberName);
 
@@ -138,7 +130,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void EditMembership()
         {
             Pages.Login
@@ -181,8 +172,49 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
+        public void AddProgramsToNewMembership()
+        {
+            
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .ClickCreateBtn()
+                .EnterMembershipData();
+            Pages.Common
+                .ClickSaveBtn();
 
-        public void AddProgramsToNewMembershipMega()
+            string memberName = AppDbContext.GetLastMembership();
+
+            Pages.MembershipAdmin
+                .ClickAddProgramsBtn(memberName)
+                .VerifyMembershipNameCbbx(memberName)
+                .CreatePrograms();
+
+            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+
+            Pages.MembershipAdmin
+                .ClickAddWorkoutBtn()
+                .CreateWorkouts(programList);
+
+            Pages.Login
+                .GetAdminLogout();
+
+        }
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+        public void RemoveProgramsFromNewMembership()
         {
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
@@ -199,21 +231,22 @@ namespace MCMAutomation.AdminSiteTests
                 .ClickSaveBtn();
 
             string memberName = AppDbContext.GetLastMembership();
-            string email = AppDbContext.GetUserEmail();
 
             Pages.MembershipAdmin
-                .SearchMembership(memberName)
-                .VerifyMembershipName(memberName);
-            Pages.MembershipAdmin
-               .ClickAddProgramsBtn();
-
-            string url = Browser._Driver.Url;
-
-            Pages.MembershipAdmin
-                .VerifyMembershipNameCbbx(memberName)
-                .CreateProgramsMega();
+               .ClickAddProgramsBtn(memberName)
+               .VerifyMembershipNameCbbx(memberName)
+               .CreateProgramsMega();
             Pages.Sidebar
-                .OpenMemberShipPage();
+               .OpenMemberShipPage();
+            Pages.MembershipAdmin
+               .ClickAddProgramsBtn(memberName);
+
+            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+
+            Pages.MembershipAdmin
+                .DeletePrograms(programList)
+                .VerifyDeletePrograms();
+
             Pages.Login
                 .GetAdminLogout();
 
@@ -226,7 +259,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void AddWorkoutsAndExercisesToNewMembership()
         {
             Pages.SignUpUser
@@ -255,14 +287,7 @@ namespace MCMAutomation.AdminSiteTests
             string memberName = AppDbContext.GetLastMembership();
 
             Pages.MembershipAdmin
-                .SearchMembership(memberName)
-                .VerifyMembershipName(memberName);
-            Pages.MembershipAdmin
-                .ClickAddProgramsBtn();
-
-            string url = Browser._Driver.Url;
-
-            Pages.MembershipAdmin
+                .ClickAddProgramsBtn(memberName)
                 .VerifyMembershipNameCbbx(memberName)
                 .CreatePrograms();
 
@@ -281,7 +306,72 @@ namespace MCMAutomation.AdminSiteTests
             Pages.MembershipAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
-                .EditUser(memberName, email);
+                .ClickEditUser(email)
+                .AddMembershipToUser(memberName)
+                .SelectActiveMembership(memberName);
+
+            Pages.Login
+                .GetAdminLogout();
+
+        }
+
+        [Test]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+        public void CopyExercisesToNewMembership()
+        {
+            Pages.SignUpUser
+                .GoToSignUpPage();
+
+            string email = RandomHelper.RandomEmail();
+            Pages.SignUpUser
+                .EnterData(email)
+                .ClickOnSignUpBtn()
+                .VerifyDisplayingPopUp()
+                .GoToLoginPage();
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .ClickCreateBtn()
+                .EnterMembershipData();
+            Pages.Common
+                .ClickSaveBtn();
+
+            string memberName = AppDbContext.GetLastMembership();
+
+            Pages.MembershipAdmin
+                .ClickAddProgramsBtn(memberName)
+                .VerifyMembershipNameCbbx(memberName)
+                .CreatePrograms();
+
+            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+
+            Pages.MembershipAdmin
+                .ClickAddWorkoutBtn()
+                .CreateWorkouts(programList);
+
+            List<string> membershipData = AppDbContext.GetMembershipProgramWorkoutData();
+
+            Pages.MembershipAdmin
+                .CopyExercises(programList, membershipData, memberName);
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(memberName)
+                .SelectActiveMembership(memberName);
 
             Pages.Login
                 .GetAdminLogout();
@@ -324,10 +414,7 @@ namespace MCMAutomation.AdminSiteTests
             string memberName = AppDbContext.GetLastMembership();
 
             Pages.MembershipAdmin
-                .SearchMembership(memberName)
-                .VerifyMembershipName(memberName);
-            Pages.MembershipAdmin
-                .ClickAddProgramsBtn();
+                .ClickAddProgramsBtn(memberName);
 
             string url = Browser._Driver.Url;
 
@@ -350,7 +437,9 @@ namespace MCMAutomation.AdminSiteTests
             Pages.MembershipAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
-                .EditUser(memberName, email);
+                .ClickEditUser(email)
+                .AddMembershipToUser(memberName)
+                .SelectActiveMembership(memberName);
             Pages.Sidebar
                 .OpenMemberShipPage();
             Pages.MembershipAdmin
@@ -360,11 +449,6 @@ namespace MCMAutomation.AdminSiteTests
                 .VerifyDeletingMembership(memberName);
             Pages.Login
                 .GetAdminLogout();
-
-
-
-
-
         }
 
         [Test]
@@ -374,7 +458,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void OpenMemberShipPage()
         {
             Pages.Login
@@ -407,7 +490,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void EditExercise()
         {
             Pages.Login
@@ -451,7 +533,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void DeleteRelatedExercises()
         {
             Pages.Login
@@ -477,13 +558,14 @@ namespace MCMAutomation.AdminSiteTests
 
             Pages.ExercisesAdmin
                 .VerifyExerciseIsCreated(exerciseName);
-
             Pages.ExercisesAdmin
                 .ClickEditExercise(exerciseName)
                 .ClickAddRelatedExercisesBtn(5)
                 .AddRelatedExercises(relatedExerciseList);
             Pages.Common
                 .ClickSaveBtn();
+            Pages.PopUp
+                .ClosePopUp();
             Pages.ExercisesAdmin
                 .ClickEditExercise(exerciseName)
                 .RemoveRelatedExercises();
@@ -500,7 +582,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void CreateExerciseWithoutRelated()
         {
             Pages.Login
@@ -537,7 +618,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void CreateExerciseWithRelated()
         {
             Pages.Login
@@ -576,7 +656,6 @@ namespace MCMAutomation.AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-
         public void RemoveExercise()
         {
             Pages.Login
@@ -607,19 +686,12 @@ namespace MCMAutomation.AdminSiteTests
         }
 
         [Test]
-
         public void Test()
         {
-            var q = DateTime.Now.AddMonths(-1);
-            var w = DateTime.Now;
-            var e = DateTime.Now.AddMonths(1);
-
-            Assert.IsTrue(q < w);
-            Assert.IsTrue(w > e);
-
-            Console.WriteLine(q.ToString("yyyy-MM-d"));
-            Console.WriteLine(w.ToString("yyyy-MM-d"));
-            Console.WriteLine(e.ToString("yyyy-MM-d"));
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
         }
     }
 }

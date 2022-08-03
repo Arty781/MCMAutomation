@@ -22,8 +22,9 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Program names")]
         public string[] GetProgramNames()
         {
-            WaitUntil.WaitSomeInterval(1000);
+            WaitUntil.CustomElevemtIsVisible(nameProgramTitleElem);
             var list = new List<string>();
+            
             var programNames = nameProgramTitle.Where(x => x.Displayed).ToList();
             for(int i=0; i<programNames.Count; i++)
             {
@@ -35,10 +36,18 @@ namespace MCMAutomation.PageObjects
             return namesList;
         }
 
+        [AllureStep("Verify deleting of programs")]
+        public MembershipAdmin VerifyDeletePrograms()
+        {
+            Assert.Throws<NoSuchElementException>(() => Element.webElem("//div[@class='table-item-name']"));
+
+            return this;
+        }
+
         [AllureStep("Get Workout names")]
         public string[] GetWorkoutNames()
         {
-            WaitUntil.WaitSomeInterval(1000);
+            WaitUntil.CustomElevemtIsVisible(nameWorkoutTitleElem, 30);
             var list = new List<string>();
             var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).ToList();
             for (int i = 0; i < workoutNames.Count; i++)

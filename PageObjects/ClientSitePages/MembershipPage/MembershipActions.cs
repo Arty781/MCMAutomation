@@ -491,10 +491,21 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Open workout")]
         public MembershipUser OpenWorkout()
         {
+            WaitUntil.CustomElevemtIsVisible(textDayTitleElem);
+            WaitUntil.WaitSomeInterval(2500);
+            WaitUntil.CustomElevemtIsVisible(workoutBtnElem);
+            Button.Click(workoutBtnElem);
+
+            return this;
+        }
+
+        [AllureStep("Open workout")]
+        public MembershipUser OpenCompletedWorkout()
+        {
             WaitUntil.CustomElevemtIsVisible(textDayTitle[0]);
             WaitUntil.WaitSomeInterval(2500);
-            WaitUntil.CustomElevemtIsVisible(workoutBtn[0]);
-            Button.Click(workoutBtn[0]);
+            WaitUntil.CustomElevemtIsVisible(btnCompletedWorkoutsElem);
+            Button.Click(btnCompletedWorkouts.Where(x => x.Enabled).LastOrDefault());
 
             return this;
         }
@@ -591,6 +602,20 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        [AllureStep("Get Weight data")]
+        public List<string> GetWeightData()
+        {
+            WaitUntil.CustomElevemtIsVisible(inputAddedWeight.Where(x => x.Enabled).LastOrDefault());
+            List<string> list = new List<string>();
+            var addedWeightList = inputAddedWeight.Where(x => x.Enabled).ToList();
+            foreach (var weight in addedWeightList)
+            {
+                list.Add(weight.Text);
+            }
+
+            return list;
+        }
+
         [AllureStep("Click Complete Workout Btn")]
         public MembershipUser ClickCompleteWorkoutBtn()
         {
@@ -601,6 +626,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        [AllureStep("Click Complete Workout Btn")]
+        public MembershipUser ClickBackBtn()
+        {
+
+            Button.Click(btnBack);
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 20);
+
+            return this;
+        }
 
     }
 }

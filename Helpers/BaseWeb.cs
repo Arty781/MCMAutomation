@@ -37,10 +37,16 @@ namespace MCMAutomation.Helpers
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
+                var str = TestContext.CurrentContext.Result.Message;
                 TelegramHelper.SendMessage();
 
                 Browser.Close();
             }
+            else if(Browser._Driver != null)
+            {
+                Browser.Close();
+            }
+            
         }
     }
 }

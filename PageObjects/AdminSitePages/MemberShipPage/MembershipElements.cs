@@ -159,6 +159,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
         public IList<IWebElement> nameProgramTitle;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
+        public IWebElement nameProgramTitleElem;
+
         [FindsBy(How = How.XPath, Using = "//h3[text()='Next Phase']/parent::div//input")]
         public IWebElement inputNextPhase;
 
@@ -194,13 +197,16 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
         public IList<IWebElement> nameWorkoutTitle;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
+        public IWebElement nameWorkoutTitleElem;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='delete']")]
         public IList<IWebElement> btnExerciseDelete;
         
-        [FindsBy(How=How.XPath,Using = "//div[text()='Add Exercises']")]
+        [FindsBy(How=How.XPath,Using = "//div[@class='membership-item_add add-workout'][text()='Add Exercises']")]
         public IList<IWebElement> btnAddExercises;
 
-        [FindsBy(How = How.XPath, Using = "//div[text()='Add Exercises']")]
+        [FindsBy(How = How.XPath, Using = "//div[@class='membership-item_add add-workout'][text()='Add Exercises']")]
         public IWebElement btnAddExercisesElement;
 
 
@@ -214,6 +220,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//h3[text()='Workout']/following::input[@type='search']")]
         public IWebElement cbbxWorkoutsTitle;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='copy-form_btn']")]
+        public IWebElement btnCopy;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='exercises-btn']")]
         public IWebElement addExerciseBtn;
 
@@ -222,6 +231,15 @@ namespace MCMAutomation.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//input[@id='exercises-form-items_exerciseId']")]
         public IWebElement exercisesCbbx;
+
+        [FindsBy(How = How.XPath, Using = "//h3[text()='Membership']/parent::div//input")]
+        public IWebElement cbbxMembership;
+
+        [FindsBy(How = How.XPath, Using = "//h3[text()='Program']/parent::div//input")]
+        public IWebElement cbbxProgram;
+
+        [FindsBy(How = How.XPath, Using = "//h3[text()='Workout']/parent::div//input")]
+        public IWebElement cbbxWorkout;
 
         public IWebElement exercisesCbbxElem => Browser._Driver.FindElement(By.XPath("//input[@id='exercises-form-items_exerciseId']"));
 

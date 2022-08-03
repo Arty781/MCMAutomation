@@ -99,7 +99,8 @@ namespace MCMAutomation.PageObjects
 
             for (int i=0; i < removeRelatedbtnList.Count; i++)
             {
-                Button.Click(btnRemoveRelatedExecise[0]);
+                Button.Click(btnRemoveRelatedExeciseElem);
+                WaitUntil.WaitSomeInterval(250);
             }
 
             return this;

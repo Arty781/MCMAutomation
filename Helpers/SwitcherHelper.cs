@@ -1,6 +1,7 @@
 ﻿using MCMAutomation.PageObjects;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -174,6 +175,52 @@ namespace MCMAutomation.Helpers
             btnAddUsers.Click();
         }
 
+        public static void ClickDeleteProgramBtn(string programName)
+        {
+            WaitUntil.WaitSomeInterval(300);
+
+            IWebElement btnDeleteProgram = Browser._Driver.FindElement(By.XPath($"//div[text()='{programName}']/parent::div/child::div/div[@class='delete']"));
+            WaitUntil.CustomElevemtIsVisible(btnDeleteProgram, 60);
+
+            btnDeleteProgram.Click();
+        }
+
+        public static void SelectCopyMembership(List<string> membershipData, string currentMembership)
+        {
+            WaitUntil.WaitSomeInterval(250);
+            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
+            _element = Element.webElem("//div[@class='copy-form']");
+            var membership = _element.FindElement(By.XPath(".//h3[text()='Membership']/parent::div//input"));
+            membership.SendKeys(membershipData[0] + Keys.Enter);
+            WaitUntil.WaitSomeInterval(500);
+            membership.SendKeys(currentMembership + Keys.Enter);
+            WaitUntil.WaitSomeInterval(500);
+            membership.SendKeys(membershipData[0] + Keys.Enter);
+            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Membership']/parent::div//span[@title='{membershipData[0]}']")));
+        }
+
+        public static void SelectCopyProgram(List<string> membershipData)
+        {
+            WaitUntil.WaitSomeInterval(250);
+            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
+            _element = Element.webElem("//div[@class='copy-form']");
+            var membership = _element.FindElement(By.XPath(".//h3[text()='Program']/parent::div//input"));
+            membership.SendKeys(membershipData[1] + Keys.Enter);
+            WaitUntil.WaitSomeInterval(250);
+            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Program']/parent::div//span[@title='{membershipData[1]}']")));
+        }
+
+        public static void SelectCopyWorkout(List<string> membershipData)
+        {
+            WaitUntil.WaitSomeInterval(250);
+            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
+            _element = Element.webElem("//div[@class='copy-form']");
+            var membership = _element.FindElement(By.XPath(".//h3[text()='Workout']/parent::div//input"));
+            membership.SendKeys(membershipData[2] + Keys.Enter);
+            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Workout']/parent::div//span[@title='{membershipData[2]}']")));
+        }
+
+
         #endregion
 
         #region Exercise actions
@@ -200,4 +247,5 @@ namespace MCMAutomation.Helpers
 
         #endregion
     }
+
 }

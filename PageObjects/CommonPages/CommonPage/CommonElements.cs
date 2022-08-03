@@ -17,10 +17,10 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//span[text()='Yes']")]
         public IWebElement btnConfirmationYes;
 
-        [FindsBy(How = How.XPath, Using = "//div[@class='loading-spin']")]
+        [FindsBy(How = How.XPath, Using = "//div[@class='ant-spin ant-spin-spinning']")]
         public IWebElement loader;
 
-        [FindsBy(How = How.XPath, Using = "//div[@class='ant-empty']")]
+        [FindsBy(How = How.XPath, Using = "//p[@class='user-small-title'][text()='Memberships']/parent::div//div[text()='No Data']")]
         public IWebElement itemsNoData;
 
 

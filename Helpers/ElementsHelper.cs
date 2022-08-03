@@ -37,7 +37,6 @@ namespace MCMAutomation.Helpers
 
 
     }
-
     public class InputBox
     {
         public static IWebElement Element(IWebElement element, int seconds, string data)
@@ -48,7 +47,7 @@ namespace MCMAutomation.Helpers
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
-                WaitUntil.WaitSomeInterval(200);
+                WaitUntil.WaitSomeInterval(175);
                 element.SendKeys(data);
             }
             catch (Exception) { }
@@ -64,7 +63,8 @@ namespace MCMAutomation.Helpers
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
                 element.SendKeys(data + Keys.Enter);
             }
-            catch (Exception) { }
+            catch (NoSuchElementException) { }
+            catch (StaleElementReferenceException) { }
             return element;
         }
 
@@ -75,7 +75,6 @@ namespace MCMAutomation.Helpers
         public static string GetText(IWebElement element)
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(element);
            return element.Text;
         }
 
@@ -88,4 +87,20 @@ namespace MCMAutomation.Helpers
         }
     }
 
+    public class Element
+    {
+        public static IWebElement webElem(string xpathString)
+        {
+            WaitUntil.WaitSomeInterval(250);
+            var elem = Browser._Driver.FindElement(By.XPath(xpathString));
+            return elem;
+        }
+
+        public static List<IWebElement> webElemList(string xpathString)
+        {
+            WaitUntil.WaitSomeInterval(250);
+            var elem = Browser._Driver.FindElements(By.XPath(xpathString)).ToList();
+            return elem;
+        }
+    }
 }

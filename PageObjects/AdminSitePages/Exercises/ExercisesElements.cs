@@ -52,10 +52,10 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//span[text()='Select Home Exercise']/parent::div//input")]
         public IList<IWebElement> fieldRelatedHomeExercise;
 
-        [FindsBy(How = How.XPath, Using = "//span[@title='Remove Relataed Exercise']")]
+        [FindsBy(How = How.XPath, Using = "//button[@title='Remove Relataed Exercise']")]
         public IList<IWebElement> btnRemoveRelatedExecise;
 
-        [FindsBy(How = How.XPath, Using = "//span[@title='Remove Relataed Exercise']")]
+        [FindsBy(How = How.XPath, Using = "//button[@title='Remove Relataed Exercise']")]
         public IWebElement btnRemoveRelatedExeciseElem;
 
         [FindsBy(How = How.XPath, Using = "//input[@type='radio']")]
