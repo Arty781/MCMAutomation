@@ -47,8 +47,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//input[@name='age']")]
         public IWebElement inputAge;
 
-        [FindsBy(How = How.XPath, Using = "//input[@name='height']")]
+        [FindsBy(How = How.Name, Using = "height")]
         public IWebElement inputHeight;
+
+        [FindsBy(How=How.XPath,Using = "//div[@class='height-slider_item']")]
+        public IList<IWebElement> popupHeight;
+
+        [FindsBy(How=How.XPath,Using ="//button[contains(text(),'Ok')]")]
+        public IWebElement btnOk;
 
         [FindsBy(How = How.XPath, Using = "//input[@name='weight']")]
         public IWebElement inputWeight;
@@ -61,6 +67,16 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//span[@class='ant-radio ant-radio-checked']/parent::label/span[text()]")]
         public IWebElement selectedgender;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'swiper-slide-prev')]")]
+        public IWebElement itemHeightPrev;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'swiper-slide-active')]")]
+        public IWebElement itemHeightActive;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'swiper-slide-next')]")]
+        public IWebElement itemHeightNext;
+
         #endregion
 
         #region Step01
@@ -89,7 +105,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//div[contains(@class,'reverse')]")]
         public IWebElement btnReverse;
-        
+
         [FindsBy(How = How.XPath, Using = "//div[@class='previous']")]
         public IWebElement btnPreviousStep2AndMore;
 
@@ -120,6 +136,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[contains(@class,'phase-three')]")]
         public IWebElement btnPhase3;
 
+        #region ARD sku
+
+        [FindsBy(How=How.XPath,Using = "//p[contains(text(), '3-4')]/ancestor::div[contains(@class,'week  ')]")]
+        public IList<IWebElement> btnNumberOfWeek;
+
+        #endregion
+
 
         #endregion
 
@@ -134,6 +157,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[contains(@class,'diet-three')]")]
         public IWebElement btnDiet3;
 
+        #region ARD calories
+
+        [FindsBy(How = How.XPath, Using = "//input")]
+        public IWebElement inputPrevCalories;
+
+        #endregion
+
 
 
         #endregion
@@ -142,7 +172,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[@class='last-step-content_top_block']/p[2]")]
         public IWebElement valueCalories;
 
-        [FindsBy(How = How.XPath, Using = "last-step-content_bottom_block-weight")]
+        [FindsBy(How = How.XPath, Using = "//p[@class='last-step-content_bottom_block-weight']")]
         public IList<IWebElement> valueOfProteinCarbsFat;
 
         #endregion

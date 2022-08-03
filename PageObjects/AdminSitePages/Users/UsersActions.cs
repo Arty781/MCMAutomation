@@ -16,48 +16,89 @@ namespace MCMAutomation.PageObjects
 
         public MembershipAdmin SearchUser(string email)
         {
-            WaitUntil.CustomElevemtIsVisible(searchInput);
-            searchInput.SendKeys(email + Keys.Enter);
-            
-
-            WaitUntil.WaitSomeInterval(15000);
+            WaitUntil.CustomElevemtIsVisible(inputSearch);
+            inputSearch.SendKeys(email + Keys.Enter);
             return this;
         }
 
         [AllureStep("Edit User")]
 
-        public MembershipAdmin EditUser(string[] membershipName)
+        public MembershipAdmin ClickEditUser(string email)
         {
-            editBtn.Click();
-            WaitUntil.CustomElevemtIsVisible(emailInput);
+            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
+            SwitcherHelper.ClickEditUserBtn(email, inputEmail);
+
+            return this;
+        }
+
+        [AllureStep("Add membership to user")]
+        public MembershipAdmin AddMembershipToUser(string membershipName)
+        {
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            InputBox.CbbxElement(cbbxAddUserMembership, 30, membershipName);
+            WaitUntil.WaitSomeInterval(500);
+            Button.Click(btnAddUserMembership);
+           
+            return this;
+        }
+
+        [AllureStep("Add membership to user")]
+        public MembershipAdmin SelectActiveMembership(string membershipName)
+        {
+            WaitUntil.WaitSomeInterval(2000);
+            WaitUntil.CustomElevemtIsVisible(btnDeleteAddedMembershipsElem);
+            InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, membershipName);
+
+            return this;
+        }
+
+        [AllureStep("Delete Progress")]
+        public MembershipAdmin DeleteProgressFromUser()
+        {
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.WaitSomeInterval(500);
+            var progressList = btnDeleteProgress.Where(x => x.Enabled).ToList();
+            for (int i = 0; i < progressList.Count; i++)
+            {
+                Button.Click(btnDeleteProgress[0]);
+                WaitUntil.WaitSomeInterval(500);
+                Pages.Common.btnConfirmationYes.Click();
+            }
+
+            return this;
+        }
+
+        [AllureStep("Delete User")]
+        public MembershipAdmin DeleteUser(string email)
+        {
+            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
+            SwitcherHelper.ClickDeleteUserBtn(email);
             
-            addUserMembershipCbbx.SendKeys(membershipName[0] + Keys.Enter);
-            Button.Click(addUserMembershipBtn);
-
-            WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
-
-            selectUserActiveMembershipCbbx.SendKeys(membershipName[0] + Keys.Enter);
-            WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
+            WaitUntil.WaitSomeInterval(2500);
 
             return this;
         }
 
         [AllureStep("Delete membership from User")]
-
-        public MembershipAdmin DeleteMemebershipFromUser()
+        public MembershipAdmin DeleteMemebershipFromUser(string email)
         {
-            editBtn.Click();
-            WaitUntil.CustomElevemtIsVisible(emailInput);
-
-            WaitUntil.CustomElevemtIsVisible(membershipItem, 20);
-            var listAddedmemberships = btnDeleteAddedMemberships.Where(x=>x.Displayed).ToList();
-
-            foreach (var membership in listAddedmemberships)
+            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
+            SwitcherHelper.ClickEditUserBtn(email, inputEmail);
+            if (itemMembership.Count >= 1)
             {
-                membership.Click();
+                var listOfMemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
+                for (int i = 0; i <= listOfMemberships.Count; i++)
+                {
+
+                    Button.Click(listOfMemberships[0]);
+                    WaitUntil.WaitSomeInterval(1000);
+                    WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                    listOfMemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
+                }
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.CustomElevemtIsVisible(Pages.Common.itemsNoData);
+                Assert.IsTrue(Pages.Common.itemsNoData.Text == "No Data");
             }
-
-
             return this;
         }
     }

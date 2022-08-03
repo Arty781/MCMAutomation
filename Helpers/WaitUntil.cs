@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using MCMAutomation.PageObjects;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
@@ -42,6 +43,11 @@ namespace MCMAutomation.Helpers
             new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
         }
 
+        public static void InvisibilityOfAllElementsLocatedBy(By element, int seconds = 10)
+        {
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.InvisibilityOfElementLocated(element));
+        }
+
         public static void CustomElevemtIsVisible(IWebElement element, int seconds = 10)
         {
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
@@ -50,16 +56,64 @@ namespace MCMAutomation.Helpers
             {
                 wait.Until(e =>
                 {
-                    if (!element.Displayed == true)
-                        return null;
-                    else
-                        return element;
+                    try
+                    {
+                        if (element.Enabled == true)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    catch (NoSuchElementException)
+                    {
+                        return false;
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return false;
+                    }
+
                 });
             }
-            catch (Exception) { }
+            catch (NoSuchElementException) { }
+            catch (StaleElementReferenceException) { }
 
         }
 
-       
+        public static void CustomElevemtIsInvisible(IWebElement element, int seconds = 10)
+        {
+            Task.Delay(TimeSpan.FromMilliseconds(150)).Wait();
+            WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
+            wait.PollingInterval = TimeSpan.FromMilliseconds(100);
+            try
+            {
+                wait.Until(e =>
+                {
+                    try
+                    {
+                        if (!element.Enabled == true)
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                    catch (NoSuchElementException)
+                    {
+                        return true;
+                    }
+                    catch (StaleElementReferenceException)
+                    {
+                        return true;
+                    }
+
+                });
+            }
+            catch (NoSuchElementException) { }
+            catch (StaleElementReferenceException) { }
+
+        }
+
+
+
     }
 }

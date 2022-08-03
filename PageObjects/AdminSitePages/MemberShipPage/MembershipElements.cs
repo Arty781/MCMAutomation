@@ -16,11 +16,10 @@ namespace MCMAutomation.PageObjects
 
         #region Membership Page
 
-        public IWebElement btnCreate => Browser._Driver.FindElement(_CreateBtn);
-        public readonly By _CreateBtn = By.XPath("//a[text()='Create Membership']");
-
         [FindsBy(How = How.XPath, Using = "//a[text()='Create Membership']")]
-        public IWebElement membershipCreateBtn;
+        public IWebElement btnCreatemembership;
+
+        public readonly By _btnCreateMembership = By.XPath("//a[text()='Create Membership']");
 
         [FindsBy(How = How.XPath, Using = "//input[@placeholder='Search']")]
         public IWebElement membershipSearchInput;
@@ -65,6 +64,9 @@ namespace MCMAutomation.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//textarea[@name='description']")]
         public IWebElement membershipDescriptionInput;
+
+        [FindsBy(How = How.Name, Using = "accessWeekLength")]
+        public IWebElement inputAccessWeek;
 
         [FindsBy(How = How.XPath, Using = "//input[@placeholder='Choose Start Date']")]
         public IWebElement startDateInput;
@@ -157,6 +159,12 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
         public IList<IWebElement> nameProgramTitle;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
+        public IWebElement nameProgramTitleElem;
+
+        [FindsBy(How = How.XPath, Using = "//h3[text()='Next Phase']/parent::div//input")]
+        public IWebElement inputNextPhase;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item_controls']//div[text()='Add Workouts']")]
         public IList<IWebElement> btnProgramAddWorkouts;
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item_controls']//div[text()='Add Workouts']")]
@@ -189,13 +197,16 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
         public IList<IWebElement> nameWorkoutTitle;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-name']")]
+        public IWebElement nameWorkoutTitleElem;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='delete']")]
         public IList<IWebElement> btnExerciseDelete;
         
-        [FindsBy(How=How.XPath,Using = "//div[text()='Add Exercises']")]
+        [FindsBy(How=How.XPath,Using = "//div[@class='membership-item_add add-workout'][text()='Add Exercises']")]
         public IList<IWebElement> btnAddExercises;
 
-        [FindsBy(How = How.XPath, Using = "//div[text()='Add Exercises']")]
+        [FindsBy(How = How.XPath, Using = "//div[@class='membership-item_add add-workout'][text()='Add Exercises']")]
         public IWebElement btnAddExercisesElement;
 
 
@@ -209,6 +220,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//h3[text()='Workout']/following::input[@type='search']")]
         public IWebElement cbbxWorkoutsTitle;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='copy-form_btn']")]
+        public IWebElement btnCopy;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='exercises-btn']")]
         public IWebElement addExerciseBtn;
 
@@ -217,6 +231,15 @@ namespace MCMAutomation.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//input[@id='exercises-form-items_exerciseId']")]
         public IWebElement exercisesCbbx;
+
+        [FindsBy(How = How.XPath, Using = "//h3[text()='Membership']/parent::div//input")]
+        public IWebElement cbbxMembership;
+
+        [FindsBy(How = How.XPath, Using = "//h3[text()='Program']/parent::div//input")]
+        public IWebElement cbbxProgram;
+
+        [FindsBy(How = How.XPath, Using = "//h3[text()='Workout']/parent::div//input")]
+        public IWebElement cbbxWorkout;
 
         public IWebElement exercisesCbbxElem => Browser._Driver.FindElement(By.XPath("//input[@id='exercises-form-items_exerciseId']"));
 

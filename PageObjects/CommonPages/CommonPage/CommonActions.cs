@@ -13,10 +13,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Click \"Save\" button")]
         public Common ClickSaveBtn()
         {
-            
             Button.Click(saveBtn);
-
-
             return this;
         }
 

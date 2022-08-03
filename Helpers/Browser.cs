@@ -19,7 +19,6 @@ namespace MCMAutomation.Helpers
         public IWebDriver WindowsDriver { get; set; }
         private static IWebDriver windowsDriver;
 
-
         public Browser(IWebDriver windowsDriver)
         {
             WindowsDriver = windowsDriver;
@@ -37,7 +36,6 @@ namespace MCMAutomation.Helpers
             
         }
 
-
         public static string RootPath()
         {
             string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\"));
@@ -49,14 +47,13 @@ namespace MCMAutomation.Helpers
             string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
             return mainpath;
         }
-        /*public static ISearchContext Driver { get { return windowsDriver; } }*/
+
+        //public static ISearchContext Driver { get { return windowsDriver; } }
         public static IWebDriver _Driver { get { return windowsDriver; } }
-        
         public static void Close()
         {
             windowsDriver.Close();
         }
-
         public static void Quit()
         {
             windowsDriver.Quit();

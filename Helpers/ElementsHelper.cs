@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using MCMAutomation.PageObjects;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,73 +15,92 @@ namespace MCMAutomation.Helpers
         {
             try
             {
-                WaitUntil.WaitSomeInterval(1000);
-                WaitUntil.CustomElevemtIsVisible(element, 20);
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.WaitSomeInterval(500);
+                WaitUntil.CustomElevemtIsVisible(element, 30);
 
                 element.Click();
             }
-            catch (InvalidElementStateException) { }
-            
+            catch (Exception) { }
+
         }
 
-        
-    }
+        public static void ScrollTo(int xPosition, int yPosition)
+        {
+            try
+            {
+                IJavaScriptExecutor jsi = (IJavaScriptExecutor)Browser._Driver;
+                jsi.ExecuteScript("window.scrollTo({0}, {1})", xPosition, yPosition);
+            }
+            catch (Exception) { }
+        }
 
+
+    }
     public class InputBox
     {
         public static IWebElement Element(IWebElement element, int seconds, string data)
         {
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
+            
             try 
-            { 
+            {
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.CustomElevemtIsVisible(element, seconds);
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
+                WaitUntil.WaitSomeInterval(175);
                 element.SendKeys(data);
             }
-            catch(InvalidElementStateException) { }
-
+            catch (Exception) { }
 
             return element;
         }
         public static IWebElement CbbxElement(IWebElement element, int seconds, string data)
         {
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
+
             try
             {
-                element.SendKeys(data);
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.CustomElevemtIsVisible(element, seconds);
+                element.SendKeys(data + Keys.Enter);
             }
-            catch (InvalidElementStateException) { }
-
-
+            catch (NoSuchElementException) { }
+            catch (StaleElementReferenceException) { }
             return element;
         }
+
+       
     }
     public class TextBox
     {
-        public static string GetText(IWebElement element, int seconds = 30)
+        public static string GetText(IWebElement element)
         {
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
-
-            return element.Text;
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+           return element.Text;
         }
 
-        public static string GetAttribute(IWebElement element, string attribute, int seconds = 30)
+        public static string GetAttribute(IWebElement element, string attribute)
         {
-            WaitUntil.CustomElevemtIsVisible(element, seconds);
-
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.CustomElevemtIsVisible(element);
             return element.GetAttribute(attribute);
+            
         }
     }
 
-    public class RemoveBtn
+    public class Element
     {
-        public static void ClickRemoveExerciseBtn(string name, int seconds = 10)
+        public static IWebElement webElem(string xpathString)
         {
-            WaitUntil.WaitSomeInterval(2500);
+            WaitUntil.WaitSomeInterval(250);
+            var elem = Browser._Driver.FindElement(By.XPath(xpathString));
+            return elem;
+        }
 
-            IWebElement btnRemove = Browser._Driver.FindElement(By.XPath($"//p[text()='{name}']/parent::div/following::div/div[@class='delete']"));
-            WaitUntil.CustomElevemtIsVisible(btnRemove, seconds);
-
-            btnRemove.Click();
+        public static List<IWebElement> webElemList(string xpathString)
+        {
+            WaitUntil.WaitSomeInterval(250);
+            var elem = Browser._Driver.FindElements(By.XPath(xpathString)).ToList();
+            return elem;
         }
     }
 }

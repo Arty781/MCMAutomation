@@ -17,24 +17,40 @@ namespace MCMAutomation.PageObjects
         public ExercisesAdmin VerifyExerciseIsCreated(string exercise)
         {
             WaitUntil.WaitSomeInterval(2500);
-            InputBox.Element(fieldSearchExercise, 5, exercise);
-
-            var exerciseList = nameExerciseTitle.Where(x => x.Displayed).ToList();
-
-            Assert.AreEqual(exercise, TextBox.GetText(exerciseList[0]));
+            var list = nameExerciseTitle.Where(x=>x.Text.Contains(exercise)).First();
+            Assert.AreEqual(exercise, list.Text);
 
             return this;
         }
 
         [AllureStep("Verify exercise is removed")]
 
-        public ExercisesAdmin VerifyExerciseIsRemoved()
+        public ExercisesAdmin VerifyExerciseIsRemoved(string exercise)
         {
-            WaitUntil.WaitSomeInterval(1000);
-            string[] status = AppDbContext.GetExerciseStatus();
-            Assert.That("True" == status[0]);
+            WaitUntil.WaitSomeInterval(2500);
+            WaitUntil.CustomElevemtIsVisible(nameExerciseTitle.Where(x => x.Displayed).First());
+
+            Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($".//div[@class='table-item-row']/p[contains(text(), '{exercise}')]")));
+            
 
             return this;
+        }
+
+        public List<string> GetExercisesList()
+        {
+            WaitUntil.CustomElevemtIsVisible(nameExerciseTitleElem);
+
+            var exerciseList = new List<string>();
+
+            var list = nameExerciseTitle.Where(x => x.Enabled).ToList();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                string exerciseName = list[i].Text;
+                exerciseList.Add(exerciseName);
+            }
+
+            return exerciseList;
         }
 
     }

@@ -65,6 +65,11 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//a[@href='/programs/training-program']")]
         public IWebElement myProgramBtn;
 
+        [FindsBy(How = How.XPath, Using = "//h3[@class='sidebar-info_name']")]
+        public IWebElement btnUserName;
+
+        [FindsBy(How = How.XPath, Using = "//a[@class='my-account']")]
+        public IWebElement btnMyAccount;
 
         #endregion
 

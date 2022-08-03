@@ -13,8 +13,11 @@ namespace MCMAutomation.PageObjects
 {
     public partial class ExercisesAdmin
     {
-        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-row']/child::p")]
+        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-row']/p")]
         public IList<IWebElement> nameExerciseTitle;
+
+        [FindsBy(How = How.XPath, Using = "//div[@class='table-item-row']/p")]
+        public IWebElement nameExerciseTitleElem;
 
         [FindsBy(How = How.XPath, Using = "//div[@class='exercises-database-btn']")]
         public IWebElement btnAddExercise;
@@ -31,8 +34,11 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='delete']")]
         public IList<IWebElement> btnDdeleteExercise;
 
-        [FindsBy(How = How.XPath, Using = "//button[@class='exercises-database-form_add-btn']")]
-        public IWebElement btnAddRelatedExercise;
+        [FindsBy(How = How.XPath, Using = "//button[text()='Add Related Gym Exercise']")]
+        public IWebElement btnAddRelatedGymExercise;
+
+        [FindsBy(How = How.XPath, Using = "//button[text()='Add Related Home Exercise']")]
+        public IWebElement btnAddRelatedHomeExercise;
 
         [FindsBy(How = How.Id, Using = "name")]
         public IWebElement fieldExerciseName;
@@ -41,12 +47,15 @@ namespace MCMAutomation.PageObjects
         public IWebElement fieldExerciseUrl;
 
         [FindsBy(How = How.XPath, Using = "//span[text()='Select Related Exercise']/parent::div//input")]
-        public IList<IWebElement> fieldRelatedExercise;
+        public IList<IWebElement> fieldRelatedGymExercise;
 
-        [FindsBy(How = How.XPath, Using = "//span[@title='Remove Relataed Exercise']")]
+        [FindsBy(How = How.XPath, Using = "//span[text()='Select Home Exercise']/parent::div//input")]
+        public IList<IWebElement> fieldRelatedHomeExercise;
+
+        [FindsBy(How = How.XPath, Using = "//button[@title='Remove Relataed Exercise']")]
         public IList<IWebElement> btnRemoveRelatedExecise;
 
-        [FindsBy(How = How.XPath, Using = "//span[@title='Remove Relataed Exercise']")]
+        [FindsBy(How = How.XPath, Using = "//button[@title='Remove Relataed Exercise']")]
         public IWebElement btnRemoveRelatedExeciseElem;
 
         [FindsBy(How = How.XPath, Using = "//input[@type='radio']")]

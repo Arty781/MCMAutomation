@@ -59,17 +59,36 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IList<IWebElement> workoutBtn;
+
+        [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
+        public IWebElement workoutBtnElem;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'completed')]")]
+        public IList<IWebElement> btnCompletedWorkouts;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'completed')]")]
+        public IWebElement btnCompletedWorkoutsElem;
+
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IWebElement workoutBtnelem;
 
-        [FindsBy(How = How.XPath, Using = "//input[@type='search']")]
+        [FindsBy(How = How.XPath, Using = "//p[text()='Week']/parent::div//input[@type='search']")]
         public IWebElement weekSelectorInputEx;
+
+        [FindsBy(How = How.XPath, Using = "//p[@class='modal-body_info']")]
+        public IWebElement titleModalWindow;
 
         [FindsBy(How = How.XPath, Using = "//span[@class='ant-select-selection-item']")]
         public IWebElement weekSelector;
 
-        [FindsBy(How = How.XPath, Using = "//div[@class='ant-select-selector']")]
+        [FindsBy(How = How.XPath, Using = "//p[text()='Week']/parent::div//input[@type='search']/ancestor::div[@class='ant-select-selector']")]
         public IWebElement weekSelectorCbbx;
+
+        [FindsBy(How = How.XPath, Using = "//h2")]
+        public IList<IWebElement> textDayTitle;
+
+        [FindsBy(How = How.XPath, Using = "//h2")]
+        public IWebElement textDayTitleElem;
 
 
         #endregion
@@ -78,8 +97,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//tr//td[4]//input[@class='view-workout_table_input']")]
         public IList<IWebElement> weightInput;
+
         [FindsBy(How = How.XPath, Using = "//tr//td[4]//input[@class='view-workout_table_input']")]
         public IWebElement weightInputElem;
+
+        [FindsBy(How=How.XPath,Using = "//tbody//td//span[@class='view-workout_table_readonly']")]
+        public IList<IWebElement> outputWeight;
 
         [FindsBy(How = How.XPath, Using = "//tr//td[5]//input[@class='view-workout_table_input']")]
         public IList<IWebElement> repsInput;
@@ -103,6 +126,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//textarea[@class='ant-input']")]
         public IList <IWebElement> notesInput;
+
         [FindsBy(How = How.XPath, Using = "//textarea[@class='ant-input']")]
         public IWebElement notesInputelem;
 
@@ -118,6 +142,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//div[@class='workout-btn']")]        
         public IWebElement completeWorkoutBtn;
+
+        [FindsBy(How = How.XPath, Using = "//span[@class='view-workout_table_readonly']")]
+        public IList<IWebElement> inputAddedWeight;
+
+        [FindsBy(How = How.XPath, Using = "//span[@class='view-workout_table_readonly']")]
+        public IWebElement inputAddedWeightElem;
+
+        [FindsBy(How = How.XPath, Using = "//a[text()='Back']")]
+        public IWebElement btnBack;
 
         #endregion
 

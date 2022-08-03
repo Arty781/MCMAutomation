@@ -1,0 +1,126 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="MCMWebTests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="MCMAutomation.WebTests" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="WebTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.CheckTdeeForPGForFemale" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CheckTdeeForPGForFemale" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.CheckTdeeForARDForFemale" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CheckTdeeForARDForFemale" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.CheckTdeeForPP1ForFemale" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CheckTdeeForPP1ForFemale" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.CheckTdeeForPP1ForFemaleSecondOption" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CheckTdeeForPP1ForFemaleSecondOption" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesForBuildTier1Phase1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesForBuildTier1Phase1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesForCutTier1Phase1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesForCutTier1Phase1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesForBuildTier2Phase1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesForBuildTier2Phase1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesForCutTier1Phase2" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesForCutTier1Phase2" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesForCutTier2Phase3" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesForCutTier2Phase3" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesForCutTier3Phase1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesForCutTier3Phase1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesForBuildTier3Phase2" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesForBuildTier3Phase2" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCarbsAndFatsFor1000Calories" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCarbsAndFatsFor1000Calories" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCalories" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCalories" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesDiet1" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesDiet1" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesDiet2" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesDiet2" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.VerifyCaloriesDiet3" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VerifyCaloriesDiet3" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="MCMAutomation.WebTests.WebTests.CheckTdeeForARDForFemaleWeek2" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CheckTdeeForARDForFemaleWeek2" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>
