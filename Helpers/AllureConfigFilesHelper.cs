@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,22 +35,56 @@ namespace MCMAutomation.Helpers
 
         public static string CopyJsonConfigFile()
         {
-            string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + "allureConfig.json";
-            using (FileStream fstream = new FileStream($"{mainpath}", FileMode.OpenOrCreate))
-            {
-                byte[] array = Encoding.Default.GetBytes("test");
-                fstream.Write(array, 0, array.Length);
-            }
-            FileInfo fileInf = new FileInfo(mainpath);
 
-            if (fileInf.Exists)
+            FileInfo fileInf = new FileInfo(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + "allureConfig.json");
+            if (fileInf.Exists == true)
             {
                 fileInf.Delete();
             }
-            File.Copy(Browser.RootPath() + @"\AllureConfigFIle\allureConfig.json", mainpath);
+            string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + "allureConfig.json";
+            string str = Path.Combine(Browser.RootPath() + "allure-results");
+            string path = str.Replace("\\", "\\\\");
+            
+            string body = string.Format("{{" +
+                            "\"allure\"" + ":" + "{{" +
+                                                "\"directory\":" + "\"" + $"{path}" + "\"" + "," +
+                                                "\"links\":" + "[" +
+                                                                    "\"" + "{{" + "link" + "}}" + "\"" + "," +
+                                                                    "\"https://testrail.com/browse/" + "{{" + "tms" + "}}" + "\"" + "," +
+                                                                    "\"https://jira.com/browse/" + "{{" + "issue" + "}}" + "\"" +
+                                                               "]" +
+                                                    "}}" + "," +
+                            "\"specflow\":" + "{{" +
+                                                    "\"stepArguments\":" + "{{" +
+                                                                                "\"convertToParameters\":" + "\"true\"" + "," +
+                                                                                "\"paramNameRegex\":" + "\"\"" + "," +
+                                                                                "\"paramValueRegex\":" + "\"\"" +
+                                                                                "}}" + "," +
+                                                    "\"grouping\":" + "{{" +
+                                                                            "\"suites\":" + "{{" +
+                                                                                                    "\"parentSuite\":" + "\"^parentSuite:?(.+)\"" + "," +
+                                                                                                    "\"suite\":" + "\"^suite:?(.+)\"" + "," +
+                                                                                                    "\"subSuite\":" + "\"^subSuite:?(.+)\"" +
+                                                                                                    "}}" + "," +
+                                                                            "\"behaviors\":" + "{{" +
+                                                                                                        "\"epic\":" + "\"^epic:?(.+)\"" + "," +
+                                                                                                        "\"story\":" + "\"^story:(.+)\"" +
+                                                                                                    "}}" +
+                                                                            "}}" + "," +
+                                                                            "\"labels\":" + "{{" +
+                                                                                                    "\"owner\":" + "\"^author:?(.+)\"" + "," +
+                                                                                                    "\"severity\":" + "\"^(normal|blocker|critical|minor|trivial)\"" +
+                                                                                                    "}}" + "," +
+                                                                            "\"links\":" + "{{" +
+                                                                                                "\"tms\":" + "\"^story:(.+)\"" + "," +
+                                                                                                "\"issue\":" + "\"^issue:(.+)\"" + "," +
+                                                                                                "\"link\":" + "\"^link:(.+)\"" +
+                                                                                            "}}" +
+                                                                        "}}" +
+                                             "}}");
 
-
-
+            string jsonBody = body.Replace("[[", "[").Replace("]]","]");
+            File.WriteAllText(mainpath, jsonBody);
             return mainpath;
         }
     } 

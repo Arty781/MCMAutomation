@@ -9,7 +9,7 @@ using Allure.Commons;
 using System.Collections.Generic;
 using System;
 
-namespace MCMAutomation.AdminSiteTests
+namespace AdminSiteTests
 {
     [TestFixture]
     [AllureNUnit]

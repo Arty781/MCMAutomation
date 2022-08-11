@@ -123,8 +123,7 @@ namespace MCMAutomation.WebTests
                 {
                     Pages.MembershipUser
                     .OpenWorkout()
-                    .AddWeight()
-                    .MarkCheckboxes();
+                    .AddWeight();
                     List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
                     Pages.MembershipUser
                     .EnterNotes()
@@ -140,9 +139,8 @@ namespace MCMAutomation.WebTests
                 for (int j = 0; j < countWorkouts; j++)
                 {
                     Pages.MembershipUser
-                     .OpenWorkout()
-                     .AddWeight()
-                     .MarkCheckboxes();
+                    .OpenWorkout()
+                    .AddWeight();
                     List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
                     Pages.MembershipUser
                     .EnterNotes()
@@ -159,8 +157,7 @@ namespace MCMAutomation.WebTests
                 {
                     Pages.MembershipUser
                     .OpenWorkout()
-                    .AddWeight()
-                    .MarkCheckboxes();
+                    .AddWeight();
                     List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
                     Pages.MembershipUser
                     .EnterNotes()
@@ -177,8 +174,7 @@ namespace MCMAutomation.WebTests
                 {
                     Pages.MembershipUser
                     .OpenWorkout()
-                    .AddWeight()
-                    .MarkCheckboxes();
+                    .AddWeight();
                     List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
                     Pages.MembershipUser
                     .EnterNotes()

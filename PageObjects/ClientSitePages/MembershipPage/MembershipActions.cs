@@ -603,7 +603,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         }
 
         [AllureStep("Get Weight data")]
-        public List<string> GetWeightData()
+        public List<string> GetCompleteWeightData()
         {
             WaitUntil.CustomElevemtIsVisible(inputAddedWeight.Where(x => x.Enabled).LastOrDefault());
             List<string> list = new List<string>();
@@ -611,6 +611,20 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             foreach (var weight in addedWeightList)
             {
                 list.Add(weight.Text);
+            }
+
+            return list;
+        }
+
+        [AllureStep("Get Weight data")]
+        public List<string> GetWeightData()
+        {
+            WaitUntil.CustomElevemtIsVisible(weightInput.Where(x => x.Enabled).LastOrDefault());
+            List<string> list = new List<string>();
+            var addedWeightList = weightInput.Where(x => x.Enabled).ToList();
+            foreach (var weight in addedWeightList)
+            {
+                list.Add(weight.GetAttribute("value"));
             }
 
             return list;

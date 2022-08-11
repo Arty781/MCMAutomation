@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.APIHelpers
 {
-    public class SignInRequestHelper
+    public class SignInRequest
     {
        
         public static string SignIn(string login, string password)
@@ -21,7 +21,7 @@ namespace MCMAutomation.APIHelpers
             return str;
         }
 
-        public static string MakeSignIn(string login, string password)
+        public static SignInResponseModel MakeAdminSignIn(string login, string password)
         {
             
             
@@ -33,9 +33,9 @@ namespace MCMAutomation.APIHelpers
             var response = restDriver.Execute(request);
             var content = response.Content;
 
-            var token = JsonConvert.DeserializeObject<SignInResponseModelHelper>(content);
+            var token = JsonConvert.DeserializeObject<SignInResponseModel>(content);
 
-            return token.AccessToken;
+            return token;
         }
 
     }
