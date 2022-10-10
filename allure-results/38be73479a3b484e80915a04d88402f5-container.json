@@ -1,0 +1,76 @@
+{
+  "uuid": "11337751-c5e5-4b77-9e70-7e23cf35dd6e-tc-0-1000",
+  "name": "AdminSiteTests.Memberships.AddProgramsToExistingMembership",
+  "children": [
+    "229389e0-cdb1-4c99-aa58-89e19db70253-tr-0-1002"
+  ],
+  "befores": [
+    {
+      "name": "OneTimeSetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1664953566525,
+      "stop": 1664953566525
+    },
+    {
+      "name": "SetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1664953566525,
+      "stop": 1664953566525
+    }
+  ],
+  "afters": [
+    {
+      "name": "TearDown",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1664953566525,
+      "stop": 1664953566525
+    },
+    {
+      "name": "OneTimeTearDown",
+      "status": "none",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "It's not possible to get status of OneTimeTearDown",
+        "trace": "See Allure.NUnit wiki"
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1664953566525,
+      "stop": 1664953566525
+    }
+  ],
+  "links": [],
+  "start": 1664953425430,
+  "stop": 1664953566553
+}

@@ -58,7 +58,7 @@ namespace MCMAutomation.Helpers
         #endregion
 
         #region User actions
-        public static void ClickEditUserBtn(string email, IWebElement inputEmail)
+        public static void ClickEditUserBtn(string email, IWebElement element)
         {
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(10));
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
@@ -77,7 +77,7 @@ namespace MCMAutomation.Helpers
             _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']/parent::tr/td//div[@class='edit-btn']"));
             _element.Click();
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(inputEmail, 60);
+            WaitUntil.CustomElevemtIsVisible(element, 60);
 
         }
 

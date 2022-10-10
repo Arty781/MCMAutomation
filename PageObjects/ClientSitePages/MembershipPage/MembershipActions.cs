@@ -40,10 +40,6 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
             Button.Click(selectPhaseBtn[i]);
-            WaitUntil.WaitSomeInterval(500);
-            weekSelectorInput.Click();
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
 
             return this;
         }
@@ -436,12 +432,24 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         #region Select week number
 
         [AllureStep("Select Week number")]
-        public MembershipUser SelectWeekNumber1()
+        public MembershipUser SelectWeekNumber1InPhase()
         {
             WaitUntil.WaitSomeInterval(500);
-            WaitUntil.CustomElevemtIsVisible(titleModalWindow, 10);
+            weekSelectorInput.Click();
+            weekSelectorInput.SendKeys(Keys.Enter);
+            Button.Click(viewTrainingProgramBtn);
 
-            weekSelectorInputEx.SendKeys(Keys.ArrowDown+Keys.Enter);
+
+            return this;
+        }
+
+        [AllureStep("Select Week number")]
+        public MembershipUser SelectWeekNumber2InPhase()
+        {
+            WaitUntil.WaitSomeInterval(500);
+            weekSelectorInput.Click();
+            weekSelectorInput.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
+            Button.Click(viewTrainingProgramBtn);
 
 
             return this;
@@ -451,7 +459,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public MembershipUser SelectWeekNumber2()
         {
             
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 15);
 
             weekSelectorInputEx.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
             WaitUntil.WaitSomeInterval(5000);
@@ -522,7 +530,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Add Weight")]
         public MembershipUser AddWeight()
         {
-            WaitUntil.WaitSomeInterval(1000);
+            //WaitUntil.WaitSomeInterval(1000);
             WaitUntil.CustomElevemtIsVisible(weightInputElem);
 
             var weightList = weightInput.Where(x => x.Displayed).ToList();
@@ -530,9 +538,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
             for (int i=0; i<weightList.Count; i++)
             {
-                WaitUntil.CustomElevemtIsVisible(weightList[i], 10);
+                //WaitUntil.CustomElevemtIsVisible(weightList[i], 10);
                 InputBox.Element(weightList[i], 5, RandomHelper.RandomNumber(150));
-                WaitUntil.WaitSomeInterval(150);
+                WaitUntil.WaitSomeInterval(50);
             }
                
             return this;

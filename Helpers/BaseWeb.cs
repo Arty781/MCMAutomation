@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using NUnit.Allure.Attributes;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
@@ -15,8 +16,8 @@ namespace MCMAutomation.Helpers
         [OneTimeSetUp]
         public static void OneTimeSetUp()
         {
-            AllureConfigFilesHelper.CreateBatFile();
-            
+            //AllureConfigFilesHelper.CreateBatFile();
+            AllureConfigFilesHelper.RemoveBatFile();
         } 
 
 
@@ -28,11 +29,15 @@ namespace MCMAutomation.Helpers
             if (Browser._Driver != null)
             {
                 Browser.Quit();
+
+                ForceCloseWebDriver.ForceClose();
+                ForceCloseWebDriver.RemoveBatFile();
             }
             
         }
 
         [TearDown]
+        
         public static void TearDown()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)

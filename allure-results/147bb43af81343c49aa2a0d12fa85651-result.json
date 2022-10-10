@@ -1,0 +1,115 @@
+{
+  "uuid": "f44f89f5-117b-4dfd-b5a2-85422225e376-tr-0-1017",
+  "historyId": "AdminSiteTests.Debug.Test",
+  "fullName": "AdminSiteTests.Debug.Test",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-1QH9UGA"
+    },
+    {
+      "name": "package",
+      "value": "AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "Test"
+    },
+    {
+      "name": "testClass",
+      "value": "Debug"
+    }
+  ],
+  "links": [],
+  "name": "Test",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "System.FormatException : Input string was not in a correct format.",
+    "trace": "   at System.Globalization.TimeSpanFormat.FormatCustomized(TimeSpan value, ReadOnlySpan`1 format, DateTimeFormatInfo dtfi, StringBuilder result)\r\n   at System.Globalization.TimeSpanFormat.Format(TimeSpan value, String format, IFormatProvider formatProvider)\r\n   at System.TimeSpan.ToString(String format)\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_OpenMemberShipPage_100663382_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarActions.cs:line 26\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_OpenMemberShipPage_100663382_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_OpenMemberShipPage_100663382_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.Sidebar.OpenMemberShipPage() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarActions.cs:line 18\r\n   at AdminSiteTests.Debug.Test() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 700"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "Test",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "System.FormatException : Input string was not in a correct format.",
+        "trace": "   at System.Globalization.TimeSpanFormat.FormatCustomized(TimeSpan value, ReadOnlySpan`1 format, DateTimeFormatInfo dtfi, StringBuilder result)\r\n   at System.Globalization.TimeSpanFormat.Format(TimeSpan value, String format, IFormatProvider formatProvider)\r\n   at System.TimeSpan.ToString(String format)\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_OpenMemberShipPage_100663382_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarActions.cs:line 26\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_OpenMemberShipPage_100663382_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_OpenMemberShipPage_100663382_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.Sidebar.OpenMemberShipPage() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarActions.cs:line 18\r\n   at AdminSiteTests.Debug.Test() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 700"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1665066387182,
+          "stop": 1665066389333
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1665066389333,
+          "stop": 1665066390279
+        },
+        {
+          "name": "Open Membership page",
+          "status": "failed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false,
+            "message": "Input string was not in a correct format.",
+            "trace": "   at System.Globalization.TimeSpanFormat.FormatCustomized(TimeSpan value, ReadOnlySpan`1 format, DateTimeFormatInfo dtfi, StringBuilder result)\r\n   at System.Globalization.TimeSpanFormat.Format(TimeSpan value, String format, IFormatProvider formatProvider)\r\n   at System.TimeSpan.ToString(String format)\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_OpenMemberShipPage_100663382_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarActions.cs:line 26\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_OpenMemberShipPage_100663382_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)"
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1665066390280,
+          "stop": 1665066394589
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "ae958c502c584323a612475ec225b019-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1665066381259,
+      "stop": 1665066397044
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1665066381258,
+  "stop": 1665066397048
+}

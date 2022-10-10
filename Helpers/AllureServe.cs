@@ -16,8 +16,8 @@ namespace MCMAutomation.Helpers
         [AllureTag("Regression")]
         [AllureSeverity(SeverityLevel.critical)]
         [AllureOwner("Sukharevsky Artem")]
-        [AllureSuite("WebSite")]
-        [AllureSubSuite("Client")]
+        [AllureSuite("Report")]
+        [AllureSubSuite("AllureReport")]
         [Test]
 
         
@@ -28,5 +28,32 @@ namespace MCMAutomation.Helpers
             Process.Start(Browser.RootPathReport() + "allure serve.bat");
         }
         
+    }
+
+    public static class ForceCloseWebDriver
+    {
+        [AllureSeverity(SeverityLevel.critical)]
+        [AllureOwner("Sukharevsky Artem")]
+        [AllureSuite("DriverLevel")]
+        [AllureSubSuite("ForceCloseDriver")]
+        [Test]
+
+
+        public static void ForceClose()
+        {
+            ForceCloseDriver.CreateBatFile();
+            WaitUntil.WaitSomeInterval(1000);
+            Process.Start(Browser.RootPathReport() + "_!CloseOpenWith.bat");
+        }
+
+        public static void RemoveBatFile()
+        {
+            string path = Browser.RootPathReport() + "_!CloseOpenWith.bat";
+            FileInfo fileInf = new FileInfo(path);
+            if (fileInf.Exists == true)
+            {
+                fileInf.Delete();
+            }
+        }
     }
 }

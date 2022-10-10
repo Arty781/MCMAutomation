@@ -13,10 +13,10 @@ namespace AdminSiteTests
 {
     [TestFixture]
     [AllureNUnit]
-    public class AdminSiteTests : TestBaseAdmin
+    public class Memberships : TestBaseAdmin
     {
 
-        [Test]
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -50,7 +50,7 @@ namespace AdminSiteTests
 
         }
 
-        [Test]
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -89,7 +89,7 @@ namespace AdminSiteTests
 
         }
 
-        [Test]
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -123,7 +123,7 @@ namespace AdminSiteTests
 
         }
 
-        [Test]
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -165,49 +165,49 @@ namespace AdminSiteTests
 
         }
 
-        [Test]
-        [AllureTag("Regression")]
-        [AllureOwner("Artem Sukharevskyi")]
-        [AllureSeverity(SeverityLevel.critical)]
-        [Author("Artem", "qatester91311@gmail.com")]
-        [AllureSuite("Admin")]
-        [AllureSubSuite("Memberships")]
-        public void AddProgramsToNewMembership()
-        {
-            
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenMemberShipPage();
-            Pages.MembershipAdmin
-                .ClickCreateBtn()
-                .EnterMembershipData();
-            Pages.Common
-                .ClickSaveBtn();
+        //[Test]
+        //[AllureTag("Regression")]
+        //[AllureOwner("Artem Sukharevskyi")]
+        //[AllureSeverity(SeverityLevel.critical)]
+        //[Author("Artem", "qatester91311@gmail.com")]
+        //[AllureSuite("Admin")]
+        //[AllureSubSuite("Memberships")]
+        //public void AddProgramsToNewMembership()
+        //{
 
-            string memberName = AppDbContext.GetLastMembership();
+        //    Pages.Login
+        //        .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+        //    Pages.Sidebar
+        //        .VerifyIsLogoDisplayed();
+        //    Pages.PopUp
+        //        .ClosePopUp();
+        //    Pages.Sidebar
+        //        .OpenMemberShipPage();
+        //    Pages.MembershipAdmin
+        //        .ClickCreateBtn()
+        //        .EnterMembershipData();
+        //    Pages.Common
+        //        .ClickSaveBtn();
 
-            Pages.MembershipAdmin
-                .ClickAddProgramsBtn(memberName)
-                .VerifyMembershipNameCbbx(memberName)
-                .CreatePrograms();
+        //    string memberName = AppDbContext.GetLastMembership();
 
-            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+        //    Pages.MembershipAdmin
+        //        .ClickAddProgramsBtn(memberName)
+        //        .VerifyMembershipNameCbbx(memberName)
+        //        .CreatePrograms();
 
-            Pages.MembershipAdmin
-                .ClickAddWorkoutBtn()
-                .CreateWorkouts(programList);
+        //    string[] programList = Pages.MembershipAdmin.GetProgramNames();
 
-            Pages.Login
-                .GetAdminLogout();
+        //    Pages.MembershipAdmin
+        //        .ClickAddWorkoutBtn()
+        //        .CreateWorkouts(programList);
 
-        }
+        //    Pages.Login
+        //        .GetAdminLogout();
 
-        [Test]
+        //}
+
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -252,7 +252,7 @@ namespace AdminSiteTests
 
         }
 
-        [Test]
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -261,15 +261,15 @@ namespace AdminSiteTests
         [AllureSubSuite("Memberships")]
         public void AddWorkoutsAndExercisesToNewMembership()
         {
-            Pages.SignUpUser
-                .GoToSignUpPage();
+            //Pages.SignUpUser
+            //    .GoToSignUpPage();
 
-            string email = RandomHelper.RandomEmail();
-            Pages.SignUpUser
-                .EnterData(email)
-                .ClickOnSignUpBtn()
-                .VerifyDisplayingPopUp()
-                .GoToLoginPage();
+            //string email = RandomHelper.RandomEmail();
+            //Pages.SignUpUser
+            //    .EnterData(email)
+            //    .ClickOnSignUpBtn()
+            //    .VerifyDisplayingPopUp()
+            //    .GoToLoginPage();
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
@@ -283,7 +283,7 @@ namespace AdminSiteTests
                 .EnterMembershipData();
             Pages.Common
                 .ClickSaveBtn();
-            
+
             string memberName = AppDbContext.GetLastMembership();
 
             Pages.MembershipAdmin
@@ -292,11 +292,11 @@ namespace AdminSiteTests
                 .CreatePrograms();
 
             string[] programList = Pages.MembershipAdmin.GetProgramNames();
-           
+
             Pages.MembershipAdmin
                 .ClickAddWorkoutBtn()
                 .CreateWorkouts(programList);
-            
+
             string[] exercise = AppDbContext.GetExercisesData();
 
             Pages.MembershipAdmin
@@ -304,9 +304,9 @@ namespace AdminSiteTests
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.MembershipAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
+                .SearchUser("testuseroutsite@gmail.com")
+                .VerifyDisplayingOfUser("testuseroutsite@gmail.com")
+                .ClickEditUser("testuseroutsite@gmail.com")
                 .AddMembershipToUser(memberName)
                 .SelectActiveMembership(memberName);
 
@@ -315,13 +315,14 @@ namespace AdminSiteTests
 
         }
 
-        [Test]
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
+        
         public void CopyExercisesToNewMembership()
         {
             Pages.SignUpUser
@@ -379,7 +380,7 @@ namespace AdminSiteTests
         }
 
 
-        [Test]
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -451,7 +452,7 @@ namespace AdminSiteTests
                 .GetAdminLogout();
         }
 
-        [Test]
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
@@ -483,21 +484,26 @@ namespace AdminSiteTests
                 .GetAdminLogout();
         }
 
-        [Test]
+    }
+
+    [TestFixture]
+    [AllureNUnit]
+    public class Exercises : TestBaseAdmin
+    {
+
+        [Test, Category("Exercises")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Exercises")]
         public void EditExercise()
         {
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
                 .OpenExercisesPage();
             Pages.PopUp
                 .ClosePopUp();
@@ -514,9 +520,7 @@ namespace AdminSiteTests
                 .ClickSaveBtn();
 
             Pages.ExercisesAdmin
-                .VerifyExerciseIsCreated(exerciseName);
-
-            Pages.ExercisesAdmin
+                .VerifyExerciseIsCreated(exerciseName)
                 .ClickEditExercise(exerciseName)
                 .ClickAddRelatedExercisesBtn(5)
                 .AddRelatedExercises(relatedExerciseList);
@@ -526,13 +530,13 @@ namespace AdminSiteTests
                 .GetAdminLogout();
         }
 
-        [Test]
+        [Test, Category("Exercises")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Exercises")]
         public void DeleteRelatedExercises()
         {
             Pages.Login
@@ -575,13 +579,13 @@ namespace AdminSiteTests
                 .GetAdminLogout();
         }
 
-        [Test]
+        [Test, Category("Exercises")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Exercises")]
         public void CreateExerciseWithoutRelated()
         {
             Pages.Login
@@ -605,28 +609,27 @@ namespace AdminSiteTests
 
             Pages.ExercisesAdmin
                 .VerifyExerciseIsCreated(exerciseName);
-            
-            
+
+
             Pages.Login
                 .GetAdminLogout();
         }
 
-        [Test]
+        [Test, Category("Exercises")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Exercises")]
         public void CreateExerciseWithRelated()
         {
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
             Pages.Sidebar
-                .OpenExercisesPage();            
+                .OpenExercisesPage();
             Pages.PopUp
                 .ClosePopUp();
             List<string> relatedExerciseList = Pages.ExercisesAdmin.GetExercisesList();
@@ -634,28 +637,23 @@ namespace AdminSiteTests
                 .ClickCreateExerciseBtn()
                 .EnterExerciseData()
                 .ClickAddRelatedExercisesBtn(5)
-                .AddRelatedExercises(relatedExerciseList); ;
-
+                .AddRelatedExercises(relatedExerciseList);
             string exerciseName = TextBox.GetAttribute(Pages.ExercisesAdmin.fieldExerciseName, "value");
-
             Pages.Common
                 .ClickSaveBtn();
-
             Pages.ExercisesAdmin
                 .VerifyExerciseIsCreated(exerciseName);
-
-
             Pages.Login
                 .GetAdminLogout();
         }
 
-        [Test]
+        [Test, Category("Exercises")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Exercises")]
         public void RemoveExercise()
         {
             Pages.Login
@@ -685,13 +683,36 @@ namespace AdminSiteTests
                 .GetAdminLogout();
         }
 
+
+    }
+
+    [TestFixture]
+    [AllureNUnit]
+    public class Debug : TestBaseAdmin
+    {
         [Test]
+        [AllureIssue("Test")]
+        //[Ignore("Debugging test")]
         public void Test()
         {
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.password);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.Login
+                .GetAdminLogout();
+            Browser._Driver.Navigate().GoToUrl("https://markcarrollmethod.com/admin/memberships");
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.Login
+                .GetAdminLogout();
+
         }
     }
 }

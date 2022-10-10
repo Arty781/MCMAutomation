@@ -18,17 +18,17 @@ namespace MCMAutomation.WebTests
 {
     [TestFixture]
     [AllureNUnit]
-    public class WebTests : TestBaseWeb
+    public class Register : TestBaseWeb
     {
         #region Register
 
-        [Test]
+        [Test, Category("Register")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Register")]
 
         public void RegisterNewUser()
         {
@@ -63,254 +63,22 @@ namespace MCMAutomation.WebTests
 
 
         #endregion
+    }
 
-        #region Complete workouts
-
-        [Test]
-        [AllureTag("Regression")]
-        [AllureOwner("Artem Sukharevskyi")]
-        [AllureSeverity(SeverityLevel.critical)]
-        [Author("Artem", "qatester91311@gmail.com")]
-        [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
-
-        public void CompleteMembershipsWithData()
-        {
-
-            string email = AppDbContext.GetUserEmail();
-
-            #region AdminActions
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CMC_TEST_SUB12");
-
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.MembershipAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
-            Pages.Login
-                .GetAdminLogout();
-
-            #endregion
-
-            Pages.Login
-                .GetUserLogin(email, Credentials.password);
-            Pages.MembershipUser
-                .OpenMembership();
-
-            int countPhases = Pages.MembershipUser.GetPhasesCount();
-
-            Pages.Sidebar
-                    .OpenMemberShipPageUser();
-
-            for (int i = 0; i < countPhases; i++)
-            {
-                Pages.MembershipUser
-                    .OpenMembership()
-                    .SelectPhase(i);
-                WaitUntil.WaitSomeInterval(3000);
-                int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                    Pages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeight(addedWeightList);
-                    Pages.MembershipUser
-                    .ClickBackBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber2();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                    Pages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeight(addedWeightList);
-                    Pages.MembershipUser
-                    .ClickBackBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber3();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                    Pages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeight(addedWeightList);
-                    Pages.MembershipUser
-                    .ClickBackBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber4();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                    Pages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeight(addedWeightList);
-                    Pages.MembershipUser
-                    .ClickBackBtn();
-                }
-                Pages.Sidebar
-                    .OpenMemberShipPageUser();
-
-            }
-
-            Pages.Login
-                .GetUserLogout();
-
-        }
-
-
-        [Test]
-        [AllureTag("Regression")]
-        [AllureOwner("Artem Sukharevskyi")]
-        [AllureSeverity(SeverityLevel.critical)]
-        [Author("Artem", "qatester91311@gmail.com")]
-        [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
-
-        public void CompleteMembershipsWithDataMega()
-        {
-
-            string email = AppDbContext.GetUserEmail();
-
-            #region AdminActions
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.MembershipAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
-            Pages.Login
-                .GetAdminLogout();
-
-            #endregion
-
-            Pages.Login
-                .GetUserLogin(email, Credentials.password);
-            Pages.MembershipUser
-                .OpenMembership();
-
-            int countPhases = Pages.MembershipUser.GetPhasesCount();
-
-            Pages.Sidebar
-                    .OpenMemberShipPageUser();
-
-            for (int i = 0; i < countPhases; i++)
-            {
-                Pages.MembershipUser
-                    .OpenMembership()
-                    .SelectPhase(i);
-                
-                int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for(int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight()
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber2();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight()
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber3();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight()
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber4();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight()
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn();
-                }
-                Pages.Sidebar
-                    .OpenMemberShipPageUser();
-               
-            }
-
-            Pages.Login
-                .GetUserLogout();
-
-        }
-
-
-        #endregion
-
+    [TestFixture]
+    [AllureNUnit]
+    public class Tdee : TestBaseWeb
+    {
         #region TDEE
 
-        [Test]
+
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void CheckTdeeForPP1ForFemale()
         {
@@ -428,13 +196,13 @@ namespace MCMAutomation.WebTests
 
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void CheckTdeeForPP1ForFemaleSecondOption()
         {
@@ -554,13 +322,13 @@ namespace MCMAutomation.WebTests
 
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void CheckTdeeForPGForFemale()
         {
@@ -592,7 +360,7 @@ namespace MCMAutomation.WebTests
                 .GetUserLoginForTdee(email, Credentials.password);
             Pages.Sidebar
                 .OpenNutritionPage();
-            
+
             #region Variables
 
             string tier = null;
@@ -682,13 +450,13 @@ namespace MCMAutomation.WebTests
 
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
         public void CheckTdeeForARDForMale()
         {
             #region Preconditions
@@ -741,7 +509,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectMale(genderBtns);
 
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");            
+            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
 
             Pages.Nutrition
@@ -804,13 +572,13 @@ namespace MCMAutomation.WebTests
 
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
         public void CheckTdeeForARDForFemaleWeek2()
         {
             #region Preconditions
@@ -858,7 +626,7 @@ namespace MCMAutomation.WebTests
             #region FINDING YOUR ESTIMATED TDEE Page
             Pages.Nutrition
                 .SelectActivityLevel(0);
-            string level = Pages.Nutrition.cbbxActivitylevel.Text;            
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
 
             Pages.Nutrition
@@ -868,7 +636,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Nutrition
                 .SelectMetric(conversionsBtn)
-                .EnterAge(RandomNumber.Next(18,65).ToString())
+                .EnterAge(RandomNumber.Next(18, 65).ToString())
                 .SelectHeight()
                 .EnterWeight(RandomNumber.Next(50, 250).ToString())
                 .EnterBodyFat("15");
@@ -884,7 +652,7 @@ namespace MCMAutomation.WebTests
                 .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn()
                 .Step02SelectReverse();
-            
+
             string goal = Pages.Nutrition.textActiveGoal.Text;
             Pages.Nutrition
                 .ClickNextBtn();
@@ -913,6 +681,7 @@ namespace MCMAutomation.WebTests
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             #endregion
+
             Pages.Login
                 .GetUserLogout();
 
@@ -938,13 +707,13 @@ namespace MCMAutomation.WebTests
 
         #region Checks for Carbs, Fats, Proteins
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesForCutTier1Phase1()
         {
@@ -1070,13 +839,13 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesForCutTier2Phase3()
         {
@@ -1206,13 +975,13 @@ namespace MCMAutomation.WebTests
         }
 
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesForCutTier3Phase1()
         {
@@ -1338,13 +1107,13 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesForCutTier1Phase2()
         {
@@ -1470,13 +1239,13 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesForBuildTier1Phase1()
         {
@@ -1603,13 +1372,13 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesForBuildTier3Phase2()
         {
@@ -1736,13 +1505,13 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesForBuildTier2Phase1()
         {
@@ -1870,13 +1639,13 @@ namespace MCMAutomation.WebTests
         }
 
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCarbsAndFatsFor1000Calories()
         {
@@ -2000,13 +1769,13 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesDiet1()
         {
@@ -2124,13 +1893,13 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesDiet2()
         {
@@ -2236,13 +2005,13 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
-        [Test]
+        [Test, Category("TDEE")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("TDEE")]
 
         public void VerifyCaloriesDiet3()
         {
@@ -2345,16 +2114,270 @@ namespace MCMAutomation.WebTests
         #endregion
 
         #endregion
+    }
 
-        #region User profile
+    [TestFixture]
+    [AllureNUnit]
+    public class Memberships : TestBaseWeb
+    {
 
-        [Test]
+        #region Complete workouts
+
+        [Test, Category("Memberships")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
         [AllureSubSuite("Memberships")]
+
+        public void CompleteMembershipsWithData()
+        {
+
+            string email = AppDbContext.GetUserEmail();
+
+            #region AdminActions
+            //Pages.Login
+            //    .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            //Pages.Sidebar
+            //    .VerifyIsLogoDisplayed();
+
+            //string membership = AppDbContext.GetActiveMembershipsBySKU("CMC_TEST_SUB12");
+
+            //Pages.PopUp
+            //    .ClosePopUp();
+            //Pages.Sidebar
+            //    .OpenUsersPage();
+            //Pages.MembershipAdmin
+            //    .SearchUser(email)
+            //    .VerifyDisplayingOfUser(email)
+            //    .ClickEditUser(email)
+            //    .AddMembershipToUser(membership)
+            //    .SelectActiveMembership(membership);
+            //Pages.Login
+            //    .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLogin(/*Credentials.login*/ "testuseroutsite@gmail.com", Credentials.password);
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.MembershipUser
+                .OpenMembership();
+            
+
+            int countPhases = Pages.MembershipUser.GetPhasesCount();
+
+            Pages.Sidebar
+                    .OpenMemberShipPageUser();
+
+            for (int i = 0; i < countPhases; i++)
+            {
+                Pages.MembershipUser
+                    .OpenMembership()
+                    .SelectPhase(i)
+                    .SelectWeekNumber1InPhase();
+                WaitUntil.WaitSomeInterval(3000);
+                int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                //for (int j = 0; j < countWorkouts; j++)
+                //{
+                //    Pages.MembershipUser
+                //    .OpenWorkout()
+                //    .AddWeight();
+                //    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
+                //    Pages.MembershipUser
+                //    .EnterNotes()
+                //    .ClickCompleteWorkoutBtn()
+                //    .OpenCompletedWorkout()
+                //    .VerifyAddedWeight(addedWeightList);
+                //    Pages.MembershipUser
+                //    .ClickBackBtn();
+                //}
+                //Pages.MembershipUser
+                //    .SelectWeekNumber2();
+                //countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                //for (int j = 0; j < countWorkouts; j++)
+                //{
+                //    Pages.MembershipUser
+                //    .OpenWorkout()
+                //    .AddWeight();
+                //    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
+                //    Pages.MembershipUser
+                //    .EnterNotes()
+                //    .ClickCompleteWorkoutBtn()
+                //    .OpenCompletedWorkout()
+                //    .VerifyAddedWeight(addedWeightList);
+                //    Pages.MembershipUser
+                //    .ClickBackBtn();
+                //}
+                Pages.MembershipUser
+                    .SelectWeekNumber3();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight();
+                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
+                    Pages.MembershipUser
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn()
+                    .OpenCompletedWorkout()
+                    .VerifyAddedWeight(addedWeightList);
+                    Pages.MembershipUser
+                    .ClickBackBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber4();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight();
+                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
+                    Pages.MembershipUser
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn()
+                    .OpenCompletedWorkout()
+                    .VerifyAddedWeight(addedWeightList);
+                    Pages.MembershipUser
+                    .ClickBackBtn();
+                }
+                Pages.Sidebar
+                    .OpenMemberShipPageUser();
+
+            }
+
+            Pages.Login
+                .GetUserLogout();
+
+        }
+
+
+        [Test, Category("Memberships")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void CompleteMembershipsWithDataMega()
+        {
+
+            string email = AppDbContext.GetUserEmail();
+
+            #region AdminActions
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.MembershipAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership)
+                .SelectActiveMembership(membership);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLogin(email, Credentials.password);
+            Pages.MembershipUser
+                .OpenMembership();
+
+            int countPhases = Pages.MembershipUser.GetPhasesCount();
+
+            Pages.Sidebar
+                    .OpenMemberShipPageUser();
+
+            for (int i = 0; i < countPhases; i++)
+            {
+                Pages.MembershipUser
+                    .OpenMembership()
+                    .SelectPhase(i);
+
+                int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber2();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber3();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber4();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight()
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn();
+                }
+                Pages.Sidebar
+                    .OpenMemberShipPageUser();
+
+            }
+
+            Pages.Login
+                .GetUserLogout();
+
+        }
+
+
+        #endregion
+
+    }
+
+    [TestFixture]
+    [AllureNUnit]
+    public class UserProfile : TestBaseWeb
+    {
+        #region User profile
+
+        [Test, Category("UserProfile")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("UserProfile")]
 
         public void EditUser()
         {
@@ -2399,15 +2422,21 @@ namespace MCMAutomation.WebTests
 
         #endregion
 
+    }
+
+    [TestFixture]
+    [AllureNUnit]
+    public class Progress : TestBaseWeb
+    {
         #region Progress
 
-        [Test]
+        [Test, Category("Progress")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Progress")]
 
         public void AddProgressToCheckingTheGraph()
         {
@@ -2420,7 +2449,7 @@ namespace MCMAutomation.WebTests
 
             string email = AppDbContext.GetUserEmail();
             string userId = AppDbContext.GetUserId(email);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB123");
 
             Pages.PopUp
                 .ClosePopUp();
@@ -2441,7 +2470,7 @@ namespace MCMAutomation.WebTests
                 .GetUserLogin(email, Credentials.password);
             Pages.Sidebar
                 .OpenProgressPage();
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Pages.Progress
                     .ClickAddProgressBtnA()
@@ -2486,25 +2515,25 @@ namespace MCMAutomation.WebTests
 
         }
 
-        [Test]
+        [Test, Category("Progress")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Progress")]
 
         public void AddProgress()
         {
             #region Preconditions
-            
+
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
 
             string email = AppDbContext.GetUserEmail();
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB123");
 
             Pages.PopUp
                 .ClosePopUp();
@@ -2534,11 +2563,11 @@ namespace MCMAutomation.WebTests
                 .EnterArm()
                 .EnterHips();
 
-                string[] progressBeforeSaving = Pages.Progress.GetProgressData();
+            string[] progressBeforeSaving = Pages.Progress.GetProgressData();
 
-                Pages.Progress
-                    .ClickSubmitBtn()
-                    .VerifyAddedProgress(progressBeforeSaving);
+            Pages.Progress
+                .ClickSubmitBtn()
+                .VerifyAddedProgress(progressBeforeSaving);
             Pages.Login
                 .GetUserLogout();
 
@@ -2563,13 +2592,13 @@ namespace MCMAutomation.WebTests
 
         }
 
-        [Test]
+        [Test, Category("Progress")]
         [AllureTag("Regression")]
         [AllureOwner("Artem Sukharevskyi")]
         [AllureSeverity(SeverityLevel.critical)]
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Web")]
-        [AllureSubSuite("Memberships")]
+        [AllureSubSuite("Progress")]
 
         public void EditProgress()
         {
@@ -2581,7 +2610,7 @@ namespace MCMAutomation.WebTests
                 .VerifyIsLogoDisplayed();
 
             string email = AppDbContext.GetUserEmail();
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB123");
 
             Pages.PopUp
                 .ClosePopUp();

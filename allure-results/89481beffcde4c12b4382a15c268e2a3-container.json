@@ -1,0 +1,76 @@
+{
+  "uuid": "aeb1d021-e992-425e-ac99-9d4a85a9fb84-tc-0-1002",
+  "name": "MCMAutomation.WebTests.Tdee.VerifyCaloriesDiet1",
+  "children": [
+    "7a6d757b-4149-4a4e-a61b-94e69d753fbb-tr-0-1016"
+  ],
+  "befores": [
+    {
+      "name": "OneTimeSetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1664292345387,
+      "stop": 1664292345387
+    },
+    {
+      "name": "SetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1664292345388,
+      "stop": 1664292345388
+    }
+  ],
+  "afters": [
+    {
+      "name": "TearDown",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1664292345388,
+      "stop": 1664292345388
+    },
+    {
+      "name": "OneTimeTearDown",
+      "status": "none",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "It's not possible to get status of OneTimeTearDown",
+        "trace": "See Allure.NUnit wiki"
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1664292345388,
+      "stop": 1664292345388
+    }
+  ],
+  "links": [],
+  "start": 1664292287951,
+  "stop": 1664292345418
+}

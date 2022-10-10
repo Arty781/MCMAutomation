@@ -1,0 +1,214 @@
+{
+  "uuid": "e3378cbf-0c90-4969-b8aa-c3551fe3b71e-tr-0-1020",
+  "historyId": "MCMAutomation.WebTests.CompleteWorkouts.CompleteMembershipsWithData",
+  "fullName": "MCMAutomation.WebTests.CompleteWorkouts.CompleteMembershipsWithData",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-1QH9UGA"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.WebTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "CompleteMembershipsWithData"
+    },
+    {
+      "name": "testClass",
+      "value": "CompleteWorkouts"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Web"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "CompleteMembershipsWithData",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenQA.Selenium.WebDriverTimeoutException : Timed out after 10 seconds",
+    "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.CustomElevemtIsVisible(IWebElement element, Int32 seconds) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 59\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_SelectWeekNumber2_100663436_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipActions.cs:line 454\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_SelectWeekNumber2_100663436_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_SelectWeekNumber2_100663436_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.SelectWeekNumber2() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipElements.cs:line 120\r\n   at MCMAutomation.WebTests.CompleteWorkouts.CompleteMembershipsWithData() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMWebTests\\TESTS\\WebTests.cs:line 2192"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "CompleteMembershipsWithData",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "OpenQA.Selenium.WebDriverTimeoutException : Timed out after 10 seconds",
+        "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.CustomElevemtIsVisible(IWebElement element, Int32 seconds) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 59\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_SelectWeekNumber2_100663436_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipActions.cs:line 454\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_SelectWeekNumber2_100663436_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_SelectWeekNumber2_100663436_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.SelectWeekNumber2() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipElements.cs:line 120\r\n   at MCMAutomation.WebTests.CompleteWorkouts.CompleteMembershipsWithData() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMWebTests\\TESTS\\WebTests.cs:line 2192"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as user",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663055956777,
+          "stop": 1663055958919
+        },
+        {
+          "name": "Open membership",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663055958920,
+          "stop": 1663055968940
+        },
+        {
+          "name": "Get Phases count",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663055968941,
+          "stop": 1663055968976
+        },
+        {
+          "name": "Open Membership page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663055968977,
+          "stop": 1663055970892
+        },
+        {
+          "name": "Open membership",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663055970892,
+          "stop": 1663055971770
+        },
+        {
+          "name": "Select Phase",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663055971771,
+          "stop": 1663055974292
+        },
+        {
+          "name": "Get Workouts count",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663055977295,
+          "stop": 1663055977303
+        },
+        {
+          "name": "Select Week number",
+          "status": "failed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false,
+            "message": "Timed out after 10 seconds",
+            "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.CustomElevemtIsVisible(IWebElement element, Int32 seconds) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 59\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_SelectWeekNumber2_100663436_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipActions.cs:line 454\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_SelectWeekNumber2_100663436_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)"
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663055977303,
+          "stop": 1663055987618
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "2806de4b02e44fb4b01399f989d5dfa9-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1663055948892,
+      "stop": 1663055990061
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1663055948892,
+  "stop": 1663055990066
+}

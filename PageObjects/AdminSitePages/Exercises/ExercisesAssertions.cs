@@ -29,6 +29,7 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.WaitSomeInterval(2500);
             WaitUntil.CustomElevemtIsVisible(nameExerciseTitle.Where(x => x.Displayed).First());
+             
 
             Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($".//div[@class='table-item-row']/p[contains(text(), '{exercise}')]")));
             

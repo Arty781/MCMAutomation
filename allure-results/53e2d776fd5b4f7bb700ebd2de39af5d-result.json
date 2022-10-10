@@ -1,0 +1,106 @@
+{
+  "uuid": "540b88b6-cf0f-4c20-beec-71f256b6d10e-tr-0-1017",
+  "historyId": "AdminSiteTests.Debug.Test",
+  "fullName": "AdminSiteTests.Debug.Test",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-1QH9UGA"
+    },
+    {
+      "name": "package",
+      "value": "AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "Test"
+    },
+    {
+      "name": "testClass",
+      "value": "Debug"
+    }
+  ],
+  "links": [
+    {
+      "name": "Test",
+      "url": "https://jira.com/browse/Test",
+      "type": "issue"
+    }
+  ],
+  "name": "Test",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenQA.Selenium.WebDriverTimeoutException : Timed out after 30 seconds",
+    "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.CustomElevemtIsVisible(IWebElement element, Int32 seconds) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 59\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_VerifyIsLogoDisplayed_100663389_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarAssertions.cs:line 18\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_VerifyIsLogoDisplayed_100663389_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_VerifyIsLogoDisplayed_100663389_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.Sidebar.VerifyIsLogoDisplayed() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarActions.cs:line 22\r\n   at AdminSiteTests.Debug.Test() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 700"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "Test",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "OpenQA.Selenium.WebDriverTimeoutException : Timed out after 30 seconds",
+        "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.CustomElevemtIsVisible(IWebElement element, Int32 seconds) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 59\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_VerifyIsLogoDisplayed_100663389_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarAssertions.cs:line 18\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_VerifyIsLogoDisplayed_100663389_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_VerifyIsLogoDisplayed_100663389_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.Sidebar.VerifyIsLogoDisplayed() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarActions.cs:line 22\r\n   at AdminSiteTests.Debug.Test() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 700"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1665402723428,
+          "stop": 1665402725557
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "failed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false,
+            "message": "Timed out after 30 seconds",
+            "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.CustomElevemtIsVisible(IWebElement element, Int32 seconds) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 59\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_VerifyIsLogoDisplayed_100663389_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\CommonPages\\SideBarPage\\SideBarAssertions.cs:line 18\r\n   at MCMAutomation.PageObjects.Sidebar.__a$_around_VerifyIsLogoDisplayed_100663389_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)"
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1665402725558,
+          "stop": 1665402755906
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "a196daf055f1489ca61519bd9915509f-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1665402716937,
+      "stop": 1665402759026
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1665402716937,
+  "stop": 1665402759031
+}
