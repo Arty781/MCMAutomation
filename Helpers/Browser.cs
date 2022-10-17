@@ -48,7 +48,6 @@ namespace MCMAutomation.Helpers
             return mainpath;
         }
 
-        //public static ISearchContext Driver { get { return windowsDriver; } }
         public static IWebDriver _Driver { get { return windowsDriver; } }
         public static void Close()
         {

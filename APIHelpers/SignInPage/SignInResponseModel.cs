@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.APIHelpers
 {
-    public class SignInResponseModelHelper
+    public class SignInResponseModel
     {
         [JsonProperty("accessToken")]
         public string AccessToken { get; set; }

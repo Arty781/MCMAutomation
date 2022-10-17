@@ -44,10 +44,10 @@ namespace MCMAutomation.Helpers
             
             try 
             {
-                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 10);
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
                 element.SendKeys(Keys.Control + "A" + Keys.Delete);
-                WaitUntil.WaitSomeInterval(175);
+                WaitUntil.WaitSomeInterval(75);
                 element.SendKeys(data);
             }
             catch (Exception) { }

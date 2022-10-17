@@ -62,7 +62,7 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//input[@name='name']")]
         public IWebElement membershipNameInput;
 
-        [FindsBy(How = How.XPath, Using = "//textarea[@name='description']")]
+        [FindsBy(How = How.XPath, Using = "//div[@class='jodit-wysiwyg']")]
         public IWebElement membershipDescriptionInput;
 
         [FindsBy(How = How.Name, Using = "accessWeekLength")]

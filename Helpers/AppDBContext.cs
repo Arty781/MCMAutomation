@@ -121,7 +121,7 @@ namespace MCMAutomation.Helpers
         public static string GetLastMembership()
         {
             
-            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitleElem, 90);
+            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitleElem, 30);
             string exercise = null;
             using (SqlConnection db = new(DB.GetConnectionString))
             {

@@ -1,4 +1,5 @@
 ﻿using MCMAutomation.APIHelpers;
+using MCMAutomation.APIHelpers.SignInPage;
 using MCMAutomation.Helpers;
 using NUnit.Framework;
 using System;
@@ -16,7 +17,9 @@ namespace MCMApiTests
         [Test]
         public void MakeSignIn()
         {
-            SignInRequestHelper.MakeSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
+            var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
+            SignInAssertions
+                .VerifyIsAdminSignInSuccesfull(responseLogin);
         }
     }
 }

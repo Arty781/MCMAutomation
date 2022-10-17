@@ -1,0 +1,80 @@
+{
+  "uuid": "20448f32-48c1-47a3-a3b9-4ea1fae11e31-tc-0-1000",
+  "name": "AdminSiteTests.AdminSiteTests.AddWorkoutsAndExercisesToNewMembership",
+  "children": [
+    "79eb5bbe-1f66-495c-a775-d630e0e49503-tr-0-1007"
+  ],
+  "befores": [
+    {
+      "name": "OneTimeSetUp",
+      "status": "passed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1662990972879,
+      "stop": 1662990972879
+    },
+    {
+      "name": "SetUp",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "System.InvalidOperationException : session not created: This version of ChromeDriver only supports Chrome version 103\nCurrent browser version is 105.0.5195.102 with binary path C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe (SessionNotCreated)\r\nTearDown : System.NullReferenceException : Object reference not set to an instance of an object.",
+        "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.StartSession(ICapabilities desiredCapabilities)\r\n   at OpenQA.Selenium.WebDriver..ctor(ICommandExecutor executor, ICapabilities capabilities)\r\n   at OpenQA.Selenium.Chromium.ChromiumDriver..ctor(ChromiumDriverService service, ChromiumOptions options, TimeSpan commandTimeout)\r\n   at OpenQA.Selenium.Chrome.ChromeDriver..ctor(ChromeDriverService service, ChromeOptions options, TimeSpan commandTimeout)\r\n   at OpenQA.Selenium.Chrome.ChromeDriver..ctor(ChromeOptions options)\r\n   at OpenQA.Selenium.Chrome.ChromeDriver..ctor()\r\n   at MCMAutomation.Helpers.Browser.Initialize() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\Browser.cs:line 31\r\n   at AdminSiteTests.BASE.TestBaseAdmin.SetUp() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\BASE\\TestBaseAdmin.cs:line 22\r\n--TearDown\r\n   at MCMAutomation.Helpers.Browser.Close() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\Browser.cs:line 54\r\n   at MCMAutomation.Helpers.BaseWeb.TearDown() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\BaseWeb.cs:line 43"
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1662990972879,
+      "stop": 1662990972879
+    }
+  ],
+  "afters": [
+    {
+      "name": "TearDown",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "System.InvalidOperationException : session not created: This version of ChromeDriver only supports Chrome version 103\nCurrent browser version is 105.0.5195.102 with binary path C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe (SessionNotCreated)\r\nTearDown : System.NullReferenceException : Object reference not set to an instance of an object.",
+        "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.StartSession(ICapabilities desiredCapabilities)\r\n   at OpenQA.Selenium.WebDriver..ctor(ICommandExecutor executor, ICapabilities capabilities)\r\n   at OpenQA.Selenium.Chromium.ChromiumDriver..ctor(ChromiumDriverService service, ChromiumOptions options, TimeSpan commandTimeout)\r\n   at OpenQA.Selenium.Chrome.ChromeDriver..ctor(ChromeDriverService service, ChromeOptions options, TimeSpan commandTimeout)\r\n   at OpenQA.Selenium.Chrome.ChromeDriver..ctor(ChromeOptions options)\r\n   at OpenQA.Selenium.Chrome.ChromeDriver..ctor()\r\n   at MCMAutomation.Helpers.Browser.Initialize() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\Browser.cs:line 31\r\n   at AdminSiteTests.BASE.TestBaseAdmin.SetUp() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\BASE\\TestBaseAdmin.cs:line 22\r\n--TearDown\r\n   at MCMAutomation.Helpers.Browser.Close() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\Browser.cs:line 54\r\n   at MCMAutomation.Helpers.BaseWeb.TearDown() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\BaseWeb.cs:line 43"
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1662990972880,
+      "stop": 1662990972880
+    },
+    {
+      "name": "OneTimeTearDown",
+      "status": "none",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "It's not possible to get status of OneTimeTearDown",
+        "trace": "See Allure.NUnit wiki"
+      },
+      "stage": "finished",
+      "steps": [],
+      "attachments": [],
+      "parameters": [],
+      "start": 1662990972880,
+      "stop": 1662990972880
+    }
+  ],
+  "links": [],
+  "start": 1662990970641,
+  "stop": 1662990972897
+}

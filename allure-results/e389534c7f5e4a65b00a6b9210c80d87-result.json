@@ -1,0 +1,304 @@
+{
+  "uuid": "16b0c0d6-a3dc-4f73-b356-95c368e78d4a-tr-0-1020",
+  "historyId": "MCMAutomation.WebTests.CompleteWorkouts.CompleteMembershipsWithData",
+  "fullName": "MCMAutomation.WebTests.CompleteWorkouts.CompleteMembershipsWithData",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-1QH9UGA"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.WebTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "CompleteMembershipsWithData"
+    },
+    {
+      "name": "testClass",
+      "value": "CompleteWorkouts"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Web"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "CompleteMembershipsWithData",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "  Expected: True\r\n  But was:  False\r\n",
+    "trace": "   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_VerifyAddedWeight_100663454_o(List`1 addedWeight) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipAssertions.cs:line 90\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_VerifyAddedWeight_100663454_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_VerifyAddedWeight_100663454_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.VerifyAddedWeight(List`1 addedWeight) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipActions.cs:line 62\r\n   at MCMAutomation.WebTests.CompleteWorkouts.CompleteMembershipsWithData() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMWebTests\\TESTS\\WebTests.cs:line 2184\r\n"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "CompleteMembershipsWithData",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "  Expected: True\r\n  But was:  False\r\n",
+        "trace": "   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_VerifyAddedWeight_100663454_o(List`1 addedWeight) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipAssertions.cs:line 90\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_VerifyAddedWeight_100663454_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_VerifyAddedWeight_100663454_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.VerifyAddedWeight(List`1 addedWeight) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipActions.cs:line 62\r\n   at MCMAutomation.WebTests.CompleteWorkouts.CompleteMembershipsWithData() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMWebTests\\TESTS\\WebTests.cs:line 2184\r\n"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as user",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056116184,
+          "stop": 1663056118321
+        },
+        {
+          "name": "Open membership",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056118322,
+          "stop": 1663056128903
+        },
+        {
+          "name": "Get Phases count",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056128904,
+          "stop": 1663056128941
+        },
+        {
+          "name": "Open Membership page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056128942,
+          "stop": 1663056130207
+        },
+        {
+          "name": "Open membership",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056130207,
+          "stop": 1663056131089
+        },
+        {
+          "name": "Select Phase",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056131090,
+          "stop": 1663056133642
+        },
+        {
+          "name": "Get Workouts count",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056136668,
+          "stop": 1663056136704
+        },
+        {
+          "name": "Open workout",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056136704,
+          "stop": 1663056140425
+        },
+        {
+          "name": "Add Weight",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056140425,
+          "stop": 1663056142634
+        },
+        {
+          "name": "Get Weight data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056142634,
+          "stop": 1663056142825
+        },
+        {
+          "name": "Enter Notes",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056142825,
+          "stop": 1663056151294
+        },
+        {
+          "name": "Click Complete Workout Btn",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056151295,
+          "stop": 1663056153036
+        },
+        {
+          "name": "Open workout",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056153036,
+          "stop": 1663056156746
+        },
+        {
+          "name": "Verify added weight",
+          "status": "failed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false,
+            "message": "  Expected: True\r\n  But was:  False\r\n",
+            "trace": "   at NUnit.Framework.Assert.ReportFailure(String message)\r\n   at NUnit.Framework.Assert.ReportFailure(ConstraintResult result, String message, Object[] args)\r\n   at NUnit.Framework.Assert.That[TActual](TActual actual, IResolveConstraint expression, String message, Object[] args)\r\n   at NUnit.Framework.Assert.IsTrue(Boolean condition)\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_VerifyAddedWeight_100663454_o(List`1 addedWeight) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\ClientSitePages\\MembershipPage\\MembershipAssertions.cs:line 90\r\n   at MCMAutomation.PageObjects.ClientSitePages.MembershipUser.__a$_around_VerifyAddedWeight_100663454_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)"
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1663056156746,
+          "stop": 1663056157398
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "603944728cd44b1bb317773a47b990b0-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1663056108199,
+      "stop": 1663056160122
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1663056108199,
+  "stop": 1663056160127
+}

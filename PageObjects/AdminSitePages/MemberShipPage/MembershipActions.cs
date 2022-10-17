@@ -38,12 +38,14 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter membership data")]
         public MembershipAdmin EnterMembershipData()
         {
-            InputBox.Element(skuInput, 20, "CMC_TEST_SUB12");
-            InputBox.Element(membershipNameInput, 20, "Created New Membership SUB " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
-            InputBox.Element(membershipDescriptionInput, 20, Lorem.Paragraph());
-            InputBox.Element(priceInput, 10, "");
+            InputBox.Element(skuInput, 20, "CMC_TEST_SKU" + DateTime.Now.ToString("hh:mm:ss"));
+            InputBox.Element(membershipNameInput, 20, "00Created New Multilevel Membership SUB " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
+            InputBox.Element(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
+            InputBox.Element(startDateInput, 10, DateTime.Now.AddDays(-30).ToString("yyyy-MM-d") + Keys.Enter);
+            InputBox.Element(endDateInput, 10, DateTime.Now.AddDays(30).ToString("yyyy-MM-d") + Keys.Enter);
+            InputBox.Element(priceInput, 10, "100");
             InputBox.Element(urlInput, 10, Endpoints.websiteHost);
-            Button.Click(subscriptionToggleType);
+            Button.Click(productToggleType);
             availableForPurchaseCheckbox.Click();
             
 
@@ -350,7 +352,7 @@ namespace MCMAutomation.PageObjects
                 var listWorkouts = btnAddExercises.Where(x => x.Displayed).ToList();
 
                 string[] workoutNames = GetWorkoutNames();
-
+                WaitUntil.WaitSomeInterval(1500);
                 Button.Click(listWorkouts[0]);
                 WaitUntil.CustomElevemtIsVisible(addExerciseBtn);
                 foreach (string workoutName in workoutNames)
@@ -367,6 +369,7 @@ namespace MCMAutomation.PageObjects
                 {
                     Button.Click(backBtn);
                 }
+                WaitUntil.WaitSomeInterval(1500);
             }
 
             return this;

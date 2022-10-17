@@ -1,0 +1,579 @@
+{
+  "uuid": "371a6e7d-a2f8-407c-8387-4bdb1bb7631f-tr-0-1008",
+  "historyId": "AdminSiteTests.AdminSiteTests.CopyExercisesToNewMembership",
+  "fullName": "AdminSiteTests.AdminSiteTests.CopyExercisesToNewMembership",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-1QH9UGA"
+    },
+    {
+      "name": "package",
+      "value": "AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "CopyExercisesToNewMembership"
+    },
+    {
+      "name": "testClass",
+      "value": "AdminSiteTests"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Admin"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "CopyExercisesToNewMembership",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenQA.Selenium.StaleElementReferenceException : stale element reference: element is not attached to the page document\n  (Session info: chrome=104.0.5112.81)",
+    "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.InternalExecute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebElement.Execute(String commandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebElement.get_Text()\r\n   at MCMAutomation.Helpers.TextBox.GetText(IWebElement element) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\ElementsHelper.cs:line 78\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipAssertions.cs:line 55\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.GetWorkoutNames() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipElements.cs:line 107\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CopyExercises_100663330_o(String[] programNames, List`1 membershipData, String curentmMembership) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 352\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CopyExercises_100663330_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CopyExercises_100663330_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.CopyExercises(String[] programNames, List`1 membershipData, String curentmMembership) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipElements.cs:line 107\r\n   at AdminSiteTests.AdminSiteTests.CopyExercisesToNewMembership() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 365"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "CopyExercisesToNewMembership",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "OpenQA.Selenium.StaleElementReferenceException : stale element reference: element is not attached to the page document\n  (Session info: chrome=104.0.5112.81)",
+        "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.InternalExecute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebElement.Execute(String commandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebElement.get_Text()\r\n   at MCMAutomation.Helpers.TextBox.GetText(IWebElement element) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\ElementsHelper.cs:line 78\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipAssertions.cs:line 55\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.GetWorkoutNames() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipElements.cs:line 107\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CopyExercises_100663330_o(String[] programNames, List`1 membershipData, String curentmMembership) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 352\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CopyExercises_100663330_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CopyExercises_100663330_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.CopyExercises(String[] programNames, List`1 membershipData, String curentmMembership) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipElements.cs:line 107\r\n   at AdminSiteTests.AdminSiteTests.CopyExercisesToNewMembership() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 365"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Go to SignUp page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812542482,
+          "stop": 1660812543244
+        },
+        {
+          "name": "Enter user data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812543247,
+          "stop": 1660812546350
+        },
+        {
+          "name": "Click on \"SignUp\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812546350,
+          "stop": 1660812547072
+        },
+        {
+          "name": "Go to Login page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812548149,
+          "stop": 1660812548874
+        },
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812548874,
+          "stop": 1660812550467
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812550467,
+          "stop": 1660812550958
+        },
+        {
+          "name": "Close PopUp",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812550958,
+          "stop": 1660812564519
+        },
+        {
+          "name": "Open Membership page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812564519,
+          "stop": 1660812568920
+        },
+        {
+          "name": "Click \"Create new membership\" btn",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812568920,
+          "stop": 1660812569692
+        },
+        {
+          "name": "Enter membership data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812569693,
+          "stop": 1660812574021
+        },
+        {
+          "name": "Click \"Save\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812574022,
+          "stop": 1660812574751
+        },
+        {
+          "name": "Click \"Add programs\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812589336,
+          "stop": 1660812589681
+        },
+        {
+          "name": "Verify membership name in combobox",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812589681,
+          "stop": 1660812589870
+        },
+        {
+          "name": "Create Programs",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812593098,
+              "stop": 1660812593859
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812599484,
+              "stop": 1660812600234
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812605721,
+              "stop": 1660812606447
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812589871,
+          "stop": 1660812607948
+        },
+        {
+          "name": "Get Program names",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812607949,
+          "stop": 1660812608515
+        },
+        {
+          "name": "Click \"Add Workout\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812608515,
+          "stop": 1660812610290
+        },
+        {
+          "name": "Create Workouts",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812612097,
+              "stop": 1660812612815
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812614142,
+              "stop": 1660812614850
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812616184,
+              "stop": 1660812616895
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812618397,
+              "stop": 1660812619116
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812620451,
+              "stop": 1660812621179
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812622508,
+              "stop": 1660812623235
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812624716,
+              "stop": 1660812625439
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812626742,
+              "stop": 1660812627456
+            },
+            {
+              "name": "Click \"Save\" button",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812628809,
+              "stop": 1660812629525
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812610290,
+          "stop": 1660812629525
+        },
+        {
+          "name": "Copy exercises",
+          "status": "failed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false,
+            "message": "stale element reference: element is not attached to the page document\n  (Session info: chrome=104.0.5112.81)",
+            "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.InternalExecute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebElement.Execute(String commandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebElement.get_Text()\r\n   at MCMAutomation.Helpers.TextBox.GetText(IWebElement element) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\ElementsHelper.cs:line 78\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipAssertions.cs:line 55\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.GetWorkoutNames() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipElements.cs:line 107\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CopyExercises_100663330_o(String[] programNames, List`1 membershipData, String curentmMembership) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipActions.cs:line 352\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_CopyExercises_100663330_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)"
+          },
+          "stage": "finished",
+          "steps": [
+            {
+              "name": "Get Workout names",
+              "status": "passed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812630439,
+              "stop": 1660812630979
+            },
+            {
+              "name": "Get Workout names",
+              "status": "failed",
+              "statusDetails": {
+                "known": false,
+                "muted": false,
+                "flaky": false,
+                "message": "stale element reference: element is not attached to the page document\n  (Session info: chrome=104.0.5112.81)",
+                "trace": "   at OpenQA.Selenium.WebDriver.UnpackAndThrowOnError(Response errorResponse)\r\n   at OpenQA.Selenium.WebDriver.Execute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebDriver.InternalExecute(String driverCommandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebElement.Execute(String commandToExecute, Dictionary`2 parameters)\r\n   at OpenQA.Selenium.WebElement.get_Text()\r\n   at MCMAutomation.Helpers.TextBox.GetText(IWebElement element) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\ElementsHelper.cs:line 78\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_o() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipAssertions.cs:line 55\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_GetWorkoutNames_100663337_u(Object[] )\r\n   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)"
+              },
+              "stage": "finished",
+              "steps": [],
+              "attachments": [],
+              "parameters": [],
+              "start": 1660812656364,
+              "stop": 1660812656958
+            }
+          ],
+          "attachments": [],
+          "parameters": [],
+          "start": 1660812629661,
+          "stop": 1660812656962
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "840c21092ce440b2bc0bcb720935a844-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1660812533679,
+      "stop": 1660812659279
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1660812533679,
+  "stop": 1660812659283
+}

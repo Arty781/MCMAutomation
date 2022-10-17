@@ -1,0 +1,197 @@
+{
+  "uuid": "eea82ef6-34a7-4c0b-b959-69ade5c299b6-tr-0-1026",
+  "historyId": "MCMAutomation.WebTests.Progress.AddProgress",
+  "fullName": "MCMAutomation.WebTests.Progress.AddProgress",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "NonParallelWorker"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-1QH9UGA"
+    },
+    {
+      "name": "package",
+      "value": "MCMAutomation.WebTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "AddProgress"
+    },
+    {
+      "name": "testClass",
+      "value": "Progress"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Web"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "AddProgress",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "System.NullReferenceException : Object reference not set to an instance of an object.",
+    "trace": "   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_AddMembershipToUser_100663347_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.AddMembershipToUser(String membershipName) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipElements.cs:line 22\r\n   at MCMAutomation.WebTests.Progress.AddProgress() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMWebTests\\TESTS\\WebTests.cs:line 2537"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "AddProgress",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "System.NullReferenceException : Object reference not set to an instance of an object.",
+        "trace": "   at NUnit.Allure.Steps.AllureStepAspect.WrapStep(String name, MethodBase methodBase, Object[] arguments, Func`2 method)\r\n   at MCMAutomation.PageObjects.MembershipAdmin.__a$_around_AddMembershipToUser_100663347_w_0(Object[] )\r\n   at MCMAutomation.PageObjects.MembershipAdmin.AddMembershipToUser(String membershipName) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\PageObjects\\AdminSitePages\\MemberShipPage\\MembershipElements.cs:line 22\r\n   at MCMAutomation.WebTests.Progress.AddProgress() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMWebTests\\TESTS\\WebTests.cs:line 2537"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1661773108253,
+          "stop": 1661773110365
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1661773110365,
+          "stop": 1661773111326
+        },
+        {
+          "name": "Close PopUp",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1661773112494,
+          "stop": 1661773120872
+        },
+        {
+          "name": "Open Users page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1661773120873,
+          "stop": 1661773121745
+        },
+        {
+          "name": "Search User",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1661773121757,
+          "stop": 1661773123996
+        },
+        {
+          "name": "Verify displaying of user",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1661773123997,
+          "stop": 1661773126793
+        },
+        {
+          "name": "Edit User",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1661773126793,
+          "stop": 1661773148086
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "1a975811fa024f10aa7888f90f91ff38-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1661773101120,
+      "stop": 1661773150582
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1661773101120,
+  "stop": 1661773150585
+}

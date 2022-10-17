@@ -1,0 +1,2 @@
+Load time for https://mcmstaging-ui.azurewebsites.net/admin/memberships is: 00:00:04.1790854
+Load time for https://markcarrollmethod.com/admin/memberships is: 00:00:02.1695012

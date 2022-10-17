@@ -1,0 +1,201 @@
+{
+  "uuid": "02d91523-d313-477e-8a55-e190436d7074-tr-0-1002",
+  "historyId": "AdminSiteTests.Memberships.AddProgramsToExistingMembership",
+  "fullName": "AdminSiteTests.Memberships.AddProgramsToExistingMembership",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "16"
+    },
+    {
+      "name": "host",
+      "value": "DESKTOP-1QH9UGA"
+    },
+    {
+      "name": "package",
+      "value": "AdminSiteTests"
+    },
+    {
+      "name": "testMethod",
+      "value": "AddProgramsToExistingMembership"
+    },
+    {
+      "name": "testClass",
+      "value": "Memberships"
+    },
+    {
+      "name": "owner",
+      "value": "Artem <qatester91311@gmail.com>"
+    },
+    {
+      "name": "tag",
+      "value": "Memberships"
+    },
+    {
+      "name": "tag",
+      "value": "Regression"
+    },
+    {
+      "name": "owner",
+      "value": "Artem Sukharevskyi"
+    },
+    {
+      "name": "severity",
+      "value": "critical"
+    },
+    {
+      "name": "suite",
+      "value": "Admin"
+    },
+    {
+      "name": "subSuite",
+      "value": "Memberships"
+    }
+  ],
+  "links": [],
+  "name": "AddProgramsToExistingMembership",
+  "status": "failed",
+  "statusDetails": {
+    "known": false,
+    "muted": false,
+    "flaky": false,
+    "message": "OpenQA.Selenium.WebDriverTimeoutException : Timed out after 30 seconds",
+    "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.CustomElevemtIsVisible(IWebElement element, Int32 seconds) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 59\r\n   at MCMAutomation.Helpers.AppDbContext.GetLastMembership() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\AppDBContext.cs:line 124\r\n   at AdminSiteTests.Memberships.AddProgramsToExistingMembership() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 76"
+  },
+  "stage": "finished",
+  "steps": [
+    {
+      "name": "AddProgramsToExistingMembership",
+      "status": "failed",
+      "statusDetails": {
+        "known": false,
+        "muted": false,
+        "flaky": false,
+        "message": "OpenQA.Selenium.WebDriverTimeoutException : Timed out after 30 seconds",
+        "trace": "   at OpenQA.Selenium.Support.UI.DefaultWait`1.ThrowTimeoutException(String exceptionMessage, Exception lastException)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition, CancellationToken token)\r\n   at OpenQA.Selenium.Support.UI.DefaultWait`1.Until[TResult](Func`2 condition)\r\n   at MCMAutomation.Helpers.WaitUntil.CustomElevemtIsVisible(IWebElement element, Int32 seconds) in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\WaitUntil.cs:line 59\r\n   at MCMAutomation.Helpers.AppDbContext.GetLastMembership() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\Helpers\\AppDBContext.cs:line 124\r\n   at AdminSiteTests.Memberships.AddProgramsToExistingMembership() in C:\\Users\\ARTY\\Source\\Repos\\Arty781\\MCMAutomation\\MCMAdminTests\\TESTS\\AdminTests.cs:line 76"
+      },
+      "stage": "finished",
+      "steps": [
+        {
+          "name": "Login as admin",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1664957568746,
+          "stop": 1664957570887
+        },
+        {
+          "name": "Verify is login successfully",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1664957570887,
+          "stop": 1664957571818
+        },
+        {
+          "name": "Close PopUp",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1664957571818,
+          "stop": 1664957579660
+        },
+        {
+          "name": "Open Membership page",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1664957579661,
+          "stop": 1664957582901
+        },
+        {
+          "name": "Click \"Create new membership\" btn",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1664957582902,
+          "stop": 1664957584052
+        },
+        {
+          "name": "Enter membership data",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1664957584053,
+          "stop": 1664957595850
+        },
+        {
+          "name": "Click \"Save\" button",
+          "status": "passed",
+          "statusDetails": {
+            "known": false,
+            "muted": false,
+            "flaky": false
+          },
+          "stage": "finished",
+          "steps": [],
+          "attachments": [],
+          "parameters": [],
+          "start": 1664957595850,
+          "stop": 1664957596764
+        }
+      ],
+      "attachments": [
+        {
+          "name": "Console Output",
+          "source": "fee44a8fd6fd45ca858ede8de6cd452a-attachment.txt",
+          "type": "text/plain"
+        }
+      ],
+      "parameters": [],
+      "start": 1664957562990,
+      "stop": 1664957634034
+    }
+  ],
+  "attachments": [],
+  "parameters": [],
+  "start": 1664957562989,
+  "stop": 1664957634038
+}
