@@ -540,7 +540,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             {
                 //WaitUntil.CustomElevemtIsVisible(weightList[i], 10);
                 InputBox.Element(weightList[i], 5, RandomHelper.RandomNumber(150));
-                WaitUntil.WaitSomeInterval(50);
+                WaitUntil.WaitSomeInterval(5);
             }
                
             return this;

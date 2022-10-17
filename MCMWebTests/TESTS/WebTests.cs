@@ -2180,37 +2180,37 @@ namespace MCMAutomation.WebTests
                     .SelectWeekNumber1InPhase();
                 WaitUntil.WaitSomeInterval(3000);
                 int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                //for (int j = 0; j < countWorkouts; j++)
-                //{
-                //    Pages.MembershipUser
-                //    .OpenWorkout()
-                //    .AddWeight();
-                //    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                //    Pages.MembershipUser
-                //    .EnterNotes()
-                //    .ClickCompleteWorkoutBtn()
-                //    .OpenCompletedWorkout()
-                //    .VerifyAddedWeight(addedWeightList);
-                //    Pages.MembershipUser
-                //    .ClickBackBtn();
-                //}
-                //Pages.MembershipUser
-                //    .SelectWeekNumber2();
-                //countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                //for (int j = 0; j < countWorkouts; j++)
-                //{
-                //    Pages.MembershipUser
-                //    .OpenWorkout()
-                //    .AddWeight();
-                //    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                //    Pages.MembershipUser
-                //    .EnterNotes()
-                //    .ClickCompleteWorkoutBtn()
-                //    .OpenCompletedWorkout()
-                //    .VerifyAddedWeight(addedWeightList);
-                //    Pages.MembershipUser
-                //    .ClickBackBtn();
-                //}
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight();
+                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
+                    Pages.MembershipUser
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn()
+                    .OpenCompletedWorkout()
+                    .VerifyAddedWeight(addedWeightList);
+                    Pages.MembershipUser
+                    .ClickBackBtn();
+                }
+                Pages.MembershipUser
+                    .SelectWeekNumber2();
+                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    Pages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight();
+                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
+                    Pages.MembershipUser
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn()
+                    .OpenCompletedWorkout()
+                    .VerifyAddedWeight(addedWeightList);
+                    Pages.MembershipUser
+                    .ClickBackBtn();
+                }
                 Pages.MembershipUser
                     .SelectWeekNumber3();
                 countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
