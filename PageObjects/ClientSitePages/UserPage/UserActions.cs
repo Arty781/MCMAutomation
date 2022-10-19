@@ -35,7 +35,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterDOB()
         {
 
-            InputBox.Element(inputBirthDate, 10, RandomHelper.RandomAge());
+            InputBox.Element(inputBirthDate, 10, RandomHelper.RandomAge() + Keys.Enter);
 
             return this;
         }
@@ -80,7 +80,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterFats()
         {
 
-            InputBox.Element(inputFats, 10, RandomHelper.RandomNumber(200));
+            InputBox.Element(inputFats, 10, "10");
 
             return this;
         }

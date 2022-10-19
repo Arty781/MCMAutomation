@@ -12,7 +12,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
     {
         public string[] GetProgressData()
         {
-            WaitUntil.WaitSomeInterval(5000);
+            WaitUntil.WaitSomeInterval(1500);
             var progressList = new List<string>();
             
             progressList.Add(TextBox.GetAttribute(inputWeight, "value"));

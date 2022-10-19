@@ -26,7 +26,7 @@ namespace MCMAutomation.APIHelpers
             
             
             var restDriver = new RestClient(Endpoints.apiHost);
-            RestRequest? request = new RestRequest("/Account/SignIn", Method.Post);
+            RestRequest? request = new("/Account/SignIn", Method.Post);
             request.AddHeaders(headers: Headers.HeadersCommon());
             request.AddJsonBody(SignIn(login, password));
 

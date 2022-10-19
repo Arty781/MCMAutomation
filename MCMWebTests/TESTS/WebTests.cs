@@ -95,7 +95,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -113,7 +113,7 @@ namespace MCMAutomation.WebTests
 
             string tier = null;
             string phase = null;
-            string diet = null;
+            string diet;
             string textOfMoreThan2KgSelected = null;
             double previousCalories = 0.0;
 
@@ -185,7 +185,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -219,7 +219,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -237,7 +237,7 @@ namespace MCMAutomation.WebTests
 
             string tier = null;
             string phase = null;
-            string diet = null;
+            string diet;
             string textOfMoreThan2KgSelected = null;
             double previousCalories = 0.0;
 
@@ -311,7 +311,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -345,7 +345,7 @@ namespace MCMAutomation.WebTests
                 .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -365,7 +365,7 @@ namespace MCMAutomation.WebTests
 
             string tier = null;
             string phase = null;
-            string diet = null;
+            string diet;
             string textOfMoreThan2KgSelected = null;
             double previousCalories = 0.0;
             string[] userData = AppDbContext.GetUserData(email);
@@ -439,7 +439,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -472,7 +472,7 @@ namespace MCMAutomation.WebTests
                 .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -488,13 +488,13 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenNutritionPage();
             #region Variables
-            string tier = null;
-            string phase = null;
-            string diet = null;
+            string tier;
+            string phase;
+            string diet;
             string selectedAdditionalOption = null;
             string[] textSelectedAdditionalOptions = null;
             string textOfMoreThan2KgSelected = null;
-            double previousCalories = 0.0;
+            double previousCalories;
 
             #endregion
 
@@ -561,7 +561,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -594,10 +594,10 @@ namespace MCMAutomation.WebTests
                 .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
+                .RemoveAddedMembership()
                 .AddMembershipToUser(membership)
                 .SelectActiveMembership(membership);
             Pages.Login
@@ -611,12 +611,12 @@ namespace MCMAutomation.WebTests
                 .OpenNutritionPage();
 
             #region Variables
-            string tier = null;
-            string phase = null;
-            string diet = null;
+            string tier;
+            string phase;
+            string diet;
             string selectedAdditionalOption = null;
             string[] textSelectedAdditionalOptions = null;
-            string textOfMoreThan2KgSelected = null;
+            string textOfMoreThan2KgSelected;
             double previousCalories = 0.0;
             string[] userData = AppDbContext.GetUserData(email);
             string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
@@ -694,7 +694,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -730,7 +730,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -829,7 +829,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -862,7 +862,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -964,7 +964,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -998,7 +998,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -1097,7 +1097,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -1130,7 +1130,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -1229,7 +1229,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -1262,7 +1262,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -1362,7 +1362,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -1395,7 +1395,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -1495,7 +1495,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -1528,7 +1528,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -1628,7 +1628,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -1662,7 +1662,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -1759,7 +1759,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -1792,7 +1792,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -1883,7 +1883,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -1916,7 +1916,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -1995,7 +1995,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -2028,7 +2028,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -2100,7 +2100,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email);
@@ -2281,7 +2281,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -2449,13 +2449,13 @@ namespace MCMAutomation.WebTests
 
             string email = AppDbContext.GetUserEmail();
             string userId = AppDbContext.GetUserId(email);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB123");
+            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB");
 
             Pages.PopUp
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -2470,16 +2470,16 @@ namespace MCMAutomation.WebTests
                 .GetUserLogin(email, Credentials.password);
             Pages.Sidebar
                 .OpenProgressPage();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Pages.Progress
                     .ClickAddProgressBtnA()
                     .EnterWeight()
                     .EnterWaist()
-                    .EnterThigh()
                     .EnterChest()
                     .EnterArm()
-                    .EnterHips();
+                    .EnterHips()
+                    .EnterThigh();
 
                 string[] progressBeforeSaving = Pages.Progress.GetProgressData();
 
@@ -2503,9 +2503,8 @@ namespace MCMAutomation.WebTests
                 .VerifyIsLogoDisplayed();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email)
                 .DeleteProgressFromUser();
             Pages.Login
@@ -2533,16 +2532,17 @@ namespace MCMAutomation.WebTests
                 .VerifyIsLogoDisplayed();
 
             string email = AppDbContext.GetUserEmail();
-            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB123");
+            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB");
 
             Pages.PopUp
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
+                /*.VerifyDisplayingOfUser(email)*/
+                .ClickEditUser(email);
+            Pages.UsersAdmin
                 .AddMembershipToUser(membership)
                 .SelectActiveMembership(membership);
             Pages.Login
@@ -2579,7 +2579,7 @@ namespace MCMAutomation.WebTests
                 .VerifyIsLogoDisplayed();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email)
@@ -2616,7 +2616,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -2673,7 +2673,7 @@ namespace MCMAutomation.WebTests
                 .VerifyIsLogoDisplayed();
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .DeleteMemebershipFromUser(email)
