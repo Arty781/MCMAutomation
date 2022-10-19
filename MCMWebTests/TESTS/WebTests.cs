@@ -2384,7 +2384,7 @@ namespace MCMAutomation.WebTests
             string email = AppDbContext.GetUserEmail();
 
             Pages.Login
-                .GetUserLogin("qatester2022-10-19-03-37@xitroo.com", Credentials.password);
+                .GetUserLogin("qatester2022-10-19-03-38@xitroo.com", Credentials.password);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
