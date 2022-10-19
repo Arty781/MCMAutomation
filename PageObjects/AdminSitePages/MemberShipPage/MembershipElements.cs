@@ -17,9 +17,7 @@ namespace MCMAutomation.PageObjects
         #region Membership Page
 
         [FindsBy(How = How.XPath, Using = "//a[text()='Create Membership']")]
-        public IWebElement btnCreatemembership;
-
-        public readonly By _btnCreateMembership = By.XPath("//a[text()='Create Membership']");
+        public IWebElement btnCreateMembership;
 
         [FindsBy(How = How.XPath, Using = "//input[@placeholder='Search']")]
         public IWebElement membershipSearchInput;

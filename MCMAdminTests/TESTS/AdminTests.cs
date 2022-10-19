@@ -77,9 +77,6 @@ namespace AdminSiteTests
 
             Pages.MembershipAdmin
                .ClickAddProgramsBtn(memberName);
-
-            string url = Browser._Driver.Url;
-
             Pages.MembershipAdmin
                 .VerifyMembershipNameCbbx(memberName)
                 .CreatePrograms();
@@ -303,7 +300,7 @@ namespace AdminSiteTests
                 .AddExercises(programList, exercise);
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser("testuseroutsite@gmail.com")
                 .VerifyDisplayingOfUser("testuseroutsite@gmail.com")
                 .ClickEditUser("testuseroutsite@gmail.com")
@@ -367,7 +364,7 @@ namespace AdminSiteTests
                 .CopyExercises(programList, membershipData, memberName);
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
@@ -415,11 +412,7 @@ namespace AdminSiteTests
             string memberName = AppDbContext.GetLastMembership();
 
             Pages.MembershipAdmin
-                .ClickAddProgramsBtn(memberName);
-
-            string url = Browser._Driver.Url;
-
-            Pages.MembershipAdmin
+                .ClickAddProgramsBtn(memberName)
                 .VerifyMembershipNameCbbx(memberName)
                 .CreatePrograms();
 
@@ -435,7 +428,7 @@ namespace AdminSiteTests
                 .AddExercises(programList, exercise);
             Pages.Sidebar
                 .OpenUsersPage();
-            Pages.MembershipAdmin
+            Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)

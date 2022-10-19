@@ -10,14 +10,14 @@ using NUnit.Framework;
 
 namespace MCMAutomation.PageObjects
 {
-    public partial class MembershipAdmin
+    public partial class UsersAdmin
     {
         [AllureStep("Verify displaying of user")]
 
-        public MembershipAdmin VerifyDisplayingOfUser(string email)
+        public UsersAdmin VerifyDisplayingOfUser(string email)
         {
             WaitUntil.WaitSomeInterval(1000);
-            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email), 30);
+            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email), 10);
             Assert.AreEqual(email, SwitcherHelper.GetTextForUserEmail(email).GetAttribute("title"));
             return this;
         }

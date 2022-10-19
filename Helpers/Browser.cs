@@ -26,7 +26,7 @@ namespace MCMAutomation.Helpers
 
         public static void Initialize()
         {
-            AllureConfigFilesHelper.CopyJsonConfigFile();
+            AllureConfigFilesHelper.CreateJsonConfigFile();
             new DriverManager().SetUpDriver(new ChromeConfig());
             windowsDriver = new ChromeDriver();
             _Driver.Manage().Cookies.DeleteAllCookies();

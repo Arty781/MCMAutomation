@@ -15,6 +15,7 @@ namespace MCMApiTests
     public class Tests
     {
         [Test]
+        [Retry(4)]
         public void MakeSignIn()
         {
             var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);

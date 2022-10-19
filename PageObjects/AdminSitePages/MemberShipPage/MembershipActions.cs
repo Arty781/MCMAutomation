@@ -18,8 +18,8 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin ClickCreateBtn()
         {
 
-            WaitUntil.CustomElevemtIsVisible(btnCreatemembership);
-            Button.Click(btnCreatemembership);
+            WaitUntil.CustomElevemtIsVisible(btnCreateMembership);
+            Button.Click(btnCreateMembership);
 
             return this;
         }

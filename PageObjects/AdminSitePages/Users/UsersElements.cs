@@ -11,7 +11,7 @@ using SeleniumExtras.PageObjects;
 
 namespace MCMAutomation.PageObjects
 {
-    public partial class MembershipAdmin
+    public partial class UsersAdmin
     {
         #region User page
 

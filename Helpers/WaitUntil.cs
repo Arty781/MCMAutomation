@@ -66,14 +66,7 @@ namespace MCMAutomation.Helpers
                         }
                         return false;
                     }
-                    catch (NoSuchElementException)
-                    {
-                        return false;
-                    }
-                    catch (StaleElementReferenceException)
-                    {
-                        return false;
-                    }
+                    catch (Exception) { return false; }
 
                 });
             }
@@ -93,25 +86,16 @@ namespace MCMAutomation.Helpers
                 {
                     try
                     {
-                        if (!element.Enabled == true)
+                        if (element.Enabled == true)
                         {
                             return false;
                         }
                         return true;
                     }
-                    catch (NoSuchElementException)
-                    {
-                        return true;
-                    }
-                    catch (StaleElementReferenceException)
-                    {
-                        return true;
-                    }
-
+                    catch (Exception) { return true; }
                 });
             }
-            catch (NoSuchElementException) { }
-            catch (StaleElementReferenceException) { }
+            catch (Exception) { }
 
         }
 
