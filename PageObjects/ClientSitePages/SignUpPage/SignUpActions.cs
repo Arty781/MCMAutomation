@@ -1,5 +1,6 @@
 ﻿using MCMAutomation.Helpers;
 using NUnit.Allure.Steps;
+using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,10 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter user data")]
         public SignUpUser EnterData(string email)
         {
-            InputBox.Element(firstNameInput,10, "Jane");
-            InputBox.Element(lastNameInput, 10, "Doe");
+            InputBox.Element(firstNameInput,10, Name.FirstName());
+            InputBox.Element(lastNameInput, 10, Name.LastName());
             InputBox.Element(emailInput, 10, email);
+            TextBox.CopyTextToBuffer(emailInput);
             InputBox.Element(confirmEmailInput, 10, email);
             InputBox.Element(passwordInput, 10, "Qaz11111!");
             InputBox.Element(confirmPasswordInput, 10, "Qaz11111!");

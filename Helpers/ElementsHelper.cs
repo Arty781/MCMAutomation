@@ -46,7 +46,7 @@ namespace MCMAutomation.Helpers
             {
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 10);
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
-                element.Clear();
+                element.SendKeys(Keys.Control + "A" + Keys.Delete);
                 WaitUntil.WaitSomeInterval(75);
                 element.SendKeys(data);
             }
@@ -84,6 +84,21 @@ namespace MCMAutomation.Helpers
             WaitUntil.CustomElevemtIsVisible(element);
             return element.GetAttribute(attribute);
             
+        }
+
+        public static void CopyTextToBuffer(IWebElement element)
+        {
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.CustomElevemtIsVisible(element);
+            element.SendKeys(Keys.Control + "A");
+            element.SendKeys(Keys.Control + "C");
+        }
+
+        public static void PasteCopiedText(IWebElement element)
+        {
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.CustomElevemtIsVisible(element);
+            element.SendKeys(Keys.Control + "A" + Keys.Control + "V");
         }
     }
 

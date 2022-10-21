@@ -181,8 +181,11 @@ namespace MCMAutomation.Helpers
 
             IWebElement btnDeleteProgram = Browser._Driver.FindElement(By.XPath($"//div[text()='{programName}']/parent::div/child::div/div[@class='delete']"));
             WaitUntil.CustomElevemtIsVisible(btnDeleteProgram, 60);
-
             btnDeleteProgram.Click();
+            Button.Click(Pages.Common.btnConfirmationYes);
+            WaitUntil.CustomElevemtIsInvisible(Element.webElem($"//div[text()='{programName}']"), 30);
+
+            
         }
 
         public static void SelectCopyMembership(List<string> membershipData, string currentMembership)

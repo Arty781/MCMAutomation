@@ -19,7 +19,7 @@ namespace MCMAutomation.PageObjects
             var dateBefore = DateTime.Now;
             Button.Click(membershipTb);
 
-            WaitUntil.CustomElevemtIsInvisible(Pages.MembershipAdmin.btnCreateMembership, 30);
+            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.btnCreateMembership, 90);
             var lastMembership = Pages.MembershipAdmin.membershipTitle.Last();
             WaitUntil.CustomElevemtIsVisible(lastMembership, 30);
             var dateAfter = DateTime.Now;

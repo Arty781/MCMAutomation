@@ -77,7 +77,7 @@ namespace MCMAutomation.PageObjects
             InputBox.Element(inputAccessWeek, 10, "16");
 
             Button.Click(genderMaleToggle);
-            Button.Click(subscriptionToggleType);
+            Button.Click(productToggleType);
             InputBox.Element(priceInput, 10, "");
             InputBox.Element(urlInput, 10, Endpoints.websiteHost);
             availableForPurchaseCheckboxElem.Click();
@@ -127,7 +127,7 @@ namespace MCMAutomation.PageObjects
                 if (i == 1)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 1 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "10000");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -138,7 +138,7 @@ namespace MCMAutomation.PageObjects
                 else if (i == 2)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 2 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -149,7 +149,7 @@ namespace MCMAutomation.PageObjects
                 else if (i == 3)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 3 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -160,7 +160,7 @@ namespace MCMAutomation.PageObjects
                 else if (i == 4)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 4 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "10000");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -171,7 +171,7 @@ namespace MCMAutomation.PageObjects
                 else if (i > 4)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 5 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.Element(inputProgramNumOfWeeks, 10, "4");
                     InputBox.Element(inputProgramSteps, 10, "10000");
                     InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
@@ -260,8 +260,7 @@ namespace MCMAutomation.PageObjects
             foreach (string program in programList)
             {
                 SwitcherHelper.ClickDeleteProgramBtn(program);
-                Button.Click(Pages.Common.btnConfirmationYes);                
-                WaitUntil.CustomElevemtIsInvisible(Element.webElem($"//div[text()='{program}']"), 30);
+                
             }
             
 
@@ -506,7 +505,7 @@ namespace MCMAutomation.PageObjects
             for (int i=0; i < programs.Length; i++)
             {
                 nameProgramTitle[i].Click();
-                WaitUntil.WaitSomeInterval(1200);
+                WaitUntil.WaitSomeInterval(250);
                 inputNextPhase.Click();
                 inputNextPhase.SendKeys(Keys.ArrowDown + Keys.Enter);
 

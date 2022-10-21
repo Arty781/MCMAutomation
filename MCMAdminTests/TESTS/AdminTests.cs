@@ -8,6 +8,7 @@ using NUnit.Allure.Attributes;
 using Allure.Commons;
 using System.Collections.Generic;
 using System;
+using MCMAutomation.APIHelpers;
 
 namespace AdminSiteTests
 {
@@ -109,7 +110,8 @@ namespace AdminSiteTests
             Pages.MembershipAdmin
                 .ClickAddProgramsBtn(memberName);
             Pages.MembershipAdmin
-                .VerifyMembershipNameCbbx(memberName);
+                .VerifyMembershipNameCbbx(memberName)
+                .CreatePrograms();
 
             string[] programList = Pages.MembershipAdmin.GetProgramNames();
 
@@ -258,70 +260,6 @@ namespace AdminSiteTests
         [AllureSubSuite("Memberships")]
         public void AddWorkoutsAndExercisesToNewMembership()
         {
-            //Pages.SignUpUser
-            //    .GoToSignUpPage();
-
-            //string email = RandomHelper.RandomEmail();
-            //Pages.SignUpUser
-            //    .EnterData(email)
-            //    .ClickOnSignUpBtn()
-            //    .VerifyDisplayingPopUp()
-            //    .GoToLoginPage();
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenMemberShipPage();
-            Pages.MembershipAdmin
-                .ClickCreateBtn()
-                .EnterMembershipData();
-            Pages.Common
-                .ClickSaveBtn();
-
-            string memberName = AppDbContext.GetLastMembership();
-
-            Pages.MembershipAdmin
-                .ClickAddProgramsBtn(memberName)
-                .VerifyMembershipNameCbbx(memberName)
-                .CreatePrograms();
-
-            string[] programList = Pages.MembershipAdmin.GetProgramNames();
-
-            Pages.MembershipAdmin
-                .ClickAddWorkoutBtn()
-                .CreateWorkouts(programList);
-
-            string[] exercise = AppDbContext.GetExercisesData();
-
-            Pages.MembershipAdmin
-                .AddExercises(programList, exercise);
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser("testuseroutsite@gmail.com")
-                .VerifyDisplayingOfUser("testuseroutsite@gmail.com")
-                .ClickEditUser("testuseroutsite@gmail.com")
-                .AddMembershipToUser(memberName)
-                .SelectActiveMembership(memberName);
-
-            Pages.Login
-                .GetAdminLogout();
-
-        }
-
-        [Test, Category("Memberships")]
-        [AllureTag("Regression")]
-        [AllureOwner("Artem Sukharevskyi")]
-        [AllureSeverity(SeverityLevel.critical)]
-        [Author("Artem", "qatester91311@gmail.com")]
-        [AllureSuite("Admin")]
-        [AllureSubSuite("Memberships")]
-        
-        public void CopyExercisesToNewMembership()
-        {
             Pages.SignUpUser
                 .GoToSignUpPage();
 
@@ -358,6 +296,71 @@ namespace AdminSiteTests
                 .ClickAddWorkoutBtn()
                 .CreateWorkouts(programList);
 
+            string[] exercise = AppDbContext.GetExercisesData();
+
+            Pages.MembershipAdmin
+                .AddExercises(programList, exercise);
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser()
+                .ClickEditUser(email)
+                .AddMembershipToUser(memberName)
+                .SelectActiveMembership(memberName);
+
+            Pages.Login
+                .GetAdminLogout();
+
+        }
+
+        [Test, Category("Memberships")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Admin")]
+        [AllureSubSuite("Memberships")]
+        //[Ignore("Ignore")]
+        
+        public void CopyExercisesToNewMembership()
+        {
+            Pages.SignUpUser
+                .GoToSignUpPage();
+
+            string email = RandomHelper.RandomEmail();
+            Pages.SignUpUser
+                .EnterData(email)
+                .ClickOnSignUpBtn()
+                .VerifyDisplayingPopUp()
+                .GoToLoginPage();
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenMemberShipPage();
+            Pages.MembershipAdmin
+                .ClickCreateBtn()
+                .EnterMembershipData();
+            Pages.Common
+                .ClickSaveBtn();
+
+            string memberName = AppDbContext.GetLastMembership();
+
+            Pages.MembershipAdmin
+                .ClickAddProgramsBtn(memberName)
+                .VerifyMembershipNameCbbx(memberName)
+                .CreatePrograms();
+
+            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+
+            Pages.MembershipAdmin
+                .ClickAddWorkoutBtn()
+                .CreateWorkouts(programList);
+
             List<string> membershipData = AppDbContext.GetMembershipProgramWorkoutData();
 
             Pages.MembershipAdmin
@@ -365,7 +368,7 @@ namespace AdminSiteTests
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.UsersAdmin
-                .SearchUser(email)
+                .SearchUser()
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
                 .AddMembershipToUser(memberName)
@@ -429,7 +432,7 @@ namespace AdminSiteTests
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.UsersAdmin
-                .SearchUser(email)
+                .SearchUser()
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
                 .AddMembershipToUser(memberName)
@@ -688,23 +691,8 @@ namespace AdminSiteTests
         //[Ignore("Debugging test")]
         public void Test()
         {
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.password);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.Sidebar
-                .OpenMemberShipPage();
-            Pages.Login
-                .GetAdminLogout();
-            Browser._Driver.Navigate().GoToUrl("https://markcarrollmethod.com/admin/memberships");
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.Sidebar
-                .OpenMemberShipPage();
-            Pages.Login
-                .GetAdminLogout();
+            var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
+            MembershipsWithUsersRequest.GetMembershipsWithUsersList(responseLogin);
 
         }
     }

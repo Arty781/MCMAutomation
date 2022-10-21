@@ -22,5 +22,17 @@ namespace MCMApiTests
             SignInAssertions
                 .VerifyIsAdminSignInSuccesfull(responseLogin);
         }
+
+        [Test]
+        [Repeat(4)]
+        public void Demo()
+        {
+
+            var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
+            var dateBefore = DateTime.Now;
+            MembershipsWithUsersRequest.GetMembershipsWithUsersList(responseLogin);
+            var dateAfter = DateTime.Now;
+            Console.WriteLine($"Load time is: " + (dateAfter - dateBefore));
+        }
     }
 }

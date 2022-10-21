@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MCMAutomation.APIHelpers;
 
 namespace MCMAutomation.PageObjects
 {
@@ -21,6 +22,19 @@ namespace MCMAutomation.PageObjects
             InputBox.Element(passwordInput, 30, password);
 
             Button.Click(signInBtn);
+            var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
+            MembershipsWithUsersRequest.GetMembershipsWithUsersList(responseLogin);
+
+            return this;
+        }
+
+        [AllureStep("Login as admin")]
+        public Login CopyUserEmail(string login)
+        {
+
+            InputBox.Element(loginInput, 30, login);
+
+            TextBox.CopyTextToBuffer(loginInput);
 
             return this;
         }
@@ -30,6 +44,7 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.CustomElevemtIsVisible(adminLogOutBtn, 30);
             Button.Click(adminLogOutBtn);
+            WaitUntil.CustomElevemtIsVisible(signInBtn, 30);
 
             return this;
         }
@@ -70,6 +85,7 @@ namespace MCMAutomation.PageObjects
 
             WaitUntil.CustomElevemtIsVisible(userLogoutBtn, 30);
             Button.Click(userLogoutBtn);
+            WaitUntil.CustomElevemtIsVisible(signInBtn, 30);
 
             return this;
         }
