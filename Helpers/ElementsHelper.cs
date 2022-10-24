@@ -46,8 +46,7 @@ namespace MCMAutomation.Helpers
             {
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 10);
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
-                element.SendKeys(Keys.Control + "A");
-                element.SendKeys(Keys.Delete);
+                element.Clear();
                 WaitUntil.WaitSomeInterval(75);
                 element.SendKeys(data);
             }
