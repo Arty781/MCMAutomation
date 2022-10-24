@@ -288,7 +288,7 @@ namespace MCMAutomation.Helpers
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1) *" +
-                                         "FROM [AspNetUsers] where email like 'qatester2022%@xitroo.com' AND IsDeleted = 0" +
+                                         "FROM [AspNetUsers] where email like '%qatester2022%@xitroo.com' AND IsDeleted = 0" +
                                          "ORDER BY DateTime DESC", db);
                 db.Open();
 
