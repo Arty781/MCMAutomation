@@ -2426,10 +2426,7 @@ namespace MCMAutomation.WebTests
                 .EnterFats()
                 .EnterHeight()
                 .EnterWeight()
-                .EnterNewEmail()
-                .EnterOldPass()
-                .EnterNewPass()
-                .EnterConfirmPass();
+                .EnterNewEmail();
             ScreenShotHelper.MakeScreenShot();
 
             List<string> dataBeforeSaving = Pages.UserProfile.GetUserDataBeforeSaving();
