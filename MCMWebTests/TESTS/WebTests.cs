@@ -2430,6 +2430,7 @@ namespace MCMAutomation.WebTests
                 .EnterOldPass()
                 .EnterNewPass()
                 .EnterConfirmPass();
+            ScreenShotHelper.MakeScreenShot();
 
             List<string> dataBeforeSaving = Pages.UserProfile.GetUserDataBeforeSaving();
 
