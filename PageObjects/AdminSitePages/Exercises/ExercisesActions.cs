@@ -27,8 +27,8 @@ namespace MCMAutomation.PageObjects
         public ExercisesAdmin EnterExerciseData()
         {
             
-            InputBox.Element(fieldExerciseName, 5, "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss"));
-            InputBox.Element(fieldExerciseUrl, 5, "https://player.vimeo.com/video/478282179");
+            InputBox.ElementCtrlA(fieldExerciseName, 5, "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss"));
+            InputBox.ElementCtrlA(fieldExerciseUrl, 5, "https://player.vimeo.com/video/478282179");
 
             btnTempoStart[0].Click();
 
@@ -49,7 +49,7 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin SearchExercise (string exercise)
         {
-            InputBox.Element(fieldSearchExercise, 5, exercise);
+            InputBox.ElementCtrlA(fieldSearchExercise, 5, exercise);
 
             return this;
         }

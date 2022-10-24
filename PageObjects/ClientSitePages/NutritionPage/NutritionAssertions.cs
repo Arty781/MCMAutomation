@@ -119,7 +119,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition SetCalories()
         {
-            InputBox.Element(inputCalories, 10, "000");
+            InputBox.ElementCtrlA(inputCalories, 10, "000");
 
             return this;
         }

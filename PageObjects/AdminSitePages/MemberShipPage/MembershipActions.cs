@@ -38,13 +38,13 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter membership data")]
         public MembershipAdmin EnterMembershipData()
         {
-            InputBox.Element(skuInput, 20, "CMC_TEST_SKU" + DateTime.Now.ToString("hh:mm:ss"));
-            InputBox.Element(membershipNameInput, 20, "00Created New Multilevel Membership SUB " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
-            InputBox.Element(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
-            InputBox.Element(startDateInput, 10, DateTime.Now.AddDays(-30).ToString("yyyy-MM-d") + Keys.Enter);
-            InputBox.Element(endDateInput, 10, DateTime.Now.AddDays(30).ToString("yyyy-MM-d") + Keys.Enter);
-            InputBox.Element(priceInput, 10, "100");
-            InputBox.Element(urlInput, 10, Endpoints.websiteHost);
+            InputBox.ElementCtrlA(skuInput, 20, "CMC_TEST_SKU" + DateTime.Now.ToString("hh:mm:ss"));
+            InputBox.ElementCtrlA(membershipNameInput, 20, "00Created New Multilevel Membership SUB " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
+            InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
+            InputBox.ElementCtrlA(startDateInput, 10, DateTime.Now.AddDays(-30).ToString("yyyy-MM-d") + Keys.Enter);
+            InputBox.ElementCtrlA(endDateInput, 10, DateTime.Now.AddDays(30).ToString("yyyy-MM-d") + Keys.Enter);
+            InputBox.ElementCtrlA(priceInput, 10, "100");
+            InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
             Button.Click(productToggleType);
             availableForPurchaseCheckbox.Click();
             
@@ -71,15 +71,15 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter membership data edited")]
         public MembershipAdmin EditMembershipData()
         {
-            InputBox.Element(skuInput, 20, "CP_TEST_SUB");
-            InputBox.Element(membershipNameInput, 20, "Edited New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
-            InputBox.Element(membershipDescriptionInput, 20, Lorem.Paragraph());
-            InputBox.Element(inputAccessWeek, 10, "16");
+            InputBox.ElementCtrlA(skuInput, 20, "CP_TEST_SUB");
+            InputBox.ElementCtrlA(membershipNameInput, 20, "Edited New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
+            InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.Paragraph());
+            InputBox.ElementCtrlA(inputAccessWeek, 10, "16");
 
             Button.Click(genderMaleToggle);
             Button.Click(productToggleType);
-            InputBox.Element(priceInput, 10, "");
-            InputBox.Element(urlInput, 10, Endpoints.websiteHost);
+            InputBox.ElementCtrlA(priceInput, 10, "");
+            InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
             availableForPurchaseCheckboxElem.Click();
 
 
@@ -89,7 +89,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Search Membership")]
         public MembershipAdmin SearchMembership(string membershipName)
         {
-            InputBox.Element(membershipSearchInput, 10, membershipName);
+            InputBox.ElementCtrlA(membershipSearchInput, 10, membershipName);
             Button.Click(membershipSearchBtn);
 
             return this;
@@ -127,55 +127,55 @@ namespace MCMAutomation.PageObjects
                 if (i == 1)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 1 " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "10000");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 1 " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 2)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 2 " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 2 " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 3)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 3 " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 3 " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 4)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 4 " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "10000");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 4 " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i > 4)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase 5 " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "10000");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 5 " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
@@ -196,55 +196,55 @@ namespace MCMAutomation.PageObjects
                 if (i == 1)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "10000");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
                     Pages.Common.ClickSaveBtn();
                 }
                 else if (i == 2)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
                     Pages.Common.ClickSaveBtn();
                 }
                 else if (i == 3)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
                     Pages.Common.ClickSaveBtn();
                 }
                 else if (i == 4)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "10000");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
                     Pages.Common.ClickSaveBtn();
                 }
                 else if (i > 4)
                 {
                     Button.Click(btnAddProgram);
-                    InputBox.Element(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
-                    InputBox.Element(inputProgramNumOfWeeks, 10, "4");
-                    InputBox.Element(inputProgramSteps, 10, "10000");
-                    InputBox.Element(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.Element(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
+                    InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
+                    InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
                     Pages.Common.ClickSaveBtn();
                 }
@@ -293,7 +293,7 @@ namespace MCMAutomation.PageObjects
                     {
 
                         Button.Click(btnAddWorkout);
-                        InputBox.Element(inputWorkoutName, 10, "Monday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
+                        InputBox.ElementCtrlA(inputWorkoutName, 10, "Monday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
                         btnWeekDayElem.SendKeys(Keys.ArrowDown + Keys.Enter);
 
                         Pages.Common.ClickSaveBtn();
@@ -301,7 +301,7 @@ namespace MCMAutomation.PageObjects
                     if (i == 3)
                     {
                         Button.Click(btnAddWorkout);
-                        InputBox.Element(inputWorkoutName, 10, "Wednesday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
+                        InputBox.ElementCtrlA(inputWorkoutName, 10, "Wednesday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
                         //Button.Click(weekDayBtn);
 
                         for (int y = 0; y < i; ++y)
@@ -316,7 +316,7 @@ namespace MCMAutomation.PageObjects
                     if (i == 5)
                     {
                         Button.Click(btnAddWorkout);
-                        InputBox.Element(inputWorkoutName, 10, "Friday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
+                        InputBox.ElementCtrlA(inputWorkoutName, 10, "Friday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
                         //Button.Click(weekDayBtn);
 
                         for (int y = 0; y < i; ++y)
@@ -397,76 +397,76 @@ namespace MCMAutomation.PageObjects
 
                         if (i == 1)
                         {
-                            InputBox.Element(seriesExerciseInput, 10, "A");
+                            InputBox.ElementCtrlA(seriesExerciseInput, 10, "A");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Length)] + Keys.Enter);
-                            InputBox.Element(setsExerciseInput, 10, "6");
-                            InputBox.Element(repsExerciseInput, 10, "4,4,4,5,7,8");
-                            InputBox.Element(restExerciseInput, 10, "60");
-                            InputBox.Element(tempoExerciseInput, 10, "20X0");
-                            InputBox.Element(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            InputBox.ElementCtrlA(setsExerciseInput, 10, "6");
+                            InputBox.ElementCtrlA(repsExerciseInput, 10, "4,4,4,5,7,8");
+                            InputBox.ElementCtrlA(restExerciseInput, 10, "60");
+                            InputBox.ElementCtrlA(tempoExerciseInput, 10, "20X0");
+                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.Common.ClickSaveBtn();
                         }
                         if (i == 2)
                         {
 
-                            InputBox.Element(seriesExerciseInput, 10, "B");
+                            InputBox.ElementCtrlA(seriesExerciseInput, 10, "B");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Length)] + Keys.Enter);
-                            InputBox.Element(setsExerciseInput, 10, "4");
-                            InputBox.Element(repsExerciseInput, 10, "10-12");
-                            InputBox.Element(restExerciseInput, 10, "30");
-                            InputBox.Element(tempoExerciseInput, 10, "2X10");
-                            InputBox.Element(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            InputBox.ElementCtrlA(setsExerciseInput, 10, "4");
+                            InputBox.ElementCtrlA(repsExerciseInput, 10, "10-12");
+                            InputBox.ElementCtrlA(restExerciseInput, 10, "30");
+                            InputBox.ElementCtrlA(tempoExerciseInput, 10, "2X10");
+                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.Common.ClickSaveBtn();
                         }
                         if (i == 3)
                         {
-                            InputBox.Element(seriesExerciseInput, 10, "C1");
+                            InputBox.ElementCtrlA(seriesExerciseInput, 10, "C1");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Length)] + Keys.Enter);
-                            InputBox.Element(setsExerciseInput, 10, "7");
-                            InputBox.Element(repsExerciseInput, 10, "15-20 Each");
-                            InputBox.Element(restExerciseInput, 10, "60");
-                            InputBox.Element(tempoExerciseInput, 10, "201X");
-                            InputBox.Element(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            InputBox.ElementCtrlA(setsExerciseInput, 10, "7");
+                            InputBox.ElementCtrlA(repsExerciseInput, 10, "15-20 Each");
+                            InputBox.ElementCtrlA(restExerciseInput, 10, "60");
+                            InputBox.ElementCtrlA(tempoExerciseInput, 10, "201X");
+                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.Common.ClickSaveBtn();
                         }
                         if (i == 4)
                         {
 
-                            InputBox.Element(seriesExerciseInput, 10, "C2");
+                            InputBox.ElementCtrlA(seriesExerciseInput, 10, "C2");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Length)] + Keys.Enter);
-                            InputBox.Element(setsExerciseInput, 10, "3");
-                            InputBox.Element(repsExerciseInput, 10, "4,4,4");
-                            InputBox.Element(restExerciseInput, 10, "60");
-                            InputBox.Element(tempoExerciseInput, 10, "3011");
-                            InputBox.Element(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            InputBox.ElementCtrlA(setsExerciseInput, 10, "3");
+                            InputBox.ElementCtrlA(repsExerciseInput, 10, "4,4,4");
+                            InputBox.ElementCtrlA(restExerciseInput, 10, "60");
+                            InputBox.ElementCtrlA(tempoExerciseInput, 10, "3011");
+                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.Common.ClickSaveBtn();
                         }
                         if (i == 5)
                         {
 
-                            InputBox.Element(seriesExerciseInput, 10, "D");
+                            InputBox.ElementCtrlA(seriesExerciseInput, 10, "D");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Length)] + Keys.Enter);
-                            InputBox.Element(setsExerciseInput, 10, "6");
-                            InputBox.Element(repsExerciseInput, 10, "4,4,4,5,7,8");
-                            InputBox.Element(restExerciseInput, 10, "60");
-                            InputBox.Element(tempoExerciseInput, 10, "2010");
-                            InputBox.Element(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            InputBox.ElementCtrlA(setsExerciseInput, 10, "6");
+                            InputBox.ElementCtrlA(repsExerciseInput, 10, "4,4,4,5,7,8");
+                            InputBox.ElementCtrlA(restExerciseInput, 10, "60");
+                            InputBox.ElementCtrlA(tempoExerciseInput, 10, "2010");
+                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.Common.ClickSaveBtn();
                         }
                         if (i == 6)
                         {
-                            InputBox.Element(seriesExerciseInput, 10, "E");
+                            InputBox.ElementCtrlA(seriesExerciseInput, 10, "E");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Length)] + Keys.Enter);
-                            InputBox.Element(setsExerciseInput, 10, "5");
-                            InputBox.Element(repsExerciseInput, 10, "4,4,4,5,7");
-                            InputBox.Element(restExerciseInput, 10, "60");
-                            InputBox.Element(tempoExerciseInput, 10, "2111");
-                            InputBox.Element(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            InputBox.ElementCtrlA(setsExerciseInput, 10, "5");
+                            InputBox.ElementCtrlA(repsExerciseInput, 10, "4,4,4,5,7");
+                            InputBox.ElementCtrlA(restExerciseInput, 10, "60");
+                            InputBox.ElementCtrlA(tempoExerciseInput, 10, "2111");
+                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.Common.ClickSaveBtn();
 
@@ -491,7 +491,7 @@ namespace MCMAutomation.PageObjects
 
             Button.Click(membershipAddUserBtn);
             WaitUntil.CustomElevemtIsVisible(userCbbx);
-            InputBox.Element(userCbbx, 60, email + Keys.Enter);
+            InputBox.ElementCtrlA(userCbbx, 60, email + Keys.Enter);
 
             Button.Click(addUserBtn);
 

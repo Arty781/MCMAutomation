@@ -17,7 +17,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile AddFirstName()
         {
             
-            InputBox.Element(inputFirstName, 10, Name.FirstName());
+            InputBox.ElementCtrlA(inputFirstName, 10, Name.FirstName());
 
             return this;
         }
@@ -26,7 +26,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile AddLastName()
         {
 
-            InputBox.Element(inputLastName, 10, Name.LastName());
+            InputBox.ElementCtrlA(inputLastName, 10, Name.LastName());
 
             return this;
         }
@@ -35,7 +35,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterDOB()
         {
 
-            InputBox.Element(inputBirthDate, 10, RandomHelper.RandomAge() + Keys.Enter);
+            InputBox.ElementCtrlA(inputBirthDate, 10, RandomHelper.RandomAge() + Keys.Enter);
 
             return this;
         }
@@ -44,7 +44,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterCalories()
         {
 
-            InputBox.Element(inputCalories, 10, RandomHelper.RandomNumber(2000));
+            InputBox.ElementCtrlA(inputCalories, 10, RandomHelper.RandomNumber(2000));
 
             return this;
         }
@@ -53,7 +53,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterMaintenanceCalories()
         {
 
-            InputBox.Element(inputMaintenanceCalories, 10, RandomHelper.RandomNumber(2000));
+            InputBox.ElementCtrlA(inputMaintenanceCalories, 10, RandomHelper.RandomNumber(2000));
 
             return this;
         }
@@ -62,7 +62,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterProteins()
         {
 
-            InputBox.Element(inputProtein, 10, RandomHelper.RandomNumber(200));
+            InputBox.ElementCtrlA(inputProtein, 10, RandomHelper.RandomNumber(200));
 
             return this;
         }
@@ -71,7 +71,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterCarbs()
         {
 
-            InputBox.Element(inputCarbs, 10, RandomHelper.RandomNumber(200));
+            InputBox.ElementCtrlA(inputCarbs, 10, RandomHelper.RandomNumber(200));
 
             return this;
         }
@@ -80,7 +80,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterFats()
         {
 
-            InputBox.Element(inputFats, 10, "10");
+            InputBox.ElementCtrlA(inputFats, 10, "10");
 
             return this;
         }
@@ -165,7 +165,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterWeight()
         {
 
-            InputBox.Element(inputWeight, 10, "70");
+            InputBox.ElementCtrlA(inputWeight, 10, "70");
 
             return this;
         }
@@ -173,7 +173,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Estimated Body Fat (%)")]
         public UserProfile EnterEstimatedBodyFat()
         {
-            InputBox.Element(inputBodyfat, 10, "15");
+            InputBox.ElementCtrlA(inputBodyfat, 10, "15");
 
             return this;
         }
@@ -182,7 +182,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterNewEmail()
         {
 
-            InputBox.Element(inputEmail, 10, RandomHelper.RandomEmail());
+            InputBox.ElementCtrlA(inputEmail, 10, RandomHelper.RandomEmail());
 
             return this;
         }
@@ -191,7 +191,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterOldPass()
         {
 
-            InputBox.Element(inputOldPassword, 10, "Qaz11111!");
+            InputBox.ElementCtrlA(inputOldPassword, 10, "Qaz11111!");
 
             return this;
         }
@@ -200,7 +200,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterNewPass()
         {
 
-            InputBox.Element(inputChangePassword, 10, "Qaz11111!");
+            InputBox.ElementCtrlA(inputChangePassword, 10, "Qaz11111!");
 
             return this;
         }
@@ -209,7 +209,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public UserProfile EnterConfirmPass()
         {
 
-            InputBox.Element(inputConfirmPassword, 10, "Qaz11111!");
+            InputBox.ElementCtrlA(inputConfirmPassword, 10, "Qaz11111!");
 
             return this;
         }

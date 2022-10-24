@@ -39,7 +39,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify deleting of programs")]
         public MembershipAdmin VerifyDeletePrograms()
         {
-            Assert.Throws<NoSuchElementException>(() => Element.webElem("//div[@class='table-item-name']"));
+            Assert.Throws<NoSuchElementException>(() => ElementCtrlA.webElem("//div[@class='table-item-name']"));
 
             return this;
         }
@@ -78,7 +78,7 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.CustomElevemtIsVisible(Pages.Common.messageDeleted);
 
-            InputBox.Element(membershipSearchInput,30, membership);
+            InputBox.ElementCtrlA(membershipSearchInput,30, membership);
             Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership)));
             
 

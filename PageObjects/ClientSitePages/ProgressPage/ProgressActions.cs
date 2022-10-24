@@ -35,7 +35,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Weight")]
         public Progress EnterWeight()
         {
-            InputBox.Element(inputWeight, 10, RandomHelper.RandomNumber(2000));
+            InputBox.ElementCtrlA(inputWeight, 10, RandomHelper.RandomNumber(2000));
 
             return this;
         }
@@ -43,7 +43,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Waist")]
         public Progress EnterWaist()
         {
-            InputBox.Element(inputWaist, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputWaist, 10, RandomHelper.RandomNumber(400));
 
             return this;
         }
@@ -51,7 +51,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Chest")]
         public Progress EnterChest()
         {
-            InputBox.Element(inputChest, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputChest, 10, RandomHelper.RandomNumber(400));
 
             return this;
         }
@@ -59,7 +59,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Arm")]
         public Progress EnterArm()
         {
-            InputBox.Element(inputArm, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputArm, 10, RandomHelper.RandomNumber(400));
 
             return this;
         }
@@ -67,7 +67,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Hips")]
         public Progress EnterHips()
         {
-            InputBox.Element(inputHip, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputHip, 10, RandomHelper.RandomNumber(400));
 
             return this;
         }
@@ -75,7 +75,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Thigh")]
         public Progress EnterThigh()
         {
-            InputBox.Element(inputThigh, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputThigh, 10, RandomHelper.RandomNumber(400));
 
             return this;
         }

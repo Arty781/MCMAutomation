@@ -11,15 +11,15 @@ namespace MCMAutomation.Helpers
 {
     public class Button
     {
-        public static void Click(IWebElement element)
+        public static void Click(IWebElement ElementCtrlA)
         {
             try
             {
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
                 WaitUntil.WaitSomeInterval(500);
-                WaitUntil.CustomElevemtIsVisible(element, 30);
+                WaitUntil.CustomElevemtIsVisible(ElementCtrlA, 30);
 
-                element.Click();
+                ElementCtrlA.Click();
             }
             catch (Exception) { }
 
@@ -39,71 +39,89 @@ namespace MCMAutomation.Helpers
     }
     public class InputBox
     {
-        public static IWebElement Element(IWebElement element, int seconds, string data)
+        public static IWebElement ElementClear(IWebElement ElementCtrlA, int seconds, string data)
         {
             
             try 
             {
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 10);
-                WaitUntil.CustomElevemtIsVisible(element, seconds);
-                element.Click();
-                element.Clear();
+                WaitUntil.CustomElevemtIsVisible(ElementCtrlA, seconds);
+                ElementCtrlA.Click();
+                ElementCtrlA.Clear();
                 WaitUntil.WaitSomeInterval(75);
-                element.SendKeys(data);
+                ElementCtrlA.SendKeys(data);
             }
             catch (Exception) { }
 
-            return element;
+            return ElementCtrlA;
         }
-        public static IWebElement CbbxElement(IWebElement element, int seconds, string data)
+
+        public static IWebElement ElementCtrlA(IWebElement ElementCtrlA, int seconds, string data)
+        {
+
+            try
+            {
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 10);
+                WaitUntil.CustomElevemtIsVisible(ElementCtrlA, seconds);
+                ElementCtrlA.SendKeys(Keys.Control + "A");
+                ElementCtrlA.SendKeys(Keys.Delete);
+                WaitUntil.WaitSomeInterval(75);
+                ElementCtrlA.SendKeys(data);
+            }
+            catch (Exception) { }
+
+            return ElementCtrlA;
+        }
+
+        public static IWebElement CbbxElement(IWebElement ElementCtrlA, int seconds, string data)
         {
 
             try
             {
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-                WaitUntil.CustomElevemtIsVisible(element, seconds);
-                element.SendKeys(data + Keys.Enter);
+                WaitUntil.CustomElevemtIsVisible(ElementCtrlA, seconds);
+                ElementCtrlA.SendKeys(data + Keys.Enter);
             }
             catch (NoSuchElementException) { }
             catch (StaleElementReferenceException) { }
-            return element;
+            return ElementCtrlA;
         }
 
        
     }
     public class TextBox
     {
-        public static string GetText(IWebElement element)
+        public static string GetText(IWebElement ElementCtrlA)
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-           return element.Text;
+           return ElementCtrlA.Text;
         }
 
-        public static string GetAttribute(IWebElement element, string attribute)
+        public static string GetAttribute(IWebElement ElementCtrlA, string attribute)
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(element);
-            return element.GetAttribute(attribute);
+            WaitUntil.CustomElevemtIsVisible(ElementCtrlA);
+            return ElementCtrlA.GetAttribute(attribute);
             
         }
 
-        public static void CopyTextToBuffer(IWebElement element)
+        public static void CopyTextToBuffer(IWebElement ElementCtrlA)
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(element);
-            element.SendKeys(Keys.Control + "A");
-            element.SendKeys(Keys.Control + "C");
+            WaitUntil.CustomElevemtIsVisible(ElementCtrlA);
+            ElementCtrlA.SendKeys(Keys.Control + "A");
+            ElementCtrlA.SendKeys(Keys.Control + "C");
         }
 
-        public static void PasteCopiedText(IWebElement element)
+        public static void PasteCopiedText(IWebElement ElementCtrlA)
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(element);
-            element.SendKeys(Keys.Control + "A" + Keys.Control + "V");
+            WaitUntil.CustomElevemtIsVisible(ElementCtrlA);
+            ElementCtrlA.SendKeys(Keys.Control + "A" + Keys.Control + "V");
         }
     }
 
-    public class Element
+    public class ElementCtrlA
     {
         public static IWebElement webElem(string xpathString)
         {

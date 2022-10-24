@@ -19,6 +19,7 @@ namespace MCMAutomation.Helpers
         [AllureSuite("Report")]
         [AllureSubSuite("AllureReport")]
         [Test]
+        [Ignore("Report")]
 
         
         public void GoToAllureResults()

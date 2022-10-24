@@ -132,7 +132,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             if(inputAge.GetAttribute("value") == "")
             {
-                InputBox.Element(inputAge, 10, age);
+                InputBox.ElementCtrlA(inputAge, 10, age);
             }
             
             return this;
@@ -218,7 +218,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             if(inputWeight.GetAttribute("value") == "")
             {
-                InputBox.Element(inputWeight, 10, weight);
+                InputBox.ElementCtrlA(inputWeight, 10, weight);
             }
             
             return this;
@@ -228,7 +228,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             if(inputBodyFat.GetAttribute("value") == "")
             {
-                InputBox.Element(inputBodyFat, 10, fat);
+                InputBox.ElementCtrlA(inputBodyFat, 10, fat);
             }
             
             return this;
@@ -378,7 +378,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             
             if (inputPrevCalories.GetAttribute("value") == "")
             {
-                InputBox.Element(inputPrevCalories, 5, RandomNumber.Next(1000, (int)maintanceCalories).ToString());
+                InputBox.ElementCtrlA(inputPrevCalories, 5, RandomNumber.Next(1000, (int)maintanceCalories).ToString());
                 previousCalories = double.Parse(TextBox.GetAttribute(inputPrevCalories, "value"));
             }
             previousCalories = double.Parse(TextBox.GetAttribute(inputPrevCalories, "value"));

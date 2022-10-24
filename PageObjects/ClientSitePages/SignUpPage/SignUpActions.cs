@@ -24,13 +24,13 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter user data")]
         public SignUpUser EnterData(string email)
         {
-            InputBox.Element(firstNameInput,10, Name.FirstName());
-            InputBox.Element(lastNameInput, 10, Name.LastName());
-            InputBox.Element(emailInput, 10, email);
+            InputBox.ElementCtrlA(firstNameInput,10, Name.FirstName());
+            InputBox.ElementCtrlA(lastNameInput, 10, Name.LastName());
+            InputBox.ElementCtrlA(emailInput, 10, email);
             TextBox.CopyTextToBuffer(emailInput);
-            InputBox.Element(confirmEmailInput, 10, email);
-            InputBox.Element(passwordInput, 10, "Qaz11111!");
-            InputBox.Element(confirmPasswordInput, 10, "Qaz11111!");
+            InputBox.ElementCtrlA(confirmEmailInput, 10, email);
+            InputBox.ElementCtrlA(passwordInput, 10, "Qaz11111!");
+            InputBox.ElementCtrlA(confirmPasswordInput, 10, "Qaz11111!");
             
 
             return this;

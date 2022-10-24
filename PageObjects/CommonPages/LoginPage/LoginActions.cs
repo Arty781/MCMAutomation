@@ -18,8 +18,8 @@ namespace MCMAutomation.PageObjects
         public Login GetLogin(string login, string password)
         {
 
-            InputBox.Element(loginInput, 30, login);
-            InputBox.Element(passwordInput, 30, password);
+            InputBox.ElementClear(loginInput, 30, login);
+            InputBox.ElementClear(passwordInput, 30, password);
 
             Button.Click(signInBtn);
             var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
@@ -32,7 +32,7 @@ namespace MCMAutomation.PageObjects
         public Login CopyUserEmail(string login)
         {
 
-            InputBox.Element(loginInput, 30, login);
+            InputBox.ElementClear(loginInput, 30, login);
 
             TextBox.CopyTextToBuffer(loginInput);
 
@@ -58,8 +58,8 @@ namespace MCMAutomation.PageObjects
         public Login GetUserLoginForTdee(string login, string password)
         {
            
-                InputBox.Element(loginInput, 30, login);
-                InputBox.Element(passwordInput, 30, password);
+                InputBox.ElementClear(loginInput, 30, login);
+                InputBox.ElementClear(passwordInput, 30, password);
 
                 Button.Click(signInBtn);
 
@@ -70,8 +70,8 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Login as user")]
         public Login GetUserLogin(string login, string password)
         {
-            InputBox.Element(loginInput, 30, login);
-            InputBox.Element(passwordInput, 30, password);
+            InputBox.ElementClear(loginInput, 30, login);
+            InputBox.ElementClear(passwordInput, 30, password);
             
             Button.Click(signInBtn);
             return this;

@@ -539,7 +539,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             for (int i=0; i<weightList.Count; i++)
             {
                 //WaitUntil.CustomElevemtIsVisible(weightList[i], 10);
-                InputBox.Element(weightList[i], 5, RandomHelper.RandomNumber(150));
+                InputBox.ElementCtrlA(weightList[i], 5, RandomHelper.RandomNumber(150));
                 WaitUntil.WaitSomeInterval(5);
             }
                
@@ -555,7 +555,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //    var repsList = repsInput.Where(x => x.Displayed).ToList();
         //    foreach(var reps in repsList)
         //    {
-        //        InputBox.Element(reps, 10, RandomHelper.RandomNumber(10));
+        //        InputBox.ElementCtrlA(reps, 10, RandomHelper.RandomNumber(10));
         //    }
 
         //    return this;
@@ -588,7 +588,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     for (int i = 0; i < notesList.Count; i++)
                     {
                         notesList[i].Click();
-                        InputBox.Element(notesInputelem, 10, Lorem.Sentence());
+                        InputBox.ElementCtrlA(notesInputelem, 10, Lorem.Sentence());
                         Button.Click(saveNotesBtnElem);
                     }
             }
@@ -600,7 +600,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 for (int i = 0; i < notesList.Count; i++)
                 {
                     notesList[i].Click();
-                    InputBox.Element(notesInputelem, 10, Lorem.Sentence());
+                    InputBox.ElementCtrlA(notesInputelem, 10, Lorem.Sentence());
                     Button.Click(saveNotesBtnElem);
                 }
 
