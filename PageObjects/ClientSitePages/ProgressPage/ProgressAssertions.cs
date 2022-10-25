@@ -45,6 +45,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var list1 = progressData.Except(progressListOne);
             var list2 = progressListOne.Except(progressData);
 
+            foreach(var item in progressData)
+            {
+                Console.WriteLine(item);
+            }
+            foreach (var item in progressListOne)
+            {
+                Console.WriteLine(item);
+            }
+
             Assert.IsTrue(!list1.Any() && !list2.Any());
 
             return this;

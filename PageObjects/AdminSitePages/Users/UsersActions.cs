@@ -14,10 +14,10 @@ namespace MCMAutomation.PageObjects
     {
         [AllureStep("Search User")]
 
-        public UsersAdmin SearchUser()
+        public UsersAdmin SearchUser(string email)
         {
             WaitUntil.CustomElevemtIsVisible(inputSearch);
-            inputSearch.SendKeys(Keys.Control + "V" + Keys.Enter);
+            inputSearch.SendKeys(email + Keys.Enter);
             return this;
         }
 

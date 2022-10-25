@@ -18,8 +18,8 @@ namespace MCMAutomation.PageObjects
         public Login GetLogin(string login, string password)
         {
 
-            InputBox.ElementClear(loginInput, 30, login);
-            InputBox.ElementClear(passwordInput, 30, password);
+            InputBox.ElementCtrlA(loginInput, 30, login);
+            InputBox.ElementCtrlA(passwordInput, 30, password);
 
             Button.Click(signInBtn);
             var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);

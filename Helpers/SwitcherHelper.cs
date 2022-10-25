@@ -31,9 +31,9 @@ namespace MCMAutomation.Helpers
             WaitUntil.WaitSomeInterval(1500);
             var str = $".//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']";
             _element = Browser._Driver.FindElement(By.XPath(str));
-            IWebElement ElementCtrlA = _element.FindElement(By.XPath(".//input[@type='radio']/ancestor::label[contains(@class,'checked')]/span[2]"));
+            IWebElement element = _element.FindElement(By.XPath(".//input[@type='radio']/ancestor::label[contains(@class,'checked')]/span[2]"));
 
-            list.Add(ElementCtrlA.Text);
+            list.Add(element.Text);
 
             string[] selectedElement = list.ToArray();
 
@@ -58,7 +58,7 @@ namespace MCMAutomation.Helpers
         #endregion
 
         #region User actions
-        public static void ClickEditUserBtn(string email, IWebElement ElementCtrlA)
+        public static void ClickEditUserBtn(string email, IWebElement element)
         {
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(10));
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
@@ -77,7 +77,7 @@ namespace MCMAutomation.Helpers
             _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']/parent::tr/td//div[@class='edit-btn']"));
             _element.Click();
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 120);
-            WaitUntil.CustomElevemtIsVisible(ElementCtrlA, 60);
+            WaitUntil.CustomElevemtIsVisible(element, 60);
 
         }
 
@@ -113,12 +113,12 @@ namespace MCMAutomation.Helpers
                 wait.Until(e =>
                 {
 
-                    foreach (var ElementCtrlA in list)
+                    foreach (var element in list)
                     {
-                        if (!ElementCtrlA.Displayed && ElementCtrlA.Text == email)
+                        if (!element.Displayed && element.Text == email)
                             return null;
                         else
-                            return ElementCtrlA;
+                            return element;
                     }
                     return Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']"));
 
@@ -183,7 +183,7 @@ namespace MCMAutomation.Helpers
             WaitUntil.CustomElevemtIsVisible(btnDeleteProgram, 60);
             btnDeleteProgram.Click();
             Button.Click(Pages.Common.btnConfirmationYes);
-            WaitUntil.CustomElevemtIsInvisible(ElementCtrlA.webElem($"//div[text()='{programName}']"), 30);
+            WaitUntil.CustomElevemtIsInvisible(Element.webElem($"//div[text()='{programName}']"), 30);
 
             
         }
@@ -191,8 +191,8 @@ namespace MCMAutomation.Helpers
         public static void SelectCopyMembership(List<string> membershipData, string currentMembership)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(ElementCtrlA.webElem("//h4[text()='Copy exercises from']"), 30);
-            _element = ElementCtrlA.webElem("//div[@class='copy-form']");
+            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
+            _element = Element.webElem("//div[@class='copy-form']");
             var membership = _element.FindElement(By.XPath(".//h3[text()='Membership']/parent::div//input"));
             membership.SendKeys(membershipData[0] + Keys.Enter);
             WaitUntil.WaitSomeInterval(500);
@@ -205,8 +205,8 @@ namespace MCMAutomation.Helpers
         public static void SelectCopyProgram(List<string> membershipData)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(ElementCtrlA.webElem("//h4[text()='Copy exercises from']"), 30);
-            _element = ElementCtrlA.webElem("//div[@class='copy-form']");
+            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
+            _element = Element.webElem("//div[@class='copy-form']");
             var membership = _element.FindElement(By.XPath(".//h3[text()='Program']/parent::div//input"));
             membership.SendKeys(membershipData[1] + Keys.Enter);
             WaitUntil.WaitSomeInterval(250);
@@ -216,8 +216,8 @@ namespace MCMAutomation.Helpers
         public static void SelectCopyWorkout(List<string> membershipData)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(ElementCtrlA.webElem("//h4[text()='Copy exercises from']"), 30);
-            _element = ElementCtrlA.webElem("//div[@class='copy-form']");
+            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
+            _element = Element.webElem("//div[@class='copy-form']");
             var membership = _element.FindElement(By.XPath(".//h3[text()='Workout']/parent::div//input"));
             membership.SendKeys(membershipData[2] + Keys.Enter);
             WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Workout']/parent::div//span[@title='{membershipData[2]}']")));

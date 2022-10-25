@@ -39,7 +39,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify deleting of programs")]
         public MembershipAdmin VerifyDeletePrograms()
         {
-            Assert.Throws<NoSuchElementException>(() => ElementCtrlA.webElem("//div[@class='table-item-name']"));
+            Assert.Throws<NoSuchElementException>(() => Element.webElem("//div[@class='table-item-name']"));
 
             return this;
         }

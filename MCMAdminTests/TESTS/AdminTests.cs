@@ -303,7 +303,7 @@ namespace AdminSiteTests
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.UsersAdmin
-                .SearchUser()
+                .SearchUser(email)
                 .ClickEditUser(email)
                 .AddMembershipToUser(memberName)
                 .SelectActiveMembership(memberName);
@@ -368,8 +368,7 @@ namespace AdminSiteTests
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.UsersAdmin
-                .SearchUser()
-                .VerifyDisplayingOfUser(email)
+                .SearchUser(email)
                 .ClickEditUser(email)
                 .AddMembershipToUser(memberName)
                 .SelectActiveMembership(memberName);
@@ -432,7 +431,7 @@ namespace AdminSiteTests
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.UsersAdmin
-                .SearchUser()
+                .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
                 .AddMembershipToUser(memberName)

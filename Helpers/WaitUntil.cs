@@ -18,38 +18,38 @@ namespace MCMAutomation.Helpers
             Task.Delay(TimeSpan.FromMilliseconds(milliseconds)).Wait();
         }
 
-        public static void ElementIsClickable(IWebElement ElementCtrlA, int seconds = 10)
+        public static void ElementIsClickable(IWebElement element, int seconds = 10)
         {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementToBeClickable(ElementCtrlA));
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementToBeClickable(element));
         }
 
-        public static void ElementIsVisible(By ElementCtrlA, int seconds = 10)
+        public static void ElementIsVisible(By element, int seconds = 10)
         {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementIsVisible(ElementCtrlA));
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementIsVisible(element));
         }
 
-        public static void ElementIsVisibleAndClickable(By ElementCtrlA, int seconds = 10)
+        public static void ElementIsVisibleAndClickable(By element, int seconds = 10)
         {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementToBeClickable(ElementCtrlA));
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementIsVisible(ElementCtrlA));
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementToBeClickable(element));
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementIsVisible(element));
         }
 
-        public static void ElementIsInvisible(By ElementCtrlA, int seconds = 10)
+        public static void ElementIsInvisible(By element, int seconds = 10)
         {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.InvisibilityOfElementLocated(ElementCtrlA));
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.InvisibilityOfElementLocated(element));
         }
 
-        public static void VisibilityOfAllElementsLocatedBy(By ElementCtrlA, int seconds = 10)
+        public static void VisibilityOfAllElementsLocatedBy(By element, int seconds = 10)
         {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(ElementCtrlA));
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
         }
 
-        public static void InvisibilityOfAllElementsLocatedBy(By ElementCtrlA, int seconds = 10)
+        public static void InvisibilityOfAllElementsLocatedBy(By element, int seconds = 10)
         {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.InvisibilityOfElementLocated(ElementCtrlA));
+            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.InvisibilityOfElementLocated(element));
         }
 
-        public static void CustomElevemtIsVisible(IWebElement ElementCtrlA, int seconds = 10)
+        public static void CustomElevemtIsVisible(IWebElement element, int seconds = 10)
         {
             Task.Delay(TimeSpan.FromMilliseconds(150)).Wait();
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
@@ -60,7 +60,7 @@ namespace MCMAutomation.Helpers
                 {
                     try
                     {
-                        if (ElementCtrlA.Enabled == true)
+                        if (element.Enabled == true)
                         {
                             return true;
                         }
@@ -75,7 +75,7 @@ namespace MCMAutomation.Helpers
 
         }
 
-        public static void CustomElevemtIsInvisible(IWebElement ElementCtrlA, int seconds = 10)
+        public static void CustomElevemtIsInvisible(IWebElement element, int seconds = 10)
         {
             Task.Delay(TimeSpan.FromMilliseconds(150)).Wait();
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
@@ -86,7 +86,7 @@ namespace MCMAutomation.Helpers
                 {
                     try
                     {
-                        if (ElementCtrlA.Enabled == true)
+                        if (element.Enabled == true)
                         {
                             return false;
                         }

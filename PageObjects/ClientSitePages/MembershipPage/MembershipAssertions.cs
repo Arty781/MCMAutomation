@@ -77,17 +77,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public void VerifyAddedWeight(List<string> addedWeight)
         {
             WaitUntil.CustomElevemtIsVisible(inputAddedWeightElem);
-            List<string> list = new List<string>();
-            var addedWeightList = inputAddedWeight.Where(x => x.Enabled).ToList();
-            foreach (var weight in addedWeightList)
-            {
-                list.Add(weight.Text);
-            }
-            List<string> list1 = list.Except(addedWeight).ToList();
-            var list2 = addedWeight.Except(list).ToList();
-            Console.WriteLine("List 1: " + list1.Count);
-            Console.WriteLine("List 2: " + list2.Count);
-            Assert.IsTrue(list1.Any() == list2.Any());
+            var addedWeightList = inputAddedWeight.Where(x => x.Enabled).Select(x => x.Text).ToList();
+            var checkList = addedWeightList.Except(addedWeight).ToList();
+            Assert.IsTrue(checkList.Count() == 0);
         }
     }
 }
