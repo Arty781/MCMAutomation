@@ -90,7 +90,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
 
             Button.Click(inputHeight);
-            string[] selectedConversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
+            List<string> selectedConversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
             if (selectedConversionSystem[0] == "Imperial")
             {
                 string activeElem = itemHeightActive.Text;

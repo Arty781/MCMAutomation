@@ -10,51 +10,35 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 {
     public partial class Progress
     {
-        public string[] GetProgressData()
+        public List<string> GetProgressData()
         {
-            WaitUntil.WaitSomeInterval(1500);
+            WaitUntil.CustomElevemtIsVisible(inputWeight);
             var progressList = new List<string>();
             
-            progressList.Add(TextBox.GetAttribute(inputWeight, "value"));
-            progressList.Add(TextBox.GetAttribute(inputWaist, "value"));
-            progressList.Add(TextBox.GetAttribute(inputChest, "value"));
-            progressList.Add(TextBox.GetAttribute(inputArm, "value"));
-            progressList.Add(TextBox.GetAttribute(inputHip, "value"));
-            progressList.Add(TextBox.GetAttribute(inputThigh, "value"));
+            progressList.Add(inputWeight.GetAttribute("value"));
+            progressList.Add(inputWaist.GetAttribute("value"));
+            progressList.Add(inputChest.GetAttribute("value"));
+            progressList.Add(inputArm.GetAttribute("value"));
+            progressList.Add(inputHip.GetAttribute("value"));
+            progressList.Add(inputThigh.GetAttribute("value"));
 
-            string[] progressData = progressList.ToArray();
-
-            return progressData;
+            return progressList;
         }
 
-        public Progress VerifyAddedProgress(string[] progressData)
+        public Progress VerifyAddedProgress(List<string> progressData)
         {
             WaitUntil.CustomElevemtIsVisible(titleProgressPage, 60);
             WaitUntil.WaitSomeInterval(1500);
             var progressList = new List<string>();
-
-            progressList.Add(TextBox.GetText(valueWeight).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's'}));
+            progressList.Add(TextBox.GetText(valueWeight).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));
             progressList.Add(TextBox.GetText(valueWaist).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));
             progressList.Add(TextBox.GetText(valueChest).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));
             progressList.Add(TextBox.GetText(valueArm).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));
             progressList.Add(TextBox.GetText(valueHips).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));
             progressList.Add(TextBox.GetText(valueThigh).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));
+            var verifyList = progressData.Except(progressList);
 
-            string[] progressListOne = progressList.ToArray();
-            
-            var list1 = progressData.Except(progressListOne);
-            var list2 = progressListOne.Except(progressData);
-
-            foreach(var item in progressData)
-            {
-                Console.WriteLine(item);
-            }
-            foreach (var item in progressListOne)
-            {
-                Console.WriteLine(item);
-            }
-
-            Assert.IsTrue(!list1.Any() && !list2.Any());
+            Assert.IsTrue(verifyList.Count() == 0);
 
             return this;
         }

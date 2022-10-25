@@ -11,7 +11,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 {
     public partial class Nutrition
     {
-        public Nutrition VerifyMaintainCaloriesStep01(string[] values, string level, string[] gender, string[] textOfSelectedAdditionalOption, string selectedAdditionalOption)
+        public Nutrition VerifyMaintainCaloriesStep01(List<string> values, string level, List<string> gender, List<string> textOfSelectedAdditionalOption, string selectedAdditionalOption)
         {
             DateTime birthdate = DateTime.Parse(values[0]);
             var currentTime = DateTime.Now;
@@ -555,7 +555,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //    }
         //}
 
-        public void VerifyNutritionData(string[] userData, string goal, string tier, string SKU, string[] gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories)
+        public void VerifyNutritionData(List<string> userData, string goal, string tier, string SKU, List<string> gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories)
         {
             #region Protein Calculation
 

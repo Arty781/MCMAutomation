@@ -25,7 +25,7 @@ namespace MCMAutomation.Helpers
             return _element.FindElements(By.XPath(".//input[@type='radio']/ancestor::label")); 
         }
 
-        public static string[] GetTexOfSelectedtNutritionSelector(string title)
+        public static List<string> GetTexOfSelectedtNutritionSelector(string title)
         {
             var list = new List<string>();
             WaitUntil.WaitSomeInterval(1500);
@@ -35,9 +35,7 @@ namespace MCMAutomation.Helpers
 
             list.Add(element.Text);
 
-            string[] selectedElement = list.ToArray();
-
-            return selectedElement;
+            return list;
         }
 
         public static void SelectNumberOfWeekForARD(string week)

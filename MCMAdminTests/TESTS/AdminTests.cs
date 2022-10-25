@@ -113,7 +113,7 @@ namespace AdminSiteTests
                 .VerifyMembershipNameCbbx(memberName)
                 .CreatePrograms();
 
-            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+            List<string> programList = Pages.MembershipAdmin.GetProgramNames();
 
             Pages.MembershipAdmin
                 .AddNextPhaseDependency(programList);
@@ -240,7 +240,7 @@ namespace AdminSiteTests
             Pages.MembershipAdmin
                .ClickAddProgramsBtn(memberName);
 
-            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+            List<string> programList = Pages.MembershipAdmin.GetProgramNames();
 
             Pages.MembershipAdmin
                 .DeletePrograms(programList)
@@ -290,13 +290,13 @@ namespace AdminSiteTests
                 .VerifyMembershipNameCbbx(memberName)
                 .CreatePrograms();
 
-            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+            List<string> programList = Pages.MembershipAdmin.GetProgramNames();
 
             Pages.MembershipAdmin
                 .ClickAddWorkoutBtn()
                 .CreateWorkouts(programList);
 
-            string[] exercise = AppDbContext.GetExercisesData();
+            List<string> exercise = AppDbContext.GetExercisesData();
 
             Pages.MembershipAdmin
                 .AddExercises(programList, exercise);
@@ -355,7 +355,7 @@ namespace AdminSiteTests
                 .VerifyMembershipNameCbbx(memberName)
                 .CreatePrograms();
 
-            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+            List<string> programList = Pages.MembershipAdmin.GetProgramNames();
 
             Pages.MembershipAdmin
                 .ClickAddWorkoutBtn()
@@ -418,13 +418,13 @@ namespace AdminSiteTests
                 .VerifyMembershipNameCbbx(memberName)
                 .CreatePrograms();
 
-            string[] programList = Pages.MembershipAdmin.GetProgramNames();
+            List<string> programList = Pages.MembershipAdmin.GetProgramNames();
 
             Pages.MembershipAdmin
                 .ClickAddWorkoutBtn()
                 .CreateWorkouts(programList);
 
-            string[] exercise = AppDbContext.GetExercisesData();
+            List<string> exercise = AppDbContext.GetExercisesData();
 
             Pages.MembershipAdmin
                 .AddExercises(programList, exercise);

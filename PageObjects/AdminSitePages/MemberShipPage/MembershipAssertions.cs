@@ -20,20 +20,11 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Get Program names")]
-        public string[] GetProgramNames()
+        public List<string> GetProgramNames()
         {
             WaitUntil.CustomElevemtIsVisible(nameProgramTitleElem);
-            var list = new List<string>();
-            
-            var programNames = nameProgramTitle.Where(x => x.Displayed).ToList();
-            for(int i=0; i<programNames.Count; i++)
-            {
-                string programName = TextBox.GetText(programNames[i]);
-                list.Add(programName);
-            }
-            
-            string[] namesList = list.ToArray();
-            return namesList;
+            var programNames = nameProgramTitle.Where(x => x.Displayed).Select(x=>x.Text).ToList();
+            return programNames;
         }
 
         [AllureStep("Verify deleting of programs")]
@@ -45,19 +36,13 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Get Workout names")]
-        public string[] GetWorkoutNames()
+        public List<string> GetWorkoutNames()
         {
             WaitUntil.CustomElevemtIsVisible(nameWorkoutTitleElem, 30);
-            var list = new List<string>();
-            var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).ToList();
-            for (int i = 0; i < workoutNames.Count; i++)
-            {
-                string workoutName = TextBox.GetText(workoutNames[i]);
-                list.Add(workoutName);
-            }
-
-            string[] namesList = list.ToArray();
-            return namesList;
+           
+            var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).Select(x=>x.Text).ToList();
+            
+            return workoutNames;
         }
 
         [AllureStep("Verify displaying membership name")]

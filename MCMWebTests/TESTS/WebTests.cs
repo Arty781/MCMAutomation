@@ -93,18 +93,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .ClickEditUser(email)
@@ -134,8 +132,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -143,7 +141,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -160,7 +158,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -217,18 +215,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
-            
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .ClickEditUser(email)
@@ -258,8 +254,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -267,7 +263,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -284,7 +280,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -343,14 +339,12 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("PG");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("PG");
-
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.PopUp
@@ -378,8 +372,8 @@ namespace MCMAutomation.WebTests
             string diet;
             string textOfMoreThan2KgSelected = null;
             double previousCalories = 0.0;
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -394,7 +388,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -411,7 +405,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -471,18 +465,15 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
             Pages.Login
-                .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -503,7 +494,7 @@ namespace MCMAutomation.WebTests
             string phase;
             string diet;
             string selectedAdditionalOption = null;
-            string[] textSelectedAdditionalOptions = null;
+            List<string> textSelectedAdditionalOptions = null;
             string textOfMoreThan2KgSelected = null;
             double previousCalories;
 
@@ -513,14 +504,14 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
 
             Pages.Nutrition
                 .SelectMale(genderBtns);
 
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
 
             Pages.Nutrition
@@ -594,18 +585,15 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
             Pages.Login
-                .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .ClickEditUser(email)
@@ -627,11 +615,11 @@ namespace MCMAutomation.WebTests
             string phase;
             string diet;
             string selectedAdditionalOption = null;
-            string[] textSelectedAdditionalOptions = null;
+            List<string> textSelectedAdditionalOptions = null;
             string textOfMoreThan2KgSelected;
             double previousCalories = 0.0;
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -643,7 +631,7 @@ namespace MCMAutomation.WebTests
 
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
 
             Pages.Nutrition
@@ -730,18 +718,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -770,8 +756,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -779,7 +765,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -796,7 +782,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -863,18 +849,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -888,8 +872,6 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.password);
-            //Pages.PopUp
-            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -905,8 +887,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -914,7 +896,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -931,7 +913,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1000,18 +982,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -1025,8 +1005,6 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.password);
-            //Pages.PopUp
-            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1041,8 +1019,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -1050,7 +1028,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -1067,7 +1045,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1133,18 +1111,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -1158,8 +1134,6 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.password);
-            //Pages.PopUp
-            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1174,8 +1148,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -1183,7 +1157,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -1200,7 +1174,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1266,18 +1240,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU(SKU: "CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -1291,8 +1263,6 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.password);
-            //Pages.PopUp
-            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1307,8 +1277,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -1316,7 +1286,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -1333,7 +1303,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1400,18 +1370,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -1425,8 +1393,6 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.password);
-            //Pages.PopUp
-            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1441,8 +1407,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -1450,7 +1416,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -1467,7 +1433,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1534,18 +1500,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -1559,8 +1523,6 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.password);
-            //Pages.PopUp
-            //    .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1575,8 +1537,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -1584,7 +1546,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -1601,7 +1563,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectYesOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1669,18 +1631,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -1708,8 +1668,8 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
 
             #endregion
 
@@ -1717,7 +1677,7 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
                 .SelectFemale(genderBtns);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
@@ -1734,7 +1694,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectNoOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1800,18 +1760,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -1838,14 +1796,14 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
             IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
 
             Pages.Nutrition
                 .SelectFemale(genderBtns);
 
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
                 .SelectImperial(conversionsBtn);
@@ -1856,7 +1814,7 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectNoOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1925,18 +1883,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -1960,16 +1916,16 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .EnterAge("37");
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
 
             IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
                 .SelectNoOfAdditionalOptions(additionalOption);
 
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -2038,18 +1994,16 @@ namespace MCMAutomation.WebTests
         {
             #region AdminActions
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("BBB1");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("BBB1");
-
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -2073,15 +2027,15 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .EnterAge("37");
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            string[] userData = AppDbContext.GetUserData(email);
-            string[] membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            string[] selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
 
             IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
                 .SelectNoOfAdditionalOptions(additionalOption);
-            string[] textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -2502,7 +2456,7 @@ namespace MCMAutomation.WebTests
                     .EnterHips()
                     .EnterThigh();
 
-                string[] progressBeforeSaving = Pages.Progress.GetProgressData();
+                List<string> progressBeforeSaving = Pages.Progress.GetProgressData();
 
                 Pages.Progress
                     .ClickSubmitBtn()
@@ -2583,7 +2537,7 @@ namespace MCMAutomation.WebTests
                 .EnterArm()
                 .EnterHips();
 
-            string[] progressBeforeSaving = Pages.Progress.GetProgressData();
+            List<string> progressBeforeSaving = Pages.Progress.GetProgressData();
 
             Pages.Progress
                 .ClickSubmitBtn()
@@ -2638,7 +2592,6 @@ namespace MCMAutomation.WebTests
                 .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
                 .AddMembershipToUser(membership)
                 .SelectActiveMembership(membership);
@@ -2655,12 +2608,12 @@ namespace MCMAutomation.WebTests
                 .ClickAddProgressBtnA()
                 .EnterWeight()
                 .EnterWaist()
-                .EnterThigh()
                 .EnterChest()
                 .EnterArm()
-                .EnterHips();
+                .EnterHips()
+                .EnterThigh();
 
-            string[] progressBeforeSaving = Pages.Progress.GetProgressData();
+            List<string> progressBeforeSaving = Pages.Progress.GetProgressData();
 
             Pages.Progress
                 .ClickSubmitBtn()

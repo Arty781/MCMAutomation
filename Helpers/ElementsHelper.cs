@@ -13,15 +13,11 @@ namespace MCMAutomation.Helpers
     {
         public static void Click(IWebElement element)
         {
-            try
-            {
-                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-                WaitUntil.WaitSomeInterval(500);
-                WaitUntil.CustomElevemtIsVisible(element, 30);
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.WaitSomeInterval(500);
+            WaitUntil.CustomElevemtIsVisible(element, 30);
 
-                element.Click();
-            }
-            catch (Exception) { }
+            element.Click();
 
         }
 

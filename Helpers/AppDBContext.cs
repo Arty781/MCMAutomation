@@ -57,7 +57,7 @@ namespace MCMAutomation.Helpers
         }
 
 
-        public static string[] GetExercisesData()
+        public static List<string> GetExercisesData()
         {
             var list = new List<string>();
             
@@ -80,9 +80,7 @@ namespace MCMAutomation.Helpers
                 }
                 
             }
-
-            string[] exercise = list.ToArray();
-            return exercise;
+            return list;
         }
 
         public static List<string> GetMembershipProgramWorkoutData()
@@ -174,7 +172,7 @@ namespace MCMAutomation.Helpers
             return status;
         }
 
-        public static string[] GetActiveMembershipsByEmail(string email)
+        public static List<string> GetActiveMembershipsByEmail(string email)
         {
             
             var list = new List<string>();
@@ -198,9 +196,7 @@ namespace MCMAutomation.Helpers
                 }
 
             }
-
-            string[] nameMembership = list.ToArray();
-            return nameMembership;
+            return list;
         }
 
         public static string GetActiveMembershipsBySKU(string SKU)
@@ -251,7 +247,7 @@ namespace MCMAutomation.Helpers
         }
 
         #region UserOptions
-        public static string[] GetUserData(string userEmail)
+        public static List<string> GetUserData(string userEmail)
         {
             var list = new List<string>();
             using (SqlConnection db = new(DB.GetConnectionString))
@@ -277,9 +273,8 @@ namespace MCMAutomation.Helpers
                 }
 
             }
-            string[] data = list.ToArray();
 
-            return data;
+            return list;
         }
 
         public static string GetUserEmail()

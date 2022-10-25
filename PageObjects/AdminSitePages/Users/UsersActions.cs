@@ -79,9 +79,9 @@ namespace MCMAutomation.PageObjects
             var progressList = btnDeleteProgress.Where(x => x.Enabled).ToList();
             for (int i = 0; i < progressList.Count; i++)
             {
+                WaitUntil.WaitSomeInterval(1000);
                 Button.Click(btnDeleteProgress[0]);
-                WaitUntil.WaitSomeInterval(500);
-                Pages.Common.btnConfirmationYes.Click();
+                Button.Click(Pages.Common.btnConfirmationYes);
             }
 
             return this;
