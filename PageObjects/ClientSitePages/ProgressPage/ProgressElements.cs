@@ -49,6 +49,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//h2[text()='Your Progress']")]
         public IWebElement titleProgressPage;
 
+
         #region FINDING YOUR ESTIMATED TDEE
 
         [FindsBy(How = How.Name, Using = "weight")]

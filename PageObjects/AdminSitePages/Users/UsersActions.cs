@@ -106,13 +106,12 @@ namespace MCMAutomation.PageObjects
             if (itemMembership.Count >= 1)
             {
                 var listOfMemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
-                for (int i = 0; i <= listOfMemberships.Count; i++)
+                for (int i = 0; i < listOfMemberships.Count; i++)
                 {
-
-                    Button.Click(listOfMemberships[0]);
                     WaitUntil.WaitSomeInterval(1000);
+                    Button.Click(btnDeleteAddedMemberships[0]);
+                    WaitUntil.WaitSomeInterval(250);
                     WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
-                    listOfMemberships = btnDeleteAddedMemberships.Where(x => x.Displayed).ToList();
                 }
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
                 WaitUntil.CustomElevemtIsVisible(Pages.Common.itemsNoData);

@@ -88,8 +88,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Height")]
         public UserProfile EnterHeight()
         {
-
             Button.Click(inputHeight);
+
+
             List<string> selectedConversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
             if (selectedConversionSystem[0] == "Imperial")
             {
@@ -100,7 +101,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 {
                     WaitUntil.WaitSomeInterval(200);
                     activeElem = itemHeightActive.Text;
-                    if(activeElem == "5 ft 9 in")
+                    if (activeElem == "5 ft 9 in")
                     {
                         break;
                     }
@@ -112,18 +113,18 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     for (int i = 0; i < heightsBeforeActive.Count; i++)
                     {
                         WaitUntil.WaitSomeInterval(200);
+                        itemHeightPrev.Click();
                         activeElem = itemHeightActive.Text;
                         if (activeElem == "5 ft 9 in")
                         {
                             break;
                         }
-                        itemHeightPrev.Click();
                     }
-                        
+
                 }
 
             }
-            else if(selectedConversionSystem[0] == "Metric")
+            else if (selectedConversionSystem[0] == "Metric")
             {
                 string activeElem = itemHeightActive.Text;
                 IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));
@@ -131,12 +132,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 for (int i = 0; i < heightsAfterActive.Count; i++)
                 {
                     WaitUntil.WaitSomeInterval(200);
-                    itemHeightNext.Click();
                     activeElem = itemHeightActive.Text;
                     if (activeElem == "175 cm")
                     {
                         break;
                     }
+                    itemHeightNext.Click();
                 }
                 if (activeElem != "175 cm")
                 {

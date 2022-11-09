@@ -28,7 +28,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public Progress VerifyAddedProgress(List<string> progressData)
         {
             WaitUntil.CustomElevemtIsVisible(titleProgressPage, 60);
-            WaitUntil.WaitSomeInterval(1500);
+           WaitUntil.WaitSomeInterval(2100);
             var progressList = new List<string>();
             progressList.Add(TextBox.GetText(valueWeight).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));
             progressList.Add(TextBox.GetText(valueWaist).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));

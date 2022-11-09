@@ -301,7 +301,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -345,10 +344,10 @@ namespace MCMAutomation.WebTests
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-            Pages.Sidebar
-                .OpenUsersPage();
             Pages.PopUp
                 .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
@@ -428,7 +427,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -547,7 +545,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             #endregion
@@ -665,7 +662,6 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .ClickNextBtn();
             previousCalories = Pages.Nutrition.GetPreviousCalories(previousCalories, maintanceCalories);
-
             Pages.Nutrition
                 .ClickNextBtn();
             textOfMoreThan2KgSelected = Pages.Nutrition.GetTextOnStep06();
@@ -677,7 +673,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             #endregion
@@ -812,7 +807,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -945,7 +939,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
             Pages.Login
                 .GetUserLogout();
@@ -1074,7 +1067,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -1203,7 +1195,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -1333,7 +1324,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -1463,7 +1453,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -1593,7 +1582,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -1723,7 +1711,6 @@ namespace MCMAutomation.WebTests
 
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -1846,7 +1833,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -1957,7 +1943,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -2061,7 +2046,6 @@ namespace MCMAutomation.WebTests
                 .ClickNextBtn();
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .ClickNextBtn()
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
@@ -2379,7 +2363,8 @@ namespace MCMAutomation.WebTests
                 .EnterFats()
                 .EnterHeight()
                 .EnterWeight()
-                .EnterNewEmail();
+                .EnterNewEmail()
+                .EnterEstimatedBodyFat();
             ScreenShotHelper.MakeScreenShot();
 
             List<string> dataBeforeSaving = Pages.UserProfile.GetUserDataBeforeSaving();
@@ -2445,7 +2430,7 @@ namespace MCMAutomation.WebTests
                 .GetUserLogin(email, Credentials.password);
             Pages.Sidebar
                 .OpenProgressPage();
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 12; i++)
             {
                 Pages.Progress
                     .ClickAddProgressBtnA()
@@ -2454,7 +2439,8 @@ namespace MCMAutomation.WebTests
                     .EnterChest()
                     .EnterArm()
                     .EnterHips()
-                    .EnterThigh();
+                    .EnterThigh()
+                    .AddImages();
 
                 List<string> progressBeforeSaving = Pages.Progress.GetProgressData();
 

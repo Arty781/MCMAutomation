@@ -23,9 +23,9 @@ namespace MCMAutomation.Helpers
 
     public class UploadedImages
     {
-        public const string CreateMemberImg = $"\\Images\\alone-with-his-thoughts-1080x720.jpg";
-        public const string PhaseImg1 = $"\\Images\\Photos-App.jpg";
-        public const string PhaseImg2 = $"\\Images\\will-burrard-lucas-beetlecam-23-1024x683.webp"; 
+        public const string CreateMemberImg =  @"\Images\alone-with-his-thoughts-1080x720.jpg";
+        public const string PhaseImg1 = @"\Images\Photos-App.jpg";
+        public const string PhaseImg2 = @"\Images\will-burrard-lucas-beetlecam-23-1024x683.jpg"; 
     }
 
     public class DB

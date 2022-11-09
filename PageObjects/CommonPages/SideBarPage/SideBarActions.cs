@@ -88,13 +88,13 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
-        [AllureStep("Open MyAccount")]
+        [AllureStep("Open Progress")]
         public Sidebar OpenProgressPage()
         {
 
             Button.Click(progressTb);
 
-            WaitUntil.CustomElevemtIsVisible(Pages.Progress.titleProgressPage, 30);
+            //WaitUntil.CustomElevemtIsVisible(Pages.Progress.titleProgressPage, 30);
 
             return this;
         }
