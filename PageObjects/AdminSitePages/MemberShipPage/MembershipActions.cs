@@ -42,7 +42,7 @@ namespace MCMAutomation.PageObjects
             InputBox.ElementCtrlA(membershipNameInput, 20, "00Created New Multilevel Membership SUB " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
             InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
             InputBox.ElementCtrlA(startDateInput, 10, DateTime.Now.AddDays(-30).ToString("yyyy-MM-d") + Keys.Enter);
-            InputBox.ElementCtrlA(endDateInput, 10, DateTime.Now.AddDays(30).ToString("yyyy-MM-d") + Keys.Enter);
+            InputBox.ElementCtrlA(endDateInput, 10, DateTime.Now.AddDays(60).ToString("yyyy-MM-d") + Keys.Enter);
             InputBox.ElementCtrlA(priceInput, 10, "100");
             InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
             Button.Click(productToggleType);
@@ -130,8 +130,8 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 1 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
@@ -141,8 +141,8 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 2 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
@@ -152,8 +152,8 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 3 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
@@ -163,8 +163,8 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 4 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
@@ -174,8 +174,8 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase 5 " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, "10000");
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
-                    InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
+                    InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
                     Pages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }

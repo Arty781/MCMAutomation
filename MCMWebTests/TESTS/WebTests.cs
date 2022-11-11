@@ -2097,6 +2097,7 @@ namespace MCMAutomation.WebTests
             string email = AppDbContext.GetUserEmail();
 
             #region AdminActions
+
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar

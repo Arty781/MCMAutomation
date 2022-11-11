@@ -530,46 +530,43 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Add Weight")]
         public MembershipUser AddWeight()
         {
-            //WaitUntil.WaitSomeInterval(1000);
-            WaitUntil.CustomElevemtIsVisible(weightInputElem);
+            WaitUntil.CustomElevemtIsVisible(weightInput.LastOrDefault());
 
             var weightList = weightInput.Where(x => x.Displayed).ToList();
-            var repsList = repsInput.Where(x => x.Displayed).ToList();
-            var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
-            for (int i=0; i<weightList.Count; i++)
+            foreach (var weight in weightList)
             {
-                //WaitUntil.CustomElevemtIsVisible(weightList[i], 10);
-                InputBox.ElementCtrlA(weightList[i], 5, RandomHelper.RandomNumber(150));
-                WaitUntil.WaitSomeInterval(5);
+                WaitUntil.WaitSomeInterval(150);
+                InputBox.ElementCtrlA(weight, 5, RandomHelper.RandomNumber(150));
             }
                
             return this;
         }
 
-        //[AllureStep("Enter Reps")]
-        //public MembershipUser EnterReps()
-        //{
-        //    WaitUntil.WaitSomeInterval(2);
-        //    WaitUntil.CustomElevemtIsVisible(repsInputElem);
+        [AllureStep("Enter Reps")]
+        public MembershipUser EnterReps()
+        {
+            WaitUntil.WaitSomeInterval(2);
+            WaitUntil.CustomElevemtIsVisible(repsInputElem);
 
-        //    var repsList = repsInput.Where(x => x.Displayed).ToList();
-        //    foreach(var reps in repsList)
-        //    {
-        //        InputBox.ElementCtrlA(reps, 10, RandomHelper.RandomNumber(10));
-        //    }
+            var repsList = repsInput.Where(x => x.Displayed).ToList();
+            foreach (var reps in repsList)
+            {
+                WaitUntil.WaitSomeInterval(150);
+                InputBox.ElementCtrlA(reps, 10, RandomHelper.RandomNumber(10));
+            }
 
-        //    return this;
-        //}
+            return this;
+        }
 
         [AllureStep("Mark Checkboxes")]
         public MembershipUser MarkCheckboxes()
         {
             WaitUntil.WaitSomeInterval(1000);
-            WaitUntil.CustomElevemtIsVisible(checkboxInput[0]);
-
+            WaitUntil.CustomElevemtIsVisible(checkboxInput.Last());
             var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
             foreach (var checkbox in checkboxesList)
             {
+                WaitUntil.WaitSomeInterval(150);
                 checkbox.Click();
             }
 
@@ -588,7 +585,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     for (int i = 0; i < notesList.Count; i++)
                     {
                         notesList[i].Click();
-                        InputBox.ElementCtrlA(notesInputelem, 10, Lorem.Sentence());
+                        InputBox.ElementCtrlA(notesInputelem, 10, Lorem.Paragraph());
                         Button.Click(saveNotesBtnElem);
                     }
             }
@@ -600,7 +597,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 for (int i = 0; i < notesList.Count; i++)
                 {
                     notesList[i].Click();
-                    InputBox.ElementCtrlA(notesInputelem, 10, Lorem.Sentence());
+                    InputBox.ElementCtrlA(notesInputelem, 10, Lorem.Paragraph());
                     Button.Click(saveNotesBtnElem);
                 }
 
