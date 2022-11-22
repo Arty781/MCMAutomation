@@ -230,7 +230,11 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             {
                 InputBox.ElementCtrlA(inputBodyFat, 10, fat);
             }
-            
+            else if (inputBodyFat.GetAttribute("value") != "")
+            {
+                InputBox.ElementCtrlA(inputBodyFat, 10, fat);
+            }
+
             return this;
         }
 

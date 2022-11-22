@@ -570,8 +570,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             else
             {
                 if (
-                    (gender[0] == "Female" && bodyFat > 35) ||
-                    (gender[0] == "Male" && bodyFat > 20)
+                    (gender[0] == "Female" && bodyFat > 30) ||
+                    (gender[0] == "Male" && bodyFat > 25)
                 )
                 {
                     protein = weight * 1.6;
@@ -612,15 +612,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             if (diet == Diets.diet[0])
             {
-                fat = weight * 0.8;
+                fat = weight * 0.7;
             }
             else if (diet == Diets.diet[1])
             {
-                fat = weight * 1;
+                fat = weight * 0.8;
             }
             else if (diet == Diets.diet[2])
             {
-                fat = weight * 1.2;
+                fat = weight * 1;
             }
             fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
 

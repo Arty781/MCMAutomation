@@ -51,7 +51,7 @@ namespace MCMAutomation.Helpers
 
         public static void CustomElevemtIsVisible(IWebElement element, int seconds = 10)
         {
-            Task.Delay(TimeSpan.FromMilliseconds(150)).Wait();
+            Task.Delay(TimeSpan.FromMilliseconds(500)).Wait();
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
             try

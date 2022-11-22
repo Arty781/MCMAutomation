@@ -36,395 +36,22 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         #region Select phase
 
         [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase(int i)
+        public MembershipUser SelectPhaseAndWeek(int phaseNum, int weekNum)
         {
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[i]);
-
+            Button.Click(selectPhaseBtn[phaseNum - 1]);
+            Button.Click(weekSelectorInput);
+            Button.Click(listWeekNumber[weekNum - 1]);
+            Button.Click(viewTrainingProgramBtn);
             return this;
         }
 
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase2()
+        public int GetWeekNumber()
         {
-
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-
-
-            Button.Click(selectPhaseBtn[1]);
-
-
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-
-            Button.Click(viewTrainingProgramBtn);
-
-
-
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase3()
-        {
-
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-
-
-            Button.Click(selectPhaseBtn[2]);
-
-
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-
-            Button.Click(viewTrainingProgramBtn);
-
-
-
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase4()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[3]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase5()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[4]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase6()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[5]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase7()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[6]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase8()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[7]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase9()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[8]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase10()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[9]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase11()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[10]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase12()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[11]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase13()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[12]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase14()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[13]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase15()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[14]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase16()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[15]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase17()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[16]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase18()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[17]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase19()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[18]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase20()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[19]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase21()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[20]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase22()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[21]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase23()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[22]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase24()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[23]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase25()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[24]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase26()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[25]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase27()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[26]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase28()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[27]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
-        }
-
-        [AllureStep("Select Phase")]
-        public MembershipUser SelectPhase29()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtnElem, 20);
-            Button.Click(selectPhaseBtn[28]);
-            Button.Click(weekSelectorInput);
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-            return this;
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 15);
+            weekSelectorInputEx.Click();
+            WaitUntil.CustomElevemtIsVisible(listWeekNumber.Last(), 15);
+            weekSelectorInputEx.Click();
+            return listWeekNumber.Count;
         }
 
         #endregion
@@ -432,63 +59,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         #region Select week number
 
         [AllureStep("Select Week number")]
-        public MembershipUser SelectWeekNumber1InPhase()
-        {
-            WaitUntil.WaitSomeInterval(500);
-            weekSelectorInput.Click();
-            weekSelectorInput.SendKeys(Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-
-            return this;
-        }
-
-        [AllureStep("Select Week number")]
-        public MembershipUser SelectWeekNumber2InPhase()
-        {
-            WaitUntil.WaitSomeInterval(500);
-            weekSelectorInput.Click();
-            weekSelectorInput.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            Button.Click(viewTrainingProgramBtn);
-
-
-            return this;
-        }
-
-        [AllureStep("Select Week number")]
-        public MembershipUser SelectWeekNumber2()
+        public MembershipUser SelectWeekNumber(int weekNum)
         {
             
             WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 15);
-
-            weekSelectorInputEx.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            WaitUntil.WaitSomeInterval(5000);
-
-
-            return this;
-        }
-
-        [AllureStep("Select Week number")]
-        public MembershipUser SelectWeekNumber3()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
-
-            weekSelectorInputEx.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            WaitUntil.WaitSomeInterval(5000);
-
-
-            return this;
-        }
-
-        [AllureStep("Select Week number")]
-        public MembershipUser SelectWeekNumber4()
-        {
-
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx);
-
-            weekSelectorInputEx.SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.ArrowDown + Keys.ArrowDown + Keys.Enter);
-            WaitUntil.WaitSomeInterval(5000);
+            weekSelectorInputEx.Click();
+            Button.Click(listWeekNumber[weekNum]);
+            WaitUntil.WaitSomeInterval(2500);
 
 
             return this;
@@ -500,9 +77,10 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public MembershipUser OpenWorkout()
         {
             WaitUntil.CustomElevemtIsVisible(textDayTitleElem);
-            WaitUntil.WaitSomeInterval(2500);
-            WaitUntil.CustomElevemtIsVisible(workoutBtnElem);
-            Button.Click(workoutBtnElem);
+            WaitUntil.WaitSomeInterval(500);
+            WaitUntil.CustomElevemtIsVisible(workoutBtn.First());
+            Button.Click(workoutBtn.First());
+            WaitUntil.WaitSomeInterval(500);
 
             return this;
         }
@@ -513,16 +91,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             WaitUntil.CustomElevemtIsVisible(textDayTitle[0]);
             WaitUntil.WaitSomeInterval(2500);
             WaitUntil.CustomElevemtIsVisible(btnCompletedWorkoutsElem);
-            Button.Click(btnCompletedWorkouts.Where(x => x.Enabled).LastOrDefault());
-
-            return this;
-        }
-
-        [AllureStep("Open completed workout")]
-        public MembershipUser OpenCompletedWorkouts()
-        {
-
-            Button.Click(btnCompletedWorkouts[0]);
+            Button.Click(btnCompletedWorkouts.LastOrDefault());
 
             return this;
         }
@@ -530,7 +99,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Add Weight")]
         public MembershipUser AddWeight()
         {
-            WaitUntil.CustomElevemtIsVisible(weightInput.LastOrDefault());
+            WaitUntil.CustomElevemtIsVisible(weightInput[1]);
 
             var weightList = weightInput.Where(x => x.Displayed).ToList();
             foreach (var weight in weightList)

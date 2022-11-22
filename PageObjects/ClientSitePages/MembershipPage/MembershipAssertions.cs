@@ -60,6 +60,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Get Phases count")]
         public int GetPhasesCount()
         {
+            WaitUntil.CustomElevemtIsVisible(selectPhaseBtn[0]);
             var count = selectPhaseBtn.Where(x=>x.Displayed).Count();
 
             return count;
@@ -68,6 +69,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Get Workouts count")]
         public int GetWorkoutsCount()
         {
+            WaitUntil.CustomElevemtIsVisible(workoutBtn[0]);
             var count = workoutBtn.Where(x => x.Displayed).Count();
 
             return count;

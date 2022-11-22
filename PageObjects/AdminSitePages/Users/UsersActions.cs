@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using MCMAutomation.PageObjects.ClientSitePages;
 
 namespace MCMAutomation.PageObjects
 {
@@ -27,6 +28,14 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email), 10);
             SwitcherHelper.ClickEditUserBtn(email, inputEmail);
+
+            return this;
+        }
+
+        [AllureStep("Edit Fats")]
+        public UsersAdmin EnterEstimatedBodyFat(string fat)
+        {
+            InputBox.ElementCtrlA(Pages.UserProfile.inputBodyfat, 10, fat);
 
             return this;
         }

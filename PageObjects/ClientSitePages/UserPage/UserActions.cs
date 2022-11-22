@@ -172,9 +172,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         }
 
         [AllureStep("Enter Estimated Body Fat (%)")]
-        public UserProfile EnterEstimatedBodyFat()
+        public UserProfile EnterEstimatedBodyFat(string fat)
         {
-            InputBox.ElementCtrlA(inputBodyfat, 10, "15");
+            InputBox.ElementCtrlA(inputBodyfat, 10, fat);
 
             return this;
         }

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using RimuTec.Faker;
+using OpenQA.Selenium.DevTools.V85.Profiler;
 
 namespace MCMAutomation.WebTests
 {
@@ -61,7 +62,7 @@ namespace MCMAutomation.WebTests
                 .EnterOldPass()
                 .EnterNewPass()
                 .EnterConfirmPass()
-                .EnterEstimatedBodyFat();
+                .EnterEstimatedBodyFat("15");
             Pages.Common
                 .ClickSaveBtn();
             Pages.PopUp
@@ -2070,6 +2071,820 @@ namespace MCMAutomation.WebTests
             #endregion
         }
 
+        [Test, Category("TDEE")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("TDEE")]
+
+        public void VerifyCalculationsForMaleWithMore25Fats()
+        {
+            #region AdminActions
+            string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            Pages.Login
+                .CopyUserEmail(email)
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership)
+                .SelectActiveMembership(membership)
+                .EnterEstimatedBodyFat("26");
+            Pages.Common
+                .ClickSaveBtn();
+            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(email, Credentials.password);
+            Pages.Sidebar
+                .OpenNutritionPage();
+
+            string textOfMoreThan2KgSelected = null;
+            double previousCalories = 0.0;
+
+            #region FINDING YOUR ESTIMATED TDEE
+
+            #region Select Activity lvl
+            Pages.Nutrition
+                .SelectActivityLevel(0);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+
+            #endregion
+
+            #region Select User data
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectMale(genderBtns);
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+
+            Pages.Nutrition
+                .SelectMetric(conversionsBtn)
+                .EnterAge(RandomNumber.Next(18, 65).ToString())
+                .SelectHeight()
+                .EnterWeight(RandomNumber.Next(50, 250).ToString());
+
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            #endregion
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .ClickNextBtn()
+                .Step02SelectCut();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier1();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase1();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet1();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            Pages.Nutrition
+                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .DeleteMemebershipFromUser(email);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+        }
+
+        [Test, Category("TDEE")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("TDEE")]
+
+        public void VerifyCalculationsForMaleWith25Fats()
+        {
+            #region AdminActions
+            string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            Pages.Login
+                .CopyUserEmail(email)
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership)
+                .SelectActiveMembership(membership)
+                .EnterEstimatedBodyFat("25");
+            Pages.Common
+                .ClickSaveBtn();
+            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(email, Credentials.password);
+            Pages.Sidebar
+                .OpenNutritionPage();
+
+            string textOfMoreThan2KgSelected = null;
+            double previousCalories = 0.0;
+
+            #region Select Activity lvl
+            Pages.Nutrition
+                .SelectActivityLevel(0);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+
+            #endregion
+
+            #region Select User data
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectMale(genderBtns);
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+
+            Pages.Nutrition
+                .SelectMetric(conversionsBtn)
+                .EnterAge(RandomNumber.Next(18, 65).ToString())
+                .SelectHeight()
+                .EnterWeight(RandomNumber.Next(50, 250).ToString());
+
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .ClickNextBtn()
+                .Step02SelectCut();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier2();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase2();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet3();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            Pages.Nutrition
+                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .DeleteMemebershipFromUser(email);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+        }
+
+        [Test, Category("TDEE")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("TDEE")]
+
+        public void VerifyCalculationsForMaleWithLess25Fats()
+        {
+            #region AdminActions
+            string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            Pages.Login
+                .CopyUserEmail(email)
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership)
+                .SelectActiveMembership(membership)
+                .EnterEstimatedBodyFat("24");
+            Pages.Common
+                .ClickSaveBtn();
+            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(email, Credentials.password);
+            Pages.Sidebar
+                .OpenNutritionPage();
+
+            string textOfMoreThan2KgSelected = null;
+            double previousCalories = 0.0;
+
+            #region Select Activity lvl
+            Pages.Nutrition
+                .SelectActivityLevel(0);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+
+            #endregion
+
+            #region Select User data
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectMale(genderBtns);
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+
+            Pages.Nutrition
+                .SelectMetric(conversionsBtn)
+                .EnterAge(RandomNumber.Next(18, 65).ToString())
+                .SelectHeight()
+                .EnterWeight(RandomNumber.Next(50, 250).ToString());
+
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .ClickNextBtn()
+                .Step02SelectCut();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier3();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase1();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet3();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            Pages.Nutrition
+                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .DeleteMemebershipFromUser(email);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+        }
+
+        [Test, Category("TDEE")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("TDEE")]
+
+        public void VerifyCalculationsForFemaleWithMore35Fats()
+        {
+            #region AdminActions
+            string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            Pages.Login
+                .CopyUserEmail(email)
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership)
+                .SelectActiveMembership(membership)
+                .EnterEstimatedBodyFat("36");
+            Pages.Common
+                .ClickSaveBtn();
+            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(email, Credentials.password);
+            Pages.Sidebar
+                .OpenNutritionPage();
+
+            string textOfMoreThan2KgSelected = null;
+            double previousCalories = 0.0;
+
+            #region Select Activity lvl
+            Pages.Nutrition
+                .SelectActivityLevel(0);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+
+            #endregion
+
+            #region Select User data
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectNoOfAdditionalOptions(additionalOption);
+
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+
+            Pages.Nutrition
+                .SelectMetric(conversionsBtn)
+                .EnterAge(RandomNumber.Next(18, 65).ToString())
+                .SelectHeight()
+                .EnterWeight(RandomNumber.Next(50, 250).ToString())
+                .EnterBodyFat("36");
+
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .ClickNextBtn()
+                .Step02SelectCut();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step03SelectTier3();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase3();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+            .Step05SelectDiet1();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            Pages.Nutrition
+                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .DeleteMemebershipFromUser(email);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+        }
+
+        [Test, Category("TDEE")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("TDEE")]
+
+        public void VerifyCalculationsForFemaleWith35Fats()
+        {
+            #region AdminActions
+            string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            Pages.Login
+                .CopyUserEmail(email)
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership)
+                .SelectActiveMembership(membership)
+                .EnterEstimatedBodyFat("35");
+            Pages.Common
+                .ClickSaveBtn();
+            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(email, Credentials.password);
+            Pages.Sidebar
+                .OpenNutritionPage();
+
+            string textOfMoreThan2KgSelected = null;
+            double previousCalories = 0.0;
+
+            #region Select Activity lvl
+            Pages.Nutrition
+                .SelectActivityLevel(0);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+
+            #endregion
+
+            #region Select User data
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+
+            Pages.Nutrition
+                .SelectMetric(conversionsBtn)
+                .EnterAge(RandomNumber.Next(18, 65).ToString())
+                .SelectHeight()
+                .EnterWeight(RandomNumber.Next(50, 250).ToString());
+
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .ClickNextBtn()
+                .Step02SelectCut();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier3();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase1();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet2();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            Pages.Nutrition
+                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .DeleteMemebershipFromUser(email);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+        }
+
+        [Test, Category("TDEE")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("TDEE")]
+
+        public void VerifyCalculationsForFemaleWithLess35Fats()
+        {
+            #region AdminActions
+            string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            Pages.Login
+                .CopyUserEmail(email)
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .ClickEditUser(email)
+                .AddMembershipToUser(membership)
+                .SelectActiveMembership(membership)
+                .EnterEstimatedBodyFat("34");
+            Pages.Common
+                .ClickSaveBtn();
+            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLoginForTdee(email, Credentials.password);
+            Pages.Sidebar
+                .OpenNutritionPage();
+
+            string textOfMoreThan2KgSelected = null;
+            double previousCalories = 0.0;
+
+            #region Select Activity lvl
+            Pages.Nutrition
+                .SelectActivityLevel(0);
+            string level = Pages.Nutrition.cbbxActivitylevel.Text;
+
+            #endregion
+
+            #region Select User data
+            List<string> userData = AppDbContext.GetUserData(email);
+            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+
+            #endregion
+
+            #region Select gender
+            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            Pages.Nutrition
+                .SelectFemale(genderBtns);
+            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            #endregion
+
+            #region Select additional options
+
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
+
+            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            Pages.Nutrition
+                .SelectYesOfAdditionalOptions(additionalOption);
+
+            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+
+            #endregion
+
+            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+
+            Pages.Nutrition
+                .SelectMetric(conversionsBtn)
+                .EnterAge(RandomNumber.Next(18, 65).ToString())
+                .SelectHeight()
+                .EnterWeight(RandomNumber.Next(50, 250).ToString());
+
+            Pages.Nutrition
+                .ClickCalculateBtn();
+
+            double maintanceCalories = Pages.Nutrition.GetCalories();
+
+            Pages.Nutrition
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .ClickNextBtn()
+                .Step02SelectCut();
+            string goal = Pages.Nutrition.textActiveGoal.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step03SelectTier3();
+            string tier = Pages.Nutrition.textActiveTier.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step04SelectPhase3();
+            string phase = Pages.Nutrition.textActivePhase.Text;
+            Pages.Nutrition
+                .ClickNextBtn()
+                .Step05SelectDiet2();
+            string diet = Pages.Nutrition.textActiveDiet.Text;
+            Pages.Nutrition
+                .ClickNextBtn();
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            Pages.Nutrition
+                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+
+            Pages.Login
+                .GetUserLogout();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .VerifyDisplayingOfUser(email)
+                .DeleteMemebershipFromUser(email);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+        }
 
         #endregion
 
@@ -2091,7 +2906,7 @@ namespace MCMAutomation.WebTests
         [AllureSuite("Web")]
         [AllureSubSuite("Memberships")]
 
-        public void CompleteMembershipsWithData()
+        public void CompleteMembershipWithData()
         {
 
             string email = AppDbContext.GetUserEmail();
@@ -2112,6 +2927,7 @@ namespace MCMAutomation.WebTests
             Pages.UsersAdmin
                 .SearchUser(email)
                 .ClickEditUser(email)
+                .RemoveAddedMembership()
                 .AddMembershipToUser(membership)
                 .SelectActiveMembership(membership);
             Pages.Login
@@ -2127,7 +2943,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.MembershipUser
                 .OpenMembership();
-            
+
 
             int countPhases = Pages.MembershipUser.GetPhasesCount();
 
@@ -2138,74 +2954,27 @@ namespace MCMAutomation.WebTests
             {
                 Pages.MembershipUser
                     .OpenMembership()
-                    .SelectPhase(i)
-                    .SelectWeekNumber1InPhase();
-                WaitUntil.WaitSomeInterval(3000);
-                int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
+                    .SelectPhaseAndWeek(i + 1, i + 1);
+                int weekNum = Pages.MembershipUser.GetWeekNumber();
+                for (int q = 0; q < weekNum; q++)
                 {
                     Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                    Pages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeight(addedWeightList);
-                    Pages.MembershipUser
-                    .ClickBackBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber2();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                    Pages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeight(addedWeightList);
-                    Pages.MembershipUser
-                    .ClickBackBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber3();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                    Pages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeight(addedWeightList);
-                    Pages.MembershipUser
-                    .ClickBackBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber4();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                    List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
-                    Pages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeight(addedWeightList);
-                    Pages.MembershipUser
-                    .ClickBackBtn();
+                        .SelectWeekNumber(q);
+                    int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+                    for (int j = 0; j < countWorkouts; j++)
+                    {
+                        Pages.MembershipUser
+                            .OpenWorkout()
+                            .AddWeight();
+                        List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
+                        Pages.MembershipUser
+                            .EnterNotes()
+                            .ClickCompleteWorkoutBtn()
+                            .OpenCompletedWorkout()
+                            .VerifyAddedWeight(addedWeightList);
+                        Pages.MembershipUser
+                            .ClickBackBtn();
+                    }
                 }
                 Pages.Sidebar
                     .OpenMemberShipPageUser();
@@ -2216,7 +2985,6 @@ namespace MCMAutomation.WebTests
                 .GetUserLogout();
 
         }
-
 
         [Test, Category("Memberships")]
         [AllureTag("Regression")]
@@ -2226,29 +2994,31 @@ namespace MCMAutomation.WebTests
         [AllureSuite("Web")]
         [AllureSubSuite("Memberships")]
 
-        public void CompleteMembershipsWithDataMega()
+        public void CompleteFirstPhase()
         {
 
             string email = AppDbContext.GetUserEmail();
+            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
 
             #region AdminActions
+
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-
             Pages.PopUp
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenUsersPage();
             Pages.UsersAdmin
                 .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
+                .RemoveAddedMembership()
                 .AddMembershipToUser(membership)
                 .SelectActiveMembership(membership);
+            Pages.Common
+                .ClickSaveBtn();
+            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
             Pages.Login
                 .GetAdminLogout();
 
@@ -2256,71 +3026,142 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
             Pages.MembershipUser
                 .OpenMembership();
-
-            int countPhases = Pages.MembershipUser.GetPhasesCount();
-
             Pages.Sidebar
-                    .OpenMemberShipPageUser();
-
-            for (int i = 0; i < countPhases; i++)
+                .OpenMemberShipPageUser();
+            Pages.MembershipUser
+                .OpenMembership()
+                .SelectPhaseAndWeek(1, 3);
+            int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+            for (int j = 0; j < countWorkouts; j++)
             {
                 Pages.MembershipUser
-                    .OpenMembership()
-                    .SelectPhase(i);
-
-                int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
                     .OpenWorkout()
-                    .AddWeight()
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn();
-                }
+                    .AddWeight();
+                List<string> addedWeightList = Pages.MembershipUser.GetWeightData();
                 Pages.MembershipUser
-                    .SelectWeekNumber2();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight()
                     .EnterNotes()
-                    .ClickCompleteWorkoutBtn();
-                }
+                    .ClickCompleteWorkoutBtn()
+                    .OpenCompletedWorkout()
+                    .VerifyAddedWeight(addedWeightList);
                 Pages.MembershipUser
-                    .SelectWeekNumber3();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight()
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn();
-                }
-                Pages.MembershipUser
-                    .SelectWeekNumber4();
-                countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
-                {
-                    Pages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight()
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn();
-                }
-                Pages.Sidebar
-                    .OpenMemberShipPageUser();
-
+                    .ClickBackBtn();
             }
 
             Pages.Login
                 .GetUserLogout();
 
         }
+
+
+        //[Test, Category("Memberships")]
+        //[AllureTag("Regression")]
+        //[AllureOwner("Artem Sukharevskyi")]
+        //[AllureSeverity(SeverityLevel.critical)]
+        //[Author("Artem", "qatester91311@gmail.com")]
+        //[AllureSuite("Web")]
+        //[AllureSubSuite("Memberships")]
+
+        //public void CompleteMembershipsWithDataMega()
+        //{
+
+        //    string email = AppDbContext.GetUserEmail();
+
+        //    #region AdminActions
+        //    Pages.Login
+        //        .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+        //    Pages.Sidebar
+        //        .VerifyIsLogoDisplayed();
+
+        //    string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+
+        //    Pages.PopUp
+        //        .ClosePopUp();
+        //    Pages.Sidebar
+        //        .OpenUsersPage();
+        //    Pages.UsersAdmin
+        //        .SearchUser(email)
+        //        .VerifyDisplayingOfUser(email)
+        //        .ClickEditUser(email)
+        //        .AddMembershipToUser(membership)
+        //        .SelectActiveMembership(membership);
+        //    Pages.Login
+        //        .GetAdminLogout();
+
+        //    #endregion
+
+        //    Pages.Login
+        //        .GetUserLogin(email, Credentials.password);
+        //    Pages.MembershipUser
+        //        .OpenMembership();
+
+        //    int countPhases = Pages.MembershipUser.GetPhasesCount();
+
+        //    Pages.Sidebar
+        //            .OpenMemberShipPageUser();
+
+        //    for (int i = 0; i < countPhases; i++)
+        //    {
+        //        Pages.MembershipUser
+        //            .OpenMembership()
+        //            .SelectPhase(i);
+
+        //        int countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+        //        for (int j = 0; j < countWorkouts; j++)
+        //        {
+        //            Pages.MembershipUser
+        //            .OpenWorkout()
+        //            .AddWeight()
+        //            .EnterNotes()
+        //            .ClickCompleteWorkoutBtn();
+        //        }
+        //        Pages.MembershipUser
+        //            .SelectWeekNumber2();
+        //        countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+        //        for (int j = 0; j < countWorkouts; j++)
+        //        {
+        //            Pages.MembershipUser
+        //            .OpenWorkout()
+        //            .AddWeight()
+        //            .EnterNotes()
+        //            .ClickCompleteWorkoutBtn();
+        //        }
+        //        Pages.MembershipUser
+        //            .SelectWeekNumber3();
+        //        countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+        //        for (int j = 0; j < countWorkouts; j++)
+        //        {
+        //            Pages.MembershipUser
+        //            .OpenWorkout()
+        //            .AddWeight()
+        //            .EnterNotes()
+        //            .ClickCompleteWorkoutBtn();
+        //        }
+        //        Pages.MembershipUser
+        //            .SelectWeekNumber4();
+        //        countWorkouts = Pages.MembershipUser.GetWorkoutsCount();
+        //        for (int j = 0; j < countWorkouts; j++)
+        //        {
+        //            Pages.MembershipUser
+        //            .OpenWorkout()
+        //            .AddWeight()
+        //            .EnterNotes()
+        //            .ClickCompleteWorkoutBtn();
+        //        }
+        //        Pages.Sidebar
+        //            .OpenMemberShipPageUser();
+
+        //    }
+
+        //    Pages.Login
+        //        .GetUserLogout();
+
+        //}
 
 
         #endregion
@@ -2365,7 +3206,7 @@ namespace MCMAutomation.WebTests
                 .EnterHeight()
                 .EnterWeight()
                 .EnterNewEmail()
-                .EnterEstimatedBodyFat();
+                .EnterEstimatedBodyFat("26");
             ScreenShotHelper.MakeScreenShot();
 
             List<string> dataBeforeSaving = Pages.UserProfile.GetUserDataBeforeSaving();

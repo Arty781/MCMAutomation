@@ -48,6 +48,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//input[@type='search']")]
         public IWebElement weekSelectorInput;
 
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class, 'ant-select-item ant-select-item-option')]")]
+        public IList<IWebElement> listWeekNumber;
+
         [FindsBy(How = How.XPath, Using = "//button[@class='ant-btn modal-controls-btn_view']")]
         public IWebElement viewTrainingProgramBtn;
 
@@ -72,7 +75,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//div[@class='program-overview_days ']//div[@class='program-overview_days-btn ']")]
         public IWebElement workoutBtnelem;
 
-        [FindsBy(How = How.XPath, Using = "//p[text()='Week']/parent::div//input[@type='search']")]
+        [FindsBy(How = How.XPath, Using = "//p[contains(text(),'Week')]/parent::div//div[@class='ant-select-selector']")]
         public IWebElement weekSelectorInputEx;
 
         [FindsBy(How = How.XPath, Using = "//p[@class='modal-body_info']")]
