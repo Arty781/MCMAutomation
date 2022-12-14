@@ -52,11 +52,36 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Add membership to user")]
+        public UsersAdmin AddMembershipToUser(List<string> membershipsName)
+        {
+            foreach(var membership in membershipsName)
+            {
+                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 120);
+                InputBox.CbbxElement(cbbxAddUserMembership, 30, membership);
+                WaitUntil.WaitSomeInterval(500);
+                Button.Click(btnAddUserMembership);
+            }
+            
+
+            return this;
+        }
+
+        [AllureStep("Add membership to user")]
         public UsersAdmin SelectActiveMembership(string membershipName)
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
             WaitUntil.CustomElevemtIsVisible(btnDeleteAddedMembershipsElem);
             InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, membershipName);
+
+            return this;
+        }
+
+        [AllureStep("Add membership to user")]
+        public UsersAdmin SelectActiveMembership(List<string> membershipsName)
+        {
+            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.CustomElevemtIsVisible(btnDeleteAddedMembershipsElem);
+            InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, membershipsName.FirstOrDefault());
 
             return this;
         }
@@ -76,6 +101,14 @@ namespace MCMAutomation.PageObjects
             }
             catch (Exception) { return this; } 
             
+
+            return this;
+        }
+
+        [AllureStep("Create custom membership")]
+        public UsersAdmin CreateCustomMembership()
+        {
+            Button.Click(btnCreateCustommembership);
 
             return this;
         }

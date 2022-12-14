@@ -1,4 +1,7 @@
-﻿using MCMAutomation.PageObjects;
+﻿using MCMAutomation.APIHelpers;
+using MCMAutomation.PageObjects;
+using NUnit.Framework.Internal;
+using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -116,11 +119,9 @@ namespace MCMAutomation.Helpers
             return list;
         }
 
-        public static string GetLastMembership()
+        public static List<string> GetLastMembership()
         {
-            
-            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipTitleElem, 30);
-            string exercise = null;
+            var list = new List<string>();
             using (SqlConnection db = new(DB.GetConnectionString))
             {
                 SqlCommand command = new("SELECT TOP(1)*" +
@@ -133,12 +134,36 @@ namespace MCMAutomation.Helpers
                 {
                     while (reader.Read())
                     {
-                        exercise = reader.GetString(2).ToString();
+                        list.Add(reader.GetInt32(0).ToString());
+                        list.Add(reader.GetString(2).ToString());
                     }
                 }
             }
 
-            return exercise;
+            return list;
+        }
+
+        public static List<int> GetLastPrograms()
+        {
+            var list = new List<int>();
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new("SELECT TOP(3) Id " +
+                                         "FROM [Programs] WHERE IsDeleted=0 " +
+                                         "ORDER BY CreationDate DESC", db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader.GetInt32(0));
+                    }
+                }
+            }
+
+            return list;
         }
 
         public static string[] GetExerciseStatus()
@@ -208,7 +233,7 @@ namespace MCMAutomation.Helpers
             {
                 SqlCommand command = new("SELECT TOP(1) Name, SKU " +
                                          "FROM Memberships WHERE SKU LIKE @SKU AND IsDeleted = 0 ORDER BY CreationDate DESC", db);
-                command.Parameters.AddWithValue("@SKU", DbType.String).Value = SKU + "%";
+                command.Parameters.AddWithValue("@SKU", DbType.String).Value = String.Concat(SKU + "%");
                 db.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -224,6 +249,69 @@ namespace MCMAutomation.Helpers
             }
 
             return nameMembership;
+        }
+
+        public static List<string> GetSubProdAndCustomMemberships()
+        {
+            List<string> list = new List<string>();
+
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new(String.Concat("Select top(1) Name from memberships " +
+                                                        "where Type = 0 And Isdeleted = 0 " +
+                                                        "order by creationDate desc"), db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+
+                        list.Add(reader.GetString(0));
+                    }
+                }
+
+            }
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new(String.Concat("Select top(1) Name from memberships " +
+                                                        "where Type = 1 And Isdeleted = 0 " +
+                                                        "order by creationDate desc"), db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+
+                        list.Add(reader.GetString(0));
+                    }
+                }
+
+            }
+
+            using (SqlConnection db = new(DB.GetConnectionString))
+            {
+                SqlCommand command = new(String.Concat("Select top(1) Name from memberships " +
+                                                       "where Type = 0 and SKU is null And Isdeleted = 0 " +
+                                                       "order by creationDate desc"), db);
+                db.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+
+                        list.Add(reader.GetString(0));
+                    }
+                }
+
+            }
+
+            return list;
         }
 
         public static void UpdateUserProgressDate(string userId)
@@ -324,6 +412,47 @@ namespace MCMAutomation.Helpers
             return data;
         }
 
+        public static void DeleteUser (string email)
+        {
+            using SqlConnection db = new(DB.GetConnectionString);
+            SqlCommand command = new(String.Concat(
+                "delete from DeletedUserExercises where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "delete from UserRelatedExercises where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "delete from CompletedWorkouts where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "delete from WorkoutUserNotes where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "delete from [JsonUserExercises] where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "Update UserMemberships set isdeleted = 1, UserId=null where UserId in (" +
+                                                                    "SELECT Id FROM [AspNetUsers] where Email like @email)\r\n\r\n" +
+                "delete from Media where ProgressId in (" +
+                                                                    "SELECT Id FROM Progress where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email))\r\n\r\n" +
+                "delete from Progress where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "delete from UserExercises where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "delete from GlobalDisplayedPopups where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "delete from Logins where UserId in (" +
+                                                                    "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n\r\n" +
+                "delete from AspNetUsers where email like @email"), db);
+            command.Parameters.AddWithValue("@email", DbType.String).Value = email;
+            command.Parameters.AddWithValue("@userId", DbType.String).Value = "c5c91cc8-dd78-4bba-aab6-471830c3d28e";
+            db.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    continue;
+                }
+            }
+        }
         #endregion
     }
 }

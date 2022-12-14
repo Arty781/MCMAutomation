@@ -18,40 +18,9 @@ namespace MCMAutomation.Helpers
             Task.Delay(TimeSpan.FromMilliseconds(milliseconds)).Wait();
         }
 
-        public static void ElementIsClickable(IWebElement element, int seconds = 10)
-        {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementToBeClickable(element));
-        }
-
-        public static void ElementIsVisible(By element, int seconds = 10)
-        {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementIsVisible(element));
-        }
-
-        public static void ElementIsVisibleAndClickable(By element, int seconds = 10)
-        {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementToBeClickable(element));
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.ElementIsVisible(element));
-        }
-
-        public static void ElementIsInvisible(By element, int seconds = 10)
-        {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.InvisibilityOfElementLocated(element));
-        }
-
-        public static void VisibilityOfAllElementsLocatedBy(By element, int seconds = 10)
-        {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(element));
-        }
-
-        public static void InvisibilityOfAllElementsLocatedBy(By element, int seconds = 10)
-        {
-            new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds)).Until(ExpectedConditions.InvisibilityOfElementLocated(element));
-        }
-
         public static void CustomElevemtIsVisible(IWebElement element, int seconds = 10)
         {
-            Task.Delay(TimeSpan.FromMilliseconds(500)).Wait();
+            Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
             try
@@ -66,18 +35,23 @@ namespace MCMAutomation.Helpers
                         }
                         return false;
                     }
-                    catch (Exception) { return false; }
+                    catch (NoSuchElementException) { return false; }
+                    catch (StaleElementReferenceException) { return false; }
+                    catch (ArgumentOutOfRangeException) { return false; }
 
                 });
             }
             catch (NoSuchElementException) { }
             catch (StaleElementReferenceException) { }
+            catch (ArgumentOutOfRangeException) { }
+            wait.Message = $"Timeout after {seconds}. The search element is not displayed";
+
 
         }
 
         public static void CustomElevemtIsInvisible(IWebElement element, int seconds = 10)
         {
-            Task.Delay(TimeSpan.FromMilliseconds(150)).Wait();
+            Task.Delay(TimeSpan.FromMilliseconds(250)).Wait();
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
             try
@@ -92,11 +66,14 @@ namespace MCMAutomation.Helpers
                         }
                         return true;
                     }
-                    catch (Exception) { return true; }
+                    catch (NoSuchElementException) { return true; }
+                    catch (StaleElementReferenceException) { return true; }
+
                 });
             }
-            catch (Exception) { }
-
+            catch (NoSuchElementException) { }
+            catch (StaleElementReferenceException) { }
+            wait.Message = $"Timeout after {seconds}. The search element is displayed";
         }
 
 

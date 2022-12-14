@@ -75,5 +75,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.Name, Using = "confirmPassword")]
         public IWebElement inputConfirmPassword;
+
+        [FindsBy(How = How.XPath, Using = "//span[text()='Refer Your Friends & Earn Discounts!']/ancestor::div[@class='programs-head']/a")]
+        public IWebElement linkReferring;
     }
 }

@@ -16,7 +16,7 @@ namespace MCMAutomation.PageObjects
         public Sidebar VerifyIsLogoDisplayed()
         {
             WaitUntil.CustomElevemtIsVisible(sideBarLogo, 30);
-            Assert.IsTrue(sideBarLogo.Displayed);
+            Assert.IsTrue(sideBarLogo.Enabled);
             return this;
         }
 

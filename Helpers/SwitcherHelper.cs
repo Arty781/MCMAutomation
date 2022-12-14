@@ -12,7 +12,7 @@ namespace MCMAutomation.Helpers
 {
     public class SwitcherHelper
     {
-        #region TDEE actions
+        #region TDEE actions User
 
         private static IWebElement _element;
         public static IList<IWebElement> NutritionSelector(string title)
@@ -55,7 +55,7 @@ namespace MCMAutomation.Helpers
 
         #endregion
 
-        #region User actions
+        #region User actions Admin
         public static void ClickEditUserBtn(string email, IWebElement element)
         {
             WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(10));
@@ -85,7 +85,6 @@ namespace MCMAutomation.Helpers
             wait.PollingInterval = TimeSpan.FromMilliseconds(100);
             try
             {
-                var list = Browser._Driver.FindElements(By.XPath($".//td[@title='{email}']"));
                 wait.Until(e =>
                 {
                     try { return Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']")).Enabled; }
@@ -132,7 +131,7 @@ namespace MCMAutomation.Helpers
 
         #endregion
 
-        #region Membership actions
+        #region Membership actions Admin
         public static void ClickEditMembershipBtn(string title)
         {
             WaitUntil.WaitSomeInterval(200);
@@ -224,7 +223,21 @@ namespace MCMAutomation.Helpers
 
         #endregion
 
-        #region Exercise actions
+        #region Membership actions User
+
+        public static void ActivateMembership (string membershipTitle)
+        {
+            WaitUntil.WaitSomeInterval(200);
+
+            IWebElement btnSelectProgram = Browser._Driver.FindElement(By.XPath($"//h2[text()='{membershipTitle}']/parent::div//button[@class='ant-btn program-switch-btn']"));
+            WaitUntil.CustomElevemtIsVisible(btnSelectProgram, 60);
+
+            btnSelectProgram.Click();
+        }
+
+        #endregion
+
+        #region Exercise actions Admin
 
         public static void ClickRemoveExerciseBtn(string exercise)
         {
@@ -240,10 +253,10 @@ namespace MCMAutomation.Helpers
         {
             WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath("//div[@class='edit']")));
 
-            IWebElement btnRemove = Browser._Driver.FindElement(By.XPath($"//p[text()='{exercise}']/ancestor::div[@class='table-item']//div[@class='edit']"));
-            WaitUntil.CustomElevemtIsVisible(btnRemove);
+            IWebElement btnEdit = Browser._Driver.FindElement(By.XPath($"//p[text()='{exercise}']/ancestor::div[@class='table-item']//div[@class='edit']"));
+            WaitUntil.CustomElevemtIsVisible(btnEdit);
 
-            btnRemove.Click();
+            btnEdit.Click();
         }
 
         #endregion

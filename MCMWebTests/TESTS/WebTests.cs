@@ -14,6 +14,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using RimuTec.Faker;
 using OpenQA.Selenium.DevTools.V85.Profiler;
+using OpenQA.Selenium.Chrome;
+using MCMAutomation.APIHelpers.Client.EditUser;
+using MCMAutomation.APIHelpers;
+using MCMAutomation.APIHelpers.Client.SignUp;
 
 namespace MCMAutomation.WebTests
 {
@@ -47,26 +51,12 @@ namespace MCMAutomation.WebTests
                 .GetLogin(email, Credentials.password);
             Pages.MembershipUser
                 .VerifyIsBuyBtnDisplayed();
-            Pages.Sidebar
-                .OpenMyAccount();
-            Pages.UserProfile
-                .EnterDOB()
-                .EnterProteins()
-                .EnterCalories()
-                .EnterMaintenanceCalories()
-                .EnterCarbs()
-                .EnterFats()
-                .EnterHeight()
-                .EnterWeight()
-                .EnterNewEmail()
-                .EnterOldPass()
-                .EnterNewPass()
-                .EnterConfirmPass()
-                .EnterEstimatedBodyFat("15");
-            Pages.Common
-                .ClickSaveBtn();
             Pages.PopUp
                 .ClosePopUp();
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
+            Pages.UserProfile
+                .VerifyDisplayingReferringBtn();
             Pages.Login
                 .GetUserLogout();
         }
@@ -93,7 +83,10 @@ namespace MCMAutomation.WebTests
         public void CheckTdeeForPP1ForFemale()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
             Pages.Login
                 .CopyUserEmail(email)
@@ -184,21 +177,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
 
@@ -215,7 +196,11 @@ namespace MCMAutomation.WebTests
         public void CheckTdeeForPP1ForFemaleSecondOption()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
             Pages.Login
                 .CopyUserEmail(email)
@@ -307,21 +292,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
 
@@ -338,7 +311,10 @@ namespace MCMAutomation.WebTests
         public void CheckTdeeForPGForFemale()
         {
             #region Preconditions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("PG");
             Pages.Login
                 .CopyUserEmail(email)
@@ -435,19 +411,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
 
@@ -463,7 +427,10 @@ namespace MCMAutomation.WebTests
         public void CheckTdeeForARDForMale()
         {
             #region Preconditions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
@@ -549,24 +516,13 @@ namespace MCMAutomation.WebTests
                 .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             #endregion
+
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
 
@@ -582,7 +538,11 @@ namespace MCMAutomation.WebTests
         public void CheckTdeeForARDForFemaleWeek2()
         {
             #region Preconditions
-            string email = AppDbContext.GetUserEmail();
+
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
@@ -683,18 +643,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
 
@@ -713,7 +662,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesForCutTier1Phase1()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -813,21 +765,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -843,7 +783,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesForCutTier2Phase3()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -944,21 +887,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -975,7 +906,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesForCutTier3Phase1()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -1073,21 +1007,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -1103,7 +1025,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesForCutTier1Phase2()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -1201,21 +1126,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -1231,7 +1144,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesForBuildTier1Phase1()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -1330,21 +1246,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -1360,7 +1264,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesForBuildTier3Phase2()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -1459,21 +1366,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -1489,7 +1384,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesForBuildTier2Phase1()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -1588,21 +1486,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -1619,7 +1505,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCarbsAndFatsFor1000Calories()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -1717,21 +1606,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -1747,7 +1624,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesDiet1()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -1839,21 +1719,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -1869,7 +1737,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesDiet2()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -1949,21 +1820,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -1979,7 +1838,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCaloriesDiet3()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("BBB1");
             Pages.Login
                 .CopyUserEmail(email)
@@ -2052,21 +1914,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -2082,7 +1932,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCalculationsForMaleWithMore25Fats()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -2191,21 +2044,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -2221,7 +2062,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCalculationsForMaleWith25Fats()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -2326,21 +2170,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -2356,7 +2188,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCalculationsForMaleWithLess25Fats()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -2461,21 +2296,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -2491,7 +2314,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCalculationsForFemaleWithMore35Fats()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -2597,21 +2423,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -2627,7 +2441,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCalculationsForFemaleWith35Fats()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -2732,21 +2549,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -2762,7 +2567,10 @@ namespace MCMAutomation.WebTests
         public void VerifyCalculationsForFemaleWithLess35Fats()
         {
             #region AdminActions
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
@@ -2867,21 +2675,9 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
-            #region AdminActions
+            #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email);
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
         }
@@ -2909,7 +2705,10 @@ namespace MCMAutomation.WebTests
         public void CompleteMembershipWithData()
         {
 
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
 
             #region AdminActions
 
@@ -2918,7 +2717,7 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
 
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CMC_TEST_SUB");
+            string membership = AppDbContext.GetActiveMembershipsBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
 
             Pages.PopUp
                 .ClosePopUp();
@@ -2997,8 +2796,11 @@ namespace MCMAutomation.WebTests
         public void CompleteFirstPhase()
         {
 
-            string email = AppDbContext.GetUserEmail();
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
+            string membership = AppDbContext.GetActiveMembershipsBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
 
             #region AdminActions
 
@@ -3052,6 +2854,80 @@ namespace MCMAutomation.WebTests
                 Pages.MembershipUser
                     .ClickBackBtn();
             }
+
+            Pages.Login
+                .GetUserLogout();
+
+        }
+
+        [Test, Category("Memberships")]
+        [AllureTag("Regression")]
+        [AllureOwner("Artem Sukharevskyi")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [Author("Artem", "qatester91311@gmail.com")]
+        [AllureSuite("Web")]
+        [AllureSubSuite("Memberships")]
+
+        public void VerifyDisplayingOfDownloadReportBtn()
+        {
+
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
+            List<string> memberships = AppDbContext.GetSubProdAndCustomMemberships();
+
+            #region AdminActions
+
+            Pages.Login
+                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            Pages.Sidebar
+                .OpenUsersPage();
+            Pages.UsersAdmin
+                .SearchUser(email)
+                .ClickEditUser(email)
+                .RemoveAddedMembership()
+                .AddMembershipToUser(memberships);
+            Pages.Common
+                .ClickSaveBtn();
+            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
+            Pages.Login
+                .GetAdminLogout();
+
+            #endregion
+
+            Pages.Login
+                .GetUserLogin(email, Credentials.password);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.PopUp
+                .ClosePopUp();
+            SwitcherHelper.ActivateMembership(memberships[0]);
+            Pages.MembershipUser
+                .ConfirmMembershipActivation()
+                .OpenMembership()
+                .SelectPhaseAndWeek(1, 1)
+                .VerifyDisplayedDownloadBtn();
+            Pages.MembershipUser
+                .OpenMembershipPage();
+            SwitcherHelper.ActivateMembership(memberships[1]);
+            Pages.MembershipUser
+                .ConfirmMembershipActivation()
+                .OpenMembership()
+                .SelectPhaseAndWeek(1, 1)
+                .VerifyDisplayedDownloadBtn();
+            Pages.MembershipUser
+                .OpenMembershipPage();
+            SwitcherHelper.ActivateMembership(memberships[2]);
+            Pages.MembershipUser
+                .ConfirmMembershipActivation()
+                .OpenMembership()
+                .SelectPhaseAndWeek(1, 1)
+                .VerifyDisplayedDownloadBtn();
 
             Pages.Login
                 .GetUserLogout();
@@ -3184,7 +3060,9 @@ namespace MCMAutomation.WebTests
 
         public void EditUser()
         {
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            SignInRequest.MakeAdminSignIn(email, Credentials.password);
 
             Pages.Login
                 .GetUserLogin(email, Credentials.password);
@@ -3220,6 +3098,12 @@ namespace MCMAutomation.WebTests
             Pages.UserProfile
                 .VerifyUserData(dataBeforeSaving, dataAfterSaving);
 
+            #region Postconditions
+
+            AppDbContext.DeleteUser(email);
+
+            #endregion
+
         }
 
         #endregion
@@ -3244,12 +3128,14 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
 
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string email = AppDbContext.GetUserEmail();
             string userId = AppDbContext.GetUserId(email);
             string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB");
 
@@ -3298,20 +3184,10 @@ namespace MCMAutomation.WebTests
             }
             Pages.Login
                 .GetUserLogout();
+
             #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .DeleteMemebershipFromUser(email)
-                .DeleteProgressFromUser();
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
 
@@ -3329,9 +3205,11 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
 
-            string email = AppDbContext.GetUserEmail();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             Pages.Login
-                .CopyUserEmail(email)
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
@@ -3375,19 +3253,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email)
-                .DeleteProgressFromUser();
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
 
@@ -3406,14 +3272,15 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
 
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            EditUserRequest.EditUser(responseLogin);
             Pages.Login
                 .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-
-            string email = AppDbContext.GetUserEmail();
             string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB");
-
             Pages.PopUp
                 .ClosePopUp();
             Pages.Sidebar
@@ -3466,19 +3333,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .DeleteMemebershipFromUser(email)
-                .DeleteProgressFromUser();
-            Pages.Login
-                .GetAdminLogout();
+            AppDbContext.DeleteUser(email);
 
             #endregion
 

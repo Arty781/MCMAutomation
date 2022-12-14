@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -114,9 +116,10 @@ namespace MCMAutomation.Helpers
 
     public class MembershipsSKU
     {
-        public static string[] membershipSKU =
+        public static string[] MEMBERSHIP_SKU =
         {
-            "PP-1"
+            "PP-1",
+            "CMC_TEST_SKU"
         };
     }
 
@@ -157,15 +160,47 @@ namespace MCMAutomation.Helpers
         public static ICollection<KeyValuePair<string, string>> HeadersCommon()
 
         {
-            var headersCommon = new List<KeyValuePair<string, string>>();
-
-            headersCommon.Add(new KeyValuePair<string, string>("accept", "application/json, text/plain, /"));
-            headersCommon.Add(new KeyValuePair<string, string>("accept-encoding", "gzip, deflate, br"));
-            headersCommon.Add(new KeyValuePair<string, string>("content-type", "application/json"));
+            var headersCommon = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("accept", "application/json, text/plain, /"),
+                new KeyValuePair<string, string>("accept-encoding", "gzip, deflate, br")
+            };
 
             return headersCommon;
-            //    {"accept:", "application/json, text/plain, /" },
-            //    { "accept-encoding:", "gzip, deflate, br"}
+        }
+    }
+
+    public class Workouts
+    {
+        public static string[] STRING =
+        {
+            String.Concat("Refer to the <a href = "+"\"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\""+">Welcome Pack</a> for your Cardio and Step Requirements"),
+            "10000",
+            String.Concat("Refer to the <a href = "+"\"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\""+">Welcome Pack</a> for your Cardio and Step Requirements")
+        };
+    }
+
+    public class MembershipType
+    {
+        public const string PRODUCT = "Product";
+        public const string SUBSCRIPTION = "Subscription";
+        public const string MULTILEVEL = "Multilevel";
+    }
+
+    public class Keyss
+    {
+        public static string Control()
+        {
+            string control = String.Empty;
+            if(OperatingSystem.IsWindows())
+            {
+                control = Keys.Control;
+            }else if(OperatingSystem.IsLinux()||OperatingSystem.IsMacOS())
+            {
+                control = Keys.Command;
+            }
+
+            return control;
         }
     }
 }

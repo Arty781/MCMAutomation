@@ -10,10 +10,22 @@ namespace MCMAutomation.Helpers
     {
         public static string RandomNumber(int maxWeight)
         {
-            Random r = new Random();
-            int genRand = r.Next(1, maxWeight);
+            var r = new Random().Next(0, maxWeight);
+            return r.ToString();
+        }
 
-            return genRand.ToString();
+        public static int RandomNum(int maxNum)
+        {
+            var r = new Random().Next(0, maxNum);
+
+            return r;
+        }
+
+        public static int RandomNumFromOne(int maxNumber)
+        {
+            var r = new Random().Next(1, maxNumber);
+
+            return r;
         }
 
         public static int RandomExercise(int maxWeight)
@@ -42,7 +54,7 @@ namespace MCMAutomation.Helpers
 
         public static string RandomEmail()
         {
-            string email = "qatester" + DateTime.Now.ToString("yyyy-MM-d-hh-mm") + "@xitroo.com";
+            string email = "qatester" + DateTime.Now.ToString("yyyy-MM-d-hh-mm-ss") + "@xitroo.com";
 
             return email;
         }

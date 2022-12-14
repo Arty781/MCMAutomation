@@ -69,6 +69,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Get Workouts count")]
         public int GetWorkoutsCount()
         {
+            WaitUntil.WaitSomeInterval(1500);
             WaitUntil.CustomElevemtIsVisible(workoutBtn[0]);
             var count = workoutBtn.Where(x => x.Displayed).Count();
 
@@ -82,6 +83,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var addedWeightList = inputAddedWeight.Where(x => x.Enabled).Select(x => x.Text).ToList();
             var checkList = addedWeightList.Except(addedWeight).ToList();
             Assert.IsTrue(checkList.Count() == 0);
+        }
+
+        [AllureStep("Verify added weight")]
+        public void VerifyDisplayedDownloadBtn()
+        {
+            WaitUntil.CustomElevemtIsVisible(btnDownloadProgram);
+            Assert.IsTrue(btnDownloadProgram.Displayed);
         }
     }
 }

@@ -62,6 +62,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             Assert.AreEqual(!list1.Any(), !list2.Any());
         }
+
+        public void VerifyDisplayingReferringBtn()
+        {
+            WaitUntil.CustomElevemtIsVisible(linkReferring);
+            Assert.IsTrue(linkReferring.Displayed);
+        }
         
     }
 }

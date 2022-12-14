@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,6 +83,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             InputBox.ElementCtrlA(inputFats, 10, "10");
 
+            return this;
+        }
+
+        [AllureStep("Upload photo")]
+        public UserProfile UploadPhoto()
+        {
+            inputPhoto.SendKeys(String.Concat(Browser.RootPath() + UploadedImages.PhaseImg1));
             return this;
         }
 

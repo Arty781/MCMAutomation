@@ -13,14 +13,18 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 {
     public partial class MembershipUser
     {
-        [AllureStep("Activate membership")]
-        public MembershipUser ActivateMembership()
+        [AllureStep("Open memberships page")]
+        public MembershipUser OpenMembershipPage()
         {
-            
-            Button.Click(selectProgramBtn);
+            Browser.GoToUrl("https://mcmstaging-ui.azurewebsites.net/programs/all");
+            Pages.PopUp.ClosePopUp();
+            return this;
+        }
 
+        [AllureStep("Activate membership")]
+        public MembershipUser ConfirmMembershipActivation()
+        {
             Button.Click(popupYesBtn);
-
             return this;
         }
 
@@ -73,6 +77,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #endregion
 
+        #region Workouts page
+
         [AllureStep("Open workout")]
         public MembershipUser OpenWorkout()
         {
@@ -96,10 +102,26 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
+        [AllureStep("Click Complete Workout Btn")]
+        public MembershipUser ClickCompleteWorkoutBtn()
+        {
+
+            Button.Click(completeWorkoutBtn);
+            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 20);
+
+            return this;
+        }
+
+
+
+        #endregion
+
+        #region Enter Data For Exercises
+
         [AllureStep("Add Weight")]
         public MembershipUser AddWeight()
         {
-            WaitUntil.CustomElevemtIsVisible(weightInput[1]);
+            WaitUntil.CustomElevemtIsVisible(weightInput.FirstOrDefault());
 
             var weightList = weightInput.Where(x => x.Displayed).ToList();
             foreach (var weight in weightList)
@@ -205,16 +227,6 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         }
 
         [AllureStep("Click Complete Workout Btn")]
-        public MembershipUser ClickCompleteWorkoutBtn()
-        {
-           
-            Button.Click(completeWorkoutBtn);
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 20);
-
-            return this;
-        }
-
-        [AllureStep("Click Complete Workout Btn")]
         public MembershipUser ClickBackBtn()
         {
 
@@ -223,6 +235,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             return this;
         }
+
+        #endregion
+
+        
+
+        
 
     }
 }

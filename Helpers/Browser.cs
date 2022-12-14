@@ -28,9 +28,10 @@ namespace MCMAutomation.Helpers
         {
             AllureConfigFilesHelper.CreateJsonConfigFile();
             new DriverManager().SetUpDriver(new ChromeConfig());
-            windowsDriver = new ChromeDriver();
-            _Driver.Manage().Cookies.DeleteAllCookies();
-            _Driver.Manage().Window.Maximize();
+            var options = new ChromeOptions();
+            options.AddArguments("fullscreen.allowed", "start-maximized");
+            windowsDriver = new ChromeDriver(options);
+            windowsDriver.Manage().Cookies.DeleteAllCookies();
             
             Assert.NotNull(windowsDriver);
             
@@ -46,6 +47,11 @@ namespace MCMAutomation.Helpers
         {
             string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
             return mainpath;
+        }
+
+        public static void GoToUrl(string url)
+        {
+            windowsDriver.Navigate().GoToUrl(url);
         }
 
         public static IWebDriver _Driver { get { return windowsDriver; } }

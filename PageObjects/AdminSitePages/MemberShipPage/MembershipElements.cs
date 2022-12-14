@@ -82,10 +82,13 @@ namespace MCMAutomation.PageObjects
         public IWebElement genderBothToggle;
 
         [FindsBy(How = How.XPath, Using = "//label/span[text()='Subscription']")]
-        public IWebElement subscriptionToggleType;
+        public IWebElement toggleSubscriptionType;
 
         [FindsBy(How = How.XPath, Using = "//label/span[text()='Product']")]
-        public IWebElement productToggleType;
+        public IWebElement toggleProductType;
+
+        [FindsBy(How = How.XPath, Using = "//label/span[text()='Multilevel']")]
+        public IWebElement toggleMultilevelType;
 
         [FindsBy(How = How.XPath, Using = "//input[@name='price']")]
         public IWebElement priceInput;
@@ -106,6 +109,21 @@ namespace MCMAutomation.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//button[contains(@class, 'canel')]")]
         public IWebElement cancelMembershipBtn;
+
+        [FindsBy(How = How.XPath, Using = "//button[text()='Add Membership Level']")]
+        public IWebElement btnAddLevel;
+
+        [FindsBy(How = How.XPath, Using = "//div[text()='Level Name']/parent::div/input")]
+        public IWebElement inputLevelName;
+
+        [FindsBy(How = How.XPath, Using = "//div[text()='Level Membership']/parent::div//input")]
+        public IWebElement inputLevelMembership;
+
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class, 'ant-select-item ant-select-item-option')]")]
+        public IList<IWebElement> listLevelMembership;
+
+        [FindsBy(How = How.XPath, Using = "//span[text()='Save']/parent::button")]
+        public IWebElement btnSaveLevel;
 
         #endregion
 
@@ -244,19 +262,19 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//div[@class='top-inputs']//span[@class='ant-select-selection-item']")]
         public IWebElement exercisesTitle;
 
-        [FindsBy(How = How.XPath, Using = "//input[@id='exercises-form-items_weekWorkoutExercises_0_sets']")]
-        public IWebElement setsExerciseInput;
+        [FindsBy(How = How.XPath, Using = "//input[contains(@id,'sets')]")]
+        public IList<IWebElement> setsExerciseInput;
 
-        [FindsBy(How = How.XPath, Using = "//input[@id='exercises-form-items_weekWorkoutExercises_0_reps']")]
-        public IWebElement repsExerciseInput;
+        [FindsBy(How = How.XPath, Using = "//input[contains(@id,'reps')]")]
+        public IList<IWebElement> repsExerciseInput;
 
-        [FindsBy(How = How.XPath, Using = "//input[@id='exercises-form-items_weekWorkoutExercises_0_rest']")]
-        public IWebElement restExerciseInput;
+        [FindsBy(How = How.XPath, Using = "//input[contains(@id,'rest')]")]
+        public IList<IWebElement> restExerciseInput;
 
-        [FindsBy(How = How.XPath, Using = "//input[@id='exercises-form-items_weekWorkoutExercises_0_tempo']")]
-        public IWebElement tempoExerciseInput;
+        [FindsBy(How = How.XPath, Using = "//input[contains(@id,'tempo')]")]
+        public IList<IWebElement> tempoExerciseInput;
 
-        [FindsBy(How = How.XPath, Using = "//button[contains(@class, 'ex-add-btn')]/span[contains(text(), 'Add row')]")]
+        [FindsBy(How = How.XPath, Using = "//span[contains(text(), 'Add row')]/parent::button[contains(@class, 'ex-add-btn')]")]
         public IWebElement addExerciseRowBtn;
 
         [FindsBy(How = How.XPath, Using = "//button[contains(@class, 'ex-add-btn')]/span[contains(text(), 'Delete row')]")]

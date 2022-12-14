@@ -59,7 +59,7 @@ namespace MCMAutomation.Helpers
             {
                 WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 10);
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
-                element.SendKeys(Keys.Control + "A");
+                element.SendKeys(Keyss.Control() + "A");
                 element.SendKeys(Keys.Delete);
                 WaitUntil.WaitSomeInterval(75);
                 element.SendKeys(data);
@@ -105,15 +105,15 @@ namespace MCMAutomation.Helpers
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
             WaitUntil.CustomElevemtIsVisible(element);
-            element.SendKeys(Keys.Control + "A");
-            element.SendKeys(Keys.Control + "C");
+            element.SendKeys(Keyss.Control() + "A");
+            element.SendKeys(Keyss.Control() + "C");
         }
 
         public static void PasteCopiedText(IWebElement element)
         {
             WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
             WaitUntil.CustomElevemtIsVisible(element);
-            element.SendKeys(Keys.Control + "A" + Keys.Control + "V");
+            element.SendKeys(Keyss.Control() + "A" + Keyss.Control() + "V");
         }
     }
 

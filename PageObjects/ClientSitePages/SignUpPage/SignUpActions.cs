@@ -14,9 +14,9 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Go to SignUp page")]
         public SignUpUser GoToSignUpPage()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_signUpBtn);
+            WaitUntil.CustomElevemtIsVisible(btnSignUp);
 
-            Button.Click(signUpLink);
+            Button.Click(linkSignUp);
 
             return this;
         }
@@ -24,13 +24,12 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter user data")]
         public SignUpUser EnterData(string email)
         {
-            InputBox.ElementCtrlA(firstNameInput,10, Name.FirstName());
-            InputBox.ElementCtrlA(lastNameInput, 10, Name.LastName());
-            InputBox.ElementCtrlA(emailInput, 10, email);
-            TextBox.CopyTextToBuffer(emailInput);
-            InputBox.ElementCtrlA(confirmEmailInput, 10, email);
-            InputBox.ElementCtrlA(passwordInput, 10, "Qaz11111!");
-            InputBox.ElementCtrlA(confirmPasswordInput, 10, "Qaz11111!");
+            InputBox.ElementCtrlA(inputFirstName,10, Name.FirstName());
+            InputBox.ElementCtrlA(inputLastName, 10, Name.LastName());
+            InputBox.ElementCtrlA(inputEmail, 10, email);
+            InputBox.ElementCtrlA(inputConfirmEmail, 10, email);
+            InputBox.ElementCtrlA(inputPassword, 10, "Qaz11111!");
+            InputBox.ElementCtrlA(inputConfirmPassword, 10, "Qaz11111!");
             
 
             return this;
@@ -39,8 +38,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Click on \"SignUp\" button")]
         public SignUpUser ClickOnSignUpBtn()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_signUpBtn);
-            Button.Click(signUpBtn);
+            Button.Click(btnSignUp);
 
             return this;
         }
@@ -49,9 +47,7 @@ namespace MCMAutomation.PageObjects
 
         public SignUpUser GoToLoginPage()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_loginBtn);
-
-            Button.Click(loginBtn);
+            Button.Click(btnLogin);
 
             return this;
         }

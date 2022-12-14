@@ -23,6 +23,8 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//p[@class='user-small-title'][text()='Memberships']/parent::div//div[text()='No Data']")]
         public IWebElement itemsNoData;
 
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class, 'ant-select-item ant-select-item-option')]")]
+        public IList<IWebElement> listItems;
 
         #region Alerts
 

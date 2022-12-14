@@ -12,8 +12,8 @@ namespace MCMAutomation.PageObjects
     {
         public SignUpUser VerifyDisplayingPopUp()
         {
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_confirmPopUp, 20);
-            Assert.AreEqual("We sent a confirmation link to your email", confirmPopUp.Text);
+            WaitUntil.CustomElevemtIsVisible(popupConfirm, 20);
+            Assert.AreEqual("We sent a confirmation link to your email", popupConfirm.Text);
 
             return this;
         }

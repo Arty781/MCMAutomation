@@ -29,6 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="chilkat-x64" Version="9.5.0.93" />
+    <PackageReference Include="ChilkatNativeLib" Version="9.50.93" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core" Version="4.0.1" />
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />

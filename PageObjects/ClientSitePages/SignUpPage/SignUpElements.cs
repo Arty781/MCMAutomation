@@ -1,5 +1,6 @@
 ﻿using MCMAutomation.Helpers;
 using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +11,34 @@ namespace MCMAutomation.PageObjects
 {
     public partial class SignUpUser
     {
-        public IWebElement firstNameInput => Browser._Driver.FindElement(_firstNameInput);
-        public readonly By _firstNameInput = By.XPath("//input[@name='firstName']");
+        [FindsBy(How=How.Name,Using = "firstName")]
+        public IWebElement inputFirstName;
 
-        public IWebElement lastNameInput => Browser._Driver.FindElement(_lastNameInput);
-        public readonly By _lastNameInput = By.XPath("//input[@name='lastName']");
+        [FindsBy(How = How.Name, Using = "lastName")]
+        public IWebElement inputLastName;
 
-        public IWebElement emailInput => Browser._Driver.FindElement(_emailInput);
-        public readonly By _emailInput = By.XPath("//input[@name='email']");
+        [FindsBy(How = How.Name, Using = "email")]
+        public IWebElement inputEmail;
 
+        [FindsBy(How = How.Name, Using = "confirmEmail")]
+        public IWebElement inputConfirmEmail;
 
-        public IWebElement confirmEmailInput => Browser._Driver.FindElement(_confirmEmailInput);
-        public readonly By _confirmEmailInput = By.XPath("//input[@name='confirmEmail']");
+        [FindsBy(How = How.Name, Using = "password")]
+        public IWebElement inputPassword;
 
-        public IWebElement passwordInput => Browser._Driver.FindElement(_passwordInput);
-        public readonly By _passwordInput = By.XPath("//input[@name='password']");
+        [FindsBy(How = How.Name, Using = "confirmPassword")]
+        public IWebElement inputConfirmPassword;
 
-        public IWebElement confirmPasswordInput => Browser._Driver.FindElement(_confirmPasswordInput);
-        public readonly By _confirmPasswordInput = By.XPath("//input[@name='confirmPassword']");
+        [FindsBy(How = How.XPath, Using = "//a[@class='signin-form_signup-link']")]
+        public IWebElement linkSignUp;
 
-        public IWebElement signUpLink => Browser._Driver.FindElement(_signUpLink);
-        public readonly By _signUpLink = By.XPath("//a[@class='signin-form_signup-link']");
+        [FindsBy(How = How.XPath, Using = "//button[@type='submit']")]
+        public IWebElement btnSignUp;
 
-        public IWebElement signUpBtn => Browser._Driver.FindElement(_signUpBtn);
-        public readonly By _signUpBtn = By.XPath("//button[@type='submit']");
+        [FindsBy(How = How.XPath, Using = "//button[@type='button']/a[@href='/auth/login']")]
+        public IWebElement btnLogin;
 
-        public IWebElement loginBtn => Browser._Driver.FindElement(_loginBtn);
-        public readonly By _loginBtn = By.XPath("//button[@type='button']/a[@href='/auth/login']");
-
-        public IWebElement confirmPopUp => Browser._Driver.FindElement(_confirmPopUp);
-        public readonly By _confirmPopUp = By.XPath("//div[@class='confirmation-wrapper']/h2");
+        [FindsBy(How = How.XPath, Using = "//div[@class='confirmation-wrapper']/h2")]
+        public IWebElement popupConfirm;
     }
 }

@@ -25,10 +25,10 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//a[@class='program-info_title']")]
         public IWebElement programTitle;
 
-        [FindsBy(How = How.XPath, Using = "//button[@class='program-button']")]
-        public IWebElement selectProgramBtn;
+        [FindsBy(How = How.XPath, Using = "//button[@class='ant-btn program-switch-btn']")]
+        public IList<IWebElement> selectProgramBtn;
 
-        [FindsBy(How = How.XPath, Using = "//button[contains(@class,'modal-controls-btn_yes')]")]
+        [FindsBy(How = How.XPath, Using = "//span[text()='Yes']/parent::button")]
         public IWebElement popupYesBtn;
 
         [FindsBy(How = How.XPath, Using = "//button[contains(@class,'modal-controls-btn_no')]")]
@@ -92,6 +92,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         [FindsBy(How = How.XPath, Using = "//h2")]
         public IWebElement textDayTitleElem;
+
+        [FindsBy(How = How.XPath, Using = "//button[text()='Download Program']")]
+        public IWebElement btnDownloadProgram;
 
 
         #endregion

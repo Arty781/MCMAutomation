@@ -281,7 +281,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             if (goal == Goals.goal[0])
             {
-                if (SKU == MembershipsSKU.membershipSKU[0])
+                if (SKU == MembershipsSKU.MEMBERSHIP_SKU[0])
                 {
                     finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
                 }
@@ -653,7 +653,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
                 if (goal == Goals.goal[0])
                 {
-                    if (SKU == MembershipsSKU.membershipSKU[0])
+                    if (SKU == MembershipsSKU.MEMBERSHIP_SKU[0])
                     {
                         finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
                     }

@@ -1,4 +1,6 @@
 ﻿using MCMAutomation.APIHelpers;
+using MCMAutomation.APIHelpers.Client.EditUser;
+using MCMAutomation.APIHelpers.Client.SignUp;
 using MCMAutomation.APIHelpers.SignInPage;
 using MCMAutomation.Helpers;
 using NUnit.Framework;
@@ -15,7 +17,6 @@ namespace MCMApiTests
     public class Tests
     {
         [Test]
-        [Retry(4)]
         public void MakeSignIn()
         {
             var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
@@ -24,15 +25,24 @@ namespace MCMApiTests
         }
 
         [Test]
-        [Repeat(4)]
+        //[Repeat(4)]
         public void Demo()
         {
-
             var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
-            var dateBefore = DateTime.Now;
-            MembershipsWithUsersRequest.GetMembershipsWithUsersList(responseLogin);
-            var dateAfter = DateTime.Now;
-            Console.WriteLine($"Load time is: " + (dateAfter - dateBefore));
+            MembershipsWithUsersRequest.CreateMembership(responseLogin);
+            int memberId = int.Parse(AppDbContext.GetLastMembership().FirstOrDefault());
+            for(int i =0; i<3; i++)
+            {
+                MembershipsWithUsersRequest.CreatePrograms(responseLogin, memberId);
+            }
+            List<int> programs = AppDbContext.GetLastPrograms();
+            foreach(var program in programs)
+            {
+                MembershipsWithUsersRequest.CreateWorkouts(responseLogin, program);
+                MembershipsWithUsersRequest.CreateWorkouts(responseLogin, program);
+                MembershipsWithUsersRequest.CreateWorkouts(responseLogin, program);
+            }
+            
         }
     }
 }

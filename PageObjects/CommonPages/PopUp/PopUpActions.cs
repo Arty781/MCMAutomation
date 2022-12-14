@@ -15,9 +15,7 @@ namespace MCMAutomation.PageObjects
         {
             
             Browser._Driver.Navigate().Refresh();
-            WaitUntil.VisibilityOfAllElementsLocatedBy(_cancelBtn, 60);
-            popupYesNoBtnLinq.Click();
-            WaitUntil.WaitSomeInterval(250);
+            Button.Click(btnCancel);
 
             return this;
         }
