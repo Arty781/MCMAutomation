@@ -37,7 +37,7 @@ namespace MCMAutomation.Helpers
         [AllureOwner("Sukharevsky Artem")]
         [AllureSuite("DriverLevel")]
         [AllureSubSuite("ForceCloseDriver")]
-        [Ignore("Report")]
+        //[Ignore("Report")]
         [Test]
 
 

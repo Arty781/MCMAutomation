@@ -22,8 +22,8 @@ namespace MCMAutomation.PageObjects
             InputBox.ElementCtrlA(passwordInput, 30, password);
 
             Button.Click(signInBtn);
-            var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
-            MembershipsWithUsersRequest.GetMembershipsWithUsersList(responseLogin);
+            var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.GetMembershipsWithUsersList(responseLogin);
 
             return this;
         }

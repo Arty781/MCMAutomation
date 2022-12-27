@@ -1,10 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions;
 using OpenQA.Selenium;
+using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Chilkat.Http;
 
 namespace MCMAutomation.Helpers
 {
@@ -16,23 +18,82 @@ namespace MCMAutomation.Helpers
 
     public class Credentials
     {
-        public const string login = "qatester91311@gmail.com";
-        public const string password = "Qaz11111!";
+        public const string LOGIN = "qatester91311@gmail.com";
+        public const string PASSWORD = "Qaz11111!";
 
-        public const string loginAdmin = "admin@coachmarkcarroll.com";
-        public const string passwordAdmin = "Upgr@de21";
+        public const string LOGIN_ADMIN = "admin@coachmarkcarroll.com";
+        public const string PASSWORD_ADMIN = "Upgr@de21";
     }
 
     public class UploadedImages
     {
-        public const string CreateMemberImg =  @"\Images\alone-with-his-thoughts-1080x720.jpg";
-        public const string PhaseImg1 = @"\Images\Photos-App.jpg";
-        public const string PhaseImg2 = @"\Images\will-burrard-lucas-beetlecam-23-1024x683.jpg"; 
+        public const string CREATE_MEMBER_IMG =  @"\Images\alone-with-his-thoughts-1080x720.jpg";
+        public const string PHASE_IMG_1 = @"\Images\Photos-App.jpg";
+        public const string PHASE_IMG_2 = @"\Images\will-burrard-lucas-beetlecam-23-1024x683.jpg"; 
     }
 
     public class DB
     {
-        public const string GetConnectionString = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethodStaging; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
+        public const string GET_CONNECTION_STRING = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethodStaging; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
+
+        public class Exercises
+        {
+            public int Id {get; set;}
+            public string Name { get; set; }
+            public DateTime CreationDate { get; set;}
+            public bool IsDeleted { get; set;}
+            public string VideoURL { get; set;}
+            public int TempoBold { get; set;}
+        }
+
+        public class Workouts
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int WeekDay { get; set;}
+            public int ProgramId { get; set; }
+            public DateTime CreationDate { get; set; }
+            public bool IsDeleted { get; set; }
+            public int Type { get; set; }
+            
+        }
+
+        public class Programs
+        {
+            public int Id { get; set; }
+            public int MembershipId { get; set; }
+            public string Name { get; set; }
+            public int NumberOfWeeks { get; set; }
+            public DateTime CreationDate { get; set;}
+            public bool IsDeleted { get; set; }
+            public string Steps { get; set; }
+            public DateTime? AvailableDate { get; set; }
+            public int? NextProgramId { get; set; }
+            public DateTime? ExpirationDate { get; set; }
+            public int Type { get; set;}
+
+        }
+
+        public class Memberships
+        {
+            public int Id { get; set; }
+            public string? SKU { get; set; }
+            public string? Name { get; set; }
+            public string? Description { get; set; }
+            public DateTime? StartDate { get; set; }
+            public DateTime? EndDate { get; set; }
+            public string? URL { get; set; }
+            public decimal? Price { get; set; }
+            public DateTime CreationDate { get; set; }
+            public bool IsDeleted { get; set; }
+            public bool IsCustom { get; set; }
+            public bool ForPurchase { get; set; }
+            public int? AccessWeekLength { get; set; }
+            public int? RelatedMembershipGroupId { get; set; }
+            public int Gender { get; set; }
+            public int? PromotionalPopupId { get; set; }
+            public int Type { get; set; }
+        }
     }
 
     public class Exersises

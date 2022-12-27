@@ -20,9 +20,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Add images")]
         public Progress AddImages()
         {
-            inputUploadPhotoFront.SendKeys(Browser.RootPath() + UploadedImages.CreateMemberImg);
-            inputUploadPhotoBack.SendKeys(Browser.RootPath() + UploadedImages.PhaseImg1);
-            inputUploadPhotoSide.SendKeys(Browser.RootPath() + UploadedImages.PhaseImg2);
+            inputUploadPhotoFront.SendKeys(Browser.RootPath() + UploadedImages.CREATE_MEMBER_IMG);
+            inputUploadPhotoBack.SendKeys(Browser.RootPath() + UploadedImages.PHASE_IMG_1);
+            inputUploadPhotoSide.SendKeys(Browser.RootPath() + UploadedImages.PHASE_IMG_2);
 
             return this;
         }

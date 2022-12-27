@@ -13,7 +13,7 @@ namespace MCMAutomation.APIHelpers.SignInPage
         
         public static void VerifyIsAdminSignInSuccesfull(SignInResponseModel response)
         {
-            Assert.IsTrue(Credentials.loginAdmin == response.Email);
+            Assert.IsTrue(Credentials.LOGIN_ADMIN == response.Email);
         }
     }
 }

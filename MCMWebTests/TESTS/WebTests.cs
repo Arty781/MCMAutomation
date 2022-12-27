@@ -18,6 +18,7 @@ using OpenQA.Selenium.Chrome;
 using MCMAutomation.APIHelpers.Client.EditUser;
 using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.SignUp;
+using MCMAutomation.APIHelpers.Client.AddProgress;
 
 namespace MCMAutomation.WebTests
 {
@@ -48,12 +49,12 @@ namespace MCMAutomation.WebTests
                 .GoToLoginPage();
 
             Pages.Login
-                .GetLogin(email, Credentials.password);
+                .GetLogin(email, Credentials.PASSWORD);
             Pages.MembershipUser
                 .VerifyIsBuyBtnDisplayed();
             Pages.PopUp
                 .ClosePopUp();
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             Pages.UserProfile
                 .VerifyDisplayingReferringBtn();
@@ -85,12 +86,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -108,7 +109,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -199,12 +200,12 @@ namespace MCMAutomation.WebTests
 
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -222,7 +223,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -313,12 +314,12 @@ namespace MCMAutomation.WebTests
             #region Preconditions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("PG");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -337,7 +338,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -429,11 +430,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
             Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -452,7 +453,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
             #region Variables
@@ -541,11 +542,11 @@ namespace MCMAutomation.WebTests
 
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
             Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -564,7 +565,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -664,12 +665,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -688,7 +689,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -785,12 +786,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -809,7 +810,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -908,12 +909,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -932,7 +933,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1027,12 +1028,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1051,7 +1052,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1146,12 +1147,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1170,7 +1171,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1266,12 +1267,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1290,7 +1291,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1386,12 +1387,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1410,7 +1411,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1507,12 +1508,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1531,7 +1532,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1626,12 +1627,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1650,7 +1651,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1739,12 +1740,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1763,7 +1764,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1840,12 +1841,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("BBB1");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1864,7 +1865,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1934,12 +1935,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -1962,7 +1963,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2064,12 +2065,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2092,7 +2093,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2190,12 +2191,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2218,7 +2219,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2316,12 +2317,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2344,7 +2345,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2443,12 +2444,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2471,7 +2472,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2569,12 +2570,12 @@ namespace MCMAutomation.WebTests
             #region AdminActions
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2597,7 +2598,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLoginForTdee(email, Credentials.password);
+                .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2707,13 +2708,13 @@ namespace MCMAutomation.WebTests
 
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
 
             #region AdminActions
 
             Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
 
@@ -2735,7 +2736,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLogin(email, Credentials.password);
+                .GetUserLogin(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2798,14 +2799,14 @@ namespace MCMAutomation.WebTests
 
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string membership = AppDbContext.GetActiveMembershipsBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
 
             #region AdminActions
 
             Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2827,7 +2828,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLogin(email, Credentials.password);
+                .GetUserLogin(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2873,14 +2874,14 @@ namespace MCMAutomation.WebTests
 
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             List<string> memberships = AppDbContext.GetSubProdAndCustomMemberships();
 
             #region AdminActions
 
             Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -2901,7 +2902,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLogin(email, Credentials.password);
+                .GetUserLogin(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -3062,10 +3063,10 @@ namespace MCMAutomation.WebTests
         {
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
 
             Pages.Login
-                .GetUserLogin(email, Credentials.password);
+                .GetUserLogin(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
@@ -3128,37 +3129,37 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
 
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
-            EditUserRequest.EditUser(responseLogin);
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            string userId = AppDbContext.GetUserId(email);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB");
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            #endregion
 
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
-            Pages.Login
-                .GetAdminLogout();
+            #region Add and Activate membership to User
+            string userId = AppDbContext.GetUserId(email);
+            List<DB.Memberships> membershipId = AppDbContext.GetLastMembership();
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.FirstOrDefault().Id, userId);
+            int userMembershipId = AppDbContext.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
+
+            #region Add Progress as User
+            for (int i = 0; i < 60; i++)
+            {
+                ProgressRequest.AddProgress(responseLoginUser);
+                AppDbContext.UpdateUserProgressDate(userId);
+            }
+            #endregion
 
             #endregion
 
             Pages.Login
-                .GetUserLogin(email, Credentials.password);
+                .GetUserLogin(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenProgressPage();
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Pages.Progress
                     .ClickAddProgressBtnA()
@@ -3205,33 +3206,26 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
 
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
-            EditUserRequest.EditUser(responseLogin);
-            Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB");
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            #endregion
 
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .ClickEditUser(email);
-            Pages.UsersAdmin
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
-            Pages.Login
-                .GetAdminLogout();
+            #region Add and Activate membership to User
+            string userId = AppDbContext.GetUserId(email);
+            List<DB.Memberships> membershipId = AppDbContext.GetLastMembership();
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.FirstOrDefault().Id, userId);
+            int userMembershipId = AppDbContext.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
-                .GetUserLogin(email, Credentials.password);
+                .GetUserLogin(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenProgressPage();
             Pages.Progress
@@ -3274,10 +3268,10 @@ namespace MCMAutomation.WebTests
 
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.password);
+            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             Pages.Login
-                .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB");
@@ -3296,7 +3290,7 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Login
-                .GetUserLogin(email, Credentials.password);
+                .GetUserLogin(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenProgressPage();
             Pages.Progress

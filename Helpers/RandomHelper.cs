@@ -28,6 +28,37 @@ namespace MCMAutomation.Helpers
             return r;
         }
 
+        public static int RandomProgressData(string bodyPart)
+        {
+            int r = 0;
+            if(bodyPart.ToLower() == "weight")
+            {
+                r = new Random().Next(45, 150);
+            }
+            else if(bodyPart.ToLower() == "waist")
+            {
+                r = new Random().Next(45, 120);
+            }
+            else if (bodyPart.ToLower() == "hip")
+            {
+                r = new Random().Next(80, 150);
+            }
+            else if (bodyPart.ToLower() == "thigh")
+            {
+                r = new Random().Next(45, 150);
+            }
+            else if (bodyPart.ToLower() == "chest")
+            {
+                r = new Random().Next(80, 200);
+            }
+            else if (bodyPart.ToLower() == "arm")
+            {
+                r = new Random().Next(20, 100);
+            }
+
+            return r;
+        }
+
         public static int RandomExercise(int maxWeight)
         {
             Random r = new Random();

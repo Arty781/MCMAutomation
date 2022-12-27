@@ -89,7 +89,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Upload photo")]
         public UserProfile UploadPhoto()
         {
-            inputPhoto.SendKeys(String.Concat(Browser.RootPath() + UploadedImages.PhaseImg1));
+            inputPhoto.SendKeys(String.Concat(Browser.RootPath() + UploadedImages.PHASE_IMG_1));
             return this;
         }
 

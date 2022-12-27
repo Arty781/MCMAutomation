@@ -51,6 +51,20 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Enter membership data")]
+        public MembershipAdmin EnterSubscriptionMembershipData()
+        {
+            InputBox.ElementCtrlA(skuInput, 20, MembershipsSKU.MEMBERSHIP_SKU[1] + DateTime.Now.ToString("hh:mm:ss"));
+            InputBox.ElementCtrlA(membershipNameInput, 20, "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
+            InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
+            InputBox.ElementCtrlA(priceInput, 10, "100");
+            InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
+            availableForPurchaseCheckbox.Click();
+
+
+            return this;
+        }
+
+        [AllureStep("Enter membership data")]
         public MembershipAdmin EnterCustomMembershipData()
         {
             InputBox.ElementCtrlA(membershipNameInput, 20, "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
@@ -469,7 +483,7 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Add exercises")]
-        public MembershipAdmin AddExercises(List<string> programNames, List<string> exercises)
+        public MembershipAdmin AddExercises(List<string> programNames, List<DB.Exercises> exercises)
         {
             foreach (string programName in programNames)
             {
@@ -492,7 +506,7 @@ namespace MCMAutomation.PageObjects
                         if (i == 1)
                         {
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "A");
-                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)] + Keys.Enter);
+                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
                             InputBox.ElementCtrlA(setsExerciseInput.FirstOrDefault(), 10, "6");
                             InputBox.ElementCtrlA(repsExerciseInput.FirstOrDefault(), 10, "4,4,4,5,7,8");
                             InputBox.ElementCtrlA(restExerciseInput.FirstOrDefault(), 10, "60");
@@ -505,7 +519,7 @@ namespace MCMAutomation.PageObjects
                         {
                             
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "B");
-                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)] + Keys.Enter);
+                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
                             for(int q =0; q<3; q++)
                             {
                                 Button.Click(addExerciseRowBtn);
@@ -546,7 +560,7 @@ namespace MCMAutomation.PageObjects
                         if (i == 3)
                         {
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "C1");
-                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)] + Keys.Enter);
+                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
                             InputBox.ElementCtrlA(setsExerciseInput.FirstOrDefault(), 10, "7");
                             InputBox.ElementCtrlA(repsExerciseInput.FirstOrDefault(), 10, "15-20 Each");
                             InputBox.ElementCtrlA(restExerciseInput.FirstOrDefault(), 10, "60");
@@ -559,7 +573,7 @@ namespace MCMAutomation.PageObjects
                         {
 
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "C2");
-                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)] + Keys.Enter);
+                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
                             for (int q = 0; q < 3; q++)
                             {
                                 Button.Click(addExerciseRowBtn);
@@ -600,7 +614,7 @@ namespace MCMAutomation.PageObjects
                         {
 
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "D");
-                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)] + Keys.Enter);
+                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
                             InputBox.ElementCtrlA(setsExerciseInput.FirstOrDefault(), 10, "6");
                             InputBox.ElementCtrlA(repsExerciseInput.FirstOrDefault(), 10, "4,4,4,5,7,8");
                             InputBox.ElementCtrlA(restExerciseInput.FirstOrDefault(), 10, "60");
@@ -612,7 +626,7 @@ namespace MCMAutomation.PageObjects
                         if (i == 6)
                         {
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "E");
-                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)] + Keys.Enter);
+                            exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
                             InputBox.ElementCtrlA(setsExerciseInput.FirstOrDefault(), 10, "5");
                             InputBox.ElementCtrlA(repsExerciseInput.FirstOrDefault(), 10, "4,4,4,5,7");
                             InputBox.ElementCtrlA(restExerciseInput.FirstOrDefault(), 10, "60");
