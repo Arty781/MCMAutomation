@@ -119,14 +119,14 @@ namespace MCMAutomation.Helpers
 
     public class Element
     {
-        public static IWebElement webElem(string xpathString)
+        public static IWebElement FindElementByXpath(string xpathString)
         {
-            WaitUntil.WaitSomeInterval(250);
+            WaitUntil.WaitSomeInterval(350);
             var elem = Browser._Driver.FindElement(By.XPath(xpathString));
             return elem;
         }
 
-        public static List<IWebElement> webElemList(string xpathString)
+        public static List<IWebElement> FindElementsByXpath(string xpathString)
         {
             WaitUntil.WaitSomeInterval(250);
             var elem = Browser._Driver.FindElements(By.XPath(xpathString)).ToList();

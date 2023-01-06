@@ -24,51 +24,37 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition SelectActivityLevel(int levelNumber)
         {
-            if (levelNumber == 1)
+            if (levelNumber == 0)
             {
                 WaitUntil.WaitSomeInterval(250);
                 cbbxActivitylevel.Click();
-                new Actions(Browser._Driver)
-                 .SendKeys(Keys.ArrowUp +Keys.ArrowUp +Keys.Enter)
-                 .Build()
-                 .Perform();
+                Button.Click(listActivityLevel[levelNumber]);
             }
-            if (levelNumber == 2)
+            else if (levelNumber == 1)
             {
                 WaitUntil.WaitSomeInterval(250);
                 cbbxActivitylevel.Click();
-                new Actions(Browser._Driver)
-                 .SendKeys(Keys.ArrowUp + Keys.Enter)
-                 .Build()
-                 .Perform();
+                Button.Click(listActivityLevel[levelNumber]);
             }
-            if (levelNumber == 3)
+            else if (levelNumber == 2)
             {
                 WaitUntil.WaitSomeInterval(250);
                 cbbxActivitylevel.Click();
-                new Actions(Browser._Driver)
-                 .SendKeys(Keys.Enter)
-                 .Build()
-                 .Perform();
+                Button.Click(listActivityLevel[levelNumber]);
             }
-            if (levelNumber == 4)
+            else if (levelNumber == 3)
             {
                 WaitUntil.WaitSomeInterval(250);
                 cbbxActivitylevel.Click();
-                new Actions(Browser._Driver)
-                 .SendKeys(Keys.ArrowDown + Keys.Enter)
-                 .Build()
-                 .Perform();
+                Button.Click(listActivityLevel[levelNumber]);
             }
-            if (levelNumber == 5)
+            else if (levelNumber == 4)
             {
                 WaitUntil.WaitSomeInterval(250);
                 cbbxActivitylevel.Click();
-                new Actions(Browser._Driver)
-                 .SendKeys(Keys.ArrowDown + Keys.ArrowDown + Keys.Enter)
-                 .Build()
-                 .Perform();
+                Button.Click(listActivityLevel[levelNumber]);
             }
+
             WaitUntil.WaitSomeInterval(3000);
             return this;
         }
@@ -80,49 +66,51 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public Nutrition SelectMale(IList<IWebElement> genderBtns)
+        public Nutrition SelectMale()
         {
-            Button.Click(genderBtns[0]);
+            Button.Click(SwitcherHelper.NutritionSelector("Gender")[0]);
             WaitUntil.WaitSomeInterval(250);
 
             return this;
         }
 
-        public Nutrition SelectFemale(IList<IWebElement> genderBtns)
+        public Nutrition SelectFemale()
         {
-            Button.Click(genderBtns[1]);
+            Button.Click(SwitcherHelper.NutritionSelector("Gender")[1]);
             WaitUntil.WaitSomeInterval(250);
 
             return this;
         }
 
-        public Nutrition SelectImperial(IList<IWebElement> conversionSystem)
+        public Nutrition SelectImperial()
         {
-            Button.Click(conversionSystem[0]);
+            Button.Click(SwitcherHelper.NutritionSelector("Preferred Conversion System")[0]);
             WaitUntil.WaitSomeInterval(250);
 
             return this;
         }
 
-        public Nutrition SelectMetric(IList<IWebElement> conversionSystem)
+        public Nutrition SelectMetric()
         {
-            Button.Click(conversionSystem[1]);
+            Button.Click(SwitcherHelper.NutritionSelector("Preferred Conversion System")[1]);
             WaitUntil.WaitSomeInterval(250);
 
             return this;
         }
 
-        public Nutrition SelectYesOfAdditionalOptions(IList<IWebElement> additionalOptions)
+        public Nutrition SelectYesOfAdditionalOptions(string title)
         {
-            Button.Click(additionalOptions[0]);
+            var togglesList = Element.FindElementsByXpath($"//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label");
+            Button.Click(togglesList.FirstOrDefault());
             WaitUntil.WaitSomeInterval(250);
 
             return this;
         }
 
-        public Nutrition SelectNoOfAdditionalOptions(IList<IWebElement> additionalOptions)
+        public Nutrition SelectNoOfAdditionalOptions(string title)
         {
-            Button.Click(additionalOptions[1]);
+            var togglesList = Element.FindElementsByXpath($"//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label");
+            Button.Click(togglesList.LastOrDefault());
             WaitUntil.WaitSomeInterval(250);
 
             return this;
@@ -142,26 +130,23 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             Button.Click(inputHeight);
 
-
-            List<string> selectedConversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
-            if (selectedConversionSystem[0] == "Imperial")
+            if (SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System") == "Imperial")
             {
                 string activeElem = itemHeightActive.Text;
-                IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));
-                IList<IWebElement> heightsAfterActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]"));
-                for (int i = 0; i < heightsAfterActive.Count; i++)
+                var heightsAfterActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]");
+                if(activeElem != "5 ft 9 in")
                 {
-                    WaitUntil.WaitSomeInterval(200);
-                    activeElem = itemHeightActive.Text;
-                    if (activeElem == "5 ft 9 in")
+                    for (int i = 0; i < heightsAfterActive.Count; i++)
                     {
-                        break;
+                        WaitUntil.WaitSomeInterval(200);
+                        activeElem = itemHeightActive.Text;
+                        if (activeElem == "5 ft 9 in")
+                        {
+                            break;
+                        }
+                        itemHeightNext.Click();
                     }
-                    itemHeightNext.Click();
-                }
-                if (activeElem != "5 ft 9 in")
-                {
-                    IList<IWebElement> heightsBeforeActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]"));
+                    var heightsBeforeActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]");
                     for (int i = 0; i < heightsBeforeActive.Count; i++)
                     {
                         WaitUntil.WaitSomeInterval(200);
@@ -172,28 +157,26 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                             break;
                         }
                     }
-
                 }
 
             }
-            else if (selectedConversionSystem[0] == "Metric")
+            else if (SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System") == "Metric")
             {
                 string activeElem = itemHeightActive.Text;
-                IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));
-                IList<IWebElement> heightsAfterActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]"));
-                for (int i = 0; i < heightsAfterActive.Count; i++)
-                {
-                    WaitUntil.WaitSomeInterval(200);
-                    activeElem = itemHeightActive.Text;
-                    if (activeElem == "175 cm")
-                    {
-                        break;
-                    }
-                    itemHeightNext.Click();
-                }
+                var heightsAfterActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]");
                 if (activeElem != "175 cm")
                 {
-                    IList<IWebElement> heightsBeforeActive = heightSlider.FindElements(By.XPath(".//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]"));
+                    for (int i = 0; i < heightsAfterActive.Count; i++)
+                    {
+                        WaitUntil.WaitSomeInterval(200);
+                        activeElem = itemHeightActive.Text;
+                        if (activeElem == "175 cm")
+                        {
+                            break;
+                        }
+                        itemHeightNext.Click();
+                    }
+                    var heightsBeforeActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]");
                     for (int i = 0; i < heightsBeforeActive.Count; i++)
                     {
                         WaitUntil.WaitSomeInterval(200);
@@ -204,7 +187,6 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                             break;
                         }
                     }
-
                 }
 
             }

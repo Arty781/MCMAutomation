@@ -1,8 +1,10 @@
-﻿using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions;
+﻿using Chilkat;
+using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions;
 using OpenQA.Selenium;
 using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,24 +40,24 @@ namespace MCMAutomation.Helpers
 
         public class Exercises
         {
-            public int Id {get; set;}
+            public int Id { get; set; }
             public string Name { get; set; }
-            public DateTime CreationDate { get; set;}
-            public bool IsDeleted { get; set;}
-            public string VideoURL { get; set;}
-            public int TempoBold { get; set;}
+            public DateTime CreationDate { get; set; }
+            public bool IsDeleted { get; set; }
+            public string VideoURL { get; set; }
+            public int TempoBold { get; set; }
         }
 
         public class Workouts
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public int WeekDay { get; set;}
+            public int WeekDay { get; set; }
             public int ProgramId { get; set; }
             public DateTime CreationDate { get; set; }
             public bool IsDeleted { get; set; }
             public int Type { get; set; }
-            
+
         }
 
         public class Programs
@@ -64,13 +66,13 @@ namespace MCMAutomation.Helpers
             public int MembershipId { get; set; }
             public string Name { get; set; }
             public int NumberOfWeeks { get; set; }
-            public DateTime CreationDate { get; set;}
+            public DateTime CreationDate { get; set; }
             public bool IsDeleted { get; set; }
             public string Steps { get; set; }
             public DateTime? AvailableDate { get; set; }
             public int? NextProgramId { get; set; }
             public DateTime? ExpirationDate { get; set; }
-            public int Type { get; set;}
+            public int Type { get; set; }
 
         }
 
@@ -94,32 +96,76 @@ namespace MCMAutomation.Helpers
             public int? PromotionalPopupId { get; set; }
             public int Type { get; set; }
         }
-    }
 
+        public class CopyMembershipPrograms
+        {
+            public string MembershipName { get; set; }
+            public string ProgramName { get; set; }
+            public string WorkoutName { get; set; }
+        }
+
+        public class AspNetUsers
+        {
+            public string Id { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Email { get; set; }
+            public int ConversionSystem { get; set; }
+            public int Gender { get; set; }
+            public DateTime Birthdate { get; set; }
+            public int Weight { get; set; }
+            public int Height { get; set; }
+            public int ActivityLevel { get; set; }
+            public int Bodyfat { get; set; }
+            public int Calories { get; set; }
+            public bool Active { get; set; }
+            public DateTime DateTime { get; set; }
+            public string UserName { get; set; }
+            public string NormalizedUserName { get; set; }
+            public string NormalizedEmail { get; set; }
+            public bool EmailConfirmed { get; set; }
+            public string PasswordHash { get; set; }
+            public string SecurityStamp { get; set; }
+            public string ConcurrencyStamp { get; set; }
+            public string? PhoneNumber { get; set; }
+            public bool PhoneNumberConfirmed { get; set; }
+            public bool TwoFactorEnabled { get; set; }
+            public DateTime? LockoutEnd { get; set; }
+            public bool LockoutEnabled { get; set; }
+            public int AccessFailedCount { get; set; }
+            public bool IsDeleted { get; set; }
+            public bool IsMainAdmin { get; set; }
+            public string? LastGeneratedIdentityToken { get; set; }
+            public int Carbs { get; set; }
+            public int Fats { get; set; }
+            public int MaintenanceCalories { get; set; }
+            public int Protein { get; set; }
+
+        }
+    }
     public class Exersises
     {
-        public static string[] exercise = 
+        public static string[] exercise =
         {
-                "15* Incline DB Tricep Extensions",
-                "30* Prone DB Row - Neutral",
-                "45* Back Extension",
-                "45* DB Press Neutral Grip",
-                "45* Incline BB Bench Press",
-                "45* Incline DB Curls",
-                "45* Incline DB Press - Pronated",
-                "45* Incline Zottman Curls - Rear Delt Focused",
-                "45* Prone DB Lateral Raises",
-                "45* Prone DB Y-Raises",
-                "45* Prone Trap 3 Raises",
-                "45* Standing Straight Leg Kickback - Banded",
-                "45* Standing Straight Leg Kickback - Cable",
-                "65* DB Arnold Press",
-                "65* DB Arnold Press - 1 & 1/4 Reps",
-                "65* Incline DB Bench Press - Neutral",
-                "65* Incline DB Bench Press - Pronated"
+            "15* Incline DB Tricep Extensions",
+            "30* Prone DB Row - Neutral",
+            "45* Back Extension",
+            "45* DB Press Neutral Grip",
+            "45* Incline BB Bench Press",
+            "45* Incline DB Curls",
+            "45* Incline DB Press - Pronated",
+            "45* Incline Zottman Curls - Rear Delt Focused",
+            "45* Prone DB Lateral Raises",
+            "45* Prone DB Y-Raises",
+            "45* Prone Trap 3 Raises",
+            "45* Standing Straight Leg Kickback - Banded",
+            "45* Standing Straight Leg Kickback - Cable",
+            "65* DB Arnold Press",
+            "65* DB Arnold Press - 1 & 1/4 Reps",
+            "65* Incline DB Bench Press - Neutral",
+            "65* Incline DB Bench Press - Pronated"
         };
     }
-
     public class ActivityLevel
     {
         public static string[] level =
@@ -186,15 +232,9 @@ namespace MCMAutomation.Helpers
 
     public class AdditionalOptions
     {
-        public static string[] additionalCommonOption =
-        {
-            "Have you been dieting long term?"
-        };
+        public static string additionalCommonOption = "Have you been dieting long term?";
 
-        public static string[] additionalPgOption =
-        {
-            "Are you in the third trimester of pregnancy?"
-        };
+        public static string additionalPgOption = "Are you in the third trimester of pregnancy?";
 
         public static string[] additionalPpOption =
         {

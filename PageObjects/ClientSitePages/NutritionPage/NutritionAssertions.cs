@@ -11,16 +11,16 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 {
     public partial class Nutrition
     {
-        public Nutrition VerifyMaintainCaloriesStep01(List<string> values, string level, List<string> gender, List<string> textOfSelectedAdditionalOption, string selectedAdditionalOption)
+        public Nutrition VerifyMaintainCaloriesStep01(DB.AspNetUsers userData, string level, string gender, string textOfSelectedAdditionalOption, string selectedAdditionalOption)
         {
-            DateTime birthdate = DateTime.Parse(values[0]);
+            DateTime birthdate = userData.Birthdate;
             var currentTime = DateTime.Now;
             var age = (int)((currentTime - birthdate).TotalDays)/365;
             Console.WriteLine($"Age: {age}");
 
 
-            var weight = double.Parse(values[1]);
-            var bodyFat = double.Parse(values[3]);
+            var weight = userData.Weight;
+            var bodyFat = userData.Bodyfat;
             var l = weight * (1 - bodyFat / 100);
             var calories = 370 + 21.6 * l;
             var maintainCalories = 0.0;
@@ -50,11 +50,11 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             }
 
-            if (gender[0] == "Male")
+            if (gender == "Male")
             {
-                if (selectedAdditionalOption == AdditionalOptions.additionalCommonOption[0])
+                if (selectedAdditionalOption == AdditionalOptions.additionalCommonOption)
                 {
-                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    if (textOfSelectedAdditionalOption == "Yes")
                     {
                         maintainCalories = Math.Round((maintainCalories + 500), 0, MidpointRounding.AwayFromZero);
                     }
@@ -63,11 +63,11 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 maintainCalories *= 1;
 
             }
-            else if (gender[0] == "Female")
+            else if (gender == "Female")
             {
                 if (selectedAdditionalOption == AdditionalOptions.additionalPpOption[0])
                 {
-                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    if (textOfSelectedAdditionalOption == "Yes")
                     {
                         maintainCalories = Math.Round((maintainCalories + 500), 0, MidpointRounding.AwayFromZero);
                     }
@@ -75,37 +75,32 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 }
                 else if (selectedAdditionalOption == AdditionalOptions.additionalPpOption[1])
                 {
-                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    if (textOfSelectedAdditionalOption == "Yes")
                     {
                         maintainCalories = Math.Round((maintainCalories + 300), 0, MidpointRounding.AwayFromZero);
                     }
                     maintainCalories *= 1;
                 }
-                else if (selectedAdditionalOption == AdditionalOptions.additionalPgOption[0])
+                else if (selectedAdditionalOption == AdditionalOptions.additionalPgOption)
                 {
-                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    if (textOfSelectedAdditionalOption == "Yes")
                     {
                         maintainCalories = Math.Round((maintainCalories + 200), 0, MidpointRounding.AwayFromZero);
                     }
                     maintainCalories *= 1;
                 }
-                else if (selectedAdditionalOption == AdditionalOptions.additionalCommonOption[0])
+                else if (selectedAdditionalOption == AdditionalOptions.additionalCommonOption)
                 {
-                    if (textOfSelectedAdditionalOption[0] == "Yes")
+                    if (textOfSelectedAdditionalOption == "Yes")
                     {
                         maintainCalories = Math.Round((maintainCalories - 100), 0, MidpointRounding.AwayFromZero);
                     }
                     maintainCalories *= 1;
                 }
             }
-
-
-            Console.WriteLine($"maintain calories are \"{maintainCalories}\"");
+            Console.WriteLine($"Maintain calories are \"{maintainCalories}\"");
             double caloriesWeb = int.Parse(TextBox.GetAttribute(inputCalories, "value"));
-
             Assert.IsTrue((maintainCalories - caloriesWeb) <=3 || (maintainCalories - caloriesWeb) >= 3);
-
-
 
             return this;
         }
@@ -555,12 +550,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //    }
         //}
 
-        public void VerifyNutritionData(List<string> userData, string goal, string tier, string SKU, List<string> gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories)
+        public void VerifyNutritionData(DB.AspNetUsers userData, string goal, string tier, string SKU, string gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories)
         {
             #region Protein Calculation
 
-            var weight = double.Parse(userData[1]);
-            var bodyFat = double.Parse(userData[3]);
+            var weight = userData.Weight;
+            var bodyFat = userData.Bodyfat;
             var protein = 0.0;
 
             if (goal == Goals.goal[1] || goal == Goals.goal[2] || goal == Goals.goal[3])
@@ -570,8 +565,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             else
             {
                 if (
-                    (gender[0] == "Female" && bodyFat > 30) ||
-                    (gender[0] == "Male" && bodyFat > 25)
+                    (gender == "Female" && bodyFat > 30) ||
+                    (gender == "Male" && bodyFat > 25)
                 )
                 {
                     protein = weight * 1.6;
@@ -802,11 +797,6 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             #endregion
         }
 
-
-        #region
-
-
-        #endregion
 
     }
 }

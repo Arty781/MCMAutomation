@@ -23,7 +23,7 @@ namespace MCMAutomation.APIHelpers
                 req = new()
                 {
                     ProgramId = programId,
-                    Name = "Workout" + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
+                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
                     WeekDay = 1,
                 };
             }
@@ -32,7 +32,7 @@ namespace MCMAutomation.APIHelpers
                 req = new()
                 {
                     ProgramId = programId,
-                    Name = "Workout" + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
+                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
                     WeekDay = 2,
                 };
             }
@@ -41,7 +41,7 @@ namespace MCMAutomation.APIHelpers
                 req = new()
                 {
                     ProgramId = programId,
-                    Name = "Workout" + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
+                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
                     WeekDay = 3,
                 };
             }
@@ -50,7 +50,7 @@ namespace MCMAutomation.APIHelpers
                 req = new()
                 {
                     ProgramId = programId,
-                    Name = "Workout" + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
+                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
                     WeekDay = 4,
                 };
             }
@@ -59,7 +59,7 @@ namespace MCMAutomation.APIHelpers
                 req = new()
                 {
                     ProgramId = programId,
-                    Name = "Workout" + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
+                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
                     WeekDay = 5,
                 };
             }
@@ -68,7 +68,7 @@ namespace MCMAutomation.APIHelpers
                 req = new()
                 {
                     ProgramId = programId,
-                    Name = "Workout" + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
+                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
                     WeekDay = 6,
                 };
             }
@@ -77,7 +77,7 @@ namespace MCMAutomation.APIHelpers
                 req = new()
                 {
                     ProgramId = programId,
-                    Name = "Workout" + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
+                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
                     WeekDay = 7,
                 };
             }
@@ -425,7 +425,15 @@ namespace MCMAutomation.APIHelpers
                 Console.WriteLine(http.LastErrorText);
             }
             var countdownResponse = JsonConvert.DeserializeObject<List<MembershipSummaryResponse>>(resp.BodyStr);
-            return countdownResponse;
+            List<MembershipSummaryResponse> list= new List < MembershipSummaryResponse >();
+            foreach (MembershipSummaryResponse response in countdownResponse)
+            {
+                if(response.StartDate == null && response.EndDate ==null && response.Type == 0)
+                {
+                    list.Add(response);
+                }
+            }
+            return list;
         }
 
         public static void CreateProductMembership(SignInResponseModel SignIn)
@@ -606,14 +614,14 @@ namespace MCMAutomation.APIHelpers
 
         public static void CreateWorkouts(SignInResponseModel SignIn, int programId)
         {
-            Http http = new Http
+            Http http = new()
             {
                 Accept = "application/json",
                 AuthToken = "Bearer " + SignIn.AccessToken
             };
 
             string url = String.Concat(Endpoints.apiHost + "/Admin/AddWorkout");
-            for(int i =0; i < 6; i++)
+            for(int i = 0; i < 5; i++)
             {
                 HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, programId));
                 if (http.LastMethodSuccess == false)
@@ -641,7 +649,7 @@ namespace MCMAutomation.APIHelpers
                 {
                     Debug.WriteLine(http.LastErrorText);
                 }
-                Debug.WriteLine(resp.GetBodyJson);
+                Debug.WriteLine(resp.BodyStr);
             }
         }
 

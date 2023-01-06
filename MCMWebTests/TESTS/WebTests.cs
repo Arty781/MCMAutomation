@@ -5,16 +5,10 @@ using NUnit.Allure.Attributes;
 using NUnit.Allure.Core;
 using NUnit.Framework;
 using MCMAutomation.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using RimuTec.Faker;
-using OpenQA.Selenium.DevTools.V85.Profiler;
-using OpenQA.Selenium.Chrome;
 using MCMAutomation.APIHelpers.Client.EditUser;
 using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.SignUp;
@@ -88,7 +82,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("PP-1");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -101,8 +95,8 @@ namespace MCMAutomation.WebTests
             Pages.UsersAdmin
                 .SearchUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -127,33 +121,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
             #endregion
 
             #region Select additional options
 
             string selectedAdditionalOption = AdditionalOptions.additionalPpOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
-
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -170,17 +161,17 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .ClickNextBtn();
             diet = Pages.Nutrition.textActiveDiet.Text;
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
                 .ClickNextBtn()
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -202,7 +193,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("PP-1");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("PP-1");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -215,8 +206,8 @@ namespace MCMAutomation.WebTests
             Pages.UsersAdmin
                 .SearchUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -241,33 +232,31 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectMetric(conversionsBtn);
+                .SelectMetric();
             #endregion
 
             #region Select additional options
 
             string selectedAdditionalOption = AdditionalOptions.additionalPpOption[1];
 
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -286,16 +275,16 @@ namespace MCMAutomation.WebTests
             diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -316,7 +305,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("PG");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("PG");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -330,8 +319,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -349,8 +338,8 @@ namespace MCMAutomation.WebTests
             string diet;
             string textOfMoreThan2KgSelected = null;
             double previousCalories = 0.0;
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
@@ -362,27 +351,22 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectMetric(conversionsBtn);
+                .SelectMetric();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalPgOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
-
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+                .SelectYesOfAdditionalOptions(AdditionalOptions.additionalPgOption);
+            var textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(AdditionalOptions.additionalPgOption);
 
             #endregion
 
@@ -392,7 +376,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, AdditionalOptions.additionalPgOption)
                 .ClickNextBtn()
                 .Step02SelectMainTain();
             string goal = Pages.Nutrition.textActiveGoal.Text;
@@ -403,16 +387,16 @@ namespace MCMAutomation.WebTests
             diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -432,7 +416,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("ARD");
             Pages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
@@ -445,8 +429,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -456,33 +440,32 @@ namespace MCMAutomation.WebTests
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
             Pages.Sidebar
                 .OpenNutritionPage();
+
             #region Variables
-            string tier;
-            string phase;
-            string diet;
-            string selectedAdditionalOption = null;
-            List<string> textSelectedAdditionalOptions = null;
-            string textOfMoreThan2KgSelected = null;
-            double previousCalories;
+
+            string tier = string.Empty;
+            string phase = string.Empty;
+            string diet = string.Empty;
+            string selectedAdditionalOption = string.Empty;
+            string textSelectedAdditionalOptions = string.Empty;
+            string textOfMoreThan2KgSelected = string.Empty;
+            double previousCalories = 0;
 
             #endregion
 
             #region FINDING YOUR ESTIMATED TDEE Page
+
             Pages.Nutrition
                 .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
+            Pages.Nutrition
+                .SelectMale();
+            var selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
 
             Pages.Nutrition
-                .SelectMale(genderBtns);
-
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
-
-            Pages.Nutrition
-                .SelectMetric(conversionsBtn);
+                .SelectMetric();
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -512,9 +495,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             #endregion
 
@@ -523,7 +506,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -544,7 +527,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("ARD");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("ARD");
             Pages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
@@ -557,8 +540,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .ClickEditUser(email)
                 .RemoveAddedMembership()
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -570,15 +553,15 @@ namespace MCMAutomation.WebTests
                 .OpenNutritionPage();
 
             #region Variables
-            string tier;
-            string phase;
-            string diet;
-            string selectedAdditionalOption = null;
-            List<string> textSelectedAdditionalOptions = null;
-            string textOfMoreThan2KgSelected;
-            double previousCalories = 0.0;
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            string tier = string.Empty;
+            string phase = string.Empty;
+            string diet = string.Empty;
+            string selectedAdditionalOption = string.Empty;
+            string textSelectedAdditionalOptions = string.Empty;
+            string textOfMoreThan2KgSelected = string.Empty;
+            double previousCalories = 0;
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
@@ -586,15 +569,11 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
-
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
-
+                .SelectFemale();
+            var selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             Pages.Nutrition
-                .SelectMetric(conversionsBtn)
+                .SelectMetric()
                 .EnterAge(RandomNumber.Next(18, 65).ToString())
                 .SelectHeight()
                 .EnterWeight(RandomNumber.Next(50, 250).ToString())
@@ -633,9 +612,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             #endregion
 
@@ -644,7 +623,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -667,7 +646,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -681,8 +660,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -705,33 +684,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
-
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -759,16 +735,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -788,7 +764,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -802,8 +778,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -826,33 +802,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -882,15 +855,15 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -911,7 +884,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -925,8 +898,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -948,33 +921,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1001,16 +971,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1030,7 +1000,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1044,8 +1014,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1067,33 +1037,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1120,16 +1087,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1149,7 +1116,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1163,8 +1130,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1186,33 +1153,29 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1240,16 +1203,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1269,7 +1232,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1283,8 +1246,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1306,33 +1269,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1360,16 +1320,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1389,7 +1349,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1403,8 +1363,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1426,33 +1386,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1480,16 +1437,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1510,7 +1467,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1524,8 +1481,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1547,33 +1504,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select Conversion System
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
             Pages.Nutrition
-                .SelectMetric(conversionsBtn);
+                .SelectMetric();
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectNoOfAdditionalOptions(additionalOption);
+                .SelectNoOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1600,16 +1554,16 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                  .ClickNextBtn();
 
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1629,7 +1583,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1643,8 +1597,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1665,25 +1619,21 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .SelectActivityLevel(0);
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             Pages.Nutrition
-                .SelectFemale(genderBtns);
+                .SelectFemale();
 
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
+            var selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             Pages.Nutrition
-                .SelectImperial(conversionsBtn);
+                .SelectImperial();
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectNoOfAdditionalOptions(additionalOption);
+                .SelectNoOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1713,16 +1663,16 @@ namespace MCMAutomation.WebTests
 
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1742,7 +1692,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1756,8 +1706,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1775,16 +1725,14 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .EnterAge("37");
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
+            var selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectNoOfAdditionalOptions(additionalOption);
+                .SelectNoOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1814,16 +1762,16 @@ namespace MCMAutomation.WebTests
 
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1843,7 +1791,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("BBB1");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("BBB1");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1857,8 +1805,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -1876,15 +1824,13 @@ namespace MCMAutomation.WebTests
             Pages.Nutrition
                 .EnterAge("37");
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
+            var selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+            var selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectNoOfAdditionalOptions(additionalOption);
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+                .SelectNoOfAdditionalOptions(selectedAdditionalOption);
+            var textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
@@ -1908,16 +1854,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1937,7 +1883,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -1951,8 +1897,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership)
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name)
                 .EnterEstimatedBodyFat("26");
             Pages.Common
                 .ClickSaveBtn();
@@ -1980,34 +1926,29 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
             Pages.Nutrition
-                .SelectMale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectMale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(AdditionalOptions.additionalCommonOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(AdditionalOptions.additionalCommonOption);
 
             #endregion
 
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
-
+            
             Pages.Nutrition
-                .SelectMetric(conversionsBtn)
+                .SelectMetric()
                 .EnterAge(RandomNumber.Next(18, 65).ToString())
                 .SelectHeight()
                 .EnterWeight(RandomNumber.Next(50, 250).ToString());
@@ -2020,7 +1961,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, AdditionalOptions.additionalCommonOption)
                 .ClickNextBtn()
                 .Step02SelectCut();
             string goal = Pages.Nutrition.textActiveGoal.Text;
@@ -2038,16 +1979,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2067,7 +2008,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -2081,8 +2022,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership)
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name)
                 .EnterEstimatedBodyFat("25");
             Pages.Common
                 .ClickSaveBtn();
@@ -2108,34 +2049,29 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectMale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectMale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(AdditionalOptions.additionalCommonOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(AdditionalOptions.additionalCommonOption);
 
             #endregion
 
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
-
             Pages.Nutrition
-                .SelectMetric(conversionsBtn)
+                .SelectMetric()
                 .EnterAge(RandomNumber.Next(18, 65).ToString())
                 .SelectHeight()
                 .EnterWeight(RandomNumber.Next(50, 250).ToString());
@@ -2146,7 +2082,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, AdditionalOptions.additionalCommonOption)
                 .ClickNextBtn()
                 .Step02SelectCut();
             string goal = Pages.Nutrition.textActiveGoal.Text;
@@ -2164,16 +2100,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2193,7 +2129,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -2207,8 +2143,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership)
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name)
                 .EnterEstimatedBodyFat("24");
             Pages.Common
                 .ClickSaveBtn();
@@ -2234,34 +2170,29 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectMale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectMale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(AdditionalOptions.additionalCommonOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(AdditionalOptions.additionalCommonOption);
 
             #endregion
 
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
-
             Pages.Nutrition
-                .SelectMetric(conversionsBtn)
+                .SelectMetric()
                 .EnterAge(RandomNumber.Next(18, 65).ToString())
                 .SelectHeight()
                 .EnterWeight(RandomNumber.Next(50, 250).ToString());
@@ -2272,7 +2203,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, AdditionalOptions.additionalCommonOption)
                 .ClickNextBtn()
                 .Step02SelectCut();
             string goal = Pages.Nutrition.textActiveGoal.Text;
@@ -2290,16 +2221,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2318,29 +2249,13 @@ namespace MCMAutomation.WebTests
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership)
-                .EnterEstimatedBodyFat("36");
-            Pages.Common
-                .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
-            Pages.Login
-                .GetAdminLogout();
+            EditUserRequest.EditUser(responseLogin, 36);
+            var user = AppDbContext.User.GetUserData(email);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, user.Id);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, user.Id);
 
             #endregion
 
@@ -2349,8 +2264,8 @@ namespace MCMAutomation.WebTests
             Pages.Sidebar
                 .OpenNutritionPage();
 
-            string textOfMoreThan2KgSelected = null;
-            double previousCalories = 0.0;
+            string textOfMoreThan2KgSelected = string.Empty;
+            double previousCalories = 0;
 
             #region Select Activity lvl
             Pages.Nutrition
@@ -2360,34 +2275,30 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+            
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
             Pages.Nutrition
-                .SelectNoOfAdditionalOptions(additionalOption);
+                .SelectNoOfAdditionalOptions(AdditionalOptions.additionalCommonOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            string textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(AdditionalOptions.additionalCommonOption);
 
             #endregion
 
-            IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
-
             Pages.Nutrition
-                .SelectMetric(conversionsBtn)
+                .SelectMetric()
                 .EnterAge(RandomNumber.Next(18, 65).ToString())
                 .SelectHeight()
                 .EnterWeight(RandomNumber.Next(50, 250).ToString())
@@ -2399,7 +2310,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
             Pages.Nutrition
-                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
+                .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, AdditionalOptions.additionalCommonOption)
                 .ClickNextBtn()
                 .Step02SelectCut();
             string goal = Pages.Nutrition.textActiveGoal.Text;
@@ -2417,16 +2328,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2446,7 +2357,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -2460,8 +2371,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership)
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name)
                 .EnterEstimatedBodyFat("35");
             Pages.Common
                 .ClickSaveBtn();
@@ -2487,34 +2398,32 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            var textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
             IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
 
             Pages.Nutrition
-                .SelectMetric(conversionsBtn)
+                .SelectMetric()
                 .EnterAge(RandomNumber.Next(18, 65).ToString())
                 .SelectHeight()
                 .EnterWeight(RandomNumber.Next(50, 250).ToString());
@@ -2543,16 +2452,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2572,7 +2481,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
             Pages.Login
                 .CopyUserEmail(email)
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -2586,8 +2495,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .VerifyDisplayingOfUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership)
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name)
                 .EnterEstimatedBodyFat("34");
             Pages.Common
                 .ClickSaveBtn();
@@ -2613,34 +2522,32 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Select User data
-            List<string> userData = AppDbContext.GetUserData(email);
-            List<string> membershipData = AppDbContext.GetActiveMembershipsByEmail(userData[4]);
+            var userData = AppDbContext.User.GetUserData(email);
+            var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
 
             #endregion
 
             #region Select gender
-            IList<IWebElement> genderBtns = SwitcherHelper.NutritionSelector("Gender");
+
             Pages.Nutrition
-                .SelectFemale(genderBtns);
-            List<string> selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+                .SelectFemale();
+            string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
             #region Select additional options
 
-            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption[0];
-
-            IList<IWebElement> additionalOption = SwitcherHelper.NutritionSelector(selectedAdditionalOption);
+            string selectedAdditionalOption = AdditionalOptions.additionalCommonOption;
             Pages.Nutrition
-                .SelectYesOfAdditionalOptions(additionalOption);
+                .SelectYesOfAdditionalOptions(selectedAdditionalOption);
 
-            List<string> textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
+            var textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
 
             #endregion
 
             IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
 
             Pages.Nutrition
-                .SelectMetric(conversionsBtn)
+                .SelectMetric()
                 .EnterAge(RandomNumber.Next(18, 65).ToString())
                 .SelectHeight()
                 .EnterWeight(RandomNumber.Next(50, 250).ToString());
@@ -2669,16 +2576,16 @@ namespace MCMAutomation.WebTests
             string diet = Pages.Nutrition.textActiveDiet.Text;
             Pages.Nutrition
                 .ClickNextBtn();
-            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData[1], textOfMoreThan2KgSelected, previousCalories);
+            double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData[1], selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
 
             Pages.Login
                 .GetUserLogout();
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2705,34 +2612,21 @@ namespace MCMAutomation.WebTests
 
         public void CompleteMembershipWithData()
         {
-
+            #region Preconditions
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
 
-            #region AdminActions
-
-            Pages.Login
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-
-            string membership = AppDbContext.GetActiveMembershipsBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
-
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .ClickEditUser(email)
-                .RemoveAddedMembership()
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
-            Pages.Login
-                .GetAdminLogout();
-
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            //var memberships = MembershipRequest.GetMembershipsSummary(responseLoginAdmin);
+            var memberships = MembershipRequest.GetMembershipsSummary(responseLoginAdmin)[RandomHelper.RandomNumFromOne(15)];
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, memberships.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
             #endregion
 
             Pages.Login
@@ -2743,10 +2637,7 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.MembershipUser
                 .OpenMembership();
-
-
-            int countPhases = Pages.MembershipUser.GetPhasesCount();
-
+            var countPhases = memberships.Programs.Count;
             Pages.Sidebar
                     .OpenMemberShipPageUser();
 
@@ -2801,7 +2692,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            string membership = AppDbContext.GetActiveMembershipsBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
 
             #region AdminActions
 
@@ -2817,8 +2708,8 @@ namespace MCMAutomation.WebTests
                 .SearchUser(email)
                 .ClickEditUser(email)
                 .RemoveAddedMembership()
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Common
                 .ClickSaveBtn();
             WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
@@ -2876,7 +2767,7 @@ namespace MCMAutomation.WebTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            List<string> memberships = AppDbContext.GetSubProdAndCustomMemberships();
+            var memberships = AppDbContext.Memberships.GetSubProdAndCustomMemberships();
 
             #region AdminActions
 
@@ -2955,7 +2846,7 @@ namespace MCMAutomation.WebTests
         //    Pages.Sidebar
         //        .VerifyIsLogoDisplayed();
 
-        //    string membership = AppDbContext.GetActiveMembershipsBySKU("CP_TEST_SUB");
+        //    var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
 
         //    Pages.PopUp
         //        .ClosePopUp();
@@ -2965,8 +2856,8 @@ namespace MCMAutomation.WebTests
         //        .SearchUser(email)
         //        .VerifyDisplayingOfUser(email)
         //        .ClickEditUser(email)
-        //        .AddMembershipToUser(membership)
-        //        .SelectActiveMembership(membership);
+        //        .AddMembershipToUser(membership.Name)
+        //        .SelectActiveMembership(membership.Name);
         //    Pages.Login
         //        .GetAdminLogout();
 
@@ -3101,7 +2992,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -3137,11 +3028,11 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Add and Activate membership to User
-            string userId = AppDbContext.GetUserId(email);
-            List<DB.Memberships> membershipId = AppDbContext.GetLastMembership();
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.FirstOrDefault().Id, userId);
-            int userMembershipId = AppDbContext.GetLastUsermembershipId(email);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
             #endregion
 
@@ -3149,7 +3040,7 @@ namespace MCMAutomation.WebTests
             for (int i = 0; i < 60; i++)
             {
                 ProgressRequest.AddProgress(responseLoginUser);
-                AppDbContext.UpdateUserProgressDate(userId);
+                AppDbContext.Progress.UpdateUserProgressDate(userId);
             }
             #endregion
 
@@ -3177,7 +3068,7 @@ namespace MCMAutomation.WebTests
                     .ClickSubmitBtn()
                     .VerifyAddedProgress(progressBeforeSaving);
 
-                AppDbContext.UpdateUserProgressDate(userId);
+                AppDbContext.Progress.UpdateUserProgressDate(userId);
 
                 Browser._Driver.Navigate().Refresh();
                 Pages.PopUp
@@ -3188,7 +3079,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -3214,12 +3105,12 @@ namespace MCMAutomation.WebTests
             #endregion
 
             #region Add and Activate membership to User
-            string userId = AppDbContext.GetUserId(email);
-            List<DB.Memberships> membershipId = AppDbContext.GetLastMembership();
+            var userId = AppDbContext.User.GetUserData(email);
+            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.FirstOrDefault().Id, userId);
-            int userMembershipId = AppDbContext.GetLastUsermembershipId(email);
-            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.Id, userId.Id);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId.Id);
             #endregion
 
             #endregion
@@ -3247,7 +3138,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -3274,7 +3165,7 @@ namespace MCMAutomation.WebTests
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-            string membership = AppDbContext.GetActiveMembershipsBySKU("MCM_BIKINI_SUB");
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("MCM_BIKINI_SUB");
             Pages.PopUp
                 .ClosePopUp();
             Pages.Sidebar
@@ -3282,8 +3173,8 @@ namespace MCMAutomation.WebTests
             Pages.UsersAdmin
                 .SearchUser(email)
                 .ClickEditUser(email)
-                .AddMembershipToUser(membership)
-                .SelectActiveMembership(membership);
+                .AddMembershipToUser(membership.Name)
+                .SelectActiveMembership(membership.Name);
             Pages.Login
                 .GetAdminLogout();
 
@@ -3327,7 +3218,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.DeleteUser(email);
+            AppDbContext.User.DeleteUser(email);
 
             #endregion
 

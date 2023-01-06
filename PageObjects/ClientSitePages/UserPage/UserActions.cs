@@ -98,9 +98,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             Button.Click(inputHeight);
 
-
-            List<string> selectedConversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
-            if (selectedConversionSystem[0] == "Imperial")
+            if (SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System") == "Imperial")
             {
                 string activeElem = itemHeightActive.Text;
                 IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));
@@ -132,7 +130,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 }
 
             }
-            else if (selectedConversionSystem[0] == "Metric")
+            else if (SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System") == "Metric")
             {
                 string activeElem = itemHeightActive.Text;
                 IWebElement heightSlider = Browser._Driver.FindElement(By.XPath("//div[@class='swiper-wrapper']"));

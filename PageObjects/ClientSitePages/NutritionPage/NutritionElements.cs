@@ -65,6 +65,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [FindsBy(How = How.XPath, Using = "//span[@class='ant-select-selection-item']/parent::div")]
         public IWebElement cbbxActivitylevel;
 
+        [FindsBy(How = How.XPath, Using = "//div[@class='ant-select-item ant-select-item-option']")]
+        public IList<IWebElement> listActivityLevel;
+
         [FindsBy(How = How.XPath, Using = "//span[@class='ant-radio ant-radio-checked']/parent::label/span[text()]")]
         public IWebElement selectedgender;
 

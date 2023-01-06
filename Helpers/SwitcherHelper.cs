@@ -17,40 +17,25 @@ namespace MCMAutomation.Helpers
         private static IWebElement _element;
         public static IList<IWebElement> NutritionSelector(string title)
         {
-
             WaitUntil.WaitSomeInterval(1500);
-            _element = Browser._Driver.FindElement(By.XPath($".//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']"));
-           
-
-            return _element.FindElements(By.XPath(".//input[@type='radio']/ancestor::label")); 
+            return Element.FindElementsByXpath($"//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label"); 
         }
 
-        public static List<string> GetTexOfSelectedtNutritionSelector(string title)
+        public static string GetTexOfSelectedtNutritionSelector(string title)
         {
-            var list = new List<string>();
             WaitUntil.WaitSomeInterval(1500);
-            var str = $".//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']";
-            _element = Browser._Driver.FindElement(By.XPath(str));
-            IWebElement element = _element.FindElement(By.XPath(".//input[@type='radio']/ancestor::label[contains(@class,'checked')]/span[2]"));
-
-            list.Add(element.Text);
-
-            return list;
+            return Element.FindElementByXpath($"//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label[contains(@class,'checked')]").Text;
         }
 
         public static void SelectNumberOfWeekForARD(string week)
         {
             WaitUntil.WaitSomeInterval(1500);
-            IList<IWebElement> btnNumberOfWeek = Browser._Driver.FindElements(By.XPath($"//p[contains(text(), '{week}')]/ancestor::div[contains(@class,'week  ')]"));
-            btnNumberOfWeek[0].Click();
+            Element.FindElementByXpath($"//p[contains(text(), '{week}')]/ancestor::div[contains(@class,'week  ')]").Click();
         }
 
         public static string GetTextOfSelectNumberOfWeekForARD()
         {
-
-            string str = Browser._Driver.FindElement(By.XPath("//div[contains(@class,'week  active')]//p[2]")).Text.ToString();
-
-            return str;
+            return Element.FindElementByXpath("//div[contains(@class,'week  active')]//p[2]").Text;
         }
 
         #endregion
@@ -175,49 +160,43 @@ namespace MCMAutomation.Helpers
         public static void ClickDeleteProgramBtn(string programName)
         {
             WaitUntil.WaitSomeInterval(300);
-
-            IWebElement btnDeleteProgram = Browser._Driver.FindElement(By.XPath($"//div[text()='{programName}']/parent::div/child::div/div[@class='delete']"));
+            IWebElement btnDeleteProgram = Element.FindElementByXpath($"//div[text()='{programName}']/parent::div/child::div/div[@class='delete']");
             WaitUntil.CustomElevemtIsVisible(btnDeleteProgram, 60);
-            btnDeleteProgram.Click();
+            Button.Click(btnDeleteProgram);
             Button.Click(Pages.Common.btnConfirmationYes);
-            WaitUntil.CustomElevemtIsInvisible(Element.webElem($"//div[text()='{programName}']"), 30);
-
-            
+            WaitUntil.CustomElevemtIsInvisible(Element.FindElementByXpath($"//div[text()='{programName}']"), 30);
         }
 
-        public static void SelectCopyMembership(List<string> membershipData, string currentMembership)
+        public static void SelectCopyMembership(string membershipName, string currentMembership)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
-            _element = Element.webElem("//div[@class='copy-form']");
-            var membership = _element.FindElement(By.XPath(".//h3[text()='Membership']/parent::div//input"));
-            membership.SendKeys(membershipData[0] + Keys.Enter);
+            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
+            var membership = Element.FindElementByXpath("//h4[text()='Copy exercises from']/parent::div//h3[text()='Membership']/parent::div//input");
+            membership.SendKeys(membershipName + Keys.Enter);
             WaitUntil.WaitSomeInterval(500);
             membership.SendKeys(currentMembership + Keys.Enter);
             WaitUntil.WaitSomeInterval(500);
-            membership.SendKeys(membershipData[0] + Keys.Enter);
-            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Membership']/parent::div//span[@title='{membershipData[0]}']")));
+            membership.SendKeys(membershipName + Keys.Enter);
+            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Membership']/parent::div//span[@title='{membershipName}']")));
         }
 
-        public static void SelectCopyProgram(List<string> membershipData)
+        public static void SelectCopyProgram(string programName)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
-            _element = Element.webElem("//div[@class='copy-form']");
-            var membership = _element.FindElement(By.XPath(".//h3[text()='Program']/parent::div//input"));
-            membership.SendKeys(membershipData[1] + Keys.Enter);
-            WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Program']/parent::div//span[@title='{membershipData[1]}']")));
+            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
+            var program = Element.FindElementByXpath("//h4[text()='Copy exercises from']/parent::div//h3[text()='Program']/parent::div//input");
+            program.SendKeys(programName + Keys.Enter);
+            WaitUntil.WaitSomeInterval(450);
+            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath($"//h3[text()='Program']/parent::div//span[@title='{programName}']"));
         }
 
-        public static void SelectCopyWorkout(List<string> membershipData)
+        public static void SelectCopyWorkout(string workoutName)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(Element.webElem("//h4[text()='Copy exercises from']"), 30);
-            _element = Element.webElem("//div[@class='copy-form']");
-            var membership = _element.FindElement(By.XPath(".//h3[text()='Workout']/parent::div//input"));
-            membership.SendKeys(membershipData[2] + Keys.Enter);
-            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Workout']/parent::div//span[@title='{membershipData[2]}']")));
+            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
+            var membership = Element.FindElementByXpath("//h4[text()='Copy exercises from']/parent::div//h3[text()='Workout']/parent::div//input");
+            membership.SendKeys(workoutName + Keys.Enter);
+            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath($"//h3[text()='Workout']/parent::div//span[@title='{workoutName}']"));
         }
 
 

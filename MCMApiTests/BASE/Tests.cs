@@ -35,7 +35,7 @@ namespace MCMApiTests
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser);
-            string userId = AppDbContext.GetUserId(email);
+            string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
             #region Add and Activate membership to User
@@ -43,25 +43,25 @@ namespace MCMApiTests
 
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
-            List<DB.Memberships> membershipId = AppDbContext.GetLastMembership();
-            var exercises = AppDbContext.GetExercisesData();
+            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
             for (int i = 0; i < 5; i++)
             {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.FirstOrDefault().Id);
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
             }
-            List<DB.Programs> programs = AppDbContext.GetLastPrograms();
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms();
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.GetLastWorkoutsData();
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
                 }
 
             }
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.FirstOrDefault().Id, userId);
-            int userMembershipId = AppDbContext.GetLastUsermembershipId(email);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
             #endregion
         }
@@ -75,20 +75,14 @@ namespace MCMApiTests
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser);
-            string userId = AppDbContext.GetUserId(email);
+            var userId = AppDbContext.User.GetUserData(email);
             #endregion
 
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var memberships = MembershipRequest.GetMembershipsSummary(responseLoginAdmin);
-            for(int i =0; i < 4; i++)
-            {
-                MembershipRequest.AddUsersToMembership(responseLoginAdmin, memberships[RandomHelper.RandomNumFromOne(memberships.Count)].Id, userId);
-            }
-            int userMembershipId = AppDbContext.GetLastUsermembershipId(email);
-            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
-            List<int> usermemberships = AppDbContext.GetTop2UsermembershipId(email);
-            AppDbContext.UpdateTop2UsermembershipToComingSoon(usermemberships.FirstOrDefault());
-            AppDbContext.UpdateTop2UsermembershipToExpire(usermemberships.LastOrDefault());
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, memberships[RandomHelper.RandomNumFromOne(memberships.Count)].Id, userId.Id);
+            var userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId.Id);
 
         }
     }

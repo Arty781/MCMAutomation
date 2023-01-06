@@ -449,7 +449,7 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Copy exercises")]
-        public MembershipAdmin CopyExercises(List<string> programNames, List<string> membershipData, string curentmMembership)
+        public MembershipAdmin CopyExercises(List<string> programNames, List<DB.CopyMembershipPrograms> membershipData, string curentmMembership)
         {
             foreach (string programName in programNames)
             {
@@ -464,15 +464,16 @@ namespace MCMAutomation.PageObjects
                 WaitUntil.CustomElevemtIsVisible(addExerciseBtn);
                 foreach (string workoutName in workoutNames)
                 {
+                    int rand = RandomHelper.RandomNumFromOne(membershipData.Count);
                     InputBox.CbbxElement(cbbxWorkoutsTitle, 20, workoutName + Keys.Enter);
-                    SwitcherHelper.SelectCopyMembership(membershipData, curentmMembership);
-                    SwitcherHelper.SelectCopyProgram(membershipData);
-                    SwitcherHelper.SelectCopyWorkout(membershipData);
+                    SwitcherHelper.SelectCopyMembership(membershipData[rand].MembershipName, curentmMembership);
+                    SwitcherHelper.SelectCopyProgram(membershipData[rand].ProgramName);
+                    SwitcherHelper.SelectCopyWorkout(membershipData[rand].WorkoutName);
                     Button.Click(btnCopy);
                     WaitUntil.CustomElevemtIsVisible(exerciseTitleRow);
                 }
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i <= workoutNames.Count; i++)
                 {
                     Button.Click(backBtn);
                 }
@@ -483,16 +484,14 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Add exercises")]
-        public MembershipAdmin AddExercises(List<string> programNames, List<DB.Exercises> exercises)
+        public MembershipAdmin AddWorkoutExercises(List<string> programNames, List<DB.Exercises> exercises)
         {
             foreach (string programName in programNames)
             {
                 InputBox.CbbxElement(cbbxPhaseName, 10, programName);
                 WaitUntil.WaitSomeInterval(5000);
                 var listWorkouts = btnAddExercises.Where(x => x.Displayed).ToList();
-
                 List<string> workoutNames = GetWorkoutNames();
-
                 Button.Click(btnAddExercisesElement);
                 WaitUntil.CustomElevemtIsVisible(addExerciseBtn);
                 Button.Click(addExerciseBtn);
@@ -515,7 +514,7 @@ namespace MCMAutomation.PageObjects
 
                             Pages.Common.ClickSaveBtn();
                         }
-                        if (i == 2)
+                        else if (i == 2)
                         {
                             
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "B");
@@ -524,40 +523,42 @@ namespace MCMAutomation.PageObjects
                             {
                                 Button.Click(addExerciseRowBtn);
                             }
-                            for (int q=0; q<1; q++)
+                            for (int q=0; q<4; q++)
                             {
-                                InputBox.ElementCtrlA(setsExerciseInput[q], 10, "4");
-                                InputBox.ElementCtrlA(repsExerciseInput[q], 10, "10-12");
-                                InputBox.ElementCtrlA(restExerciseInput[q], 10, "30");
-                                InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2X10");
-                            }
-                            for (int q = 1; q < 2; q++)
-                            {
-                                InputBox.ElementCtrlA(setsExerciseInput[q], 10, "3");
-                                InputBox.ElementCtrlA(repsExerciseInput[q], 10, "7-9");
-                                InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
-                                InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
-                            }
-                            for (int q = 2; q < 3; q++)
-                            {
-                                InputBox.ElementCtrlA(setsExerciseInput[q], 10, "5");
-                                InputBox.ElementCtrlA(repsExerciseInput[q], 10, "12-16");
-                                InputBox.ElementCtrlA(restExerciseInput[q], 10, "10");
-                                InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
-                            }
-                            for (int q = 3; q < 4; q++)
-                            {
-                                InputBox.ElementCtrlA(setsExerciseInput[q], 10, "7");
-                                InputBox.ElementCtrlA(repsExerciseInput[q], 10, "10-12");
-                                InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
-                                InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
-                            }
+                                if (q == 0)
+                                {
+                                    InputBox.ElementCtrlA(setsExerciseInput[q], 10, "4");
+                                    InputBox.ElementCtrlA(repsExerciseInput[q], 10, "10-12");
+                                    InputBox.ElementCtrlA(restExerciseInput[q], 10, "30");
+                                    InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2X10");
+                                }
+                                else if (q == 1)
+                                {
+                                    InputBox.ElementCtrlA(setsExerciseInput[q], 10, "3");
+                                    InputBox.ElementCtrlA(repsExerciseInput[q], 10, "7-9");
+                                    InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
+                                    InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
+                                }
+                                else if (q == 2)
+                                {
+                                    InputBox.ElementCtrlA(setsExerciseInput[q], 10, "5");
+                                    InputBox.ElementCtrlA(repsExerciseInput[q], 10, "12-16");
+                                    InputBox.ElementCtrlA(restExerciseInput[q], 10, "10");
+                                    InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
+                                }
+                                else if (q == 3)
+                                {
+                                    InputBox.ElementCtrlA(setsExerciseInput[q], 10, "7");
+                                    InputBox.ElementCtrlA(repsExerciseInput[q], 10, "10-12");
+                                    InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
+                                    InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
+                                }
 
+                            }
                             InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
-
                             Pages.Common.ClickSaveBtn();
                         }
-                        if (i == 3)
+                        else if (i == 3)
                         {
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "C1");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
@@ -569,7 +570,7 @@ namespace MCMAutomation.PageObjects
 
                             Pages.Common.ClickSaveBtn();
                         }
-                        if (i == 4)
+                        else if (i == 4)
                         {
 
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "C2");
@@ -578,39 +579,43 @@ namespace MCMAutomation.PageObjects
                             {
                                 Button.Click(addExerciseRowBtn);
                             }
-                            for (int q = 0; q < 1; q++)
+                            for (int q = 0; q < 4; q++)
                             {
-                                InputBox.ElementCtrlA(setsExerciseInput[q], 10, "4");
-                                InputBox.ElementCtrlA(repsExerciseInput[q], 10, "3,4,5,6");
-                                InputBox.ElementCtrlA(restExerciseInput[q], 10, "30");
-                                InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
-                            }
-                            for (int q = 1; q < 2; q++)
-                            {
-                                InputBox.ElementCtrlA(setsExerciseInput[q], 10, "3");
-                                InputBox.ElementCtrlA(repsExerciseInput[q], 10, "5,5,5");
-                                InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
-                                InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
-                            }
-                            for (int q = 2; q < 3; q++)
-                            {
-                                InputBox.ElementCtrlA(setsExerciseInput[q], 10, "5");
-                                InputBox.ElementCtrlA(repsExerciseInput[q], 10, "6,8,9,7,3");
-                                InputBox.ElementCtrlA(restExerciseInput[q], 10, "10");
-                                InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
-                            }
-                            for (int q = 3; q < 4; q++)
-                            {
-                                InputBox.ElementCtrlA(setsExerciseInput[q], 10, "7");
-                                InputBox.ElementCtrlA(repsExerciseInput[q], 10, "4,4,4,5,7,8");
-                                InputBox.ElementCtrlA(restExerciseInput[q], 10, "5");
-                                InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                if (q == 0)
+                                {
+                                    InputBox.ElementCtrlA(setsExerciseInput[q], 10, "4");
+                                    InputBox.ElementCtrlA(repsExerciseInput[q], 10, "3,4,5,6");
+                                    InputBox.ElementCtrlA(restExerciseInput[q], 10, "30");
+                                    InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                }
+                                else if (q == 1)
+                                {
+                                    InputBox.ElementCtrlA(setsExerciseInput[q], 10, "3");
+                                    InputBox.ElementCtrlA(repsExerciseInput[q], 10, "5,5,5");
+                                    InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
+                                    InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                }
+                                else if (q == 2)
+                                {
+                                    InputBox.ElementCtrlA(setsExerciseInput[q], 10, "5");
+                                    InputBox.ElementCtrlA(repsExerciseInput[q], 10, "6,8,9,7,3");
+                                    InputBox.ElementCtrlA(restExerciseInput[q], 10, "10");
+                                    InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                }
+                                else if (q == 3)
+                                {
+                                    InputBox.ElementCtrlA(setsExerciseInput[q], 10, "7");
+                                    InputBox.ElementCtrlA(repsExerciseInput[q], 10, "4,4,4,5,7,8");
+                                    InputBox.ElementCtrlA(restExerciseInput[q], 10, "5");
+                                    InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                }
+
                             }
                             InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.Common.ClickSaveBtn();
                         }
-                        if (i == 5)
+                        else if (i == 5)
                         {
 
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "D");
@@ -623,7 +628,7 @@ namespace MCMAutomation.PageObjects
 
                             Pages.Common.ClickSaveBtn();
                         }
-                        if (i == 6)
+                        else if (i == 6)
                         {
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "E");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
