@@ -221,7 +221,7 @@ namespace MCMAutomation.Helpers
                                 IsDeleted = reader.GetBoolean(9),
                                 IsCustom = reader.GetBoolean(10),
                                 ForPurchase = reader.GetBoolean(11),
-                                AccessWeekLength = reader.GetInt32(12),
+                                AccessWeekLength = null,
                                 RelatedMembershipGroupId = null,
                                 Gender = reader.GetInt32(14),
                                 PromotionalPopupId = null,
@@ -307,12 +307,12 @@ namespace MCMAutomation.Helpers
 
                 return membership;
             }
-            public static List<DB.Memberships> GetSubProdAndCustomMemberships()
+            public static List<DB.Memberships> GetLastMembershipByType(string type)
             {
                 var list = new List<DB.Memberships>();
-
-                using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
+                if(type == MembershipType.PRODUCT)
                 {
+                    using SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
                                                             "where Type = 0 And Isdeleted = 0 " +
                                                             "order by creationDate desc"), db);
@@ -323,33 +323,31 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-                            var row = new DB.Memberships()
-                            {
-                                Id = reader.GetInt32(0),
-                                SKU = reader.GetString(1),
-                                Name = reader.GetString(2),
-                                Description = reader.GetString(3),
-                                StartDate = null,
-                                EndDate = null,
-                                URL = reader.GetString(6),
-                                Price = reader.GetDecimal(7),
-                                CreationDate = reader.GetDateTime(8),
-                                IsDeleted = reader.GetBoolean(9),
-                                IsCustom = reader.GetBoolean(10),
-                                ForPurchase = reader.GetBoolean(11),
-                                AccessWeekLength = reader.GetInt32(12),
-                                RelatedMembershipGroupId = null,
-                                Gender = reader.GetInt32(14),
-                                PromotionalPopupId = null,
-                                Type = reader.GetInt32(16)
-                            };
+                            var row = new DB.Memberships();
+                            row.Id = reader.GetInt32(0);
+                            row.SKU = reader.GetString(1);
+                            row.Name = reader.GetString(2);
+                            row.Description = reader.GetString(3);
+                            row.StartDate = null;
+                            row.EndDate = null;
+                            row.URL = reader.GetString(6);
+                            row.Price = reader.GetDecimal(7);
+                            row.CreationDate = reader.GetDateTime(8);
+                            row.IsDeleted = reader.GetBoolean(9);
+                            row.IsCustom = reader.GetBoolean(10);
+                            row.ForPurchase = reader.GetBoolean(11);
+                            row.AccessWeekLength = reader.GetInt32(12);
+                            row.RelatedMembershipGroupId = null;
+                            row.Gender = reader.GetInt32(14);
+                            row.PromotionalPopupId = null;
+                            row.Type = reader.GetInt32(16);
                             list.Add(row);
                         }
                     }
-
                 }
-                using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
+                else if (type == MembershipType.SUBSCRIPTION)
                 {
+                    using SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
                                                             "where Type = 1 And Isdeleted = 0 " +
                                                             "order by creationDate desc"), db);
@@ -373,7 +371,7 @@ namespace MCMAutomation.Helpers
                             row.IsDeleted = reader.GetBoolean(9);
                             row.IsCustom = reader.GetBoolean(10);
                             row.ForPurchase = reader.GetBoolean(11);
-                            row.AccessWeekLength = reader.GetInt32(12);
+                            row.AccessWeekLength = null;
                             row.RelatedMembershipGroupId = null;
                             row.Gender = reader.GetInt32(14);
                             row.PromotionalPopupId = null;
@@ -381,11 +379,10 @@ namespace MCMAutomation.Helpers
                             list.Add(row);
                         }
                     }
-
                 }
-
-                using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
+                else if (type == MembershipType.CUSTOM)
                 {
+                    using SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
                                                            "where Type = 0 and SKU is null And Isdeleted = 0 " +
                                                            "order by creationDate desc"), db);
@@ -417,10 +414,119 @@ namespace MCMAutomation.Helpers
                             list.Add(row);
                         }
                     }
+                }
+                else if (type == MembershipType.ALL)
+                {
+                    using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
+                    {
+                        SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
+                                                            "where Type = 0 and SKU is not null And Isdeleted = 0 " +
+                                                            "order by creationDate desc"), db);
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new DB.Memberships();
+                                row.Id = reader.GetInt32(0);
+                                row.SKU = reader.GetString(1);
+                                row.Name = reader.GetString(2);
+                                row.Description = reader.GetString(3);
+                                row.StartDate = null;
+                                row.EndDate = null;
+                                row.URL = reader.GetString(6);
+                                row.Price = reader.GetDecimal(7);
+                                row.CreationDate = reader.GetDateTime(8);
+                                row.IsDeleted = reader.GetBoolean(9);
+                                row.IsCustom = reader.GetBoolean(10);
+                                row.ForPurchase = reader.GetBoolean(11);
+                                row.AccessWeekLength = reader.GetInt32(12);
+                                row.RelatedMembershipGroupId = null;
+                                row.Gender = reader.GetInt32(14);
+                                row.PromotionalPopupId = null;
+                                row.Type = reader.GetInt32(16);
+                                list.Add(row);
+                            }
+                        }
+                    };
+
+                    using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
+                    {
+                        SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
+                                                            "where Type = 1 And Isdeleted = 0 " +
+                                                            "order by creationDate desc"), db);
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new DB.Memberships();
+                                row.Id = reader.GetInt32(0);
+                                row.SKU = reader.GetString(1);
+                                row.Name = reader.GetString(2);
+                                row.Description = null;
+                                row.StartDate = null;
+                                row.EndDate = null;
+                                row.URL = reader.GetString(6);
+                                row.Price = reader.GetDecimal(7);
+                                row.CreationDate = reader.GetDateTime(8);
+                                row.IsDeleted = reader.GetBoolean(9);
+                                row.IsCustom = reader.GetBoolean(10);
+                                row.ForPurchase = reader.GetBoolean(11);
+                                row.AccessWeekLength = null;
+                                row.RelatedMembershipGroupId = null;
+                                row.Gender = reader.GetInt32(14);
+                                row.PromotionalPopupId = null;
+                                row.Type = reader.GetInt32(16);
+                                list.Add(row);
+                            }
+                        }
+                    };
+
+                    using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
+                    {
+                        SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
+                                                           "where Type = 0 and SKU is null And Isdeleted = 0 " +
+                                                           "order by creationDate desc"), db);
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new DB.Memberships();
+                                row.Id = reader.GetInt32(0);
+                                row.SKU = null;
+                                row.Name = reader.GetString(2);
+                                row.Description = null;
+                                row.StartDate = null;
+                                row.EndDate = null;
+                                row.URL = null;
+                                row.Price = reader.GetDecimal(7);
+                                row.CreationDate = reader.GetDateTime(8);
+                                row.IsDeleted = reader.GetBoolean(9);
+                                row.IsCustom = reader.GetBoolean(10);
+                                row.ForPurchase = reader.GetBoolean(11);
+                                row.AccessWeekLength = reader.GetInt32(12);
+                                row.RelatedMembershipGroupId = null;
+                                row.Gender = reader.GetInt32(14);
+                                row.PromotionalPopupId = null;
+                                row.Type = reader.GetInt32(16);
+                                list.Add(row);
+                            }
+                        }
+                    };
+                    
 
                 }
 
-                return list;
+
+                    return list;
             }
             public static void DeleteMembership(string membership)
             {

@@ -168,32 +168,26 @@ namespace MCMAutomation.Helpers
     //    };
     //}
 
-    public class ActivityLevel
+    public class TDEE
     {
-        public static string[] level =
-        {
+        public static string[] ActivityLevel =
+            {
             "Sedentary (office job)",
             "Light Exercise (1-2 days/week)",
             "Moderate Exercise (3-5 days/week)",
             "Heavy Exercise (6-7 days/week)",
             "Athlete (2x per day)"
         };
-    }
 
-    public class Goals
-    {
-        public static string[] goal =
-        {
+        public static string[] Goals =
+            {
             "CUT",
             "MAINTAIN",
             "BUILD",
             "REVERSE"
         };
-    }
 
-    public class Tiers
-    {
-        public static string[] tier =
+        public static string[] Tiers =
         {
             "TIER 1",
             "TIER 2",
@@ -201,34 +195,24 @@ namespace MCMAutomation.Helpers
             "CONSERVATIVE",
             "AGGRESSIVE"
         };
-    }
 
-    public class Phases
-    {
-        public static string[] phase =
-        {
+        public static string[] Phases =
+            {
             "Phase 1",
             "Phase 2",
             "Phase 3"
         };
-    }
 
-    public class Diets
-    {
-        public static string[] diet =
-        {
-            "LOW FAT / HIGH CARB",
-            "MODERATE FAT / MODERATE CARB",
-            "HIGH FAT / LOW CARB"
-        };
+        public static string[] Diets = { "LOW FAT / HIGH CARB", "MODERATE FAT / MODERATE CARB", "HIGH FAT / LOW CARB" };
     }
 
     public class MembershipsSKU
     {
-        public static string[] MEMBERSHIP_SKU =
+        public static readonly string[] MEMBERSHIP_SKU =
         {
             "PP-1",
-            "CMC_TEST_SKU"
+            "CMC_TEST_PRODUCT",
+            "CMC_TEST_SUBSCRIPTION"
         };
     }
 
@@ -288,6 +272,8 @@ namespace MCMAutomation.Helpers
         public const string PRODUCT = "Product";
         public const string SUBSCRIPTION = "Subscription";
         public const string MULTILEVEL = "Multilevel";
+        public const string CUSTOM = "Custom";
+        public const string ALL = "All";
     }
 
     public class Keyss

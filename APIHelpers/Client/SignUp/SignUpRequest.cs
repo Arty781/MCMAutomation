@@ -3,6 +3,7 @@ using MCMAutomation.Helpers;
 using Newtonsoft.Json;
 using RimuTec.Faker;
 using System;
+using System.Diagnostics;
 
 namespace MCMAutomation.APIHelpers.Client.SignUp
 {
@@ -28,15 +29,17 @@ namespace MCMAutomation.APIHelpers.Client.SignUp
         public static void RegisterNewUser(string email)
         {
             string url = String.Concat(Endpoints.apiHost + "/Account/SignUp");
-            Http req = new();
-            req.Accept = "application/json";
+            Http req = new()
+            {
+                Accept = "application/json"
+            };
             HttpResponse resp = req.PostJson2(url, "application/json", Json(email));
             if (req.LastMethodSuccess == false)
             {
-                Console.WriteLine(req.LastErrorText);
+                Debug.WriteLine(req.LastErrorText);
             }
-            Console.WriteLine("Response status code = " + Convert.ToString(resp.StatusCode));
-            Console.WriteLine("Response message is " + Convert.ToString(resp.BodyStr));
+            Debug.WriteLine("Response status code = " + Convert.ToString(resp.StatusCode));
+            Debug.WriteLine("Response message is " + Convert.ToString(resp.BodyStr));
         }
     }
 }

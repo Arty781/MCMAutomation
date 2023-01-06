@@ -25,26 +25,26 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var calories = 370 + 21.6 * l;
             var maintainCalories = 0.0;
             
-            if(level == ActivityLevel.level[0])
+            if(level == TDEE.ActivityLevel[0])
             {
                 maintainCalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
 
             }
-            else if (level == ActivityLevel.level[1])
+            else if (level == TDEE.ActivityLevel[1])
             {
                 maintainCalories = Math.Round((calories * 1.375), 0, MidpointRounding.AwayFromZero);
             }
-            else if (level == ActivityLevel.level[2])
+            else if (level == TDEE.ActivityLevel[2])
             {
                 maintainCalories = Math.Round((calories * 1.55), 0, MidpointRounding.AwayFromZero);
 
             }
-            else if (level == ActivityLevel.level[3])
+            else if (level == TDEE.ActivityLevel[3])
             {
                 maintainCalories = Math.Round((calories * 1.725), 0, MidpointRounding.AwayFromZero);
 
             }
-            else if (level == ActivityLevel.level[4])
+            else if (level == TDEE.ActivityLevel[4])
             {
                 maintainCalories = Math.Round((calories * 1.9), 0, MidpointRounding.AwayFromZero);
 
@@ -124,112 +124,112 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //    #region Conditions
         //    var finishcalories = 0.0;
 
-        //    if (goal== Goals.goal[0])
+        //    if (goal== TDEE.Goals[0])
         //    {
         //        if (SKU == MembershipsSKU.membershipSKU[0])
         //        {
         //            finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
         //        }
-        //        else if (tier == Tiers.tier[0])
+        //        else if (tier == TDEE.Tiers[0])
         //        {
                     
-        //            if (phase == Phases.phase[0])
+        //            if (phase == TDEE.Phases[0])
         //            {
         //                finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[1])
+        //            else if (phase == TDEE.Phases[1])
         //            {
         //                finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[2])
+        //            else if (phase == TDEE.Phases[2])
         //            {
         //                finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
         //            }
         //        }
 
-        //        else if (tier == Tiers.tier[1])
+        //        else if (tier == TDEE.Tiers[1])
         //        {
-        //            if (phase == Phases.phase[0])
+        //            if (phase == TDEE.Phases[0])
         //            {
         //                finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[1])
+        //            else if (phase == TDEE.Phases[1])
         //            {
         //                finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[2])
+        //            else if (phase == TDEE.Phases[2])
         //            {
         //                finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
         //            }
         //        }
 
-        //        else if (tier == Tiers.tier[2])
+        //        else if (tier == TDEE.Tiers[2])
         //        {
-        //            if (phase == Phases.phase[0])
+        //            if (phase == TDEE.Phases[0])
         //            {
         //                finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[1])
+        //            else if (phase == TDEE.Phases[1])
         //            {
         //                finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[2])
+        //            else if (phase == TDEE.Phases[2])
         //            {
         //                finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
         //            }
         //        }
         //    }
 
-        //    else if (goal == Goals.goal[1])
+        //    else if (goal == TDEE.Goals[1])
         //    {
         //        finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
                
         //    }
 
-        //    else if (goal == Goals.goal[2])
+        //    else if (goal == TDEE.Goals[2])
         //    {
-        //        if (tier == Tiers.tier[0])
+        //        if (tier == TDEE.Tiers[0])
         //        {
-        //            if (phase == Phases.phase[0])
+        //            if (phase == TDEE.Phases[0])
         //            {
         //                finishcalories = Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero);
         //            }
         //        }
 
-        //        else if (tier == Tiers.tier[1])
+        //        else if (tier == TDEE.Tiers[1])
         //        {
-        //            if (phase == Phases.phase[0])
+        //            if (phase == TDEE.Phases[0])
         //            {
         //                finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[1])
+        //            else if (phase == TDEE.Phases[1])
         //            {
         //                finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[2])
+        //            else if (phase == TDEE.Phases[2])
         //            {
         //                finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
         //            }
         //        }
 
-        //        else if (tier == Tiers.tier[2])
+        //        else if (tier == TDEE.Tiers[2])
         //        {
-        //            if (phase == Phases.phase[0])
+        //            if (phase == TDEE.Phases[0])
         //            {
         //                finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[1])
+        //            else if (phase == TDEE.Phases[1])
         //            {
         //                finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
         //            }
-        //            else if (phase == Phases.phase[2])
+        //            else if (phase == TDEE.Phases[2])
         //            {
         //                finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
         //            }
         //        }
         //    }
 
-        //    else if(goal == Goals.goal[3])
+        //    else if(goal == TDEE.Goals[3])
         //    {
                 
         //            if (phase == ArdPhases.ardPhase[0])
@@ -240,12 +240,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //            {
         //                if (valuMoreThan2Kg == "No")
         //                {
-        //                    if (tier == Tiers.tier[3])
+        //                    if (tier == TDEE.Tiers[3])
         //                    {
         //                    //conservative
         //                    finishcalories = Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero);
         //                    }
-        //                    else if (tier == Tiers.tier[4])
+        //                    else if (tier == TDEE.Tiers[4])
         //                    {
         //                    //aggressive
         //                    finishcalories = Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero);
@@ -274,112 +274,112 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             var finishcalories = 0.0;
 
-            if (goal == Goals.goal[0])
+            if (goal == TDEE.Goals[0])
             {
                 if (SKU == MembershipsSKU.MEMBERSHIP_SKU[0])
                 {
                     finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
                 }
-                else if (tier == Tiers.tier[0])
+                else if (tier == TDEE.Tiers[0])
                 {
 
-                    if (phase == Phases.phase[0])
+                    if (phase == TDEE.Phases[0])
                     {
                         finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[1])
+                    else if (phase == TDEE.Phases[1])
                     {
                         finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[2])
+                    else if (phase == TDEE.Phases[2])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                else if (tier == Tiers.tier[1])
+                else if (tier == TDEE.Tiers[1])
                 {
-                    if (phase == Phases.phase[0])
+                    if (phase == TDEE.Phases[0])
                     {
                         finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[1])
+                    else if (phase == TDEE.Phases[1])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[2])
+                    else if (phase == TDEE.Phases[2])
                     {
                         finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                else if (tier == Tiers.tier[2])
+                else if (tier == TDEE.Tiers[2])
                 {
-                    if (phase == Phases.phase[0])
+                    if (phase == TDEE.Phases[0])
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[1])
+                    else if (phase == TDEE.Phases[1])
                     {
                         finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[2])
+                    else if (phase == TDEE.Phases[2])
                     {
                         finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
                     }
                 }
             }
 
-            else if (goal == Goals.goal[1])
+            else if (goal == TDEE.Goals[1])
             {
                 finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
 
             }
 
-            else if (goal == Goals.goal[2])
+            else if (goal == TDEE.Goals[2])
             {
-                if (tier == Tiers.tier[0])
+                if (tier == TDEE.Tiers[0])
                 {
-                    if (phase == Phases.phase[0])
+                    if (phase == TDEE.Phases[0])
                     {
                         finishcalories = Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                else if (tier == Tiers.tier[1])
+                else if (tier == TDEE.Tiers[1])
                 {
-                    if (phase == Phases.phase[0])
+                    if (phase == TDEE.Phases[0])
                     {
                         finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[1])
+                    else if (phase == TDEE.Phases[1])
                     {
                         finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[2])
+                    else if (phase == TDEE.Phases[2])
                     {
                         finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                else if (tier == Tiers.tier[2])
+                else if (tier == TDEE.Tiers[2])
                 {
-                    if (phase == Phases.phase[0])
+                    if (phase == TDEE.Phases[0])
                     {
                         finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[1])
+                    else if (phase == TDEE.Phases[1])
                     {
                         finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == Phases.phase[2])
+                    else if (phase == TDEE.Phases[2])
                     {
                         finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
                     }
                 }
             }
 
-            else if (goal == Goals.goal[3])
+            else if (goal == TDEE.Goals[3])
             {
 
                 if (phase == ArdPhases.ardPhase[0])
@@ -390,12 +390,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 {
                     if (valuMoreThan2Kg == "No")
                     {
-                        if (tier == Tiers.tier[3])
+                        if (tier == TDEE.Tiers[3])
                         {
                             //conservative
                             finishcalories = Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (tier == Tiers.tier[4])
+                        else if (tier == TDEE.Tiers[4])
                         {
                             //aggressive
                             finishcalories = Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero);
@@ -420,7 +420,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //    var bodyFat = double.Parse(values[3]);
         //    var protein = 0.0;
 
-        //    if (goal == Goals.goal[1] || goal == Goals.goal[2] || goal == Goals.goal[3]) {
+        //    if (goal == TDEE.Goals[1] || goal == TDEE.Goals[2] || goal == TDEE.Goals[3]) {
         //        protein = weight * 2;
         //    } else
         //    {
@@ -435,15 +435,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //        {
         //            protein = weight * 2;
         //        }
-        //        else if (tier == Tiers.tier[0])
+        //        else if (tier == TDEE.Tiers[0])
         //        {
         //            protein = weight * 2;
         //        }
-        //        else if (tier == Tiers.tier[1])
+        //        else if (tier == TDEE.Tiers[1])
         //        {
         //            protein = weight * 2;
         //        }
-        //        else if (tier == Tiers.tier[2])
+        //        else if (tier == TDEE.Tiers[2])
         //        {
         //            protein = weight * 2.2;
         //        }
@@ -466,7 +466,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //    var bodyFat = double.Parse(values[3]);
         //    var protein = 0.0;
 
-        //    if (goal == Goals.goal[1] || goal == Goals.goal[2] || goal == Goals.goal[3])
+        //    if (goal == TDEE.Goals[1] || goal == TDEE.Goals[2] || goal == TDEE.Goals[3])
         //    {
         //        protein = weight * 2;
         //    }
@@ -483,15 +483,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //        {
         //            protein = weight * 2;
         //        }
-        //        else if (tier == Tiers.tier[0])
+        //        else if (tier == TDEE.Tiers[0])
         //        {
         //            protein = weight * 2;
         //        }
-        //        else if (tier == Tiers.tier[1])
+        //        else if (tier == TDEE.Tiers[1])
         //        {
         //            protein = weight * 2;
         //        }
-        //        else if (tier == Tiers.tier[2])
+        //        else if (tier == TDEE.Tiers[2])
         //        {
         //            protein = weight * 2.2;
         //        }
@@ -509,15 +509,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         //    var getFat = valueOfProteinCarbsFat[2].Text.Trim(new char[] { 'g' });
         //    var actualFat = double.Parse(getFat);
 
-        //    if (diet == Diets.diet[0])
+        //    if (diet == TDEE.Diets[0])
         //    {
         //        fat = weight * 0.8;
         //    }
-        //    else if (diet == Diets.diet[1])
+        //    else if (diet == TDEE.Diets[1])
         //    {
         //        fat = weight * 1;
         //    }
-        //    else if (diet == Diets.diet[2])
+        //    else if (diet == TDEE.Diets[2])
         //    {
         //        fat = weight * 1.2;
         //    }
@@ -558,7 +558,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var bodyFat = userData.Bodyfat;
             var protein = 0.0;
 
-            if (goal == Goals.goal[1] || goal == Goals.goal[2] || goal == Goals.goal[3])
+            if (goal == TDEE.Goals[1] || goal == TDEE.Goals[2] || goal == TDEE.Goals[3])
             {
                 protein = weight * 2;
             }
@@ -575,15 +575,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 {
                     protein = weight * 2;
                 }
-                else if (tier == Tiers.tier[0])
+                else if (tier == TDEE.Tiers[0])
                 {
                     protein = weight * 2;
                 }
-                else if (tier == Tiers.tier[1])
+                else if (tier == TDEE.Tiers[1])
                 {
                     protein = weight * 2;
                 }
-                else if (tier == Tiers.tier[2])
+                else if (tier == TDEE.Tiers[2])
                 {
                     protein = weight * 2.2;
                 }
@@ -605,15 +605,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var getFat = valueOfProteinCarbsFat[2].Text.Trim(new char[] { 'g' });
             var actualFat = double.Parse(getFat);
 
-            if (diet == Diets.diet[0])
+            if (diet == TDEE.Diets[0])
             {
                 fat = weight * 0.7;
             }
-            else if (diet == Diets.diet[1])
+            else if (diet == TDEE.Diets[1])
             {
                 fat = weight * 0.8;
             }
-            else if (diet == Diets.diet[2])
+            else if (diet == TDEE.Diets[2])
             {
                 fat = weight * 1;
             }
@@ -646,112 +646,112 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
                 var finishcalories = 0.0;
 
-                if (goal == Goals.goal[0])
+                if (goal == TDEE.Goals[0])
                 {
                     if (SKU == MembershipsSKU.MEMBERSHIP_SKU[0])
                     {
                         finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (tier == Tiers.tier[0])
+                    else if (tier == TDEE.Tiers[0])
                     {
 
-                        if (phase == Phases.phase[0])
+                        if (phase == TDEE.Phases[0])
                         {
                             finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[1])
+                        else if (phase == TDEE.Phases[1])
                         {
                             finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[2])
+                        else if (phase == TDEE.Phases[2])
                         {
                             finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                         }
                     }
 
-                    else if (tier == Tiers.tier[1])
+                    else if (tier == TDEE.Tiers[1])
                     {
-                        if (phase == Phases.phase[0])
+                        if (phase == TDEE.Phases[0])
                         {
                             finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[1])
+                        else if (phase == TDEE.Phases[1])
                         {
                             finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[2])
+                        else if (phase == TDEE.Phases[2])
                         {
                             finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                         }
                     }
 
-                    else if (tier == Tiers.tier[2])
+                    else if (tier == TDEE.Tiers[2])
                     {
-                        if (phase == Phases.phase[0])
+                        if (phase == TDEE.Phases[0])
                         {
                             finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[1])
+                        else if (phase == TDEE.Phases[1])
                         {
                             finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[2])
+                        else if (phase == TDEE.Phases[2])
                         {
                             finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
                         }
                     }
                 }
 
-                else if (goal == Goals.goal[1])
+                else if (goal == TDEE.Goals[1])
                 {
                     finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
 
                 }
 
-                else if (goal == Goals.goal[2])
+                else if (goal == TDEE.Goals[2])
                 {
-                    if (tier == Tiers.tier[0])
+                    if (tier == TDEE.Tiers[0])
                     {
-                        if (phase == Phases.phase[0])
+                        if (phase == TDEE.Phases[0])
                         {
                             finishcalories = Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero);
                         }
                     }
 
-                    else if (tier == Tiers.tier[1])
+                    else if (tier == TDEE.Tiers[1])
                     {
-                        if (phase == Phases.phase[0])
+                        if (phase == TDEE.Phases[0])
                         {
                             finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[1])
+                        else if (phase == TDEE.Phases[1])
                         {
                             finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[2])
+                        else if (phase == TDEE.Phases[2])
                         {
                             finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
                         }
                     }
 
-                    else if (tier == Tiers.tier[2])
+                    else if (tier == TDEE.Tiers[2])
                     {
-                        if (phase == Phases.phase[0])
+                        if (phase == TDEE.Phases[0])
                         {
                             finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[1])
+                        else if (phase == TDEE.Phases[1])
                         {
                             finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == Phases.phase[2])
+                        else if (phase == TDEE.Phases[2])
                         {
                             finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
                         }
                     }
                 }
 
-                else if (goal == Goals.goal[3])
+                else if (goal == TDEE.Goals[3])
                 {
 
                     if (phase == ArdPhases.ardPhase[0])
@@ -762,12 +762,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     {
                         if (valuMoreThan2Kg == "No")
                         {
-                            if (tier == Tiers.tier[3])
+                            if (tier == TDEE.Tiers[3])
                             {
                                 //conservative
                                 finishcalories = Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero);
                             }
-                            else if (tier == Tiers.tier[4])
+                            else if (tier == TDEE.Tiers[4])
                             {
                                 //aggressive
                                 finishcalories = Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero);

@@ -453,7 +453,7 @@ namespace MCMAutomation.APIHelpers
             req.AddParam("description", Lorem.ParagraphByChars(792));
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
-            req.AddParam("price", "0");
+            req.AddParam("price", "100");
             req.AddParam("accessWeekLength", "12");
             req.AddParam("url", "https://mcmstaging-ui.azurewebsites.net/programs/all");
             req.AddParam("type", "0");
@@ -486,12 +486,12 @@ namespace MCMAutomation.APIHelpers
             req.AddHeader("accept-encoding", "gzip, deflate, br");
             req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
 
-            req.AddParam("sku", MembershipsSKU.MEMBERSHIP_SKU[1]);
+            req.AddParam("sku", MembershipsSKU.MEMBERSHIP_SKU[2]);
             req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
             req.AddParam("description", Lorem.ParagraphByChars(792));
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
-            req.AddParam("price", "0");
+            req.AddParam("price", "100");
             req.AddParam("accessWeekLength", "");
             req.AddParam("url", "https://mcmstaging-ui.azurewebsites.net/programs/all");
             req.AddParam("type", "1");

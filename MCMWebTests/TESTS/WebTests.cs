@@ -2806,11 +2806,11 @@ namespace MCMAutomation.WebTests
 
             #region Create Product membership
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
-            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            var membershipId = AppDbContext.Memberships.GetLastMembershipByType(MembershipType.PRODUCT);
             var exercises = AppDbContext.Exercises.GetExercisesData();
             for (int i = 0; i < 5; i++)
             {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.FirstOrDefault().Id);
             }
             List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(5);
             foreach (var program in programs)
@@ -2827,10 +2827,10 @@ namespace MCMAutomation.WebTests
 
             #region Create Custom membership
             MembershipRequest.CreateCustomMembership(responseLoginAdmin, userId);
-            membershipId = AppDbContext.Memberships.GetLastMembership();
+            membershipId = AppDbContext.Memberships.GetLastMembershipByType(MembershipType.CUSTOM);
             for (int i = 0; i < 5; i++)
             {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.FirstOrDefault().Id);
             }
             programs = AppDbContext.Programs.GetLastPrograms(5);
             foreach (var program in programs)
@@ -2847,10 +2847,10 @@ namespace MCMAutomation.WebTests
 
             #region Create Subscription membership
             MembershipRequest.CreateSubscriptionMembership(responseLoginAdmin);
-            membershipId = AppDbContext.Memberships.GetLastMembership();
+            membershipId = AppDbContext.Memberships.GetLastMembershipByType(MembershipType.SUBSCRIPTION);
             for (int i = 0; i < 5; i++)
             {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.FirstOrDefault().Id);
             }
             programs = AppDbContext.Programs.GetLastPrograms(5);
             foreach (var program in programs)
@@ -2865,7 +2865,7 @@ namespace MCMAutomation.WebTests
             }
             #endregion
 
-            var membershipData = AppDbContext.Memberships.GetSubProdAndCustomMemberships();
+            var membershipData = AppDbContext.Memberships.GetLastMembershipByType(MembershipType.ALL);
             foreach(var membership in membershipData)
             {
                 MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);

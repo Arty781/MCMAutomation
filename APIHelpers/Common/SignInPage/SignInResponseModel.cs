@@ -36,4 +36,16 @@ namespace MCMAutomation.APIHelpers
         [JsonProperty("conversionSystem")]
         public long ConversionSystem { get; set; }
     }
+
+    public class SignInRequestModel
+    {
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("password")]
+        public string Password { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+    }
 }
