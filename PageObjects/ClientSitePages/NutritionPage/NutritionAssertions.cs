@@ -19,7 +19,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             Console.WriteLine($"Age: {age}");
 
 
-            var weight = userData.Weight;
+            var weight = ((double)userData.Weight);
             var bodyFat = userData.Bodyfat;
             var l = weight * (1 - bodyFat / 100);
             var calories = 370 + 21.6 * l;
@@ -554,7 +554,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             #region Protein Calculation
 
-            var weight = userData.Weight;
+            var weight = ((double)userData.Weight);
             var bodyFat = userData.Bodyfat;
             var protein = 0.0;
 

@@ -2637,7 +2637,7 @@ namespace MCMAutomation.WebTests
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -2736,7 +2736,7 @@ namespace MCMAutomation.WebTests
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -2803,6 +2803,68 @@ namespace MCMAutomation.WebTests
             EditUserRequest.EditUser(responseLogin);
             string userId = AppDbContext.User.GetUserData(email).Id;
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+
+            #region Create Product membership
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            for (int i = 0; i < 5; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
+            }
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(5);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+            #endregion
+
+            #region Create Custom membership
+            MembershipRequest.CreateCustomMembership(responseLoginAdmin, userId);
+            membershipId = AppDbContext.Memberships.GetLastMembership();
+            for (int i = 0; i < 5; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
+            }
+            programs = AppDbContext.Programs.GetLastPrograms(5);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+            #endregion
+
+            #region Create Subscription membership
+            MembershipRequest.CreateSubscriptionMembership(responseLoginAdmin);
+            membershipId = AppDbContext.Memberships.GetLastMembership();
+            for (int i = 0; i < 5; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
+            }
+            programs = AppDbContext.Programs.GetLastPrograms(5);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+            #endregion
+
             var membershipData = AppDbContext.Memberships.GetSubProdAndCustomMemberships();
             foreach(var membership in membershipData)
             {
@@ -2845,6 +2907,10 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
+            foreach(var member in membershipData)
+            {
+                AppDbContext.Memberships.DeleteMembership(member.Name);
+            }
             AppDbContext.User.DeleteUser(email);
 
             #endregion

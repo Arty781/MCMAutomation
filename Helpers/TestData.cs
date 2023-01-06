@@ -113,7 +113,7 @@ namespace MCMAutomation.Helpers
             public int ConversionSystem { get; set; }
             public int Gender { get; set; }
             public DateTime Birthdate { get; set; }
-            public int Weight { get; set; }
+            public decimal Weight { get; set; }
             public int Height { get; set; }
             public int ActivityLevel { get; set; }
             public int Bodyfat { get; set; }

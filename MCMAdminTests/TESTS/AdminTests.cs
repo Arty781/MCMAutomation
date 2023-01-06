@@ -119,7 +119,7 @@ namespace AdminSiteTests
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -179,7 +179,7 @@ namespace AdminSiteTests
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -277,7 +277,7 @@ namespace AdminSiteTests
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);

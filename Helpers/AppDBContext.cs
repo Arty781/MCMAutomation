@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace MCMAutomation.Helpers
 {
@@ -118,13 +119,13 @@ namespace MCMAutomation.Helpers
 
         public class Workouts
         {
-            public static List<DB.Workouts> GetLastWorkoutsData()
+            public static List<DB.Workouts> GetLastWorkoutsData(int workoutCount)
             {
                 var list = new List<DB.Workouts>();
 
                 using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
                 {
-                    SqlCommand command = new("SELECT TOP(7)*" +
+                    SqlCommand command = new($"SELECT TOP({workoutCount})*" +
                                              "FROM [Workouts] WHERE IsDeleted=0" +
                                              "ORDER BY CreationDate DESC", db);
                     db.Open();
@@ -359,26 +360,24 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-                            var row = new DB.Memberships()
-                            {
-                                Id = reader.GetInt32(0),
-                                SKU = reader.GetString(1),
-                                Name = reader.GetString(2),
-                                Description = reader.GetString(3),
-                                StartDate = null,
-                                EndDate = null,
-                                URL = reader.GetString(6),
-                                Price = reader.GetDecimal(7),
-                                CreationDate = reader.GetDateTime(8),
-                                IsDeleted = reader.GetBoolean(9),
-                                IsCustom = reader.GetBoolean(10),
-                                ForPurchase = reader.GetBoolean(11),
-                                AccessWeekLength = reader.GetInt32(12),
-                                RelatedMembershipGroupId = null,
-                                Gender = reader.GetInt32(14),
-                                PromotionalPopupId = null,
-                                Type = reader.GetInt32(16)
-                            };
+                            var row = new DB.Memberships();
+                            row.Id = reader.GetInt32(0);
+                            row.SKU = reader.GetString(1);
+                            row.Name = reader.GetString(2);
+                            row.Description = null;
+                            row.StartDate = null;
+                            row.EndDate = null;
+                            row.URL = reader.GetString(6);
+                            row.Price = reader.GetDecimal(7);
+                            row.CreationDate = reader.GetDateTime(8);
+                            row.IsDeleted = reader.GetBoolean(9);
+                            row.IsCustom = reader.GetBoolean(10);
+                            row.ForPurchase = reader.GetBoolean(11);
+                            row.AccessWeekLength = reader.GetInt32(12);
+                            row.RelatedMembershipGroupId = null;
+                            row.Gender = reader.GetInt32(14);
+                            row.PromotionalPopupId = null;
+                            row.Type = reader.GetInt32(16);
                             list.Add(row);
                         }
                     }
@@ -397,26 +396,24 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-                            var row = new DB.Memberships()
-                            {
-                                Id = reader.GetInt32(0),
-                                SKU = reader.GetString(1),
-                                Name = reader.GetString(2),
-                                Description = reader.GetString(3),
-                                StartDate = null,
-                                EndDate = null,
-                                URL = reader.GetString(6),
-                                Price = reader.GetDecimal(7),
-                                CreationDate = reader.GetDateTime(8),
-                                IsDeleted = reader.GetBoolean(9),
-                                IsCustom = reader.GetBoolean(10),
-                                ForPurchase = reader.GetBoolean(11),
-                                AccessWeekLength = reader.GetInt32(12),
-                                RelatedMembershipGroupId = null,
-                                Gender = reader.GetInt32(14),
-                                PromotionalPopupId = null,
-                                Type = reader.GetInt32(16)
-                            };
+                            var row = new DB.Memberships();
+                            row.Id = reader.GetInt32(0);
+                            row.SKU = null;
+                            row.Name = reader.GetString(2);
+                            row.Description = null;
+                            row.StartDate = null;
+                            row.EndDate = null;
+                            row.URL = null;
+                            row.Price = reader.GetDecimal(7);
+                            row.CreationDate = reader.GetDateTime(8);
+                            row.IsDeleted = reader.GetBoolean(9);
+                            row.IsCustom = reader.GetBoolean(10);
+                            row.ForPurchase = reader.GetBoolean(11);
+                            row.AccessWeekLength = reader.GetInt32(12);
+                            row.RelatedMembershipGroupId = null;
+                            row.Gender = reader.GetInt32(14);
+                            row.PromotionalPopupId = null;
+                            row.Type = reader.GetInt32(16);
                             list.Add(row);
                         }
                     }
@@ -668,7 +665,7 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-                            user = new DB.AspNetUsers()
+                            user = new()
                             {
                                 Id = reader.GetString(0),
                                 FirstName = reader.GetString(1),
@@ -677,7 +674,7 @@ namespace MCMAutomation.Helpers
                                 ConversionSystem = reader.GetInt32(4),
                                 Gender = reader.GetInt32(5),
                                 Birthdate = reader.GetDateTime(6),
-                                Weight = reader.GetInt32(7),
+                                Weight = reader.GetDecimal(7),
                                 Height = reader.GetInt32(8),
                                 ActivityLevel = reader.GetInt32(9),
                                 Bodyfat = reader.GetInt32(10),
@@ -705,6 +702,7 @@ namespace MCMAutomation.Helpers
                                 MaintenanceCalories = reader.GetInt32(32),
                                 Protein = reader.GetInt32(33)
                             };
+
                         }
                     }
                 }
