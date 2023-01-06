@@ -143,29 +143,31 @@ namespace MCMAutomation.Helpers
 
         }
     }
-    public class Exersises
-    {
-        public static string[] exercise =
-        {
-            "15* Incline DB Tricep Extensions",
-            "30* Prone DB Row - Neutral",
-            "45* Back Extension",
-            "45* DB Press Neutral Grip",
-            "45* Incline BB Bench Press",
-            "45* Incline DB Curls",
-            "45* Incline DB Press - Pronated",
-            "45* Incline Zottman Curls - Rear Delt Focused",
-            "45* Prone DB Lateral Raises",
-            "45* Prone DB Y-Raises",
-            "45* Prone Trap 3 Raises",
-            "45* Standing Straight Leg Kickback - Banded",
-            "45* Standing Straight Leg Kickback - Cable",
-            "65* DB Arnold Press",
-            "65* DB Arnold Press - 1 & 1/4 Reps",
-            "65* Incline DB Bench Press - Neutral",
-            "65* Incline DB Bench Press - Pronated"
-        };
-    }
+
+    //public class Exersises
+    //{
+    //    public static string[] exercise =
+    //    {
+    //        "15* Incline DB Tricep Extensions",
+    //        "30* Prone DB Row - Neutral",
+    //        "45* Back Extension",
+    //        "45* DB Press Neutral Grip",
+    //        "45* Incline BB Bench Press",
+    //        "45* Incline DB Curls",
+    //        "45* Incline DB Press - Pronated",
+    //        "45* Incline Zottman Curls - Rear Delt Focused",
+    //        "45* Prone DB Lateral Raises",
+    //        "45* Prone DB Y-Raises",
+    //        "45* Prone Trap 3 Raises",
+    //        "45* Standing Straight Leg Kickback - Banded",
+    //        "45* Standing Straight Leg Kickback - Cable",
+    //        "65* DB Arnold Press",
+    //        "65* DB Arnold Press - 1 & 1/4 Reps",
+    //        "65* Incline DB Bench Press - Neutral",
+    //        "65* Incline DB Bench Press - Pronated"
+    //    };
+    //}
+
     public class ActivityLevel
     {
         public static string[] level =

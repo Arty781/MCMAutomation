@@ -61,15 +61,20 @@ namespace AdminSiteTests
         [Author("Artem", "qatester91311@gmail.com")]
         [AllureSuite("Admin")]
         [AllureSubSuite("Memberships")]
-        [Ignore("Report")]
+        //[Ignore("Report")]
         public void AddProgramsToExistingMembership()
         {
+            #region Preconditions
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+
+            #endregion
+
             Pages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
-            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateProductMembership(responseLoginAdmin);
             Pages.PopUp
                 .ClosePopUp();
             Pages.Sidebar
@@ -80,9 +85,14 @@ namespace AdminSiteTests
             Pages.MembershipAdmin
                 .VerifyMembershipNameCbbx(membershipData.Name)
                 .CreatePrograms();
-
             Pages.Login
                 .GetAdminLogout();
+
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+
+            #endregion
 
         }
 
@@ -95,6 +105,30 @@ namespace AdminSiteTests
         [AllureSubSuite("Memberships")]
         public void EditPrograms()
         {
+            #region Preconditions
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            for (int i = 0; i < 3; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
+            }
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+
+            #endregion
+
             Pages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
@@ -103,21 +137,22 @@ namespace AdminSiteTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenMemberShipPage();
-
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
-
             Pages.MembershipAdmin
                 .ClickAddProgramsBtn(membershipData.Name);
             Pages.MembershipAdmin
                 .VerifyMembershipNameCbbx(membershipData.Name)
                 .CreatePrograms();
-
             List<string> programList = Pages.MembershipAdmin.GetProgramNames();
-
             Pages.MembershipAdmin
                 .AddNextPhaseDependency(programList);
             Pages.Login
                 .GetAdminLogout();
+
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+
+            #endregion
 
         }
 
@@ -130,22 +165,36 @@ namespace AdminSiteTests
         [AllureSubSuite("Memberships")]
         public void EditMembership()
         {
+            #region Preconditions
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            for (int i = 0; i < 3; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
+            }
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+
+            #endregion
+
             Pages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
                 .ClosePopUp();
-            Pages.Sidebar
-                .OpenMemberShipPage();
-            Pages.MembershipAdmin
-                .ClickCreateBtn()
-                .EnterMembershipData();
-            Pages.Common
-                .ClickSaveBtn();
-
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
-
             Pages.MembershipAdmin
                 .ClickEditMembershipBtn(membershipData.Name)
                 .EditMembershipData();
@@ -156,7 +205,7 @@ namespace AdminSiteTests
 
             Pages.MembershipAdmin
                 .SearchMembership(membershipDataAfterEditing.Name)
-                .VerifyMembershipName(membershipDataAfterEditing.Name);
+                .VerifyMembershipName(membershipData.Name, membershipDataAfterEditing.Name);
 
             Pages.Login
                 .GetAdminLogout();
@@ -214,6 +263,30 @@ namespace AdminSiteTests
         [AllureSubSuite("Memberships")]
         public void RemoveProgramsFromNewMembership()
         {
+            #region Preconditions
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            for (int i = 0; i < 3; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
+            }
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+
+            #endregion
+
             Pages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.Sidebar
@@ -222,14 +295,6 @@ namespace AdminSiteTests
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenMemberShipPage();
-            Pages.MembershipAdmin
-                .ClickCreateBtn()
-                .EnterMembershipData();
-            Pages.Common
-                .ClickSaveBtn();
-
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
-
             Pages.MembershipAdmin
                .ClickAddProgramsBtn(membershipData.Name)
                .VerifyMembershipNameCbbx(membershipData.Name)
@@ -247,6 +312,12 @@ namespace AdminSiteTests
 
             Pages.Login
                 .GetAdminLogout();
+
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+
+            #endregion
 
         }
 
@@ -276,17 +347,15 @@ namespace AdminSiteTests
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             #endregion
 
-            #region Add Programs and Workouts to Custom membership
+            #region Add Programs and Workouts to Product membership
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             for (int i = 0; i < 3; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms();
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
             }
             #endregion
@@ -314,6 +383,11 @@ namespace AdminSiteTests
 
             Pages.Login
                 .GetAdminLogout();
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+
+            #endregion
 
         }
 
@@ -343,7 +417,7 @@ namespace AdminSiteTests
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms();
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
@@ -371,6 +445,11 @@ namespace AdminSiteTests
 
             Pages.Login
                 .GetAdminLogout();
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+
+            #endregion
 
         }
 
@@ -401,9 +480,16 @@ namespace AdminSiteTests
             Pages.Common
                 .ClickSaveBtn();
             WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.membershipSearchInput, 30);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
 
             Pages.Login
                 .GetAdminLogout();
+
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+
+            #endregion
 
         }
 
@@ -437,7 +523,7 @@ namespace AdminSiteTests
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms();
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
@@ -465,6 +551,12 @@ namespace AdminSiteTests
 
             Pages.Login
                 .GetAdminLogout();
+
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+
+            #endregion
 
         }
 
@@ -495,7 +587,7 @@ namespace AdminSiteTests
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms();
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
@@ -515,6 +607,11 @@ namespace AdminSiteTests
                 .CopyExercises(programList, membershipDataForCopy, membershipData.Name);
             Pages.Login
                 .GetAdminLogout();
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+
+            #endregion
 
         }
 

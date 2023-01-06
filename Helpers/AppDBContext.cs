@@ -1,18 +1,8 @@
 ﻿using MCMAutomation.APIHelpers;
-using MCMAutomation.Helpers;
-using MCMAutomation.PageObjects;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
-using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot.Types;
 
 namespace MCMAutomation.Helpers
 {
@@ -216,7 +206,7 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-                            var row = new DB.Memberships()
+                            list = new DB.Memberships()
                             {
                                 Id = reader.GetInt32(0),
                                 SKU = reader.GetString(1),
@@ -316,13 +306,13 @@ namespace MCMAutomation.Helpers
 
                 return membership;
             }
-            public static List<string> GetSubProdAndCustomMemberships()
+            public static List<DB.Memberships> GetSubProdAndCustomMemberships()
             {
-                List<string> list = new List<string>();
+                var list = new List<DB.Memberships>();
 
                 using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
                 {
-                    SqlCommand command = new(String.Concat("Select top(1) Name from memberships " +
+                    SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
                                                             "where Type = 0 And Isdeleted = 0 " +
                                                             "order by creationDate desc"), db);
                     db.Open();
@@ -332,15 +322,34 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-
-                            list.Add(reader.GetString(0));
+                            var row = new DB.Memberships()
+                            {
+                                Id = reader.GetInt32(0),
+                                SKU = reader.GetString(1),
+                                Name = reader.GetString(2),
+                                Description = reader.GetString(3),
+                                StartDate = null,
+                                EndDate = null,
+                                URL = reader.GetString(6),
+                                Price = reader.GetDecimal(7),
+                                CreationDate = reader.GetDateTime(8),
+                                IsDeleted = reader.GetBoolean(9),
+                                IsCustom = reader.GetBoolean(10),
+                                ForPurchase = reader.GetBoolean(11),
+                                AccessWeekLength = reader.GetInt32(12),
+                                RelatedMembershipGroupId = null,
+                                Gender = reader.GetInt32(14),
+                                PromotionalPopupId = null,
+                                Type = reader.GetInt32(16)
+                            };
+                            list.Add(row);
                         }
                     }
 
                 }
                 using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
                 {
-                    SqlCommand command = new(String.Concat("Select top(1) Name from memberships " +
+                    SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
                                                             "where Type = 1 And Isdeleted = 0 " +
                                                             "order by creationDate desc"), db);
                     db.Open();
@@ -350,8 +359,27 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-
-                            list.Add(reader.GetString(0));
+                            var row = new DB.Memberships()
+                            {
+                                Id = reader.GetInt32(0),
+                                SKU = reader.GetString(1),
+                                Name = reader.GetString(2),
+                                Description = reader.GetString(3),
+                                StartDate = null,
+                                EndDate = null,
+                                URL = reader.GetString(6),
+                                Price = reader.GetDecimal(7),
+                                CreationDate = reader.GetDateTime(8),
+                                IsDeleted = reader.GetBoolean(9),
+                                IsCustom = reader.GetBoolean(10),
+                                ForPurchase = reader.GetBoolean(11),
+                                AccessWeekLength = reader.GetInt32(12),
+                                RelatedMembershipGroupId = null,
+                                Gender = reader.GetInt32(14),
+                                PromotionalPopupId = null,
+                                Type = reader.GetInt32(16)
+                            };
+                            list.Add(row);
                         }
                     }
 
@@ -359,7 +387,7 @@ namespace MCMAutomation.Helpers
 
                 using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
                 {
-                    SqlCommand command = new(String.Concat("Select top(1) Name from memberships " +
+                    SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
                                                            "where Type = 0 and SKU is null And Isdeleted = 0 " +
                                                            "order by creationDate desc"), db);
                     db.Open();
@@ -369,8 +397,27 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-
-                            list.Add(reader.GetString(0));
+                            var row = new DB.Memberships()
+                            {
+                                Id = reader.GetInt32(0),
+                                SKU = reader.GetString(1),
+                                Name = reader.GetString(2),
+                                Description = reader.GetString(3),
+                                StartDate = null,
+                                EndDate = null,
+                                URL = reader.GetString(6),
+                                Price = reader.GetDecimal(7),
+                                CreationDate = reader.GetDateTime(8),
+                                IsDeleted = reader.GetBoolean(9),
+                                IsCustom = reader.GetBoolean(10),
+                                ForPurchase = reader.GetBoolean(11),
+                                AccessWeekLength = reader.GetInt32(12),
+                                RelatedMembershipGroupId = null,
+                                Gender = reader.GetInt32(14),
+                                PromotionalPopupId = null,
+                                Type = reader.GetInt32(16)
+                            };
+                            list.Add(row);
                         }
                     }
 
@@ -378,16 +425,76 @@ namespace MCMAutomation.Helpers
 
                 return list;
             }
+            public static void DeleteMembership(string membership)
+            {
+                using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
+                {
+                    SqlCommand command = new("delete from [JsonUserExercises]\r\n  where WorkoutExerciseId in \r\n\t\t\t\t\t" +
+                                             "(select Id from WorkoutExercises where WorkoutId in \r\n\t\t\t\t\t\t" +
+                                             "(select Id from Workouts where ProgramId in \r\n\t\t\t\t\t\t\t" +
+                                             "(select Id from Programs where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership))))\r\n\r\n" +
+                                             "Delete from UserRelatedExercises\r\nwhere WorkoutExerciseId in \r\n\t\t\t\t\t" +
+                                             "(select Id from WorkoutExercises where WorkoutId in \r\n\t\t\t\t\t\t" +
+                                             "(select Id from Workouts where ProgramId in \r\n\t\t\t\t\t\t\t" +
+                                             "(select Id from Programs where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership))))\r\n\r\n" +
+                                             "Delete from DeletedUserExercises\r\nwhere WorkoutExerciseId in \r\n\t\t\t\t\t" +
+                                             "(select Id from WorkoutExercises where WorkoutId in \r\n\t\t\t\t\t\t" +
+                                             "(select Id from Workouts where ProgramId in \r\n\t\t\t\t\t\t\t" +
+                                             "(select Id from Programs where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership))))\r\n\r\n" +
+                                             "Delete from WorkoutExercises\r\n  where WorkoutId in " +
+                                             "(select Id from Workouts where ProgramId in " +
+                                             "(select Id from Programs where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership)))\r\n\r\n" +
+                                             "Delete from CompletedWorkouts\r\nwhere workoutid in " +
+                                             "(select id from Workouts\r\n  where ProgramId in " +
+                                             "(select Id from Programs where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership)))\r\n\r\n" +
+                                             "Delete from Workouts\r\n  where ProgramId in " +
+                                             "(select Id from Programs where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership))\r\n  \r\n" +
+                                             "delete from Media\r\nwhere ProgramId in " +
+                                             "(select id from Programs\r\n where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership))\r\n\r\n" +
+                                             "delete from Programs\r\n where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership)\r\n\r\n" +
+                                             "Update UserMemberships set MembershipId = 66, UserId = Null \r\n  where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership)\r\n\r\n" +
+                                             "delete from Media\r\n where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership)\r\n\r\n" +
+                                             "Delete from RelatedMembershipGroups\r\n where ParentMembershipId in " +
+                                             "(select id From Memberships\r\n  where Name like @membership)\r\n\r\n" +
+                                             "delete from MultiLevelMembershipGroups\r\nwhere ParentMembershipId in " +
+                                             "(select id From Memberships\r\n  where Name like @membership)\r\n\r\n" +
+                                             "delete from PagesInMemberships\r\n where MembershipId in " +
+                                             "(Select Id From Memberships where Name like @membership)\r\n\r\n" +
+                                             "delete From Memberships\r\n  where Name like @membership", db);
+                    command.Parameters.AddWithValue("@membership", DbType.String).Value = membership;
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
+
         }
 
         public class Programs
         {
-            public static List<DB.Programs> GetLastPrograms()
+            public static List<DB.Programs> GetLastPrograms(int programsCount)
             {
                 var list = new List<DB.Programs>();
                 using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
                 {
-                    SqlCommand command = new("SELECT TOP(5) * " +
+                    SqlCommand command = new($"SELECT TOP({programsCount}) * " +
                                              "FROM [Programs] WHERE IsDeleted=0 " +
                                              "ORDER BY CreationDate DESC", db);
                     db.Open();

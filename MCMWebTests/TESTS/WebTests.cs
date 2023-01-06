@@ -2613,6 +2613,7 @@ namespace MCMAutomation.WebTests
         public void CompleteMembershipWithData()
         {
             #region Preconditions
+
             #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
@@ -2621,12 +2622,33 @@ namespace MCMAutomation.WebTests
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
+            #region Add and Activate membership to User
+
+
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            //var memberships = MembershipRequest.GetMembershipsSummary(responseLoginAdmin);
-            var memberships = MembershipRequest.GetMembershipsSummary(responseLoginAdmin)[RandomHelper.RandomNumFromOne(15)];
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, memberships.Id, userId);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            for (int i = 0; i < 2; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
+            }
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(2);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
+
             #endregion
 
             Pages.Login
@@ -2637,11 +2659,10 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.MembershipUser
                 .OpenMembership();
-            var countPhases = memberships.Programs.Count;
             Pages.Sidebar
-                    .OpenMemberShipPageUser();
+                .OpenMemberShipPageUser();
 
-            for (int i = 0; i < countPhases; i++)
+            for (int i = 0; i < programs.Count; i++)
             {
                 Pages.MembershipUser
                     .OpenMembership()
@@ -2669,11 +2690,16 @@ namespace MCMAutomation.WebTests
                 }
                 Pages.Sidebar
                     .OpenMemberShipPageUser();
-
             }
-
             Pages.Login
                 .GetUserLogout();
+
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+            AppDbContext.User.DeleteUser(email);
+
+            #endregion
 
         }
 
@@ -2687,35 +2713,39 @@ namespace MCMAutomation.WebTests
 
         public void CompleteFirstPhase()
         {
-
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
 
-            #region AdminActions
+            #region Add and Activate membership to User
 
-            Pages.Login
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .ClickEditUser(email)
-                .RemoveAddedMembership()
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Common
-                .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
-            Pages.Login
-                .GetAdminLogout();
 
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            for (int i = 0; i < 2; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
+            }
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(2);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData();
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
             #endregion
 
             Pages.Login
@@ -2724,10 +2754,6 @@ namespace MCMAutomation.WebTests
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
                 .ClosePopUp();
-            Pages.MembershipUser
-                .OpenMembership();
-            Pages.Sidebar
-                .OpenMemberShipPageUser();
             Pages.MembershipUser
                 .OpenMembership()
                 .SelectPhaseAndWeek(1, 3);
@@ -2750,6 +2776,13 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogout();
 
+            #region Postconditions
+
+            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+            AppDbContext.User.DeleteUser(email);
+
+            #endregion
+
         }
 
         [Test, Category("Memberships")]
@@ -2762,33 +2795,19 @@ namespace MCMAutomation.WebTests
 
         public void VerifyDisplayingOfDownloadReportBtn()
         {
+            #region Preconditions
 
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
-            var memberships = AppDbContext.Memberships.GetSubProdAndCustomMemberships();
-
-            #region AdminActions
-
-            Pages.Login
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .ClickEditUser(email)
-                .RemoveAddedMembership()
-                .AddMembershipToUser(memberships);
-            Pages.Common
-                .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
-            Pages.Login
-                .GetAdminLogout();
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membershipData = AppDbContext.Memberships.GetSubProdAndCustomMemberships();
+            foreach(var membership in membershipData)
+            {
+                MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            }
 
             #endregion
 
@@ -2798,7 +2817,7 @@ namespace MCMAutomation.WebTests
                 .VerifyIsLogoDisplayed();
             Pages.PopUp
                 .ClosePopUp();
-            SwitcherHelper.ActivateMembership(memberships[0]);
+            SwitcherHelper.ActivateMembership(membershipData[0].Name);
             Pages.MembershipUser
                 .ConfirmMembershipActivation()
                 .OpenMembership()
@@ -2806,7 +2825,7 @@ namespace MCMAutomation.WebTests
                 .VerifyDisplayedDownloadBtn();
             Pages.MembershipUser
                 .OpenMembershipPage();
-            SwitcherHelper.ActivateMembership(memberships[1]);
+            SwitcherHelper.ActivateMembership(membershipData[1].Name);
             Pages.MembershipUser
                 .ConfirmMembershipActivation()
                 .OpenMembership()
@@ -2814,7 +2833,7 @@ namespace MCMAutomation.WebTests
                 .VerifyDisplayedDownloadBtn();
             Pages.MembershipUser
                 .OpenMembershipPage();
-            SwitcherHelper.ActivateMembership(memberships[2]);
+            SwitcherHelper.ActivateMembership(membershipData[2].Name);
             Pages.MembershipUser
                 .ConfirmMembershipActivation()
                 .OpenMembership()
@@ -2823,6 +2842,12 @@ namespace MCMAutomation.WebTests
 
             Pages.Login
                 .GetUserLogout();
+
+            #region Postconditions
+
+            AppDbContext.User.DeleteUser(email);
+
+            #endregion
 
         }
 

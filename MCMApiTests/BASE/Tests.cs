@@ -49,7 +49,7 @@ namespace MCMApiTests
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms();
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(5);
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);

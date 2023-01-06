@@ -122,6 +122,7 @@ namespace MCMAutomation.Helpers
         public static IWebElement FindElementByXpath(string xpathString)
         {
             WaitUntil.WaitSomeInterval(350);
+            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath(xpathString)));
             var elem = Browser._Driver.FindElement(By.XPath(xpathString));
             return elem;
         }

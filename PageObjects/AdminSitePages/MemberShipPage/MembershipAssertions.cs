@@ -46,14 +46,17 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Verify displaying membership name")]
-        public MembershipAdmin VerifyMembershipName(string membership)
+        public MembershipAdmin VerifyMembershipName(string membershipBeforeEdit, string membershipAfterEdit)
         {
-            TextBox.GetText(membershipTitle[0]);
-            if (membership != membershipTitle[0].Text)
-            {
-                Console.WriteLine("Membership \"" + membership[0] + "\" is not found");
-            }
-            
+            Assert.IsTrue(membershipBeforeEdit != membershipTitleElem.Text, $"Membership {membershipAfterEdit}is not found");
+
+            return this;
+        }
+
+        [AllureStep("Verify displaying membership name")]
+        public MembershipAdmin VerifyMembershipName(string membershipName)
+        {
+            Assert.IsTrue(membershipName == membershipTitleElem.Text, $"Membership {membershipName}is not found");
 
             return this;
         }

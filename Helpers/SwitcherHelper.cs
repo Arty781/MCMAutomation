@@ -139,9 +139,9 @@ namespace MCMAutomation.Helpers
 
         public static void ClickAddProgramBtn(string title)
         {
-            WaitUntil.WaitSomeInterval(200);
+            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']"));
 
-            IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']"));
+            var btnAddUsers = Element.FindElementByXpath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']");
             WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
 
             btnAddUsers.Click();

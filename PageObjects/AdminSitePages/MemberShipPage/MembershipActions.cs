@@ -122,16 +122,14 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter membership data edited")]
         public MembershipAdmin EditMembershipData()
         {
-            InputBox.ElementCtrlA(skuInput, 20, "CP_TEST_SUB");
+            InputBox.ElementCtrlA(skuInput, 20, MembershipsSKU.MEMBERSHIP_SKU[1]);
             InputBox.ElementCtrlA(membershipNameInput, 20, "Edited New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
             InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.Paragraph());
             InputBox.ElementCtrlA(inputAccessWeek, 10, "16");
-
             Button.Click(genderMaleToggle);
             InputBox.ElementCtrlA(priceInput, 10, "");
             InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
-            availableForPurchaseCheckboxElem.Click();
-
+            Button.Click(availableForPurchaseCheckbox);
 
             return this;
         }
