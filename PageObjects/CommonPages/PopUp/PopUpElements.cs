@@ -19,5 +19,8 @@ namespace MCMAutomation.PageObjects
 
         [FindsBy(How = How.XPath, Using = "//div[@class='ant-modal-footer']//button[@type='button']")]
         public IWebElement popupYesNoBtnLinq;
+
+        [FindsBy(How=How.Id,Using ="root")]
+        public IWebElement contentDefault;
     }
 }

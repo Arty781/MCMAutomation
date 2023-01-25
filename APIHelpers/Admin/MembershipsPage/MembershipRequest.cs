@@ -555,14 +555,14 @@ namespace MCMAutomation.APIHelpers
             HttpRequest req = new HttpRequest
             {
                 HttpVerb = "POST",
-                Path = "/Admin/AddMembership",
+                Path = "/Admin/AddCustomMembership",
                 ContentType = "multipart/form-data"
             };
             req.AddHeader("Connection", "Keep-Alive");
             req.AddHeader("accept-encoding", "gzip, deflate, br");
             req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
 
-            req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MMM-ddd HH-mm-ss -ff"));
+            req.AddParam("name", "00Created New Custom Membership " + DateTime.Now.ToString("yyyy-MMM-ddd HH-mm-ss -ff"));
             req.AddParam("description", Lorem.ParagraphByChars(792));
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
@@ -612,7 +612,7 @@ namespace MCMAutomation.APIHelpers
             Debug.WriteLine(resp.BodyStr);
         }
 
-        public static void CreateWorkouts(SignInResponseModel SignIn, int programId)
+        public static void CreateWorkouts(SignInResponseModel SignIn, int programId, int programCount)
         {
             Http http = new()
             {
@@ -621,7 +621,7 @@ namespace MCMAutomation.APIHelpers
             };
 
             string url = String.Concat(Endpoints.apiHost + "/Admin/AddWorkout");
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < programCount; i++)
             {
                 HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, programId));
                 if (http.LastMethodSuccess == false)

@@ -111,15 +111,16 @@ namespace AdminSiteTests
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            for (int i = 0; i < 3; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -171,14 +172,15 @@ namespace AdminSiteTests
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            for (int i = 0; i < 3; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
                 var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
                 foreach (var workout in workouts)
                 {
@@ -269,15 +271,16 @@ namespace AdminSiteTests
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            for (int i = 0; i < 3; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -349,14 +352,15 @@ namespace AdminSiteTests
 
             #region Add Programs and Workouts to Product membership
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
-            for (int i = 0; i < 3; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
             }
             #endregion
 
@@ -413,14 +417,15 @@ namespace AdminSiteTests
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
-            for (int i = 0; i < 3; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
             }
             Pages.PopUp
                 .ClosePopUp();
@@ -447,7 +452,7 @@ namespace AdminSiteTests
                 .GetAdminLogout();
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+            //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
 
             #endregion
 
@@ -519,14 +524,15 @@ namespace AdminSiteTests
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateSubscriptionMembership(responseLoginAdmin);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
-            for (int i = 0; i < 3; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
             }
             Pages.PopUp
                 .ClosePopUp();
@@ -582,36 +588,37 @@ namespace AdminSiteTests
             string userId = AppDbContext.User.GetUserData(email).Id;
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateCustomMembership(responseLoginAdmin, userId);
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
-            for (int i = 0; i < 3; i++)
+            var membershipData = AppDbContext.Memberships.GetLastMembershipByType("custom");
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.FirstOrDefault().Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(3);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
             }
             Pages.PopUp
                 .ClosePopUp();
             Pages.Sidebar
                 .OpenMemberShipPage();
             Pages.MembershipAdmin
-                .ClickAddProgramsBtn(membershipData.Name)
-                .VerifyMembershipNameCbbx(membershipData.Name);
+                .ClickAddProgramsBtn(membershipData.FirstOrDefault().Name)
+                .VerifyMembershipNameCbbx(membershipData.FirstOrDefault().Name);
             List<string> programList = Pages.MembershipAdmin.GetProgramNames();
             Pages.MembershipAdmin
                 .ClickAddWorkoutBtn();
             List<DB.CopyMembershipPrograms> membershipDataForCopy = AppDbContext.Workouts.GetMembershipProgramWorkoutData();
             Pages.MembershipAdmin
-                .CopyExercises(programList, membershipDataForCopy, membershipData.Name);
+                .CopyExercises(programList, membershipDataForCopy, membershipData.FirstOrDefault().Name);
             Pages.Login
                 .GetAdminLogout();
-            #region Postconditions
+            //#region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+            //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
 
-            #endregion
+            //#endregion
 
         }
 

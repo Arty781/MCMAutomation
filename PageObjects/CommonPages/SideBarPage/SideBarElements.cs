@@ -71,6 +71,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//a[@class='my-account']")]
         public IWebElement btnMyAccount;
 
+        [FindsBy(How=How.XPath,Using = "//div[@class='sidebar-info']//p")]
+        public IWebElement textEmail;
+
         #endregion
 
 

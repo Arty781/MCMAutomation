@@ -13,7 +13,7 @@ namespace MCMAutomation.Helpers
     {
         public static void Click(IWebElement element)
         {
-            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.LoaderIsInvisible(Pages.Common.loader, 60);
             WaitUntil.WaitSomeInterval(500);
             WaitUntil.CustomElevemtIsVisible(element, 30);
 
@@ -40,7 +40,7 @@ namespace MCMAutomation.Helpers
             
             try 
             {
-                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 10);
+                WaitUntil.LoaderIsInvisible(Pages.Common.loader, 10);
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
                 element.Click();
                 element.Clear();
@@ -57,7 +57,7 @@ namespace MCMAutomation.Helpers
 
             try
             {
-                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 10);
+                WaitUntil.LoaderIsInvisible(Pages.Common.loader, 10);
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
                 element.SendKeys(Keyss.Control() + "A");
                 element.SendKeys(Keys.Delete);
@@ -74,7 +74,7 @@ namespace MCMAutomation.Helpers
 
             try
             {
-                WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+                WaitUntil.LoaderIsInvisible(Pages.Common.loader, 60);
                 WaitUntil.CustomElevemtIsVisible(element, seconds);
                 element.SendKeys(data + Keys.Enter);
             }
@@ -89,13 +89,13 @@ namespace MCMAutomation.Helpers
     {
         public static string GetText(IWebElement element)
         {
-            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.LoaderIsInvisible(Pages.Common.loader, 60);
            return element.Text;
         }
 
         public static string GetAttribute(IWebElement element, string attribute)
         {
-            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.LoaderIsInvisible(Pages.Common.loader, 60);
             WaitUntil.CustomElevemtIsVisible(element);
             return element.GetAttribute(attribute);
             
@@ -103,7 +103,7 @@ namespace MCMAutomation.Helpers
 
         public static void CopyTextToBuffer(IWebElement element)
         {
-            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.LoaderIsInvisible(Pages.Common.loader, 60);
             WaitUntil.CustomElevemtIsVisible(element);
             element.SendKeys(Keyss.Control() + "A");
             element.SendKeys(Keyss.Control() + "C");
@@ -111,7 +111,7 @@ namespace MCMAutomation.Helpers
 
         public static void PasteCopiedText(IWebElement element)
         {
-            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 60);
+            WaitUntil.LoaderIsInvisible(Pages.Common.loader, 60);
             WaitUntil.CustomElevemtIsVisible(element);
             element.SendKeys(Keyss.Control() + "A" + Keyss.Control() + "V");
         }

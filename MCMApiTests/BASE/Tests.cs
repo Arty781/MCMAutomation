@@ -45,15 +45,16 @@ namespace MCMApiTests
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            for (int i = 0; i < 5; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(5);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -67,6 +68,31 @@ namespace MCMApiTests
         }
 
         [Test]
+        public void CreateProductMembership()
+        {
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            int programCount = 2;
+            for (int i = 0; i < programCount; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
+            }
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+        }
+
+        [Test]
         //[Repeat(4)]
         public void Demo()
         {
@@ -74,15 +100,19 @@ namespace MCMApiTests
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser);
-            var userId = AppDbContext.User.GetUserData(email);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
+            #region Add and Activate membership to User
+
+
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var memberships = MembershipRequest.GetMembershipsSummary(responseLoginAdmin);
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, memberships[RandomHelper.RandomNumFromOne(memberships.Count)].Id, userId.Id);
-            var userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
-            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId.Id);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("ARD");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
         }
     }

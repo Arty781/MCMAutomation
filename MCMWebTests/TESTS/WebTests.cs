@@ -13,6 +13,7 @@ using MCMAutomation.APIHelpers.Client.EditUser;
 using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.SignUp;
 using MCMAutomation.APIHelpers.Client.AddProgress;
+using System;
 
 namespace MCMAutomation.WebTests
 {
@@ -77,33 +78,35 @@ namespace MCMAutomation.WebTests
 
         public void CheckTdeeForPP1ForFemale()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("PP-1");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -187,34 +190,35 @@ namespace MCMAutomation.WebTests
 
         public void CheckTdeeForPP1ForFemaleSecondOption()
         {
-            #region AdminActions
+            #region Preconditions
 
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("PP-1");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -301,33 +305,34 @@ namespace MCMAutomation.WebTests
         public void CheckTdeeForPGForFemale()
         {
             #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("PG");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -412,32 +417,34 @@ namespace MCMAutomation.WebTests
         public void CheckTdeeForARDForMale()
         {
             #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("ARD");
-            Pages.Login
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -523,32 +530,33 @@ namespace MCMAutomation.WebTests
         {
             #region Preconditions
 
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("ARD");
-            Pages.Login
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .ClickEditUser(email)
-                .RemoveAddedMembership()
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -562,22 +570,13 @@ namespace MCMAutomation.WebTests
             double previousCalories = 0;
             var userData = AppDbContext.User.GetUserData(email);
             var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
-
+            Console.WriteLine("Users weight is " + userData.Weight);
             #endregion
 
             #region FINDING YOUR ESTIMATED TDEE Page
-            Pages.Nutrition
-                .SelectActivityLevel(0);
+            
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
-            Pages.Nutrition
-                .SelectFemale();
             var selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
-            Pages.Nutrition
-                .SelectMetric()
-                .EnterAge(RandomNumber.Next(18, 65).ToString())
-                .SelectHeight()
-                .EnterWeight(RandomNumber.Next(50, 250).ToString())
-                .EnterBodyFat("15");
             Pages.Nutrition
                 .ClickCalculateBtn();
 
@@ -641,34 +640,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForCutTier1Phase1()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -759,34 +759,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForCutTier2Phase3()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -795,22 +796,20 @@ namespace MCMAutomation.WebTests
             double previousCalories = 0.0;
 
             #region Select Activity lvl
-            Pages.Nutrition
-                .SelectActivityLevel(0);
+            
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
 
             #endregion
 
             #region Select User data
+
             var userData = AppDbContext.User.GetUserData(email);
             var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
-
+            Console.WriteLine(userData.Weight);
             #endregion
 
             #region Select gender
 
-            Pages.Nutrition
-                .SelectFemale();
             string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
@@ -831,6 +830,8 @@ namespace MCMAutomation.WebTests
 
             Pages.Nutrition
                 .ClickCalculateBtn();
+
+            #region TDEE Steps
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
@@ -858,6 +859,8 @@ namespace MCMAutomation.WebTests
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
                 .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+            #endregion
+
             Pages.Login
                 .GetUserLogout();
 
@@ -879,34 +882,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForCutTier3Phase1()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -995,34 +999,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForCutTier1Phase2()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1111,34 +1116,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForBuildTier1Phase1()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1227,34 +1233,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForBuildTier3Phase2()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1344,34 +1351,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesForBuildTier2Phase1()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1462,34 +1470,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCarbsAndFatsFor1000Calories()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1578,34 +1587,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesDiet1()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1687,34 +1697,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesDiet2()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1786,34 +1797,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCaloriesDiet3()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("BBB1");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name);
-            Pages.Login
-                .GetAdminLogout();
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -1878,38 +1890,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCalculationsForMaleWithMore25Fats()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name)
-                .EnterEstimatedBodyFat("26");
-            Pages.Common
-                .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 35, UserAccount.MALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2003,38 +2012,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCalculationsForMaleWith25Fats()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name)
-                .EnterEstimatedBodyFat("25");
-            Pages.Common
-                .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 25, UserAccount.MALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2042,8 +2048,7 @@ namespace MCMAutomation.WebTests
             double previousCalories = 0.0;
 
             #region Select Activity lvl
-            Pages.Nutrition
-                .SelectActivityLevel(0);
+            
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
 
             #endregion
@@ -2051,13 +2056,11 @@ namespace MCMAutomation.WebTests
             #region Select User data
             var userData = AppDbContext.User.GetUserData(email);
             var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
-
+            Console.WriteLine("User weight is " + userData.Weight);
             #endregion
 
             #region Select gender
 
-            Pages.Nutrition
-                .SelectMale();
             string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
@@ -2071,13 +2074,9 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Nutrition
-                .SelectMetric()
-                .EnterAge(RandomNumber.Next(18, 65).ToString())
-                .SelectHeight()
-                .EnterWeight(RandomNumber.Next(50, 250).ToString());
-
-            Pages.Nutrition
                 .ClickCalculateBtn();
+
+            #region TDEE Steps
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
@@ -2103,6 +2102,7 @@ namespace MCMAutomation.WebTests
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
                 .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+            #endregion
 
             Pages.Login
                 .GetUserLogout();
@@ -2124,38 +2124,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCalculationsForMaleWithLess25Fats()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name)
-                .EnterEstimatedBodyFat("24");
-            Pages.Common
-                .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2163,8 +2160,7 @@ namespace MCMAutomation.WebTests
             double previousCalories = 0.0;
 
             #region Select Activity lvl
-            Pages.Nutrition
-                .SelectActivityLevel(0);
+            
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
 
             #endregion
@@ -2172,13 +2168,11 @@ namespace MCMAutomation.WebTests
             #region Select User data
             var userData = AppDbContext.User.GetUserData(email);
             var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
-
+            Console.WriteLine("User weight is " + userData.Weight);
             #endregion
 
             #region Select gender
 
-            Pages.Nutrition
-                .SelectMale();
             string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
@@ -2192,13 +2186,9 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Nutrition
-                .SelectMetric()
-                .EnterAge(RandomNumber.Next(18, 65).ToString())
-                .SelectHeight()
-                .EnterWeight(RandomNumber.Next(50, 250).ToString());
-
-            Pages.Nutrition
                 .ClickCalculateBtn();
+
+            #region TDEE Steps
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
@@ -2224,6 +2214,7 @@ namespace MCMAutomation.WebTests
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
                 .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+            #endregion
 
             Pages.Login
                 .GetUserLogout();
@@ -2245,22 +2236,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCalculationsForFemaleWithMore35Fats()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin, 36);
-            var user = AppDbContext.User.GetUserData(email);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 36, UserAccount.FEMALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, user.Id);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
-            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, user.Id);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2268,8 +2272,7 @@ namespace MCMAutomation.WebTests
             double previousCalories = 0;
 
             #region Select Activity lvl
-            Pages.Nutrition
-                .SelectActivityLevel(0);
+            
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
 
             #endregion
@@ -2277,13 +2280,12 @@ namespace MCMAutomation.WebTests
             #region Select User data
             var userData = AppDbContext.User.GetUserData(email);
             var membershipData = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(userData.Email);
+            Console.WriteLine("User weight is " + userData.Weight);
 
             #endregion
 
             #region Select gender
             
-            Pages.Nutrition
-                .SelectFemale();
             string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
 
             #endregion
@@ -2298,14 +2300,9 @@ namespace MCMAutomation.WebTests
             #endregion
 
             Pages.Nutrition
-                .SelectMetric()
-                .EnterAge(RandomNumber.Next(18, 65).ToString())
-                .SelectHeight()
-                .EnterWeight(RandomNumber.Next(50, 250).ToString())
-                .EnterBodyFat("36");
-
-            Pages.Nutrition
                 .ClickCalculateBtn();
+
+            #region TDEE Steps
 
             double maintanceCalories = Pages.Nutrition.GetCalories();
 
@@ -2331,6 +2328,7 @@ namespace MCMAutomation.WebTests
             double expectedCalories = Pages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories);
             Pages.Nutrition
                 .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories);
+            #endregion
 
             Pages.Login
                 .GetUserLogout();
@@ -2352,38 +2350,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCalculationsForFemaleWith35Fats()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name)
-                .EnterEstimatedBodyFat("35");
-            Pages.Common
-                .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 35, UserAccount.FEMALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2405,8 +2400,6 @@ namespace MCMAutomation.WebTests
 
             #region Select gender
 
-            Pages.Nutrition
-                .SelectFemale();
             string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
@@ -2476,38 +2469,35 @@ namespace MCMAutomation.WebTests
 
         public void VerifyCalculationsForFemaleWithLess35Fats()
         {
-            #region AdminActions
+            #region Preconditions
+
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CP_TEST_SUB");
-            Pages.Login
-                .CopyUserEmail(email)
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.PopUp
-                .ClosePopUp();
-            Pages.Sidebar
-                .OpenUsersPage();
-            Pages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membership.Name)
-                .SelectActiveMembership(membership.Name)
-                .EnterEstimatedBodyFat("34");
-            Pages.Common
-                .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.UsersAdmin.inputSearch);
-            Pages.Login
-                .GetAdminLogout();
+            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+
+            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("CMC_TEST_PRODUCT");
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            #endregion
 
             #endregion
 
             Pages.Login
                 .GetUserLoginForTdee(email, Credentials.PASSWORD);
+            Pages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
+            Pages.PopUp
+                .ClosePopUp();
             Pages.Sidebar
                 .OpenNutritionPage();
 
@@ -2515,8 +2505,7 @@ namespace MCMAutomation.WebTests
             double previousCalories = 0.0;
 
             #region Select Activity lvl
-            Pages.Nutrition
-                .SelectActivityLevel(0);
+            
             string level = Pages.Nutrition.cbbxActivitylevel.Text;
 
             #endregion
@@ -2529,8 +2518,6 @@ namespace MCMAutomation.WebTests
 
             #region Select gender
 
-            Pages.Nutrition
-                .SelectFemale();
             string selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
             #endregion
 
@@ -2547,16 +2534,8 @@ namespace MCMAutomation.WebTests
             IList<IWebElement> conversionsBtn = SwitcherHelper.NutritionSelector("Preferred Conversion System");
 
             Pages.Nutrition
-                .SelectMetric()
-                .EnterAge(RandomNumber.Next(18, 65).ToString())
-                .SelectHeight()
-                .EnterWeight(RandomNumber.Next(50, 250).ToString());
-
-            Pages.Nutrition
                 .ClickCalculateBtn();
-
             double maintanceCalories = Pages.Nutrition.GetCalories();
-
             Pages.Nutrition
                 .VerifyMaintainCaloriesStep01(userData, level, selectedGender, textSelectedAdditionalOptions, selectedAdditionalOption)
                 .ClickNextBtn()
@@ -2624,20 +2603,20 @@ namespace MCMAutomation.WebTests
 
             #region Add and Activate membership to User
 
-
             var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            for (int i = 0; i < 2; i++)
+            int programCount = 2;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(2);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -2654,7 +2633,8 @@ namespace MCMAutomation.WebTests
             Pages.Login
                 .GetUserLogin(email, Credentials.PASSWORD);
             Pages.Sidebar
-                .VerifyIsLogoDisplayed();
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
             Pages.PopUp
                 .ClosePopUp();
             Pages.MembershipUser
@@ -2696,8 +2676,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+            //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+            //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -2728,15 +2708,16 @@ namespace MCMAutomation.WebTests
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            for (int i = 0; i < 2; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(2);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -2808,15 +2789,16 @@ namespace MCMAutomation.WebTests
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             var membershipId = AppDbContext.Memberships.GetLastMembershipByType(MembershipType.PRODUCT);
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            for (int i = 0; i < 5; i++)
+            int programCount = 3;
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.FirstOrDefault().Id);
             }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(5);
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -2828,15 +2810,15 @@ namespace MCMAutomation.WebTests
             #region Create Custom membership
             MembershipRequest.CreateCustomMembership(responseLoginAdmin, userId);
             membershipId = AppDbContext.Memberships.GetLastMembershipByType(MembershipType.CUSTOM);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.FirstOrDefault().Id);
             }
-            programs = AppDbContext.Programs.GetLastPrograms(5);
+            programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -2848,15 +2830,15 @@ namespace MCMAutomation.WebTests
             #region Create Subscription membership
             MembershipRequest.CreateSubscriptionMembership(responseLoginAdmin);
             membershipId = AppDbContext.Memberships.GetLastMembershipByType(MembershipType.SUBSCRIPTION);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.FirstOrDefault().Id);
             }
-            programs = AppDbContext.Programs.GetLastPrograms(5);
+            programs = AppDbContext.Programs.GetLastPrograms(programCount);
             foreach (var program in programs)
             {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(5);
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);

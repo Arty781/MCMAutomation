@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
+using System.Drawing;
 
 namespace MCMAutomation.Helpers
 {
@@ -29,8 +30,10 @@ namespace MCMAutomation.Helpers
             AllureConfigFilesHelper.CreateJsonConfigFile();
             new DriverManager().SetUpDriver(new ChromeConfig());
             var options = new ChromeOptions();
-            options.AddArguments("fullscreen.allowed", "start-maximized");
             windowsDriver = new ChromeDriver(options);
+            windowsDriver.Manage().Window.Maximize();
+            //windowsDriver.Manage().Window.Size = new Size(1900, 990);
+            //windowsDriver.Manage().Window.Minimize();
             windowsDriver.Manage().Cookies.DeleteAllCookies();
             
             Assert.NotNull(windowsDriver);

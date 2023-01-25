@@ -285,7 +285,7 @@ namespace MCMAutomation.Helpers
                                 Id = reader.GetInt32(0),
                                 SKU = reader.GetString(1),
                                 Name = reader.GetString(2),
-                                Description = reader.GetString(3),
+                                Description = null,
                                 StartDate = null,
                                 EndDate = null,
                                 URL = reader.GetString(6),
@@ -310,7 +310,7 @@ namespace MCMAutomation.Helpers
             public static List<DB.Memberships> GetLastMembershipByType(string type)
             {
                 var list = new List<DB.Memberships>();
-                if(type == MembershipType.PRODUCT)
+                if(type.ToLower() == MembershipType.PRODUCT.ToLower())
                 {
                     using SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
@@ -345,7 +345,7 @@ namespace MCMAutomation.Helpers
                         }
                     }
                 }
-                else if (type == MembershipType.SUBSCRIPTION)
+                else if (type.ToLower() == MembershipType.SUBSCRIPTION.ToLower())
                 {
                     using SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
@@ -380,7 +380,7 @@ namespace MCMAutomation.Helpers
                         }
                     }
                 }
-                else if (type == MembershipType.CUSTOM)
+                else if (type.ToLower() == MembershipType.CUSTOM.ToLower())
                 {
                     using SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(String.Concat("Select top(1) * from memberships " +
@@ -415,7 +415,7 @@ namespace MCMAutomation.Helpers
                         }
                     }
                 }
-                else if (type == MembershipType.ALL)
+                else if (type.ToLower() == MembershipType.ALL.ToLower())
                 {
                     using (SqlConnection db = new(DB.GET_CONNECTION_STRING))
                     {

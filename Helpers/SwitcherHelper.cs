@@ -59,7 +59,7 @@ namespace MCMAutomation.Helpers
 
             _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']/parent::tr/td//div[@class='edit-btn']"));
             _element.Click();
-            WaitUntil.CustomElevemtIsInvisible(Pages.Common.loader, 120);
+            WaitUntil.LoaderIsInvisible(Pages.Common.loader, 120);
             WaitUntil.CustomElevemtIsVisible(element, 60);
 
         }
@@ -237,6 +237,12 @@ namespace MCMAutomation.Helpers
 
             btnEdit.Click();
         }
+
+        #endregion
+
+        #region Sidebar 
+
+        
 
         #endregion
     }

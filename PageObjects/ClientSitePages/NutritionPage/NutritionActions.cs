@@ -27,31 +27,31 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             if (levelNumber == 0)
             {
                 WaitUntil.WaitSomeInterval(250);
-                cbbxActivitylevel.Click();
+                Button.Click(cbbxActivitylevel);
                 Button.Click(listActivityLevel[levelNumber]);
             }
             else if (levelNumber == 1)
             {
                 WaitUntil.WaitSomeInterval(250);
-                cbbxActivitylevel.Click();
+                Button.Click(cbbxActivitylevel);
                 Button.Click(listActivityLevel[levelNumber]);
             }
             else if (levelNumber == 2)
             {
                 WaitUntil.WaitSomeInterval(250);
-                cbbxActivitylevel.Click();
+                Button.Click(cbbxActivitylevel);
                 Button.Click(listActivityLevel[levelNumber]);
             }
             else if (levelNumber == 3)
             {
                 WaitUntil.WaitSomeInterval(250);
-                cbbxActivitylevel.Click();
+                Button.Click(cbbxActivitylevel);
                 Button.Click(listActivityLevel[levelNumber]);
             }
             else if (levelNumber == 4)
             {
                 WaitUntil.WaitSomeInterval(250);
-                cbbxActivitylevel.Click();
+                Button.Click(cbbxActivitylevel);
                 Button.Click(listActivityLevel[levelNumber]);
             }
 
@@ -366,9 +366,10 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             {
                 InputBox.ElementCtrlA(inputPrevCalories, 5, RandomNumber.Next(1000, (int)maintanceCalories).ToString());
                 previousCalories = double.Parse(TextBox.GetAttribute(inputPrevCalories, "value"));
+                Console.WriteLine("previousCalories are " + previousCalories);
             }
             previousCalories = double.Parse(TextBox.GetAttribute(inputPrevCalories, "value"));
-            
+            Console.WriteLine("previousCalories are " + previousCalories);
 
             return previousCalories;
         }

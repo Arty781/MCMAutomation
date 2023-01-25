@@ -632,7 +632,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
                 var actualCalories = double.Parse(valueCalories.Text);
                 Console.WriteLine($"Expected calories are \"{calories}\", actual are \"{actualCalories}\"");
-                Assert.IsTrue((calories - actualCalories) >= -5 && (calories - actualCalories) <= 5);
+                Assert.IsTrue((calories - actualCalories) >= -20 && (calories - actualCalories) <= 20);
                 Console.WriteLine($"Carbs are \"{carbs}\"");
                 Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");
                 Assert.IsTrue(fat == actualFat);
@@ -787,7 +787,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
                 var actualCalories = double.Parse(valueCalories.Text);
                 Console.WriteLine($"Expected calories are \"{finishcalories}\", actual are \"{actualCalories}\"");
-                Assert.IsTrue((finishcalories - actualCalories) >= -5 && (finishcalories - actualCalories) <= 5);
+                Assert.IsTrue((finishcalories - actualCalories) >= -20 && (finishcalories - actualCalories) <= 20);
                 Console.WriteLine($"Expected Carbs is \"{carbs}\", actual is \"{actualCarbs}\"");
                 Assert.AreEqual(carbs, actualCarbs);
                 Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");

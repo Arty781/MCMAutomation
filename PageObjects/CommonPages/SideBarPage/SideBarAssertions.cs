@@ -17,6 +17,17 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.CustomElevemtIsVisible(sideBarLogo, 30);
             Assert.IsTrue(sideBarLogo.Enabled);
+            WaitUntil.WaitSomeInterval(2500);
+            return this;
+        }
+
+        public Sidebar VerifyEmailDisplayed(string email)
+        {
+            WaitUntil.CustomElevemtIsVisible(textEmail, 30);
+            WaitUntil.WaitSomeInterval(1000);
+            Assert.IsTrue(textEmail.Text == email);
+            
+
             return this;
         }
 

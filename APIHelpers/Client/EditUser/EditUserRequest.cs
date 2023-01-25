@@ -11,8 +11,6 @@ namespace MCMAutomation.APIHelpers.Client.EditUser
     {
         public static void EditUser(SignInResponseModel SignIn)
         {
-
-
             var req = new HttpRequest
             {
                 HttpVerb = "POST",
@@ -55,7 +53,7 @@ namespace MCMAutomation.APIHelpers.Client.EditUser
             Debug.WriteLine("HTTP response status: " + Convert.ToString(resp.StatusCode));
         }
 
-        public static void EditUser(SignInResponseModel SignIn, int bodyFat)
+        public static void EditUser(SignInResponseModel SignIn, int bodyFat, int gender)
         {
 
 
@@ -71,8 +69,8 @@ namespace MCMAutomation.APIHelpers.Client.EditUser
 
             req.AddParam("lastName", Name.FirstName());
             req.AddParam("firstName", Name.LastName());
-            req.AddParam("birthdate", Date.Birthday().ToString());
-            req.AddParam("gender", "2");
+            req.AddParam("birthdate", DateTime.Now.AddYears(-31).ToString("yyyy-MM-dd' 'HH:mm:ss.ffff"));
+            req.AddParam("gender", $"{gender}");
             req.AddParam("carbs", "260");
             req.AddParam("photo", "null");
             req.AddParam("weight", "59");

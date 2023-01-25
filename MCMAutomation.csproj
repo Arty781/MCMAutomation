@@ -29,6 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="allure serve.bat" />
+    <None Remove="_!CloseOpenWith.bat" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ChilkatDnCore" Version="9.50.93" />
     <PackageReference Include="ChilkatNativeLib" Version="9.50.93" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core" Version="4.0.1" />

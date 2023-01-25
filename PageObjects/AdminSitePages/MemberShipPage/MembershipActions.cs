@@ -44,7 +44,6 @@ namespace MCMAutomation.PageObjects
             InputBox.ElementCtrlA(inputAccessWeek, 10, "16" + Keys.Enter);
             InputBox.ElementCtrlA(priceInput, 10, "100");
             InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
-            availableForPurchaseCheckbox.Click();
             
 
             return this;
@@ -58,7 +57,6 @@ namespace MCMAutomation.PageObjects
             InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
             InputBox.ElementCtrlA(priceInput, 10, "100");
             InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
-            availableForPurchaseCheckbox.Click();
 
 
             return this;

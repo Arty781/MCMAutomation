@@ -52,9 +52,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public int GetWeekNumber()
         {
             WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 15);
-            weekSelectorInputEx.Click();
+            Button.Click(weekSelectorInputEx);
             WaitUntil.CustomElevemtIsVisible(listWeekNumber.Last(), 15);
-            weekSelectorInputEx.Click();
+            Button.Click(weekSelectorInputEx);
             return listWeekNumber.Count;
         }
 
