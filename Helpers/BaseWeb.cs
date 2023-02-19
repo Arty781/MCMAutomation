@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using NUnit.Allure.Attributes;
+using NUnit.Allure.Core;
+using NUnit.Allure.Steps;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
@@ -37,14 +39,13 @@ namespace MCMAutomation.Helpers
         }
 
         [TearDown]
-        
         public static void TearDown()
         {
+            
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                var str = TestContext.CurrentContext.Result.Message;
+               
                 TelegramHelper.SendMessage();
-
                 Browser.Close();
             }
             else if(Browser._Driver != null)

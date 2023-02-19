@@ -128,72 +128,43 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition SelectHeight()
         {
-            Button.Click(inputHeight);
+            string conversionSystem = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System");
+            string targetHeight = conversionSystem == "Imperial" ? "5 ft 9 in" : "175 cm";
 
-            if (SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System") == "Imperial")
+            Button.ClickJS(inputHeight);
+            WaitUntil.CustomElevemtIsVisible(itemHeightActive);
+            string activeElem = itemHeightActive.Text;
+            var heightsAfterActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]");
+            if (activeElem != targetHeight)
             {
-                string activeElem = itemHeightActive.Text;
-                var heightsAfterActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]");
-                if(activeElem != "5 ft 9 in")
+                for (int i = 0; i < heightsAfterActive.Count; i++)
                 {
-                    for (int i = 0; i < heightsAfterActive.Count; i++)
+                    WaitUntil.WaitSomeInterval(200);
+                    activeElem = itemHeightActive.Text;
+                    if (activeElem == targetHeight)
                     {
-                        WaitUntil.WaitSomeInterval(200);
-                        activeElem = itemHeightActive.Text;
-                        if (activeElem == "5 ft 9 in")
-                        {
-                            break;
-                        }
-                        itemHeightNext.Click();
+                        break;
                     }
-                    var heightsBeforeActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]");
-                    for (int i = 0; i < heightsBeforeActive.Count; i++)
-                    {
-                        WaitUntil.WaitSomeInterval(200);
-                        itemHeightPrev.Click();
-                        activeElem = itemHeightActive.Text;
-                        if (activeElem == "5 ft 9 in")
-                        {
-                            break;
-                        }
-                    }
+                    itemHeightNext.Click();
                 }
 
-            }
-            else if (SwitcherHelper.GetTexOfSelectedtNutritionSelector("Preferred Conversion System") == "Metric")
-            {
-                string activeElem = itemHeightActive.Text;
-                var heightsAfterActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]");
-                if (activeElem != "175 cm")
+                var heightsBeforeActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]");
+                for (int i = 0; i < heightsBeforeActive.Count; i++)
                 {
-                    for (int i = 0; i < heightsAfterActive.Count; i++)
+                    WaitUntil.WaitSomeInterval(200);
+                    itemHeightPrev.Click();
+                    activeElem = itemHeightActive.Text;
+                    if (activeElem == targetHeight)
                     {
-                        WaitUntil.WaitSomeInterval(200);
-                        activeElem = itemHeightActive.Text;
-                        if (activeElem == "175 cm")
-                        {
-                            break;
-                        }
-                        itemHeightNext.Click();
-                    }
-                    var heightsBeforeActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/preceding::div[contains(@class,'swiper-slide')]");
-                    for (int i = 0; i < heightsBeforeActive.Count; i++)
-                    {
-                        WaitUntil.WaitSomeInterval(200);
-                        itemHeightPrev.Click();
-                        activeElem = itemHeightActive.Text;
-                        if (activeElem == "175 cm")
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
-
             }
 
             btnOk.Click();
 
             return this;
+
         }
 
         public Nutrition EnterWeight(string weight)

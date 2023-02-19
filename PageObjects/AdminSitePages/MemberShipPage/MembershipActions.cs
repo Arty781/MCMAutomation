@@ -28,8 +28,7 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin ClickEditMembershipBtn(string title)
         {
 
-            WaitUntil.CustomElevemtIsVisible(membershipTitle[0]);
-
+            WaitUntil.CustomElevemtIsVisible(membershipTitle.FirstOrDefault());
             SwitcherHelper.ClickEditMembershipBtn(title);
 
             return this;
@@ -43,7 +42,7 @@ namespace MCMAutomation.PageObjects
             InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
             InputBox.ElementCtrlA(inputAccessWeek, 10, "16" + Keys.Enter);
             InputBox.ElementCtrlA(priceInput, 10, "100");
-            InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
+            InputBox.ElementCtrlA(urlInput, 10, Endpoints.WEBSITE_HOST);
             
 
             return this;
@@ -56,7 +55,7 @@ namespace MCMAutomation.PageObjects
             InputBox.ElementCtrlA(membershipNameInput, 20, "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
             InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
             InputBox.ElementCtrlA(priceInput, 10, "100");
-            InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
+            InputBox.ElementCtrlA(urlInput, 10, Endpoints.WEBSITE_HOST);
 
 
             return this;
@@ -101,7 +100,7 @@ namespace MCMAutomation.PageObjects
                 Button.Click(btnAddLevel);
                 InputBox.ElementCtrlA(inputLevelName, 5, String.Concat("Test Level " + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss")));
                 Button.Click(inputLevelMembership);
-                Button.Click(listLevelMembership[RandomHelper.RandomNum(10)]);
+                Button.ClickJS(listLevelMembership[RandomHelper.RandomNum(10)]);
                 Button.Click(btnSaveLevel);
             }
             
@@ -126,7 +125,7 @@ namespace MCMAutomation.PageObjects
             InputBox.ElementCtrlA(inputAccessWeek, 10, "16");
             Button.Click(genderMaleToggle);
             InputBox.ElementCtrlA(priceInput, 10, "");
-            InputBox.ElementCtrlA(urlInput, 10, Endpoints.websiteHost);
+            InputBox.ElementCtrlA(urlInput, 10, Endpoints.WEBSITE_HOST);
             Button.Click(availableForPurchaseCheckbox);
 
             return this;
@@ -178,7 +177,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 2)
@@ -189,7 +188,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 3)
@@ -200,7 +199,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 4)
@@ -211,7 +210,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i > 4)
@@ -222,7 +221,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.FirstOrDefault(), 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate.LastOrDefault(), 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
 
@@ -235,7 +234,7 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin CreatePrograms()
         {
 
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < 2; ++i)
             {
 
 
@@ -245,7 +244,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 2)
@@ -254,7 +253,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 3)
@@ -263,7 +262,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i == 4)
@@ -272,7 +271,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
                 else if (i > 4)
@@ -281,7 +280,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramName, 10, i + " " + "Phase " + DateTime.Now.ToString("hh-mm-ss"));
                     InputBox.ElementCtrlA(inputProgramNumOfWeeks, 10, "4");
                     InputBox.ElementCtrlA(inputProgramSteps, 10, Workouts.STRING[RandomHelper.RandomNum(3)]);
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                     WaitUntil.WaitSomeInterval(1500);
                 }
 
@@ -307,7 +306,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                 }
                 else if (i == 2)
                 {
@@ -318,7 +317,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                 }
                 else if (i == 3)
                 {
@@ -329,7 +328,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                 }
                 else if (i == 4)
                 {
@@ -340,7 +339,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                 }
                 else if (i > 4)
                 {
@@ -351,7 +350,7 @@ namespace MCMAutomation.PageObjects
                     InputBox.ElementCtrlA(inputProgramAvailableDate[0], 10, DateTime.Now.AddMonths(-1).ToString("yyyy-MM-d") + Keys.Enter);
                     InputBox.ElementCtrlA(inputProgramAvailableDate[1], 10, DateTime.Now.AddMonths(1).ToString("yyyy-MM-d") + Keys.Enter);
 
-                    Pages.Common.ClickSaveBtn();
+                    Pages.CommonPages.Common.ClickSaveBtn();
                 }
 
             }
@@ -360,12 +359,11 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Delete programs")]
-        public MembershipAdmin DeletePrograms(List<string> programList)
+        public MembershipAdmin DeletePrograms(List<DB.Programs> programList)
         {
-            foreach (string program in programList)
+            foreach (var program in programList)
             {
-                SwitcherHelper.ClickDeleteProgramBtn(program);
-                
+                SwitcherHelper.ClickDeleteProgramBtn(program.Name);
             }
             
 
@@ -390,7 +388,7 @@ namespace MCMAutomation.PageObjects
             {
                 InputBox.CbbxElement(cbbxPhaseName, 10, programName);
 
-                for (int i = 0; i <= 5; i++)
+                for (int i = 0; i <= 3; i++)
                 {
 
 
@@ -401,7 +399,7 @@ namespace MCMAutomation.PageObjects
                         InputBox.ElementCtrlA(inputWorkoutName, 10, "Monday " + "Workout " + DateTime.Now.ToString("MM-d hh-mm-ss"));
                         btnWeekDayElem.SendKeys(Keys.ArrowDown + Keys.Enter);
 
-                        Pages.Common.ClickSaveBtn();
+                        Pages.CommonPages.Common.ClickSaveBtn();
                     }
                     if (i == 3)
                     {
@@ -416,7 +414,7 @@ namespace MCMAutomation.PageObjects
                         }
 
                         btnWeekDayElem.SendKeys(Keys.Enter);
-                        Pages.Common.ClickSaveBtn();
+                        Pages.CommonPages.Common.ClickSaveBtn();
                     }
                     if (i == 5)
                     {
@@ -431,7 +429,7 @@ namespace MCMAutomation.PageObjects
                         }
 
                         btnWeekDayElem.SendKeys(Keys.Enter);
-                        Pages.Common.ClickSaveBtn();
+                        Pages.CommonPages.Common.ClickSaveBtn();
 
 
 
@@ -444,40 +442,79 @@ namespace MCMAutomation.PageObjects
             return this;
         }
 
+        [AllureStep("Get Workout names")]
+        public List<string> GetWorkoutNames()
+        {
+            WaitUntil.CustomElevemtIsVisible(nameWorkoutTitleElem, 30);
+
+            var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).Select(x => x.Text).ToList();
+
+            return workoutNames;
+        }
+
         [AllureStep("Copy exercises")]
-        public MembershipAdmin CopyExercises(List<string> programNames, List<DB.CopyMembershipPrograms> membershipData, string curentmMembership)
+        public MembershipAdmin CopyExercises(List<string> programNames, List<DB.CopyMembershipPrograms> membershipData, string currentMembership)
         {
             foreach (string programName in programNames)
             {
-                InputBox.CbbxElement(cbbxPhaseName, 10, programName);
-                WaitUntil.WaitSomeInterval(500);
-                WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Program']/parent::div//span[@title='{programName}']")));
-                var listWorkouts = btnAddExercises.Where(x => x.Displayed).ToList();
-
-                List<string> workoutNames = GetWorkoutNames();
-                WaitUntil.WaitSomeInterval(1500);
-                Button.Click(listWorkouts[0]);
-                WaitUntil.CustomElevemtIsVisible(addExerciseBtn);
+                SelectPhase(programName);
+                var workoutButtons = FindWorkoutButtons();
+                var workoutNames = GetWorkoutNames(workoutButtons);
                 foreach (string workoutName in workoutNames)
                 {
-                    int rand = RandomHelper.RandomNumFromOne(membershipData.Count);
-                    InputBox.CbbxElement(cbbxWorkoutsTitle, 20, workoutName + Keys.Enter);
-                    SwitcherHelper.SelectCopyMembership(membershipData[rand].MembershipName, curentmMembership);
-                    SwitcherHelper.SelectCopyProgram(membershipData[rand].ProgramName);
-                    SwitcherHelper.SelectCopyWorkout(membershipData[rand].WorkoutName);
-                    Button.Click(btnCopy);
-                    WaitUntil.CustomElevemtIsVisible(exerciseTitleRow);
+                    CopyWorkoutMembership(workoutName, membershipData, currentMembership);
                 }
-
-                for (int i = 0; i <= workoutNames.Count; i++)
-                {
-                    Button.Click(backBtn);
-                }
-                WaitUntil.WaitSomeInterval(1500);
+                ClickBackButton(workoutNames.Count);
             }
-
             return this;
         }
+
+        #region CopyExercises private methods
+        private void SelectPhase(string programName)
+        {
+            InputBox.CbbxElement(cbbxPhaseName, 10, programName);
+            WaitUntil.CustomElevemtIsVisible(Browser.FindElement($"//h3[text()='Program']/parent::div//span[@title='{programName}']"));
+            WaitUntil.WaitSomeInterval(500);
+        }
+
+        private List<IWebElement> FindWorkoutButtons()
+        {
+            return btnAddExercises.Where(x => x.Displayed).ToList();
+        }
+
+        [AllureStep("Get Workout names")]
+        private List<string> GetWorkoutNames(List<IWebElement> workoutButtons)
+        {
+            WaitUntil.CustomElevemtIsVisible(nameWorkoutTitleElem, 30);
+
+            var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).Select(x => x.Text).ToList();
+            Button.Click(workoutButtons.FirstOrDefault());
+            WaitUntil.CustomElevemtIsVisible(cbbxWorkoutsTitle);
+
+            return workoutNames;
+        }
+
+        private void CopyWorkoutMembership(string workoutName, List<DB.CopyMembershipPrograms> membershipData, string currentMembership)
+        {
+            int randomIndex = RandomHelper.RandomNumFromOne(membershipData.Count);
+            InputBox.CbbxElement(cbbxWorkoutsTitle, 20, workoutName + Keys.Enter);
+            SwitcherHelper.SelectCopyMembership(membershipData[randomIndex].MembershipName, currentMembership);
+            SwitcherHelper.SelectCopyProgram(membershipData[randomIndex].ProgramName);
+            SwitcherHelper.SelectCopyWorkout(membershipData[randomIndex].WorkoutName);
+            Button.Click(btnCopy);
+            WaitUntil.CustomElevemtIsVisible(exerciseTitleRow);
+        }
+
+        private void ClickBackButton(int times)
+        {
+            for (int i = 0; i <= times; i++)
+            {
+                Button.Click(backBtn);
+            }
+            WaitUntil.WaitSomeInterval(1500);
+        }
+
+        #endregion
 
         [AllureStep("Add exercises")]
         public MembershipAdmin AddWorkoutExercises(List<string> programNames, List<DB.Exercises> exercises)
@@ -508,7 +545,7 @@ namespace MCMAutomation.PageObjects
                             InputBox.ElementCtrlA(tempoExerciseInput.FirstOrDefault(), 10, "20X0");
                             InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
-                            Pages.Common.ClickSaveBtn();
+                            Pages.CommonPages.Common.ClickSaveBtn();
                         }
                         else if (i == 2)
                         {
@@ -552,7 +589,7 @@ namespace MCMAutomation.PageObjects
 
                             }
                             InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
-                            Pages.Common.ClickSaveBtn();
+                            Pages.CommonPages.Common.ClickSaveBtn();
                         }
                         else if (i == 3)
                         {
@@ -564,7 +601,7 @@ namespace MCMAutomation.PageObjects
                             InputBox.ElementCtrlA(tempoExerciseInput.FirstOrDefault(), 10, "201X");
                             InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
-                            Pages.Common.ClickSaveBtn();
+                            Pages.CommonPages.Common.ClickSaveBtn();
                         }
                         else if (i == 4)
                         {
@@ -609,7 +646,7 @@ namespace MCMAutomation.PageObjects
                             }
                             InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
-                            Pages.Common.ClickSaveBtn();
+                            Pages.CommonPages.Common.ClickSaveBtn();
                         }
                         else if (i == 5)
                         {
@@ -622,7 +659,7 @@ namespace MCMAutomation.PageObjects
                             InputBox.ElementCtrlA(tempoExerciseInput.FirstOrDefault(), 10, "2010");
                             InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
-                            Pages.Common.ClickSaveBtn();
+                            Pages.CommonPages.Common.ClickSaveBtn();
                         }
                         else if (i == 6)
                         {
@@ -634,7 +671,7 @@ namespace MCMAutomation.PageObjects
                             InputBox.ElementCtrlA(tempoExerciseInput.FirstOrDefault(), 10, "2111");
                             InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
 
-                            Pages.Common.ClickSaveBtn();
+                            Pages.CommonPages.Common.ClickSaveBtn();
 
 
                         }
@@ -666,20 +703,18 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Add next phases dependency")]
-        public MembershipAdmin AddNextPhaseDependency(List<string> programs)
+        public MembershipAdmin AddNextPhaseDependency()
         {
-            for (int i=0; i < programs.Count; i++)
+            WaitUntil.CustomElevemtIsVisible(nameProgramTitleElem);
+            var programNames = nameProgramTitle.Where(x => x.Displayed).Select(x=>x).ToList();
+            foreach(var program in programNames)
             {
-                nameProgramTitle[i].Click();
-                WaitUntil.WaitSomeInterval(250);
-                inputNextPhase.Click();
+                Button.Click(program);
+                Button.Click(inputNextPhase);
                 inputNextPhase.SendKeys(Keys.ArrowDown + Keys.Enter);
-
-                Pages.Common.ClickSaveBtn();
+                Pages.CommonPages.Common.ClickSaveBtn();
                 WaitUntil.WaitSomeInterval(500);
-
             }
-
             return this;
         }
 

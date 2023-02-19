@@ -13,43 +13,44 @@ namespace MCMAutomation.PageObjects
 {
     public class Pages
     {
+        private static readonly IDictionary<Type, object> _pageCache = new Dictionary<Type, object>();
 
-        private static T GetPage<T>() where T : new()
+        public static T GetPage<T>() where T : new()
         {
-            var page = new T();
-            IWebDriver driver = Browser._Driver;
-            PageFactory.InitElements(driver, page);
+            var type = typeof(T);
+            if (!_pageCache.ContainsKey(type))
+            {
+                var page = new T();
+                IWebDriver driver = Browser._Driver;
+                PageFactory.InitElements(driver, page);
+                _pageCache.Add(type, page);
+            }
 
-            return page;
+            return (T)_pageCache[type];
         }
 
-        #region Common
+        public static class CommonPages
+        {
+            public static Common Common => GetPage<Common>();
+            public static Login Login => GetPage<Login>();
+            public static Sidebar Sidebar => GetPage<Sidebar>();
+            public static PopUp PopUp => GetPage<PopUp>();
+        }
 
-        public static Common Common => GetPage<Common>();
-        public static Login Login => GetPage<Login>();
-        public static Sidebar Sidebar => GetPage<Sidebar>();
-        public static PopUp PopUp => GetPage<PopUp>();
+        public static class AdminPages
+        {
+            public static MembershipAdmin MembershipAdmin => GetPage<MembershipAdmin>();
+            public static ExercisesAdmin ExercisesAdmin => GetPage<ExercisesAdmin>();
+            public static UsersAdmin UsersAdmin => GetPage<UsersAdmin>();
+        }
 
-        #endregion
-
-        #region Admin
-
-        public static MembershipAdmin MembershipAdmin => GetPage<MembershipAdmin>();
-        public static ExercisesAdmin ExercisesAdmin => GetPage<ExercisesAdmin>();
-        public static UsersAdmin UsersAdmin => GetPage<UsersAdmin>();
-
-        #endregion
-
-        #region Web
-
-        public static MembershipUser MembershipUser => GetPage<MembershipUser>();
-        public static SignUpUser SignUpUser => GetPage<SignUpUser>();
-        public static Nutrition Nutrition => GetPage<Nutrition>();
-        public static UserProfile UserProfile => GetPage<UserProfile>();
-        public static Progress Progress => GetPage<Progress>();
-
-        #endregion
-
-
+        public static class WebPages
+        {
+            public static MembershipUser MembershipUser => GetPage<MembershipUser>();
+            public static SignUpUser SignUpUser => GetPage<SignUpUser>();
+            public static Nutrition Nutrition => GetPage<Nutrition>();
+            public static UserProfile UserProfile => GetPage<UserProfile>();
+            public static Progress Progress => GetPage<Progress>();
+        }
     }
 }

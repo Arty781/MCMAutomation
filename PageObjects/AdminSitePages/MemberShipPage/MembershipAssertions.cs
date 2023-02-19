@@ -30,24 +30,15 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify deleting of programs")]
         public MembershipAdmin VerifyDeletePrograms()
         {
-            Assert.Throws<NoSuchElementException>(() => Element.FindElementByXpath("//div[@class='table-item-name']"));
+            Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath("//div[@class='table-item-name']")));
 
             return this;
-        }
-
-        [AllureStep("Get Workout names")]
-        public List<string> GetWorkoutNames()
-        {
-            WaitUntil.CustomElevemtIsVisible(nameWorkoutTitleElem, 30);
-           
-            var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).Select(x=>x.Text).ToList();
-            
-            return workoutNames;
         }
 
         [AllureStep("Verify displaying membership name")]
         public MembershipAdmin VerifyMembershipName(string membershipBeforeEdit, string membershipAfterEdit)
         {
+            WaitUntil.CustomElevemtIsVisible(Browser.FindElement($"//h2[@class='membership-item_title' and contains(text(),'{membershipAfterEdit}')]"));
             Assert.IsTrue(membershipBeforeEdit != membershipTitleElem.Text, $"Membership {membershipAfterEdit}is not found");
 
             return this;
@@ -64,7 +55,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify deleting membership")]
         public MembershipAdmin VerifyDeletingMembership(string membership)
         {
-            WaitUntil.CustomElevemtIsVisible(Pages.Common.messageDeleted);
+            WaitUntil.CustomElevemtIsVisible(Pages.CommonPages.Common.messageDeleted);
 
             InputBox.ElementCtrlA(membershipSearchInput,30, membership);
             Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership)));

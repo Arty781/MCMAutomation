@@ -17,7 +17,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public MembershipUser OpenMembershipPage()
         {
             Browser.GoToUrl("https://mcmstaging-ui.azurewebsites.net/programs/all");
-            Pages.PopUp.ClosePopUp();
+            Pages.CommonPages.PopUp.ClosePopUp();
             return this;
         }
 

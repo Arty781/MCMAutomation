@@ -6,98 +6,81 @@ using System.Threading.Tasks;
 
 namespace MCMAutomation.Helpers
 {
-    public class RandomHelper
+    public static class RandomHelper
     {
+        private static readonly Random Random = new Random();
+
         public static string RandomNumber(int maxWeight)
         {
-            var r = new Random().Next(0, maxWeight);
-            return r.ToString();
+            return Random.Next(0, maxWeight).ToString();
         }
 
         public static int RandomNum(int maxNum)
         {
-            var r = new Random().Next(0, maxNum);
-
-            return r;
+            return Random.Next(0, maxNum);
         }
 
         public static int RandomNumFromOne(int maxNumber)
         {
-            var r = new Random().Next(1, maxNumber);
-
-            return r;
+            return Random.Next(1, maxNumber);
         }
 
         public static int RandomProgressData(string bodyPart)
         {
-            int r = 0;
-            if(bodyPart.ToLower() == "weight")
+            int minValue = 0;
+            int maxValue = 0;
+
+            switch (bodyPart.ToLower())
             {
-                r = new Random().Next(45, 150);
-            }
-            else if(bodyPart.ToLower() == "waist")
-            {
-                r = new Random().Next(45, 120);
-            }
-            else if (bodyPart.ToLower() == "hip")
-            {
-                r = new Random().Next(80, 150);
-            }
-            else if (bodyPart.ToLower() == "thigh")
-            {
-                r = new Random().Next(45, 150);
-            }
-            else if (bodyPart.ToLower() == "chest")
-            {
-                r = new Random().Next(80, 200);
-            }
-            else if (bodyPart.ToLower() == "arm")
-            {
-                r = new Random().Next(20, 100);
+                case "weight":
+                    minValue = 45;
+                    maxValue = 150;
+                    break;
+                case "waist":
+                    minValue = 45;
+                    maxValue = 120;
+                    break;
+                case "hip":
+                    minValue = 80;
+                    maxValue = 150;
+                    break;
+                case "thigh":
+                    minValue = 45;
+                    maxValue = 150;
+                    break;
+                case "chest":
+                    minValue = 80;
+                    maxValue = 200;
+                    break;
+                case "arm":
+                    minValue = 20;
+                    maxValue = 100;
+                    break;
             }
 
-            return r;
+            return Random.Next(minValue, maxValue);
         }
 
         public static int RandomExercise(int maxWeight)
         {
-            Random r = new Random();
-            int genRand = r.Next(1, maxWeight);
-
-            return genRand;
+            return Random.Next(1, maxWeight);
         }
 
         public static string RandomText(int size)
         {
-            var chars = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var stringChars = new char[size];
-            var random = new Random();
-
-            for (int i = 0; i < stringChars.Length; i++)
-            {
-                stringChars[i] = chars[random.Next(chars.Length)];
-            }
-
-            var finalString = new String(stringChars);
-
-            return finalString;
+            const string chars = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, size)
+              .Select(s => s[Random.Next(s.Length)]).ToArray());
         }
 
         public static string RandomEmail()
         {
-            string email = "qatester" + DateTime.Now.ToString("yyyy-MM-d-hh-mm-ss") + "@xitroo.com";
-
-            return email;
+            return $"qatester{DateTime.Now:yyyy-MM-d-hh-mm-ss}@xitroo.com";
         }
 
         public static string RandomAge()
         {
-            Random r = new Random();
-            int genRand = r.Next(18, 65);
-
-            string age = DateTime.Now.AddYears(-genRand).ToString("yyyy-MM-dd");
-
-            return age;
+            return DateTime.Now.AddYears(-Random.Next(18, 65)).ToString("yyyy-MM-dd");
         }
     }
 }

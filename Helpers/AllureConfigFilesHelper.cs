@@ -13,7 +13,15 @@ namespace MCMAutomation.Helpers
     {
         public static string CreateBatFile()
         {
-            string path = Browser.RootPathReport() + "allure serve.bat";
+            string path = String.Empty;
+            if (OperatingSystem.IsWindows())
+            {
+                path = Browser.RootPathReport() + "allure serve.bat";
+            }
+            else if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+            {
+                path = Browser.RootPathReport() + "allure serve.sh";
+            }
             string allureResultsDirectory = Browser.RootPathReport() + "allure-results";
             string allureResults = "allure serve " + allureResultsDirectory;
             FileInfo fileInf = new(path);
@@ -35,7 +43,15 @@ namespace MCMAutomation.Helpers
 
         public static void RemoveBatFile()
         {
-            string path = Browser.RootPathReport() + "allure serve.bat";
+            string path = String.Empty;
+            if (OperatingSystem.IsWindows())
+            {
+                path = Browser.RootPathReport() + "allure serve.bat";
+            }
+            else if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
+            {
+                path = Browser.RootPathReport() + "allure serve.sh";
+            }
             FileInfo fileInf = new(path);
             if (fileInf.Exists == true)
             {
@@ -45,14 +61,13 @@ namespace MCMAutomation.Helpers
 
         public static void CreateJsonConfigFile()
         {
-            FileInfo fileInf = new FileInfo(Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + "allureConfig.json");
+            string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + "allureConfig.json";
+            string str = Path.Combine(Browser.RootPath() + "allure-results");
+            FileInfo fileInf = new(mainpath);
             if (fileInf.Exists == true)
             {
                 fileInf.Delete();
             }
-            string mainpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory)) + "allureConfig.json";
-            string str = Path.Combine(Browser.RootPath() + "allure-results");
-
             CONFIG_JSON.ConfigJson req = new()
             {
                 Allure = new()
@@ -100,15 +115,9 @@ namespace MCMAutomation.Helpers
                     }
                 }
             };
-
-            using (StreamWriter file = File.CreateText(mainpath))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                //serialize object directly into file stream
-                serializer.Serialize(file, req);
-            }
-
-
+            using StreamWriter file = File.CreateText(mainpath);
+            JsonSerializer serializer = new();
+            serializer.Serialize(file, req);
         }
 
 

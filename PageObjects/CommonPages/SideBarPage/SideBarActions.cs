@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chilkat;
 
 namespace MCMAutomation.PageObjects
 {
@@ -19,8 +20,8 @@ namespace MCMAutomation.PageObjects
             var dateBefore = DateTime.Now;
             Button.Click(membershipTb);
 
-            WaitUntil.CustomElevemtIsVisible(Pages.MembershipAdmin.btnCreateMembership, 90);
-            var lastMembership = Pages.MembershipAdmin.membershipTitle.Last();
+            WaitUntil.CustomElevemtIsVisible(Pages.AdminPages.MembershipAdmin.btnCreateMembership, 90);
+            var lastMembership = Pages.AdminPages.MembershipAdmin.membershipTitle.Last();
             WaitUntil.CustomElevemtIsVisible(lastMembership, 30);
             var dateAfter = DateTime.Now;
             Console.WriteLine($"Load time for {Browser._Driver.Url} is: " + (dateAfter - dateBefore));
@@ -34,7 +35,7 @@ namespace MCMAutomation.PageObjects
             
             Button.Click(trainingProgramTb);
 
-            WaitUntil.CustomElevemtIsVisible(Pages.MembershipUser.programTitle, 30);
+            WaitUntil.CustomElevemtIsVisible(Pages.WebPages.MembershipUser.programTitle, 30);
             
 
             return this;
@@ -65,25 +66,23 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Open Nutrition page")]
         public Sidebar OpenNutritionPage()
         {
-            var dateBefore = DateTime.Now;
             Button.Click(nutritionTb);
-
-            WaitUntil.CustomElevemtIsVisible(Pages.Nutrition.btnCalculate, 30);
-            var dateAfter = DateTime.Now;
-            Console.WriteLine("Load time is: " + (dateAfter - dateBefore));
-
+            WaitUntil.CustomElevemtIsVisible(Pages.WebPages.Nutrition.btnCalculate, 30);
+            
             return this;
         }
 
         [AllureStep("Open MyAccount")]
-        public Sidebar OpenMyAccount()
+        public Sidebar OpenMyAccount(string email)
         {
-            WaitUntil.WaitSomeInterval(3000);
+            Pages.CommonPages.Sidebar
+                .VerifyIsLogoDisplayed()
+                .VerifyEmailDisplayed(email);
             Button.Click(btnUserName);
 
             WaitUntil.CustomElevemtIsVisible(btnMyAccount, 30);
             Button.Click(btnMyAccount);
-            WaitUntil.CustomElevemtIsVisible(Pages.UserProfile.inputFirstName, 30);
+            WaitUntil.CustomElevemtIsVisible(Pages.WebPages.UserProfile.inputFirstName, 30);
 
             return this;
         }
@@ -91,11 +90,8 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Open Progress")]
         public Sidebar OpenProgressPage()
         {
-
             Button.Click(progressTb);
-
-            //WaitUntil.CustomElevemtIsVisible(Pages.Progress.titleProgressPage, 30);
-
+            WaitUntil.CustomElevemtIsVisible(Pages.WebPages.Progress.titleProgressPage, 30);
             return this;
         }
 

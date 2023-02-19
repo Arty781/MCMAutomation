@@ -59,7 +59,7 @@ namespace MCMAutomation.Helpers
 
             _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']/parent::tr/td//div[@class='edit-btn']"));
             _element.Click();
-            WaitUntil.LoaderIsInvisible(Pages.Common.loader, 120);
+            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 120);
             WaitUntil.CustomElevemtIsVisible(element, 60);
 
         }
@@ -110,7 +110,7 @@ namespace MCMAutomation.Helpers
 
             _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']/parent::tr/td//div[@class='delete-btn']"));
             _element.Click();
-            Button.Click(Pages.Common.btnConfirmationYes);
+            Button.Click(Pages.CommonPages.Common.btnConfirmationYes);
 
         }
 
@@ -163,8 +163,8 @@ namespace MCMAutomation.Helpers
             IWebElement btnDeleteProgram = Element.FindElementByXpath($"//div[text()='{programName}']/parent::div/child::div/div[@class='delete']");
             WaitUntil.CustomElevemtIsVisible(btnDeleteProgram, 60);
             Button.Click(btnDeleteProgram);
-            Button.Click(Pages.Common.btnConfirmationYes);
-            WaitUntil.CustomElevemtIsInvisible(Element.FindElementByXpath($"//div[text()='{programName}']"), 30);
+            Button.Click(Pages.CommonPages.Common.btnConfirmationYes);
+            WaitUntil.CustomElevemtIsInvisible(btnDeleteProgram, 30);
         }
 
         public static void SelectCopyMembership(string membershipName, string currentMembership)

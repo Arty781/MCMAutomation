@@ -620,7 +620,7 @@ namespace MCMAutomation.APIHelpers
                 AuthToken = "Bearer " + SignIn.AccessToken
             };
 
-            string url = String.Concat(Endpoints.apiHost + "/Admin/AddWorkout");
+            string url = String.Concat(Endpoints.API_HOST + "/Admin/AddWorkout");
             for(int i = 0; i < programCount; i++)
             {
                 HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, programId));
@@ -641,7 +641,7 @@ namespace MCMAutomation.APIHelpers
                 AuthToken = "Bearer " + SignIn.AccessToken
             };
 
-            string url = String.Concat(Endpoints.apiHost + "/Admin/AddRangeWorkoutExercises");
+            string url = String.Concat(Endpoints.API_HOST + "/Admin/AddRangeWorkoutExercises");
             for (int i = 0; i < 5; i++)
             {
                 HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, workouts.Id, exercises));
@@ -660,7 +660,7 @@ namespace MCMAutomation.APIHelpers
             http.Accept = "application/json";
             http.AuthToken = "Bearer " + SignIn.AccessToken;
 
-            string url = String.Concat(Endpoints.apiHost + "/Admin/AddUsersToMembership");
+            string url = String.Concat(Endpoints.API_HOST + "/Admin/AddUsersToMembership");
             string jsonRequestBody = "{" +
                                         $"\r\n\"membershipId\": {MembershipId}" + "," +
                                         "\r\n \"type\": \"RD : ADD_MEMBERSHIP_TO_USER\"" + "," +

@@ -21,7 +21,7 @@ namespace AdminSiteTests.BASE
         {
             Browser.Initialize();
             //Browser._Driver.Navigate().GoToUrl("chrome://settings/accessibility");
-            Browser._Driver.Navigate().GoToUrl(Endpoints.websiteHost);
+            Browser.GoToUrl(Endpoints.WEBSITE_HOST);
         }
         
     }

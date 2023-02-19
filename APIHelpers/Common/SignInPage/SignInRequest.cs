@@ -24,14 +24,14 @@ namespace MCMAutomation.APIHelpers
             return JsonConvert.SerializeObject(req);
         }
 
-        public static SignInResponseModel MakeAdminSignIn(string login, string password)
+        public static SignInResponseModel MakeSignIn(string login, string password)
         {
 
             Http http = new Http();
 
             http.Accept = "application/json";
 
-            string url = String.Concat(Endpoints.apiHost + "/Account/SignIn");
+            string url = String.Concat(Endpoints.API_HOST + "/Account/SignIn");
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(login, password));
             if (http.LastMethodSuccess == false)
             {

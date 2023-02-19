@@ -19,14 +19,11 @@ namespace MCMAutomation.Helpers
         [AllureSuite("Report")]
         [AllureSubSuite("AllureReport")]
         [Test]
-        [Ignore("Report")]
-
-        
         public void GoToAllureResults()
         {
-            AllureConfigFilesHelper.CreateBatFile();
+            var bashFile = AllureConfigFilesHelper.CreateBatFile();
             WaitUntil.WaitSomeInterval(1000);
-            Process.Start(Browser.RootPathReport() + "allure serve.bat");
+            Process.Start(bashFile);
         }
         
     }
@@ -37,21 +34,18 @@ namespace MCMAutomation.Helpers
         [AllureOwner("Sukharevsky Artem")]
         [AllureSuite("DriverLevel")]
         [AllureSubSuite("ForceCloseDriver")]
-        //[Ignore("Report")]
         [Test]
-
-
         public static void ForceClose()
         {
-            ForceCloseDriver.CreateBatFile();
+            var forceCloseFile = ForceCloseDriver.CreateBatFile();
             WaitUntil.WaitSomeInterval(1000);
-            Process.Start(Browser.RootPathReport() + "_!CloseOpenWith.bat");
+            Process.Start(forceCloseFile);
         }
 
         public static void RemoveBatFile()
         {
             string path = Browser.RootPathReport() + "_!CloseOpenWith.bat";
-            FileInfo fileInf = new FileInfo(path);
+            FileInfo fileInf = new (path);
             if (fileInf.Exists == true)
             {
                 fileInf.Delete();

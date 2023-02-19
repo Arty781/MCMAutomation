@@ -14,8 +14,8 @@ namespace MCMAutomation.Helpers
 {
     public class Endpoints
     {
-        public const string websiteHost = "https://mcmstaging-ui.azurewebsites.net/";
-        public const string apiHost = "https://mcmstaging-api.azurewebsites.net";
+        public const string WEBSITE_HOST = "https://mcmstaging-ui.azurewebsites.net/";
+        public const string API_HOST = "https://mcmstaging-api.azurewebsites.net";
     }
 
     public class Credentials

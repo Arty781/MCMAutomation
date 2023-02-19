@@ -12,22 +12,25 @@ namespace MCMAutomation.Helpers
 {
     public class ScreenShotHelper
     {
-        public static string MakeScreenShot()
+        public static string TakeScreenshot()
         {
             ITakesScreenshot ssdriver = Browser._Driver as ITakesScreenshot;
             Screenshot screenshot = ssdriver.GetScreenshot();
-            string timestampPath = DateTime.Now.ToString("yyyy-MM-dd");
-            string timestampName = DateTime.UtcNow.ToString("dd-MMMM-yyyy' 'HH-mm-ss");
-            string path = Browser.RootPath() + "ErrorImages\\" + timestampPath + "\\";
-            string name = path + "Exception-" + timestampName + ".jpeg";
+            string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd_HH-mm-ss");
+            string path = Path.Combine(Browser.RootPath(), "ErrorImages", timestamp);
+            string name = $"Exception-{timestamp}.jpeg";
+
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            screenshot.SaveAsFile(name, ScreenshotImageFormat.Jpeg);
+
+            string fullPath = Path.Combine(path, name);
+            screenshot.SaveAsFile(fullPath, ScreenshotImageFormat.Jpeg);
             WaitUntil.WaitSomeInterval(2000);
-            return name;
+
+            return fullPath;
         }
-        
+
     }
 }

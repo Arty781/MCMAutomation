@@ -13,7 +13,7 @@ namespace MCMAutomation.Helpers
     //    //public static List<string> DefineProgramList(string programsUrl)
     //    //{
     //    //    Browser._Driver.Navigate().GoToUrl(programsUrl);
-    //    //    Pages.PopUp.ClosePopUp();
+    //    //    Pages.CommonPages.PopUp.ClosePopUp();
 
     //    //    WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@class='membership-item_add add-workout']"), 30);
 
@@ -46,7 +46,7 @@ namespace MCMAutomation.Helpers
     //    //    foreach (var link in workoutLinks) 
     //    //    {
     //    //        Browser._Driver.Navigate().GoToUrl(link);
-    //    //        Pages.PopUp.ClosePopUp();
+    //    //        Pages.CommonPages.PopUp.ClosePopUp();
     //    //        WaitUntil.VisibilityOfAllElementsLocatedBy(By.XPath("//div[@class='membership-item_add add-workout']"), 30);
 
     //    //        IReadOnlyCollection<IWebElement> workoutList = Browser._Driver.FindElements(By.XPath("//div[@class='membership-item_add add-workout']"));

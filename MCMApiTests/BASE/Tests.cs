@@ -22,7 +22,7 @@ namespace MCMApiTests
         [Test]
         public void MakeSignIn()
         {
-            var responseLogin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var responseLogin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             SignInAssertions
                 .VerifyIsAdminSignInSuccesfull(responseLogin);
         }
@@ -33,7 +33,7 @@ namespace MCMApiTests
             #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
@@ -41,7 +41,7 @@ namespace MCMApiTests
             #region Add and Activate membership to User
 
 
-            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
@@ -70,7 +70,7 @@ namespace MCMApiTests
         [Test]
         public void CreateProductMembership()
         {
-            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
             DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
@@ -93,26 +93,31 @@ namespace MCMApiTests
         }
 
         [Test]
-        //[Repeat(4)]
         public void Demo()
         {
-            #region Register New User
-            string email = RandomHelper.RandomEmail();
-            SignUpRequest.RegisterNewUser(email);
-            var responseLoginUser = SignInRequest.MakeAdminSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
-            string userId = AppDbContext.User.GetUserData(email).Id;
-            #endregion
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("MCM_BIKINI_SUB");
 
-            #region Add and Activate membership to User
+            //#region Register New User
+            //string email = RandomHelper.RandomEmail();
+            //SignUpRequest.RegisterNewUser(email);
+            //var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            //EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            //string userId = AppDbContext.User.GetUserData(email).Id;
+            //#endregion
 
+            //#region Add and Activate membership to User
 
-            var responseLoginAdmin = SignInRequest.MakeAdminSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("ARD");
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
-            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
-            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
-            #endregion
+            //var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            //var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("ARD");
+            //MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            //int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            //MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            //membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            //MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            //userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            //MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+
+            //#endregion
 
         }
     }
