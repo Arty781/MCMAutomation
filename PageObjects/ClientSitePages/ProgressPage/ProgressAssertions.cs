@@ -12,7 +12,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
     {
         public List<string> GetProgressData()
         {
-            WaitUntil.CustomElevemtIsVisible(inputWeight);
+            WaitUntil.WaitForElementToAppear(inputWeight);
             var progressList = new List<string>();
             
             progressList.Add(inputWeight.GetAttribute("value"));
@@ -27,7 +27,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Progress VerifyAddedProgress(List<string> progressData)
         {
-            WaitUntil.CustomElevemtIsVisible(titleProgressPage, 60);
+            WaitUntil.WaitForElementToAppear(titleProgressPage, 60);
            WaitUntil.WaitSomeInterval(2100);
             var progressList = new List<string>();
             progressList.Add(TextBox.GetText(valueWeight).Trim(new char[] { 'c', 'm', 'k', 'g', 'i', 'n', 'l', 'b', 's' }));

@@ -20,9 +20,9 @@ namespace MCMAutomation.PageObjects
             var dateBefore = DateTime.Now;
             Button.Click(membershipTb);
 
-            WaitUntil.CustomElevemtIsVisible(Pages.AdminPages.MembershipAdmin.btnCreateMembership, 90);
+            WaitUntil.WaitForElementToAppear(Pages.AdminPages.MembershipAdmin.btnCreateMembership, 90);
             var lastMembership = Pages.AdminPages.MembershipAdmin.membershipTitle.Last();
-            WaitUntil.CustomElevemtIsVisible(lastMembership, 30);
+            WaitUntil.WaitForElementToAppear(lastMembership, 30);
             var dateAfter = DateTime.Now;
             Console.WriteLine($"Load time for {Browser._Driver.Url} is: " + (dateAfter - dateBefore));
 
@@ -35,7 +35,7 @@ namespace MCMAutomation.PageObjects
             
             Button.Click(trainingProgramTb);
 
-            WaitUntil.CustomElevemtIsVisible(Pages.WebPages.MembershipUser.programTitle, 30);
+            WaitUntil.WaitForElementToAppear(Pages.WebPages.MembershipUser.programTitle, 30);
             
 
             return this;
@@ -67,7 +67,7 @@ namespace MCMAutomation.PageObjects
         public Sidebar OpenNutritionPage()
         {
             Button.Click(nutritionTb);
-            WaitUntil.CustomElevemtIsVisible(Pages.WebPages.Nutrition.btnCalculate, 30);
+            WaitUntil.WaitForElementToAppear(Pages.WebPages.Nutrition.btnCalculate, 30);
             
             return this;
         }
@@ -80,9 +80,9 @@ namespace MCMAutomation.PageObjects
                 .VerifyEmailDisplayed(email);
             Button.Click(btnUserName);
 
-            WaitUntil.CustomElevemtIsVisible(btnMyAccount, 30);
+            WaitUntil.WaitForElementToAppear(btnMyAccount, 30);
             Button.Click(btnMyAccount);
-            WaitUntil.CustomElevemtIsVisible(Pages.WebPages.UserProfile.inputFirstName, 30);
+            WaitUntil.WaitForElementToAppear(Pages.WebPages.UserProfile.inputFirstName, 30);
 
             return this;
         }
@@ -91,7 +91,7 @@ namespace MCMAutomation.PageObjects
         public Sidebar OpenProgressPage()
         {
             Button.Click(progressTb);
-            WaitUntil.CustomElevemtIsVisible(Pages.WebPages.Progress.titleProgressPage, 30);
+            WaitUntil.WaitForElementToAppear(Pages.WebPages.Progress.titleProgressPage, 30);
             return this;
         }
 

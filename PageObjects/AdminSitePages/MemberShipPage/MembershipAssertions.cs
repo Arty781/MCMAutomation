@@ -22,7 +22,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Program names")]
         public List<string> GetProgramNames()
         {
-            WaitUntil.CustomElevemtIsVisible(nameProgramTitleElem);
+            WaitUntil.WaitForElementToAppear(nameProgramTitleElem);
             var programNames = nameProgramTitle.Where(x => x.Displayed).Select(x=>x.Text).ToList();
             return programNames;
         }
@@ -38,7 +38,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify displaying membership name")]
         public MembershipAdmin VerifyMembershipName(string membershipBeforeEdit, string membershipAfterEdit)
         {
-            WaitUntil.CustomElevemtIsVisible(Browser.FindElement($"//h2[@class='membership-item_title' and contains(text(),'{membershipAfterEdit}')]"));
+            WaitUntil.WaitForElementToAppear(Browser.FindElement($"//h2[@class='membership-item_title' and contains(text(),'{membershipAfterEdit}')]"));
             Assert.IsTrue(membershipBeforeEdit != membershipTitleElem.Text, $"Membership {membershipAfterEdit}is not found");
 
             return this;
@@ -55,7 +55,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify deleting membership")]
         public MembershipAdmin VerifyDeletingMembership(string membership)
         {
-            WaitUntil.CustomElevemtIsVisible(Pages.CommonPages.Common.messageDeleted);
+            WaitUntil.WaitForElementToAppear(Pages.CommonPages.Common.messageDeleted);
 
             InputBox.ElementCtrlA(membershipSearchInput,30, membership);
             Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership)));
@@ -81,7 +81,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify that assign user is displayed in table")]
         public MembershipAdmin VerifyAssignUser()
         {
-            WaitUntil.CustomElevemtIsVisible(emailColumn, 60);
+            WaitUntil.WaitForElementToAppear(emailColumn, 60);
             Assert.AreEqual("qatester92311@xitroo.com", emailColumn.Text);
 
 

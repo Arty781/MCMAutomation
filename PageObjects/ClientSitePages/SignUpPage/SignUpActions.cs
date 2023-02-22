@@ -14,7 +14,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Go to SignUp page")]
         public SignUpUser GoToSignUpPage()
         {
-            WaitUntil.CustomElevemtIsVisible(btnSignUp);
+            WaitUntil.WaitForElementToAppear(btnSignUp);
 
             Button.Click(linkSignUp);
 

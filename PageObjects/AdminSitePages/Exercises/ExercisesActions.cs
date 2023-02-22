@@ -94,7 +94,7 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin RemoveRelatedExercises()
         {
-            WaitUntil.CustomElevemtIsVisible(btnRemoveRelatedExeciseElem);
+            WaitUntil.WaitForElementToAppear(btnRemoveRelatedExeciseElem);
             var removeRelatedbtnList = btnRemoveRelatedExecise.Where(x=>x.Enabled).ToList();
 
             for (int i=0; i < removeRelatedbtnList.Count; i++)

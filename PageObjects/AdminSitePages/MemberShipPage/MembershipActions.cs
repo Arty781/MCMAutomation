@@ -18,7 +18,7 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin ClickCreateBtn()
         {
 
-            WaitUntil.CustomElevemtIsVisible(btnCreateMembership);
+            WaitUntil.WaitForElementToAppear(btnCreateMembership);
             Button.Click(btnCreateMembership);
 
             return this;
@@ -28,7 +28,7 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin ClickEditMembershipBtn(string title)
         {
 
-            WaitUntil.CustomElevemtIsVisible(membershipTitle.FirstOrDefault());
+            WaitUntil.WaitForElementToAppear(membershipTitle.FirstOrDefault());
             SwitcherHelper.ClickEditMembershipBtn(title);
 
             return this;
@@ -154,9 +154,9 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Click \"Add programs\" button")]
         public MembershipAdmin ClickAddProgramsBtn(string memberName)
         {
-            WaitUntil.CustomElevemtIsVisible(membershipAddProgramsBtn, 30);
+            WaitUntil.WaitForElementToAppear(membershipAddProgramsBtn, 30);
             SwitcherHelper.ClickAddProgramBtn(memberName);
-            WaitUntil.CustomElevemtIsVisible(btnAddProgram, 30);
+            WaitUntil.WaitForElementToAppear(btnAddProgram, 30);
 
             return this;
         }
@@ -374,7 +374,7 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin ClickAddWorkoutBtn()
         {
             WaitUntil.WaitSomeInterval(1000);
-            WaitUntil.CustomElevemtIsVisible(btnProgramAddWorkoutsElem);
+            WaitUntil.WaitForElementToAppear(btnProgramAddWorkoutsElem);
             var listPrograms = btnProgramAddWorkouts.Where(x => x.Displayed).ToList();
             Button.Click(listPrograms[0]);
 
@@ -445,7 +445,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Workout names")]
         public List<string> GetWorkoutNames()
         {
-            WaitUntil.CustomElevemtIsVisible(nameWorkoutTitleElem, 30);
+            WaitUntil.WaitForElementToAppear(nameWorkoutTitleElem, 30);
 
             var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).Select(x => x.Text).ToList();
 
@@ -473,7 +473,7 @@ namespace MCMAutomation.PageObjects
         private void SelectPhase(string programName)
         {
             InputBox.CbbxElement(cbbxPhaseName, 10, programName);
-            WaitUntil.CustomElevemtIsVisible(Browser.FindElement($"//h3[text()='Program']/parent::div//span[@title='{programName}']"));
+            WaitUntil.WaitForElementToAppear(Browser.FindElement($"//h3[text()='Program']/parent::div//span[@title='{programName}']"));
             WaitUntil.WaitSomeInterval(500);
         }
 
@@ -485,11 +485,11 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Workout names")]
         private List<string> GetWorkoutNames(List<IWebElement> workoutButtons)
         {
-            WaitUntil.CustomElevemtIsVisible(nameWorkoutTitleElem, 30);
+            WaitUntil.WaitForElementToAppear(nameWorkoutTitleElem, 30);
 
             var workoutNames = nameWorkoutTitle.Where(x => x.Displayed).Select(x => x.Text).ToList();
             Button.Click(workoutButtons.FirstOrDefault());
-            WaitUntil.CustomElevemtIsVisible(cbbxWorkoutsTitle);
+            WaitUntil.WaitForElementToAppear(cbbxWorkoutsTitle);
 
             return workoutNames;
         }
@@ -502,7 +502,7 @@ namespace MCMAutomation.PageObjects
             SwitcherHelper.SelectCopyProgram(membershipData[randomIndex].ProgramName);
             SwitcherHelper.SelectCopyWorkout(membershipData[randomIndex].WorkoutName);
             Button.Click(btnCopy);
-            WaitUntil.CustomElevemtIsVisible(exerciseTitleRow);
+            WaitUntil.WaitForElementToAppear(exerciseTitleRow);
         }
 
         private void ClickBackButton(int times)
@@ -526,7 +526,7 @@ namespace MCMAutomation.PageObjects
                 var listWorkouts = btnAddExercises.Where(x => x.Displayed).ToList();
                 List<string> workoutNames = GetWorkoutNames();
                 Button.Click(btnAddExercisesElement);
-                WaitUntil.CustomElevemtIsVisible(addExerciseBtn);
+                WaitUntil.WaitForElementToAppear(addExerciseBtn);
                 Button.Click(addExerciseBtn);
                 foreach (string workoutName in workoutNames)
                 {
@@ -693,7 +693,7 @@ namespace MCMAutomation.PageObjects
         {
 
             Button.Click(membershipAddUserBtn);
-            WaitUntil.CustomElevemtIsVisible(userCbbx);
+            WaitUntil.WaitForElementToAppear(userCbbx);
             InputBox.ElementCtrlA(userCbbx, 60, email + Keys.Enter);
 
             Button.Click(addUserBtn);
@@ -705,7 +705,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Add next phases dependency")]
         public MembershipAdmin AddNextPhaseDependency()
         {
-            WaitUntil.CustomElevemtIsVisible(nameProgramTitleElem);
+            WaitUntil.WaitForElementToAppear(nameProgramTitleElem);
             var programNames = nameProgramTitle.Where(x => x.Displayed).Select(x=>x).ToList();
             foreach(var program in programNames)
             {

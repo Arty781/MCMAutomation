@@ -12,15 +12,15 @@ namespace MCMAutomation.Helpers
     {
         public static void Click(IWebElement element)
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
             WaitUntil.WaitSomeInterval(500);
-            WaitUntil.CustomElevemtIsVisible(element, 30);
+            WaitUntil.WaitForElementToAppear(element, 30);
 
             element.Click();
         }
         public static void ClickJS(IWebElement element)
         {
-            WaitUntil.CustomElevemtIsVisible(element, 10);
+            WaitUntil.WaitForElementToAppear(element, 10);
             IJavaScriptExecutor ex = (IJavaScriptExecutor)Browser._Driver;
             ex.ExecuteScript("arguments[0].click();", element);
         }
@@ -44,8 +44,8 @@ namespace MCMAutomation.Helpers
             
             try 
             {
-                WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 10);
-                WaitUntil.CustomElevemtIsVisible(element, seconds);
+                WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 10);
+                WaitUntil.WaitForElementToAppear(element, seconds);
                 element.Click();
                 element.Clear();
                 WaitUntil.WaitSomeInterval(75);
@@ -61,8 +61,8 @@ namespace MCMAutomation.Helpers
 
             try
             {
-                WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 10);
-                WaitUntil.CustomElevemtIsVisible(element, seconds);
+                WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 10);
+                WaitUntil.WaitForElementToAppear(element, seconds);
                 element.SendKeys(Keyss.Control() + "A");
                 element.SendKeys(Keys.Delete);
                 WaitUntil.WaitSomeInterval(75);
@@ -78,8 +78,8 @@ namespace MCMAutomation.Helpers
 
             try
             {
-                WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
-                WaitUntil.CustomElevemtIsVisible(element, seconds);
+                WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
+                WaitUntil.WaitForElementToAppear(element, seconds);
                 element.SendKeys(data + Keys.Enter);
             }
             catch (NoSuchElementException) { }
@@ -93,30 +93,30 @@ namespace MCMAutomation.Helpers
     {
         public static string GetText(IWebElement element)
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
            return element.Text;
         }
 
         public static string GetAttribute(IWebElement element, string attribute)
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(element);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToAppear(element);
             return element.GetAttribute(attribute);
             
         }
 
         public static void CopyTextToBuffer(IWebElement element)
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(element);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToAppear(element);
             element.SendKeys(Keyss.Control() + "A");
             element.SendKeys(Keyss.Control() + "C");
         }
 
         public static void PasteCopiedText(IWebElement element)
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(element);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToAppear(element);
             element.SendKeys(Keyss.Control() + "A" + Keyss.Control() + "V");
         }
     }

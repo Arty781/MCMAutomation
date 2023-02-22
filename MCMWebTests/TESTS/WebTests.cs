@@ -448,13 +448,13 @@ namespace MCMAutomation.WebTests
 
             #region Variables
 
-            string tier = string.Empty;
-            string phase = string.Empty;
-            string diet = string.Empty;
+            string tier;
+            string phase;
+            string diet;
             string selectedAdditionalOption = string.Empty;
             string textSelectedAdditionalOptions = string.Empty;
             string textOfMoreThan2KgSelected = string.Empty;
-            double previousCalories = 0;
+            double previousCalories;
 
             #endregion
 
@@ -3063,16 +3063,16 @@ namespace MCMAutomation.WebTests
                 .EnterNewEmail()
                 .EnterEstimatedBodyFat("26");
 
-            List<string> dataBeforeSaving = Pages.WebPages.UserProfile.GetUserDataBeforeSaving();
+            List<string> expectedData = Pages.WebPages.UserProfile.GetUserDataBeforeSaving();
 
             Pages.CommonPages.Common
                 .ClickSaveBtn();
             Pages.CommonPages.Sidebar
                 .OpenMyAccount(email);
 
-            List<string> dataAfterSaving = Pages.WebPages.UserProfile.GetUserDataBeforeSaving();
+            List<string> actualData = Pages.WebPages.UserProfile.GetUserDataBeforeSaving();
             Pages.WebPages.UserProfile
-                .VerifyUserData(dataBeforeSaving, dataAfterSaving);
+                .VerifyUserData(expectedData, actualData);
 
             #region Postconditions
 

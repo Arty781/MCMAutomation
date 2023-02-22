@@ -8,25 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MCMAutomation.PageObjects.ClientSitePages;
+using System.Collections.Concurrent;
 
 namespace MCMAutomation.PageObjects
 {
-    public class Pages
+    public static class Pages
     {
-        private static readonly IDictionary<Type, object> _pageCache = new Dictionary<Type, object>();
-
         public static T GetPage<T>() where T : new()
         {
-            var type = typeof(T);
-            if (!_pageCache.ContainsKey(type))
-            {
-                var page = new T();
-                IWebDriver driver = Browser._Driver;
-                PageFactory.InitElements(driver, page);
-                _pageCache.Add(type, page);
-            }
-
-            return (T)_pageCache[type];
+            var page = new T();
+            IWebDriver driver = Browser._Driver;
+            PageFactory.InitElements(driver, page);
+            return page;
         }
 
         public static class CommonPages
@@ -53,4 +46,6 @@ namespace MCMAutomation.PageObjects
             public static Progress Progress => GetPage<Progress>();
         }
     }
+
+
 }

@@ -18,97 +18,59 @@ namespace MCMAutomation.Helpers
             Task.Delay(TimeSpan.FromMilliseconds(milliseconds)).Wait();
         }
 
-        public static void CustomElevemtIsVisible(IWebElement element, int seconds = 10)
+        public static void WaitForElementToAppear(IWebElement element, int seconds = 10)
         {
-            Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
-            WebDriverWait wait = new WebDriverWait(Browser._Driver, TimeSpan.FromSeconds(seconds));
-            wait.PollingInterval = TimeSpan.FromMilliseconds(100);
-            wait.Message = $"Timeout after {seconds}. The search element is not displayed";
+            Task.Delay(TimeSpan.FromMilliseconds(550)).Wait();
+            IWait<IWebDriver> wait = new DefaultWait<IWebDriver>(Browser._Driver)
+            {
+                Timeout = TimeSpan.FromSeconds(seconds),
+                PollingInterval = TimeSpan.FromMilliseconds(100),
+                Message = "The search element is not visible"
+            };
             try
             {
-                wait.Until(e =>
+                wait.Until(driver =>
                 {
                     try
                     {
-                        if (element.Enabled == true)
+                        if (element?.Enabled == true || element?.Displayed == true)
                         {
                             return true;
                         }
                         return false;
                     }
-                    catch (Exception) { return false; }
-
+                    catch(Exception) { return false; }
                 });
-                
-            }
-            catch (Exception) { }
-            
-            Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
-
+                Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
+            }catch(Exception) { }
         }
 
-        public static void CustomElevemtIsInvisible(IWebElement element, int seconds = 10)
+        public static void WaitForElementToDisappear(IWebElement element, int seconds = 10)
         {
             Task.Delay(TimeSpan.FromMilliseconds(550)).Wait();
-            WebDriverWait wait = new(Browser._Driver, TimeSpan.FromSeconds(seconds))
+            IWait<IWebDriver> wait = new DefaultWait<IWebDriver>(Browser._Driver)
             {
+                Timeout = TimeSpan.FromSeconds(seconds),
                 PollingInterval = TimeSpan.FromMilliseconds(100),
-                Message = "The search element is displayed"
+                Message = "The search element is still visible"
             };
             try
             {
-                wait.Until(e =>
-                {
-                    try
-                    {
-                        if (element.Enabled == true && element.Displayed == true)
-                        {
-                            return false;
-                        }
-                        return true;
-                    }
-                    catch (NoSuchElementException) { return true; }
-                    catch (StaleElementReferenceException) { return true; }
-
-                });
-                
+                wait.Until(driver =>
+                            {
+                                try
+                                {
+                                    if (element?.Enabled != true || element?.Displayed != true)
+                                    {
+                                        return true;
+                                    }
+                                    return false;
+                                }
+                                catch(Exception) { return true; }
+                            });
+                Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
             }
-            catch (NoSuchElementException) { }
-            catch (StaleElementReferenceException) { }
-            
-            Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
-        }
-
-        public static void LoaderIsInvisible(IWebElement element, int seconds = 10)
-        {
-            Task.Delay(TimeSpan.FromMilliseconds(150)).Wait();
-            WebDriverWait wait = new(Browser._Driver, TimeSpan.FromSeconds(seconds))
-            {
-                PollingInterval = TimeSpan.FromMilliseconds(100),
-                Message = $"Timeout after {seconds}. The search element is displayed"
-            };
-            try
-            {
-                wait.Until(e =>
-                {
-                    try
-                    {
-                        if (element.Enabled == true && element.Displayed == true)
-                        {
-                            return false;
-                        }
-                        return true;
-                    }
-                    catch (NoSuchElementException) { return true; }
-                    catch (StaleElementReferenceException) { return true; }
-
-                });
-                wait.Message = $"Timeout after {seconds}. The search element is displayed";
-            }
-            catch (NoSuchElementException) { }
-            catch (StaleElementReferenceException) { }
-
-            Task.Delay(TimeSpan.FromMilliseconds(150)).Wait();
+            catch(Exception) { }
         }
 
 

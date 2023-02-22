@@ -82,5 +82,10 @@ namespace MCMAutomation.Helpers
         {
             return DateTime.Now.AddYears(-Random.Next(18, 65)).ToString("yyyy-MM-dd");
         }
+
+        public static string RandomDateInThePast()
+        {
+            return DateTime.Now.AddDays(-Random.Next(1, 365)).ToString("yyyy-MM-dd");
+        }
     }
 }

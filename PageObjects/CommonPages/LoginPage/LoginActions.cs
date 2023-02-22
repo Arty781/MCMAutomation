@@ -42,9 +42,9 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Logout as admin")]
         public Login GetAdminLogout()
         {
-            WaitUntil.CustomElevemtIsVisible(adminLogOutBtn, 30);
+            WaitUntil.WaitForElementToAppear(adminLogOutBtn, 30);
             Button.Click(adminLogOutBtn);
-            WaitUntil.CustomElevemtIsVisible(signInBtn, 30);
+            WaitUntil.WaitForElementToAppear(signInBtn, 30);
 
             return this;
         }
@@ -80,12 +80,12 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Logout as user")]
         public Login GetUserLogout()
         {
-            WaitUntil.CustomElevemtIsVisible(userContextMenu, 30);
+            WaitUntil.WaitForElementToAppear(userContextMenu, 30);
             Button.Click(userContextMenu);
 
-            WaitUntil.CustomElevemtIsVisible(userLogoutBtn, 30);
+            WaitUntil.WaitForElementToAppear(userLogoutBtn, 30);
             Button.Click(userLogoutBtn);
-            WaitUntil.CustomElevemtIsVisible(signInBtn, 30);
+            WaitUntil.WaitForElementToAppear(signInBtn, 30);
 
             return this;
         }

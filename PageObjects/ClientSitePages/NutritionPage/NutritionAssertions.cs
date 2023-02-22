@@ -123,112 +123,112 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             var finishcalories = 0.0;
 
-            if (goal == TDEE.Goals[0])
+            if (goal == TDEE.GOAL_CUT)
             {
                 if (SKU == MembershipsSKU.MEMBERSHIP_SKU[0])
                 {
                     finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
                 }
-                else if (tier == TDEE.Tiers[0])
+                else if (tier == TDEE.TIER_1)
                 {
 
-                    if (phase == TDEE.Phases[0])
+                    if (phase == TDEE.PHASE_1)
                     {
                         finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[1])
+                    else if (phase == TDEE.PHASE_2)
                     {
                         finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[2])
+                    else if (phase == TDEE.PHASE_3)
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                else if (tier == TDEE.Tiers[1])
+                else if (tier == TDEE.TIER_2)
                 {
-                    if (phase == TDEE.Phases[0])
+                    if (phase == TDEE.PHASE_1)
                     {
                         finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[1])
+                    else if (phase == TDEE.PHASE_2)
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[2])
+                    else if (phase == TDEE.PHASE_3)
                     {
                         finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                else if (tier == TDEE.Tiers[2])
+                else if (tier == TDEE.TIER_3)
                 {
-                    if (phase == TDEE.Phases[0])
+                    if (phase == TDEE.PHASE_1)
                     {
                         finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[1])
+                    else if (phase == TDEE.PHASE_2)
                     {
                         finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[2])
+                    else if (phase == TDEE.PHASE_3)
                     {
                         finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
                     }
                 }
             }
 
-            else if (goal == TDEE.Goals[1])
+            else if (goal == TDEE.GOAL_MAINTAIN)
             {
                 finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
 
             }
 
-            else if (goal == TDEE.Goals[2])
+            else if (goal == TDEE.GOAL_BUILD)
             {
-                if (tier == TDEE.Tiers[0])
+                if (tier == TDEE.TIER_1)
                 {
-                    if (phase == TDEE.Phases[0])
+                    if (phase == TDEE.PHASE_1)
                     {
                         finishcalories = Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                else if (tier == TDEE.Tiers[1])
+                else if (tier == TDEE.TIER_2)
                 {
-                    if (phase == TDEE.Phases[0])
+                    if (phase == TDEE.PHASE_1)
                     {
                         finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[1])
+                    else if (phase == TDEE.PHASE_2)
                     {
                         finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[2])
+                    else if (phase == TDEE.PHASE_3)
                     {
                         finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
                     }
                 }
 
-                else if (tier == TDEE.Tiers[2])
+                else if (tier == TDEE.TIER_3)
                 {
-                    if (phase == TDEE.Phases[0])
+                    if (phase == TDEE.PHASE_1)
                     {
                         finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[1])
+                    else if (phase == TDEE.PHASE_2)
                     {
                         finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
                     }
-                    else if (phase == TDEE.Phases[2])
+                    else if (phase == TDEE.PHASE_3)
                     {
                         finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
                     }
                 }
             }
 
-            else if (goal == TDEE.Goals[3])
+            else if (goal == TDEE.GOAL_REVERSE)
             {
 
                 if (phase == ArdPhases.ardPhase[0])
@@ -239,12 +239,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 {
                     if (valuMoreThan2Kg == "No")
                     {
-                        if (tier == TDEE.Tiers[3])
+                        if (tier == TDEE.TIER_CONSERVATIVE)
                         {
                             //conservative
                             finishcalories = Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (tier == TDEE.Tiers[4])
+                        else if (tier == TDEE.TIER_AGGRESSIVE)
                         {
                             //aggressive
                             finishcalories = Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero);
@@ -265,83 +265,117 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public void VerifyNutritionData(DB.AspNetUsers userData, string goal, string tier, string SKU, string gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories)
         {
-            #region Protein Calculation
+            var protein = CalculateProtein(userData, goal, tier, gender);
+            var fat = CalculateFats(userData, diet);
+            var carbs = CalculateCarbs(expectedCalories, protein, fat);
+            CalculateCalories(userData, goal, tier, SKU, calories, phase, valuMoreThan2Kg, previousCalories, carbs, protein, fat);
+        }
 
-            var weight = ((double)userData.Weight);
-            var bodyFat = userData.Bodyfat;
-            var protein = 0.0;
-
-            if (goal == TDEE.Goals[1] || goal == TDEE.Goals[2] || goal == TDEE.Goals[3])
+        private int CalculateProtein(DB.AspNetUsers userData, string goal, string tier, string gender)
+        {
+            double weight = (double)userData.Weight;
+            double bodyFat = userData.Bodyfat;
+            double protein;
+            switch (goal)
             {
-                protein = weight * 2;
-            }
-            else
-            {
-                if (
-                    (gender == "Female" && bodyFat > 30) ||
-                    (gender == "Male" && bodyFat > 25)
-                )
-                {
-                    protein = weight * 1.6;
-                }
-                else if (SKU == "PP-1")
-                {
+                case TDEE.GOAL_BUILD:
+                case TDEE.GOAL_MAINTAIN:
+                case TDEE.GOAL_REVERSE:
                     protein = weight * 2;
-                }
-                else if (tier == TDEE.Tiers[0])
-                {
-                    protein = weight * 2;
-                }
-                else if (tier == TDEE.Tiers[1])
-                {
-                    protein = weight * 2;
-                }
-                else if (tier == TDEE.Tiers[2])
-                {
-                    protein = weight * 2.2;
-                }
+                    protein = (int)protein;
+                    break;
+                default:
+                    if ((gender == "Female" && bodyFat > 30) || (gender == "Male" && bodyFat > 25))
+                    {
+                        protein = weight * 1.6;
+                        protein = (int)protein;
+                    }
+                    else
+                    {
+                        protein = tier switch
+                        {
+                            TDEE.TIER_1 or TDEE.TIER_2 => weight * 2,
+                            TDEE.TIER_CONSERVATIVE or TDEE.TIER_3 => Math.Round(weight * 2.2, 0, MidpointRounding.AwayFromZero),
+                            _ => throw new ArgumentException("Invalid tier value"),
+                        };
+                        protein = (int)protein;
+                    }
+                    break;
             }
-            protein = Math.Round(protein, 0, MidpointRounding.AwayFromZero);
 
-            var actualProtein = valueOfProteinCarbsFat[0].Text;
-            actualProtein = actualProtein.Trim(new char[] { 'g' });
+            double actualProtein = double.Parse(valueOfProteinCarbsFat[0].Text.Trim('g'));
 
-            Console.WriteLine($"Expected protein is \"{protein}\", actual is \"{actualProtein}\"");
-            Assert.IsTrue(protein.ToString() == actualProtein);
-
-            #endregion
-
-            #region Carbs and fats Calculation
-
-            var fat = 0.0;
-
-            var getFat = valueOfProteinCarbsFat[2].Text.Trim(new char[] { 'g' });
-            var actualFat = double.Parse(getFat);
-
-            if (diet == TDEE.Diets[0])
+            if (protein != actualProtein)
             {
-                fat = weight * 0.7;
+                throw new ArgumentException($"Expected protein is {protein}, but actual is {actualProtein}");
             }
-            else if (diet == TDEE.Diets[1])
-            {
-                fat = weight * 0.8;
-            }
-            else if (diet == TDEE.Diets[2])
-            {
-                fat = weight * 1;
-            }
-            fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
 
+            return (int)Math.Round(protein, 0, MidpointRounding.AwayFromZero);
+        }
+
+        private double CalculateFats(DB.AspNetUsers userData, string diet)
+        {
+            double weight = (double)userData.Weight;
+            double fat;
+
+            switch (diet)
+            {
+                case TDEE.DIET_1:
+                    fat = weight * 0.7;
+                    fat = (int)fat;
+                    break;
+                case TDEE.DIET_2:
+                    fat = weight * 0.8;
+                    fat = (int)fat;
+                    break;
+                case TDEE.DIET_3:
+                    fat = weight * 1;
+                    fat = (int)fat;
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid diet value: {diet}");
+            }
+
+            double actualFat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
+
+            if (fat != actualFat)
+            {
+                throw new ArgumentException($"Expected fat is {actualFat}, but actual is {fat}");
+            }
+
+            return actualFat;
+        }
+        private double CalculateCarbs(double expectedCalories, double protein, double fat)
+        {
             var remainderCarbs = expectedCalories - protein * 4 - fat * 9;
             var carbs = remainderCarbs / 4;
             carbs = Math.Round(carbs, 0, MidpointRounding.AwayFromZero);
+
+            if (carbs < 0)
+            {
+                throw new ArgumentException("Invalid macronutrient values: negative carbohydrates");
+            }
+
+            double actualCarbs = carbs;
+            if (carbs != actualCarbs)
+            {
+                throw new ArgumentException($"Expected carbs is {actualCarbs}, but actual is {carbs}");
+            }
+
+            return actualCarbs;
+        }
+        private void CalculateCalories(DB.AspNetUsers userData, string goal, string tier, string SKU, double calories, string phase, string valuMoreThan2Kg, double previousCalories, double carbs, double protein, double fat)
+        {
+            var weight = ((double)userData.Weight);
+            var getFat = valueOfProteinCarbsFat[2].Text.Trim(new char[] { 'g' });
+            var actualFat = double.Parse(getFat);
             if (carbs < 30)
             {
                 carbs = 30;
                 fat = weight * 0.6;
                 fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
 
-                calories = (carbs*4) + (protein*4) +(fat*9);
+                calories = (carbs * 4) + (protein * 4) + (fat * 9);
 
                 var actualCalories = double.Parse(valueCalories.Text);
                 Console.WriteLine($"Expected calories are \"{calories}\", actual are \"{actualCalories}\"");
@@ -359,143 +393,135 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
                 var finishcalories = 0.0;
 
-                if (goal == TDEE.Goals[0])
+                switch (goal)
                 {
-                    if (SKU == MembershipsSKU.MEMBERSHIP_SKU[0])
-                    {
-                        finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
-                    }
-                    else if (tier == TDEE.Tiers[0])
-                    {
-
-                        if (phase == TDEE.Phases[0])
+                    case TDEE.GOAL_CUT:
+                        if (SKU == MembershipsSKU.MEMBERSHIP_SKU[0])
                         {
-                            finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
+                            finishcalories = Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero);
                         }
-                        else if (phase == TDEE.Phases[1])
+                        else
                         {
-                            finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[2])
-                        {
-                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
-                        }
-                    }
-
-                    else if (tier == TDEE.Tiers[1])
-                    {
-                        if (phase == TDEE.Phases[0])
-                        {
-                            finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[1])
-                        {
-                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[2])
-                        {
-                            finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
-                        }
-                    }
-
-                    else if (tier == TDEE.Tiers[2])
-                    {
-                        if (phase == TDEE.Phases[0])
-                        {
-                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[1])
-                        {
-                            finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[2])
-                        {
-                            finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
-                        }
-                    }
-                }
-
-                else if (goal == TDEE.Goals[1])
-                {
-                    finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
-
-                }
-
-                else if (goal == TDEE.Goals[2])
-                {
-                    if (tier == TDEE.Tiers[0])
-                    {
-                        if (phase == TDEE.Phases[0])
-                        {
-                            finishcalories = Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero);
-                        }
-                    }
-
-                    else if (tier == TDEE.Tiers[1])
-                    {
-                        if (phase == TDEE.Phases[0])
-                        {
-                            finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[1])
-                        {
-                            finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[2])
-                        {
-                            finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
-                        }
-                    }
-
-                    else if (tier == TDEE.Tiers[2])
-                    {
-                        if (phase == TDEE.Phases[0])
-                        {
-                            finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[1])
-                        {
-                            finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
-                        }
-                        else if (phase == TDEE.Phases[2])
-                        {
-                            finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
-                        }
-                    }
-                }
-
-                else if (goal == TDEE.Goals[3])
-                {
-
-                    if (phase == ArdPhases.ardPhase[0])
-                    {
-                        finishcalories = Math.Round((previousCalories + 300), 0, MidpointRounding.AwayFromZero);
-                    }
-                    else
-                    {
-                        if (valuMoreThan2Kg == "No")
-                        {
-                            if (tier == TDEE.Tiers[3])
+                            switch (tier)
                             {
-                                //conservative
-                                finishcalories = Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero);
+                                case TDEE.TIER_1:
+                                    switch (phase)
+                                    {
+                                        case TDEE.PHASE_1:
+                                            finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                        case TDEE.PHASE_2:
+                                            finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                        case TDEE.PHASE_3:
+                                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                    }
+                                    break;
+                                case TDEE.TIER_2:
+                                    switch (phase)
+                                    {
+                                        case TDEE.PHASE_1:
+                                            finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                        case TDEE.PHASE_2:
+                                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                        case TDEE.PHASE_3:
+                                            finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                    }
+                                    break;
+                                case TDEE.TIER_3:
+                                    switch (phase)
+                                    {
+                                        case TDEE.PHASE_1:
+                                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                        case TDEE.PHASE_2:
+                                            finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                        case TDEE.PHASE_3:
+                                            finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
+                                            break;
+                                    }
+                                    break;
                             }
-                            else if (tier == TDEE.Tiers[4])
-                            {
-                                //aggressive
-                                finishcalories = Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero);
-                            }
-                        }
-                        else if (valuMoreThan2Kg == "Yes")
+                        } 
+                        break;
+                    case TDEE.GOAL_MAINTAIN:
+                        finishcalories = Math.Round((calories), 0, MidpointRounding.AwayFromZero);
+                        break;
+                    case TDEE.GOAL_BUILD:
+                        switch (tier)
                         {
-                            //weight increased more than 2kg
-                            finishcalories = Math.Round((previousCalories), 0, MidpointRounding.AwayFromZero);
+                            case TDEE.TIER_1:
+                                switch (phase)
+                                {
+                                    case TDEE.PHASE_1:
+                                        finishcalories = Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero);
+                                        break;
+                                }
+                                break;
+                            case TDEE.TIER_2:
+                                switch (phase)
+                                {
+                                    case TDEE.PHASE_1:
+                                        finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
+                                        break;
+                                    case TDEE.PHASE_2:
+                                        finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
+                                        break;
+                                    case TDEE.PHASE_3:
+                                        finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
+                                        break;
+                                }
+                                break;
+                            case TDEE.TIER_3:
+                                switch (phase)
+                                {
+                                    case TDEE.PHASE_1:
+                                        finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
+                                        break;
+                                    case TDEE.PHASE_2:
+                                        finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
+                                        break;
+                                    case TDEE.PHASE_3:
+                                        finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
+                                        break;
+                                }
+                                break;
                         }
+                        break;
+                    case TDEE.GOAL_REVERSE:
+                        if (phase == ArdPhases.ardPhase[0])
+                        {
+                            finishcalories = Math.Round((previousCalories + 300), 0, MidpointRounding.AwayFromZero);
+                        }
+                        else
+                        {
+                            if (valuMoreThan2Kg == "No")
+                            {
+                                if (tier == TDEE.TIER_CONSERVATIVE)
+                                {
+                                    //conservative
+                                    finishcalories = Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero);
+                                }
+                                else if (tier == TDEE.TIER_AGGRESSIVE)
+                                {
+                                    //aggressive
+                                    finishcalories = Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero);
+                                }
+                            }
+                            else if (valuMoreThan2Kg == "Yes")
+                            {
+                                //weight increased more than 2kg
+                                finishcalories = Math.Round((previousCalories), 0, MidpointRounding.AwayFromZero);
+                            }
 
-                    }
-
+                        }
+                        break;
                 }
-
                 #endregion
 
                 var actualCalories = double.Parse(valueCalories.Text);
@@ -506,13 +532,6 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 Console.WriteLine($"Expected fat is \"{fat}\", actual is \"{actualFat}\"");
                 Assert.AreEqual(fat, actualFat);
             }
-
-            #endregion
-        }
-
-        private void CalculateProtein()
-        {
-
         }
     }
 }

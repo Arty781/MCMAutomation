@@ -1022,6 +1022,73 @@ namespace MCMAutomation.Helpers
 
                 return user;
             }
+
+            public static DB.AspNetUsers GetLastUser()
+            {
+                var user = new DB.AspNetUsers();
+                string query = "SELECT TOP(1) *" +
+                               "FROM [AspNetUsers] " +
+                               "ORDER BY DateTime DESC";
+
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        user.Id = reader.GetString(0);
+                        user.FirstName = reader.GetString(1);
+                        user.LastName = reader.GetString(2);
+                        user.Email = reader.GetString(3);
+                        user.ConversionSystem = reader.GetInt32(4);
+                        user.Gender = reader.GetInt32(5);
+                        user.Birthdate = reader.GetDateTime(6);
+                        user.Weight = reader.GetDecimal(7);
+                        user.Height = reader.GetInt32(8);
+                        user.ActivityLevel = reader.GetInt32(9);
+                        user.Bodyfat = reader.GetInt32(10);
+                        user.Calories = reader.GetInt32(11);
+                        user.Active = reader.GetBoolean(12);
+                        user.DateTime = reader.GetDateTime(13);
+                        user.UserName = reader.GetString(14);
+                        user.NormalizedUserName = reader.GetString(15);
+                        user.NormalizedEmail = reader.GetString(16);
+                        user.EmailConfirmed = reader.GetBoolean(17);
+                        user.PasswordHash = reader.GetString(18);
+                        user.SecurityStamp = reader.GetString(19);
+                        user.ConcurrencyStamp = reader.GetString(20);
+                        user.PhoneNumber = null;
+                        user.PhoneNumberConfirmed = reader.GetBoolean(22);
+                        user.TwoFactorEnabled = reader.GetBoolean(23);
+                        user.LockoutEnd = null;
+                        user.LockoutEnabled = reader.GetBoolean(25);
+                        user.AccessFailedCount = reader.GetInt32(26);
+                        user.IsDeleted = reader.GetBoolean(27);
+                        user.IsMainAdmin = reader.GetBoolean(28);
+                        user.LastGeneratedIdentityToken = null;
+                        user.Carbs = reader.GetInt32(30);
+                        user.Fats = reader.GetInt32(31);
+                        user.MaintenanceCalories = reader.GetInt32(32);
+                        user.Protein = reader.GetInt32(33);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+
+                return user;
+            }
+
             public static void DeleteUser(string email)
             {
                 string query = String.Concat("delete from DeletedUserExercises where UserId in (" +
@@ -1036,6 +1103,9 @@ namespace MCMAutomation.Helpers
                                                                         "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
                                              "Update UserMemberships set isdeleted = 1, UserId=null where UserId in (" +
                                                                         "SELECT Id FROM [AspNetUsers] where Email like @email)\r\n" +
+                                             "delete from Media where ProgressId in (" +
+                                                                        "select id from Progress where UserId in (" +
+                                                                        "SELECT id FROM [dbo].[AspNetUsers] where email like @email))\r\n" +
                                              "delete from Media where UserId in (" +
                                                                         "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
                                              "delete from Progress where UserId in (" +
@@ -1070,6 +1140,46 @@ namespace MCMAutomation.Helpers
                     // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
+            }
+
+            public static List<DB.ProgressDaily> GetProgressDailyByUserId(string id)
+            {
+                var list = new List<DB.ProgressDaily>();
+                string query = "SELECT *\r\n  " +
+                               "FROM [dbo].[DailyProgress]\r\n  " +
+                               "where UserId = @UserId " +
+                               "order by Date";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    command.Parameters.AddWithValue("@UserId", DbType.String).Value = id;
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var progressRow = new DB.ProgressDaily();
+                        progressRow.Id = reader.GetInt32(0);
+                        progressRow.Date = reader.GetDateTime(1);
+                        progressRow.Weight = reader.GetDecimal(2);
+                        progressRow.UserId = reader.GetString(3);
+                        progressRow.CreationDate = reader.GetDateTime(4);
+                        progressRow.IsDeleted = reader.GetBoolean(5);
+                        list.Add(progressRow);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+                return list;
             }
         }
 

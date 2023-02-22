@@ -132,7 +132,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             string targetHeight = conversionSystem == "Imperial" ? "5 ft 9 in" : "175 cm";
 
             Button.ClickJS(inputHeight);
-            WaitUntil.CustomElevemtIsVisible(itemHeightActive);
+            WaitUntil.WaitForElementToAppear(itemHeightActive);
             string activeElem = itemHeightActive.Text;
             var heightsAfterActive = Element.FindElementsByXpath("//div[@class='swiper-wrapper']//div[@class='swiper-slide swiper-slide-active']/following::div[contains(@class,'swiper-slide')]");
             if (activeElem != targetHeight)
@@ -197,7 +197,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step02SelectCut()
         {
-            WaitUntil.CustomElevemtIsVisible(btnCut);
+            WaitUntil.WaitForElementToAppear(btnCut);
             btnCut.Click();
             btnCut.Click();
             WaitUntil.WaitSomeInterval(250);
@@ -210,14 +210,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             {
                 if (btnCut.Displayed == true)
                 {
-                    WaitUntil.CustomElevemtIsVisible(btnMaintain);
+                    WaitUntil.WaitForElementToAppear(btnMaintain);
                     btnMaintain.Click();
                     WaitUntil.WaitSomeInterval(250);
                 }
             }
             catch (NoSuchElementException)
             {
-                WaitUntil.CustomElevemtIsVisible(btnMaintain);
+                WaitUntil.WaitForElementToAppear(btnMaintain);
                 btnMaintain.Click();
                 btnMaintain.Click();
                 WaitUntil.WaitSomeInterval(250);
@@ -229,14 +229,14 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step02SelectBuild()
         {
-            WaitUntil.CustomElevemtIsVisible(btnBuild);
+            WaitUntil.WaitForElementToAppear(btnBuild);
             btnBuild.Click();
             WaitUntil.WaitSomeInterval(250);
             return this;
         }
         public Nutrition Step02SelectReverse()
         {
-            WaitUntil.CustomElevemtIsVisible(btnReverse);
+            WaitUntil.WaitForElementToAppear(btnReverse);
             btnReverse.Click();
             WaitUntil.WaitSomeInterval(250);
             return this;
@@ -247,7 +247,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step03SelectTier1()
         {
-            WaitUntil.CustomElevemtIsVisible(btnTier1);
+            WaitUntil.WaitForElementToAppear(btnTier1);
             btnTier1.Click();
             btnTier1.Click();
             WaitUntil.WaitSomeInterval(250);
@@ -256,7 +256,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step03SelectTier2()
         {
-            WaitUntil.CustomElevemtIsVisible(btnTier2);
+            WaitUntil.WaitForElementToAppear(btnTier2);
             btnTier2.Click();
             WaitUntil.WaitSomeInterval(250);
             return this;
@@ -264,7 +264,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step03SelectTier3()
         {
-            WaitUntil.CustomElevemtIsVisible(btnTier3);
+            WaitUntil.WaitForElementToAppear(btnTier3);
             btnTier3.Click();
             WaitUntil.WaitSomeInterval(250);
             return this;
@@ -276,7 +276,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step04SelectPhase1()
         {
-            WaitUntil.CustomElevemtIsVisible(btnPhase1);
+            WaitUntil.WaitForElementToAppear(btnPhase1);
             btnPhase1.Click();
             btnPhase1.Click();
             WaitUntil.WaitSomeInterval(250);
@@ -285,7 +285,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step04SelectPhase2()
         {
-            WaitUntil.CustomElevemtIsVisible(btnPhase2);
+            WaitUntil.WaitForElementToAppear(btnPhase2);
             btnPhase2.Click();
             WaitUntil.WaitSomeInterval(250);
             return this;
@@ -293,7 +293,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step04SelectPhase3()
         {
-            WaitUntil.CustomElevemtIsVisible(btnPhase3);
+            WaitUntil.WaitForElementToAppear(btnPhase3);
             btnPhase3.Click();
             WaitUntil.WaitSomeInterval(250);
             return this;
@@ -305,7 +305,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step05SelectDiet1()
         {
-            WaitUntil.CustomElevemtIsVisible(btnDiet1);
+            WaitUntil.WaitForElementToAppear(btnDiet1);
             btnDiet1.Click();
             btnDiet1.Click();
             WaitUntil.WaitSomeInterval(250);
@@ -314,7 +314,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step05SelectDiet2()
         {
-            WaitUntil.CustomElevemtIsVisible(btnDiet2);
+            WaitUntil.WaitForElementToAppear(btnDiet2);
             btnDiet2.Click();
             WaitUntil.WaitSomeInterval(250);
             return this;
@@ -322,7 +322,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition Step05SelectDiet3()
         {
-            WaitUntil.CustomElevemtIsVisible(btnDiet3);
+            WaitUntil.WaitForElementToAppear(btnDiet3);
             btnDiet3.Click();
             WaitUntil.WaitSomeInterval(250);
             return this;

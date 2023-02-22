@@ -55,17 +55,24 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         }
 
         [AllureStep("Verify User data")]
-        public void VerifyUserData(List<string> dataBeforeSaving, List<string> dataAfterSaving)
+        public void VerifyUserData(IEnumerable<string> expectedData, IEnumerable<string> actualData)
         {
-            var list1 = dataAfterSaving.Except(dataBeforeSaving);
-            var list2 = dataBeforeSaving.Except(dataAfterSaving);
+            if (expectedData == null)
+            {
+                throw new ArgumentNullException(nameof(expectedData));
+            }
 
-            Assert.AreEqual(!list1.Any(), !list2.Any());
+            if (actualData == null)
+            {
+                throw new ArgumentNullException(nameof(actualData));
+            }
+
+            CollectionAssert.AreEquivalent(expectedData, actualData);
         }
 
         public void VerifyDisplayingReferringBtn()
         {
-            WaitUntil.CustomElevemtIsVisible(linkReferring);
+            WaitUntil.WaitForElementToAppear(linkReferring);
             Assert.IsTrue(linkReferring.Displayed);
         }
         

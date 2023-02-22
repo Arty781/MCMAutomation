@@ -14,7 +14,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Verify is login successfully")]
         public MembershipUser VerifyIsBuyBtnDisplayed()
         {
-            WaitUntil.CustomElevemtIsVisible(buyBtn, 20);
+            WaitUntil.WaitForElementToAppear(buyBtn, 20);
             Assert.IsTrue(buyBtn.Displayed);
 
             return this;
@@ -23,7 +23,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Get entered weight")]
         public string[] GetEnteredWeight()
         {
-            WaitUntil.CustomElevemtIsVisible(outputWeight[0], 20);
+            WaitUntil.WaitForElementToAppear(outputWeight[0], 20);
 
             var firstList = new List<string>();
             foreach(var item in outputWeight)
@@ -37,30 +37,23 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
 
         [AllureStep("Verify saving weight")]
-        public MembershipUser VerifySavingWeight(string[] firstList)
+        public MembershipUser VerifySavingWeight(string[] expectedOutput)
         {
             WaitUntil.WaitSomeInterval(1000);
-            WaitUntil.CustomElevemtIsVisible(outputWeight[0], 20);
+            WaitUntil.WaitForElementToAppear(outputWeight[0], 20);
 
-            var secondList = new List<string>();
-            foreach (var item in outputWeight)
-            {
-                secondList.Add(item.Text);
-            }
-            var list = secondList.ToArray();
+            var actualOutput = outputWeight.Select(item => item.Text).ToArray();
 
-           var listOne = firstList.Except(list).ToList();
-           var listTwo = list.Except(firstList).ToList();
+            // Use CollectionAssert.AreEqual to check if both arrays have the same elements
+            CollectionAssert.AreEqual(expectedOutput, actualOutput);
 
-
-            Assert.IsTrue(!listOne.Any() && !listTwo.Any());
             return this;
         }
 
         [AllureStep("Get Phases count")]
         public int GetPhasesCount()
         {
-            WaitUntil.CustomElevemtIsVisible(selectPhaseBtn[0]);
+            WaitUntil.WaitForElementToAppear(selectPhaseBtn[0]);
             var count = selectPhaseBtn.Where(x=>x.Displayed).Count();
 
             return count;
@@ -70,7 +63,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public int GetWorkoutsCount()
         {
             WaitUntil.WaitSomeInterval(1500);
-            WaitUntil.CustomElevemtIsVisible(workoutBtn[0]);
+            WaitUntil.WaitForElementToAppear(workoutBtn[0]);
             var count = workoutBtn.Where(x => x.Displayed).Count();
 
             return count;
@@ -79,7 +72,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Verify added weight")]
         public void VerifyAddedWeight(List<string> addedWeight)
         {
-            WaitUntil.CustomElevemtIsVisible(inputAddedWeightElem);
+            WaitUntil.WaitForElementToAppear(inputAddedWeightElem);
             var addedWeightList = inputAddedWeight.Where(x => x.Enabled).Select(x => x.Text).ToList();
             var checkList = addedWeightList.Except(addedWeight).ToList();
             Assert.IsTrue(checkList.Count() == 0);
@@ -88,7 +81,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Verify added weight")]
         public void VerifyDisplayedDownloadBtn()
         {
-            WaitUntil.CustomElevemtIsVisible(btnDownloadProgram);
+            WaitUntil.WaitForElementToAppear(btnDownloadProgram);
             Assert.IsTrue(btnDownloadProgram.Displayed);
         }
     }

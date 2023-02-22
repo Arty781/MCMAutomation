@@ -15,7 +15,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Verify is login successfully")]
         public Sidebar VerifyIsLogoDisplayed()
         {
-            WaitUntil.CustomElevemtIsVisible(sideBarLogo, 30);
+            WaitUntil.WaitForElementToAppear(sideBarLogo, 30);
             Assert.IsTrue(sideBarLogo.Enabled);
             WaitUntil.WaitSomeInterval(2500);
             return this;
@@ -23,7 +23,7 @@ namespace MCMAutomation.PageObjects
 
         public Sidebar VerifyEmailDisplayed(string email)
         {
-            WaitUntil.CustomElevemtIsVisible(textEmail, 30);
+            WaitUntil.WaitForElementToAppear(textEmail, 30);
             WaitUntil.WaitSomeInterval(1000);
             Assert.IsTrue(textEmail.Text == email);
             

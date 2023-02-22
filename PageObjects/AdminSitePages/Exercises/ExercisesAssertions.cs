@@ -28,7 +28,7 @@ namespace MCMAutomation.PageObjects
         public ExercisesAdmin VerifyExerciseIsRemoved(string exercise)
         {
             WaitUntil.WaitSomeInterval(2500);
-            WaitUntil.CustomElevemtIsVisible(nameExerciseTitle.Where(x => x.Displayed).First());
+            WaitUntil.WaitForElementToAppear(nameExerciseTitle.Where(x => x.Displayed).First());
              
 
             Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($".//div[@class='table-item-row']/p[contains(text(), '{exercise}')]")));
@@ -39,7 +39,7 @@ namespace MCMAutomation.PageObjects
 
         public List<string> GetExercisesList()
         {
-            WaitUntil.CustomElevemtIsVisible(nameExerciseTitleElem);
+            WaitUntil.WaitForElementToAppear(nameExerciseTitleElem);
 
             var exerciseList = new List<string>();
 

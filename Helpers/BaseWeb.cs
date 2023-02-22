@@ -12,14 +12,10 @@ namespace MCMAutomation.Helpers
 
     public class BaseWeb
     {
-       
-        public static Process? _process;
-
         [OneTimeSetUp]
         public static void OneTimeSetUp()
         {
-            //AllureConfigFilesHelper.CreateBatFile();
-            AllureConfigFilesHelper.RemoveBatFile();
+            AllureConfigFilesHelper.CreateBatFile();
         } 
 
 
@@ -31,7 +27,7 @@ namespace MCMAutomation.Helpers
             if (Browser._Driver != null)
             {
                 Browser.Quit();
-
+                AllureConfigFilesHelper.RemoveBatFile();
                 ForceCloseWebDriver.ForceClose();
                 ForceCloseWebDriver.RemoveBatFile();
             }

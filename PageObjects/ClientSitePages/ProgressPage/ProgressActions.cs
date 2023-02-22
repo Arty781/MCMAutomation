@@ -95,7 +95,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             Button.Click(btnSubmit);
 
-            WaitUntil.CustomElevemtIsVisible(titleProgressPage, 60);
+            WaitUntil.WaitForElementToAppear(titleProgressPage, 60);
 
             return this;
         }

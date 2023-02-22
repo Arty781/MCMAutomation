@@ -1,9 +1,12 @@
 ﻿using Chilkat;
+using MCMAutomation.APIHelpers.Client.WeightTracker;
+using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions;
 using OpenQA.Selenium;
 using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -142,12 +145,28 @@ namespace MCMAutomation.Helpers
             public int Protein { get; set; }
 
         }
+
+        public class ProgressDaily
+        {
+            public int Id { get; set; }
+            public DateTime Date { get; set; }
+            public decimal Weight { get; set; }
+            public string UserId { get; set; }
+            public DateTime CreationDate { get; set; }
+            public bool IsDeleted { get; set; }
+        }
     }
 
     public class UserAccount
     {
         public static readonly int MALE = 1;
         public static readonly int FEMALE = 2;
+    }
+
+    public class ConversionSystem
+    {
+        public const int METRIC = 0;
+        public const int IMPERIAL = 1;
     }
 
     public class TDEE
@@ -161,31 +180,25 @@ namespace MCMAutomation.Helpers
             "Athlete (2x per day)"
         };
 
-        public static string[] Goals =
-            {
-            "CUT",
-            "MAINTAIN",
-            "BUILD",
-            "REVERSE"
-        };
+        public const string GOAL_CUT = "CUT";
+        public const string GOAL_MAINTAIN = "MAINTAIN";
+        public const string GOAL_BUILD = "BUILD";
+        public const string GOAL_REVERSE = "REVERSE";
 
-        public static string[] Tiers =
-        {
-            "TIER 1",
-            "TIER 2",
-            "TIER 3",
-            "CONSERVATIVE",
-            "AGGRESSIVE"
-        };
+        public const string TIER_1 = "TIER 1";
+        public const string TIER_2 = "TIER 2";
+        public const string TIER_3 = "TIER 3";
+        public const string TIER_CONSERVATIVE = "CONSERVATIVE";
+        public const string TIER_AGGRESSIVE = "AGGRESSIVE";
 
-        public static string[] Phases =
-            {
-            "Phase 1",
-            "Phase 2",
-            "Phase 3"
-        };
+        public const string PHASE_1 = "Phase 1";
+        public const string PHASE_2 = "Phase 2";
+        public const string PHASE_3 = "Phase 3";
 
-        public static string[] Diets = { "LOW FAT / HIGH CARB", "MODERATE FAT / MODERATE CARB", "HIGH FAT / LOW CARB" };
+        public const string DIET_1 = "LOW FAT / HIGH CARB";
+        public const string DIET_2 = "MODERATE FAT / MODERATE CARB";
+        public const string DIET_3 = "HIGH FAT / LOW CARB";
+
     }
 
     public class MembershipsSKU

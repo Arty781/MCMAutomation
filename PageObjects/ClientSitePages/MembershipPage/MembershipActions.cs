@@ -51,9 +51,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public int GetWeekNumber()
         {
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 15);
+            WaitUntil.WaitForElementToAppear(weekSelectorCbbx, 15);
             Button.Click(weekSelectorInputEx);
-            WaitUntil.CustomElevemtIsVisible(listWeekNumber.Last(), 15);
+            WaitUntil.WaitForElementToAppear(listWeekNumber.Last(), 15);
             Button.Click(weekSelectorInputEx);
             return listWeekNumber.Count;
         }
@@ -66,7 +66,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public MembershipUser SelectWeekNumber(int weekNum)
         {
             
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 15);
+            WaitUntil.WaitForElementToAppear(weekSelectorCbbx, 15);
             weekSelectorInputEx.Click();
             Button.Click(listWeekNumber[weekNum]);
             WaitUntil.WaitSomeInterval(2500);
@@ -82,9 +82,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Open workout")]
         public MembershipUser OpenWorkout()
         {
-            WaitUntil.CustomElevemtIsVisible(textDayTitleElem);
+            WaitUntil.WaitForElementToAppear(textDayTitleElem);
             WaitUntil.WaitSomeInterval(500);
-            WaitUntil.CustomElevemtIsVisible(workoutBtn.First());
+            WaitUntil.WaitForElementToAppear(workoutBtn.First());
             Button.Click(workoutBtn.First());
             WaitUntil.WaitSomeInterval(500);
 
@@ -94,9 +94,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Open workout")]
         public MembershipUser OpenCompletedWorkout()
         {
-            WaitUntil.CustomElevemtIsVisible(textDayTitle[0]);
+            WaitUntil.WaitForElementToAppear(textDayTitle[0]);
             WaitUntil.WaitSomeInterval(2500);
-            WaitUntil.CustomElevemtIsVisible(btnCompletedWorkoutsElem);
+            WaitUntil.WaitForElementToAppear(btnCompletedWorkoutsElem);
             Button.Click(btnCompletedWorkouts.LastOrDefault());
 
             return this;
@@ -107,7 +107,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
 
             Button.Click(completeWorkoutBtn);
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 20);
+            WaitUntil.WaitForElementToAppear(weekSelectorCbbx, 20);
 
             return this;
         }
@@ -121,7 +121,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Add Weight")]
         public MembershipUser AddWeight()
         {
-            WaitUntil.CustomElevemtIsVisible(weightInput.FirstOrDefault());
+            WaitUntil.WaitForElementToAppear(weightInput.FirstOrDefault());
 
             var weightList = weightInput.Where(x => x.Displayed).ToList();
             foreach (var weight in weightList)
@@ -137,7 +137,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public MembershipUser EnterReps()
         {
             WaitUntil.WaitSomeInterval(2);
-            WaitUntil.CustomElevemtIsVisible(repsInputElem);
+            WaitUntil.WaitForElementToAppear(repsInputElem);
 
             var repsList = repsInput.Where(x => x.Displayed).ToList();
             foreach (var reps in repsList)
@@ -153,7 +153,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public MembershipUser MarkCheckboxes()
         {
             WaitUntil.WaitSomeInterval(1000);
-            WaitUntil.CustomElevemtIsVisible(checkboxInput.Last());
+            WaitUntil.WaitForElementToAppear(checkboxInput.Last());
             var checkboxesList = checkboxInput.Where(x => x.Enabled).ToList();
             foreach (var checkbox in checkboxesList)
             {
@@ -170,7 +170,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             WaitUntil.WaitSomeInterval(1000);
             if (openNotesBtnelem.Displayed == true) { 
                 
-                WaitUntil.CustomElevemtIsVisible(openNotesBtnelem);
+                WaitUntil.WaitForElementToAppear(openNotesBtnelem);
                     WaitUntil.WaitSomeInterval(1000);
                     var notesList = openNotesBtn.Where(x => x.Enabled).ToList();
                     for (int i = 0; i < notesList.Count; i++)
@@ -183,7 +183,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             else if (editNotesBtnelem.Displayed == true)
             {
                 WaitUntil.WaitSomeInterval(1000);
-                WaitUntil.CustomElevemtIsVisible(editNotesBtnelem);
+                WaitUntil.WaitForElementToAppear(editNotesBtnelem);
                 var notesList = editNotesBtn.Where(x => x.Enabled).ToList();
                 for (int i = 0; i < notesList.Count; i++)
                 {
@@ -201,7 +201,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Get Weight data")]
         public List<string> GetCompleteWeightData()
         {
-            WaitUntil.CustomElevemtIsVisible(inputAddedWeight.Where(x => x.Enabled).LastOrDefault());
+            WaitUntil.WaitForElementToAppear(inputAddedWeight.Where(x => x.Enabled).LastOrDefault());
             List<string> list = new List<string>();
             var addedWeightList = inputAddedWeight.Where(x => x.Enabled).ToList();
             foreach (var weight in addedWeightList)
@@ -215,7 +215,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Get Weight data")]
         public List<string> GetWeightData()
         {
-            WaitUntil.CustomElevemtIsVisible(weightInput.Where(x => x.Enabled).LastOrDefault());
+            WaitUntil.WaitForElementToAppear(weightInput.Where(x => x.Enabled).LastOrDefault());
             List<string> list = new List<string>();
             var addedWeightList = weightInput.Where(x => x.Enabled).ToList();
             foreach (var weight in addedWeightList)
@@ -231,7 +231,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
 
             Button.Click(btnBack);
-            WaitUntil.CustomElevemtIsVisible(weekSelectorCbbx, 20);
+            WaitUntil.WaitForElementToAppear(weekSelectorCbbx, 20);
 
             return this;
         }

@@ -17,7 +17,7 @@ namespace MCMAutomation.PageObjects
 
         public UsersAdmin SearchUser(string email)
         {
-            WaitUntil.CustomElevemtIsVisible(inputSearch);
+            WaitUntil.WaitForElementToAppear(inputSearch);
             inputSearch.SendKeys(email + Keys.Enter);
             return this;
         }
@@ -26,7 +26,7 @@ namespace MCMAutomation.PageObjects
 
         public UsersAdmin ClickEditUser(string email)
         {
-            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email), 10);
+            WaitUntil.WaitForElementToAppear(SwitcherHelper.GetTextForUserEmail(email), 10);
             SwitcherHelper.ClickEditUserBtn(email, inputEmail);
 
             return this;
@@ -36,14 +36,13 @@ namespace MCMAutomation.PageObjects
         public UsersAdmin EnterEstimatedBodyFat(string fat)
         {
             InputBox.ElementCtrlA(Pages.WebPages.UserProfile.inputBodyfat, 10, fat);
-
             return this;
         }
 
         [AllureStep("Add membership to user")]
         public UsersAdmin AddMembershipToUser(string membershipName)
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 120);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 120);
             InputBox.CbbxElement(cbbxAddUserMembership, 30, membershipName);
             WaitUntil.WaitSomeInterval(500);
             Button.Click(btnAddUserMembership);
@@ -56,7 +55,7 @@ namespace MCMAutomation.PageObjects
         {
             foreach(var membership in membershipsName)
             {
-                WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 120);
+                WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 120);
                 InputBox.CbbxElement(cbbxAddUserMembership, 30, membership);
                 WaitUntil.WaitSomeInterval(500);
                 Button.Click(btnAddUserMembership);
@@ -69,8 +68,8 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Add membership to user")]
         public UsersAdmin SelectActiveMembership(string membershipName)
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(btnDeleteAddedMembershipsElem);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToAppear(btnDeleteAddedMembershipsElem);
             InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, membershipName);
 
             return this;
@@ -79,8 +78,8 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Add membership to user")]
         public UsersAdmin SelectActiveMembership(List<string> membershipsName)
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
-            WaitUntil.CustomElevemtIsVisible(btnDeleteAddedMembershipsElem);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToAppear(btnDeleteAddedMembershipsElem);
             InputBox.CbbxElement(cbbxSelectUserActiveMembership, 5, membershipsName.FirstOrDefault());
 
             return this;
@@ -89,15 +88,15 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Remove added memberships")]
         public UsersAdmin RemoveAddedMembership()
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
             try
             {
                 if(btnDeleteAddedMembershipsElem.Enabled == true)
                 {
                     btnDeleteAddedMembershipsElem.Click();
-                    WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
+                    WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
                 }
-                WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
+                WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
             }
             catch (Exception) { return this; } 
             
@@ -116,7 +115,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Delete Progress")]
         public UsersAdmin DeleteProgressFromUser()
         {
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
             WaitUntil.WaitSomeInterval(500);
             var progressList = btnDeleteProgress.Where(x => x.Enabled).ToList();
             for (int i = 0; i < progressList.Count; i++)
@@ -132,7 +131,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Delete User")]
         public UsersAdmin DeleteUser(string email)
         {
-            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
+            WaitUntil.WaitForElementToAppear(SwitcherHelper.GetTextForUserEmail(email));
             SwitcherHelper.ClickDeleteUserBtn(email);
             
             WaitUntil.WaitSomeInterval(2500);
@@ -143,7 +142,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Delete membership from User")]
         public UsersAdmin DeleteMemebershipFromUser(string email)
         {
-            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email));
+            WaitUntil.WaitForElementToAppear(SwitcherHelper.GetTextForUserEmail(email));
             SwitcherHelper.ClickEditUserBtn(email, inputEmail);
             if (itemMembership.Count >= 1)
             {
@@ -153,10 +152,10 @@ namespace MCMAutomation.PageObjects
                     WaitUntil.WaitSomeInterval(1000);
                     Button.Click(btnDeleteAddedMemberships[0]);
                     WaitUntil.WaitSomeInterval(250);
-                    WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
+                    WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
                 }
-                WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 60);
-                WaitUntil.CustomElevemtIsVisible(Pages.CommonPages.Common.itemsNoData);
+                WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
+                WaitUntil.WaitForElementToAppear(Pages.CommonPages.Common.itemsNoData);
                 Assert.IsTrue(Pages.CommonPages.Common.itemsNoData.Text == "No Data");
             }
             return this;

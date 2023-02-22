@@ -17,7 +17,7 @@ namespace MCMAutomation.PageObjects
         public UsersAdmin VerifyDisplayingOfUser(string email)
         {
             WaitUntil.WaitSomeInterval(1000);
-            WaitUntil.CustomElevemtIsVisible(SwitcherHelper.GetTextForUserEmail(email), 10);
+            WaitUntil.WaitForElementToAppear(SwitcherHelper.GetTextForUserEmail(email), 10);
             Assert.AreEqual(email, SwitcherHelper.GetTextForUserEmail(email).GetAttribute("title"));
             return this;
         }

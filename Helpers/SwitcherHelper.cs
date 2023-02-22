@@ -59,8 +59,8 @@ namespace MCMAutomation.Helpers
 
             _element = Browser._Driver.FindElement(By.XPath($".//td[@title='{email}']/parent::tr/td//div[@class='edit-btn']"));
             _element.Click();
-            WaitUntil.LoaderIsInvisible(Pages.CommonPages.Common.loader, 120);
-            WaitUntil.CustomElevemtIsVisible(element, 60);
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 120);
+            WaitUntil.WaitForElementToAppear(element, 60);
 
         }
 
@@ -122,7 +122,7 @@ namespace MCMAutomation.Helpers
             WaitUntil.WaitSomeInterval(200);
 
             IWebElement btnEditMember = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_edit']"));
-            WaitUntil.CustomElevemtIsVisible(btnEditMember, 60);
+            WaitUntil.WaitForElementToAppear(btnEditMember, 60);
 
             btnEditMember.Click();
         }
@@ -132,17 +132,17 @@ namespace MCMAutomation.Helpers
             WaitUntil.WaitSomeInterval(200);
 
             IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add-user ']"));
-            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+            WaitUntil.WaitForElementToAppear(btnAddUsers, 60);
 
             btnAddUsers.Click();
         }
 
         public static void ClickAddProgramBtn(string title)
         {
-            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']"));
+            WaitUntil.WaitForElementToAppear(Element.FindElementByXpath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']"));
 
             var btnAddUsers = Element.FindElementByXpath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_add']");
-            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+            WaitUntil.WaitForElementToAppear(btnAddUsers, 60);
 
             btnAddUsers.Click();
         }
@@ -152,7 +152,7 @@ namespace MCMAutomation.Helpers
             WaitUntil.WaitSomeInterval(200);
 
             IWebElement btnAddUsers = Browser._Driver.FindElement(By.XPath($"//h2[text()='{title}']/parent::div//div[@class='membership-item_delete']"));
-            WaitUntil.CustomElevemtIsVisible(btnAddUsers, 60);
+            WaitUntil.WaitForElementToAppear(btnAddUsers, 60);
 
             btnAddUsers.Click();
         }
@@ -161,42 +161,42 @@ namespace MCMAutomation.Helpers
         {
             WaitUntil.WaitSomeInterval(300);
             IWebElement btnDeleteProgram = Element.FindElementByXpath($"//div[text()='{programName}']/parent::div/child::div/div[@class='delete']");
-            WaitUntil.CustomElevemtIsVisible(btnDeleteProgram, 60);
+            WaitUntil.WaitForElementToAppear(btnDeleteProgram, 60);
             Button.Click(btnDeleteProgram);
             Button.Click(Pages.CommonPages.Common.btnConfirmationYes);
-            WaitUntil.CustomElevemtIsInvisible(btnDeleteProgram, 30);
+            WaitUntil.WaitForElementToDisappear(btnDeleteProgram, 30);
         }
 
         public static void SelectCopyMembership(string membershipName, string currentMembership)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
+            WaitUntil.WaitForElementToAppear(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
             var membership = Element.FindElementByXpath("//h4[text()='Copy exercises from']/parent::div//h3[text()='Membership']/parent::div//input");
             membership.SendKeys(membershipName + Keys.Enter);
             WaitUntil.WaitSomeInterval(500);
             membership.SendKeys(currentMembership + Keys.Enter);
             WaitUntil.WaitSomeInterval(500);
             membership.SendKeys(membershipName + Keys.Enter);
-            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath($"//h3[text()='Membership']/parent::div//span[@title='{membershipName}']")));
+            WaitUntil.WaitForElementToAppear(Browser._Driver.FindElement(By.XPath($"//h3[text()='Membership']/parent::div//span[@title='{membershipName}']")));
         }
 
         public static void SelectCopyProgram(string programName)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
+            WaitUntil.WaitForElementToAppear(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
             var program = Element.FindElementByXpath("//h4[text()='Copy exercises from']/parent::div//h3[text()='Program']/parent::div//input");
             program.SendKeys(programName + Keys.Enter);
             WaitUntil.WaitSomeInterval(450);
-            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath($"//h3[text()='Program']/parent::div//span[@title='{programName}']"));
+            WaitUntil.WaitForElementToAppear(Element.FindElementByXpath($"//h3[text()='Program']/parent::div//span[@title='{programName}']"));
         }
 
         public static void SelectCopyWorkout(string workoutName)
         {
             WaitUntil.WaitSomeInterval(250);
-            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
+            WaitUntil.WaitForElementToAppear(Element.FindElementByXpath("//h4[text()='Copy exercises from']"), 30);
             var membership = Element.FindElementByXpath("//h4[text()='Copy exercises from']/parent::div//h3[text()='Workout']/parent::div//input");
             membership.SendKeys(workoutName + Keys.Enter);
-            WaitUntil.CustomElevemtIsVisible(Element.FindElementByXpath($"//h3[text()='Workout']/parent::div//span[@title='{workoutName}']"));
+            WaitUntil.WaitForElementToAppear(Element.FindElementByXpath($"//h3[text()='Workout']/parent::div//span[@title='{workoutName}']"));
         }
 
 
@@ -209,7 +209,7 @@ namespace MCMAutomation.Helpers
             WaitUntil.WaitSomeInterval(200);
 
             IWebElement btnSelectProgram = Browser._Driver.FindElement(By.XPath($"//h2[text()='{membershipTitle}']/parent::div//button[@class='ant-btn program-switch-btn']"));
-            WaitUntil.CustomElevemtIsVisible(btnSelectProgram, 60);
+            WaitUntil.WaitForElementToAppear(btnSelectProgram, 60);
 
             btnSelectProgram.Click();
         }
@@ -220,20 +220,20 @@ namespace MCMAutomation.Helpers
 
         public static void ClickRemoveExerciseBtn(string exercise)
         {
-            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath("//div[@class='delete']")));
+            WaitUntil.WaitForElementToAppear(Browser._Driver.FindElement(By.XPath("//div[@class='delete']")));
 
             IWebElement btnRemove = Browser._Driver.FindElement(By.XPath($"//p[text()='{exercise}']/ancestor::div[@class='table-item']//div[@class='delete']"));
-            WaitUntil.CustomElevemtIsVisible(btnRemove);
+            WaitUntil.WaitForElementToAppear(btnRemove);
 
             btnRemove.Click();
         }
 
         public static void ClickEditExerciseBtn(string exercise)
         {
-            WaitUntil.CustomElevemtIsVisible(Browser._Driver.FindElement(By.XPath("//div[@class='edit']")));
+            WaitUntil.WaitForElementToAppear(Browser._Driver.FindElement(By.XPath("//div[@class='edit']")));
 
             IWebElement btnEdit = Browser._Driver.FindElement(By.XPath($"//p[text()='{exercise}']/ancestor::div[@class='table-item']//div[@class='edit']"));
-            WaitUntil.CustomElevemtIsVisible(btnEdit);
+            WaitUntil.WaitForElementToAppear(btnEdit);
 
             btnEdit.Click();
         }

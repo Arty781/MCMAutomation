@@ -210,7 +210,7 @@ namespace AdminSiteTests
                 .EditMembershipData();
             Pages.CommonPages.Common
                 .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.AdminPages.MembershipAdmin.searchUserInput, 30);
+            WaitUntil.WaitForElementToAppear(Pages.AdminPages.MembershipAdmin.searchUserInput, 30);
             DB.Memberships membershipDataAfterEditing = AppDbContext.Memberships.GetLastMembership();
             Pages.AdminPages.MembershipAdmin
                 .SearchMembership(membershipDataAfterEditing.Name)
@@ -517,7 +517,7 @@ namespace AdminSiteTests
                 .AddLevels(4);
             Pages.CommonPages.Common
                 .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.AdminPages.MembershipAdmin.membershipSearchInput, 30);
+            WaitUntil.WaitForElementToAppear(Pages.AdminPages.MembershipAdmin.membershipSearchInput, 30);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
 
             Pages.CommonPages.Login
@@ -719,7 +719,7 @@ namespace AdminSiteTests
                 .EnterMembershipData();
             Pages.CommonPages.Common
                 .ClickSaveBtn();
-            WaitUntil.CustomElevemtIsVisible(Pages.AdminPages.MembershipAdmin.membershipSearchInput);
+            WaitUntil.WaitForElementToAppear(Pages.AdminPages.MembershipAdmin.membershipSearchInput);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             Pages.AdminPages.MembershipAdmin
                 .ClickAddProgramsBtn(membershipData.Name)
@@ -1022,7 +1022,7 @@ namespace AdminSiteTests
     {
         [Test]
         [AllureIssue("Test")]
-        [Ignore("Debugging test")]
+        //[Ignore("Debugging test")]
         public void Test()
         {
             //var responseLogin = SignInRequest.MakeSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
@@ -1034,6 +1034,28 @@ namespace AdminSiteTests
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.CommonPages.Sidebar
                 .VerifyIsLogoDisplayed();
+            Pages.CommonPages.PopUp
+                .ClosePopUp();
+            Pages.CommonPages.Sidebar
+                .OpenExercisesPage();
+        }
+
+        [Test]
+        [AllureIssue("Test")]
+        //[Ignore("Debugging test")]
+        public void Test1()
+        {
+            //var responseLogin = SignInRequest.MakeSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
+            //MembershipsWithUsersRequest.GetMembershipsWithUsersList(responseLogin);
+
+
+
+            Pages.CommonPages.Login
+                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            Pages.CommonPages.Sidebar
+                .VerifyIsLogoDisplayed();
+            Pages.CommonPages.PopUp
+                .ClosePopUp();
             Pages.CommonPages.Sidebar
                 .OpenExercisesPage();
         }
