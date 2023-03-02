@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /ErrorImages/
 /allure-results
+/MCMAdminTests/allure serve.bat
