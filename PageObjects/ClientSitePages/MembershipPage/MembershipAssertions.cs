@@ -70,19 +70,30 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         }
 
         [AllureStep("Verify added weight")]
-        public void VerifyAddedWeight(List<string> addedWeight)
+        public void VerifyAddedWeights(List<string> expectedWeights)
         {
+            if (expectedWeights == null)
+            {
+                throw new ArgumentNullException(nameof(expectedWeights));
+            }
+
             WaitUntil.WaitForElementToAppear(inputAddedWeightElem);
-            var addedWeightList = inputAddedWeight.Where(x => x.Enabled).Select(x => x.Text).ToList();
-            var checkList = addedWeightList.Except(addedWeight).ToList();
-            Assert.IsTrue(checkList.Count() == 0);
+
+            var inputWeights = GetInputWeights();
+            CollectionAssert.AreEquivalent(expectedWeights, inputWeights,
+                $"Expected added weights to match {string.Join(", ", expectedWeights)}, but found {string.Join(", ", inputWeights)}");
+        }
+
+        private List<string> GetInputWeights()
+        {
+            return inputAddedWeight.Where(x => x.Enabled).Select(x => x.Text).ToList();
         }
 
         [AllureStep("Verify added weight")]
         public void VerifyDisplayedDownloadBtn()
         {
             WaitUntil.WaitForElementToAppear(btnDownloadProgram);
-            Assert.IsTrue(btnDownloadProgram.Displayed);
+            Assert.IsTrue(btnDownloadProgram.Displayed, "Download button is not displayed");
         }
     }
 }

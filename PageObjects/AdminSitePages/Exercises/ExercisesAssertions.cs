@@ -17,9 +17,9 @@ namespace MCMAutomation.PageObjects
         public ExercisesAdmin VerifyExerciseIsCreated(string exercise)
         {
             WaitUntil.WaitSomeInterval(2500);
-            var list = nameExerciseTitle.Where(x=>x.Text.Contains(exercise)).First();
-            Assert.AreEqual(exercise, list.Text);
-
+            var matchingExercise = nameExerciseTitle.FirstOrDefault(x => x.Text.Contains(exercise));
+            Assert.IsNotNull(matchingExercise, $"Exercise '{exercise}' was not found.");
+            Assert.AreEqual(exercise, matchingExercise.Text, $"Exercise title '{matchingExercise.Text}' does not match expected '{exercise}'.");
             return this;
         }
 
@@ -28,11 +28,9 @@ namespace MCMAutomation.PageObjects
         public ExercisesAdmin VerifyExerciseIsRemoved(string exercise)
         {
             WaitUntil.WaitSomeInterval(2500);
-            WaitUntil.WaitForElementToAppear(nameExerciseTitle.Where(x => x.Displayed).First());
-             
+            WaitUntil.WaitForElementToDisappear(nameExerciseTitle.FirstOrDefault(x => x.Text.Contains(exercise)));
 
-            Assert.Throws<NoSuchElementException>(() => Browser._Driver.FindElement(By.XPath($".//div[@class='table-item-row']/p[contains(text(), '{exercise}')]")));
-            
+            Assert.IsFalse(nameExerciseTitle.Any(x => x.Text.Contains(exercise)), $"Exercise '{exercise}' was found but should have been removed.");
 
             return this;
         }
@@ -40,17 +38,7 @@ namespace MCMAutomation.PageObjects
         public List<string> GetExercisesList()
         {
             WaitUntil.WaitForElementToAppear(nameExerciseTitleElem);
-
-            var exerciseList = new List<string>();
-
-            var list = nameExerciseTitle.Where(x => x.Enabled).ToList();
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                string exerciseName = list[i].Text;
-                exerciseList.Add(exerciseName);
-            }
-
+            var exerciseList = nameExerciseTitle.Where(x => x.Enabled).Select(x => x.Text).ToList();
             return exerciseList;
         }
 

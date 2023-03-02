@@ -23,9 +23,9 @@ namespace MCMAutomation.PageObjects
 
         public Sidebar VerifyEmailDisplayed(string email)
         {
-            WaitUntil.WaitForElementToAppear(textEmail, 30);
+            WaitUntil.WaitForElementToAppear(textEmail.Where(x=>x.Text.Contains(email)).Select(x=>x).FirstOrDefault(), 10);
             WaitUntil.WaitSomeInterval(1000);
-            Assert.IsTrue(textEmail.Text == email);
+            Assert.IsTrue(textEmail.First().Text == email);
             
 
             return this;

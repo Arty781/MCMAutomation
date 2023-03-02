@@ -1,4 +1,5 @@
 ﻿using MCMAutomation.Helpers;
+using MCMAutomation.PageObjects;
 using NUnit.Allure.Steps;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -238,9 +239,56 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #endregion
 
-        
 
-        
+        #region Methods
+
+        public void SelectPhaseAndWeekAndEnterWeight(int programsCount)
+        {
+            for (int i = 0; i < programsCount; i++)
+            {
+                int phaseNum = i + 1;
+                int weekNum = i + 1;
+                OpenMembership();
+                SelectPhaseAndWeek(phaseNum, weekNum);
+                int weekNumber = Pages.WebPages.MembershipUser.GetWeekNumber();
+                SelectWeek(weekNumber);
+                Pages.CommonPages.Sidebar
+                     .OpenMemberShipPageUser();
+            } 
+        }
+
+        private void SelectWeek(int weekNumber)
+        {
+            
+            for (int q = 0; q < weekNumber; q++)
+            {
+                Pages.WebPages.MembershipUser
+                    .SelectWeekNumber(q);
+                int countWorkouts = Pages.WebPages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < countWorkouts; j++)
+                {
+                    OpenWorkoutAndEnterWeight();
+                }
+            }
+        }
+        private void OpenWorkoutAndEnterWeight()
+        {
+            OpenWorkout();
+            AddWeight();
+            List<string> addedWeightList = Pages.WebPages.MembershipUser.GetWeightData();
+            EnterNotes();
+            ClickCompleteWorkoutBtn();
+            OpenCompletedWorkout();
+            VerifyAddedWeights(addedWeightList);
+            ClickBackBtn();
+        }
+
+
+        #endregion
+
+
+
+
 
     }
 }

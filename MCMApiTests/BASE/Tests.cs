@@ -1,19 +1,10 @@
-﻿using Chilkat;
-using MCMAutomation.APIHelpers;
-using MCMAutomation.APIHelpers.Client.AddProgress;
+﻿using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.EditUser;
 using MCMAutomation.APIHelpers.Client.SignUp;
 using MCMAutomation.APIHelpers.Client.WeightTracker;
 using MCMAutomation.APIHelpers.SignInPage;
 using MCMAutomation.Helpers;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Telegram.Bot.Types;
 
 namespace MCMApiTests
 {
@@ -33,9 +24,9 @@ namespace MCMApiTests
 
     [TestFixture]
 
-    public class AdminTests {
+    public class AdminMembershipsTests {
 
-        [Test]
+        [Test, Category("Memberships")]
         public void AddMembershipToUser()
         {
             #region Register New User
@@ -48,34 +39,21 @@ namespace MCMApiTests
 
             #region Add and Activate membership to User
 
-
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin);
-            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
-            var exercises = AppDbContext.Exercises.GetExercisesData();
-            int programCount = 3;
-            for (int i = 0; i < programCount; i++)
-            {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
-            }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
-            foreach (var program in programs)
-            {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
-                foreach (var workout in workouts)
-                {
-                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
-                }
-
-            }
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.Id, userId);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            const int programCount = 3;
+            var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
+            var workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+
             #endregion
         }
 
-        [Test]
+        [Test, Category("Memberships")]
         public void CreateProductMembership()
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
@@ -99,12 +77,65 @@ namespace MCMApiTests
 
             }
         }
+
+        
+
+
+    }
+
+    [TestFixture]
+    public class AdminExercisesTests
+    {
+        [Test, Category("Exercises")]
+        public void AddExerciseWithRelated()
+        {
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+            ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+        }
+
+        [Test, Category("Exercises")]
+        public void AddExerciseWithoutRelated()
+        {
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithoutRelated(responseLoginAdmin, list);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+            ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+        }
+        [Test, Category("Exercises")]
+        public void EditExerciseWithRelated()
+        {
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+            ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+            var getResponseExercises = ExercisesRequestPage.GetExercisesList(responseLoginAdmin);
+            ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, list, getResponseExercises, lastExercise.Name);
+
+        }
+
+        [Test, Category("Exercises")]
+        public void EditExerciseWithoutRelated()
+        {
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+            ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+            var getResponseExercises = ExercisesRequestPage.GetExercisesList(responseLoginAdmin);
+            ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, list, getResponseExercises, lastExercise.Name);
+
+        }
     }
 
     [TestFixture]
     public class UserTests
     {
-        [Test]
+        [Test, Category("Daily Weight")]
         public void AddWeight()
         {
             #region Register New User
@@ -116,30 +147,26 @@ namespace MCMApiTests
             #endregion
 
             #region Add Weight daily
-            int countOfRecods = 1000;
-            for (int i = 0; i < countOfRecods; i++)
-            {
-                WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), RandomHelper.RandomDateInThePast(), 0, false);
-            }
-            const string dateFormat = "yyyy-MM-ddTHH:mm:ss";
-            var userProgress = AppDbContext.User.GetProgressDailyByUserId(userId);
-            var weightList = WeightTracker.GetWeightList(responseLoginUser, ConversionSystem.METRIC, 0, countOfRecods + 100);
+            const int recordCount = 30;
+            const int conversionSystem = ConversionSystem.METRIC;
 
-            var weightListIds = weightList.Select(w => w.id);
-            var weightListDates = weightList.Select(w => w.date);
-            var weightListWeights = weightList.Select(w => w.weight);
+            Enumerable.Range(0, recordCount)
+          .ToList()
+          .ForEach(_ =>
+          {
+              var weight = RandomHelper.RandomProgressData("weight");
+              var date = RandomHelper.RandomDateInThePast();
+              WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
+          });
+            WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userId);
+            WeightTracker.VerifyAverageOfWeightTracking(responseLoginUser, conversionSystem, userId);
 
-            Assert.That(userProgress.Select(p => p.Id).SequenceEqual(weightListIds), Is.True, "Ids don't match");
-            Assert.That(userProgress.Select(p => p.Date.ToString(dateFormat)).SequenceEqual(weightListDates), Is.True, "Dates don't match");
-            Assert.That(userProgress.Select(p => p.Weight).SequenceEqual(weightListWeights), Is.True, "Weights don't match");
-
-            WeightTracker.VerifyAverageOfWeightTracking(userProgress, weightList);
 
             #endregion
 
         }
 
-        [Test]
+        [Test, Category("Daily Weight")]
         public void EditWeight()
         {
             #region Register New User
@@ -152,46 +179,84 @@ namespace MCMApiTests
 
             #region Add Weight daily
             int countOfRecods = 5;
+            const int conversionSystem = ConversionSystem.METRIC;
             for (int i = 0; i < countOfRecods; i++)
             {
                 WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), RandomHelper.RandomDateInThePast(), 0, false);
             }
-            const string dateFormat = "yyyy-MM-ddTHH:mm:ss";
-            var userProgress = AppDbContext.User.GetProgressDailyByUserId(userId);
-            var weightList = WeightTracker.GetWeightList(responseLoginUser, ConversionSystem.METRIC, 0, countOfRecods + 100);
-
-            var weightListIds = weightList.Select(w => w.id);
-            var weightListDates = weightList.Select(w => w.date);
-            var weightListWeights = weightList.Select(w => w.weight);
-
-            Assert.That(userProgress.Select(p => p.Id).SequenceEqual(weightListIds), Is.True, "Ids don't match");
-            Assert.That(userProgress.Select(p => p.Date.ToString(dateFormat)).SequenceEqual(weightListDates), Is.True, "Dates don't match");
-            Assert.That(userProgress.Select(p => p.Weight).SequenceEqual(weightListWeights), Is.True, "Weights don't match");
+            WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userId);
 
             #endregion
 
             #region Edit Weight daily
-
-            foreach (var weightId in weightListIds)
+            var weightList = WeightTracker.GetWeightList(responseLoginUser, conversionSystem, 0, countOfRecods);
+            foreach (var weight in weightList)
             {
-                WeightTracker.EditWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), ConversionSystem.METRIC, weightId);
+                WeightTracker.EditWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), ConversionSystem.METRIC, weight.id);
             }
-            userProgress = AppDbContext.User.GetProgressDailyByUserId(userId);
-            weightList = WeightTracker.GetWeightList(responseLoginUser, ConversionSystem.METRIC, 0, countOfRecods + 100);
-
-            weightListIds = weightList.Select(w => w.id);
-            weightListDates = weightList.Select(w => w.date);
-            weightListWeights = weightList.Select(w => w.weight);
-
-            Assert.That(userProgress.Select(p => p.Id).SequenceEqual(weightListIds), Is.True, "Ids don't match");
-            Assert.That(userProgress.Select(p => p.Date.ToString(dateFormat)).SequenceEqual(weightListDates), Is.True, "Dates don't match");
-            Assert.That(userProgress.Select(p => p.Weight).SequenceEqual(weightListWeights), Is.True, "Weights don't match");
+            WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userId);
 
             #endregion
         }
 
-        [Test]
+        [Test, Category("Daily Weight")]
         public void DeleteWeight()
+        {
+            #region Register New User
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            var userData = AppDbContext.User.GetUserData(email);
+            #endregion
+
+            #region Add Weight daily
+            int countOfRecods = 5;
+            var conversionSystem = ConversionSystem.METRIC;
+            for (int i = 0; i < countOfRecods; i++)
+            {
+                WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), RandomHelper.RandomDateInThePast(), conversionSystem, false);
+            }
+            
+            
+            WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userData.Id);
+
+            #endregion
+
+            #region Delete Weight daily
+            var weightList = WeightTracker.GetWeightList(responseLoginUser, conversionSystem, 0, countOfRecods);
+            foreach (var weight in weightList)
+            {
+                WeightTracker.DeleteWeight(responseLoginUser, weight.id);
+            }
+            WeightTracker.VerifyIsDeletedProgressDaily(responseLoginUser, userData.Id);
+
+            #endregion
+        }
+
+        [Test, Category("Daily Weight")]
+        public void GetDailyProgressByEmail()
+        {
+            #region Register New User
+
+            var userData = AppDbContext.User.GetUserData("qatester2023-03-2-01-37-09@xitroo.com");
+            var responseLoginUser = SignInRequest.MakeSignIn(userData.Email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+
+            #endregion
+
+            #region Add Weight daily
+
+            const int conversionSystem = ConversionSystem.METRIC;
+            WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userData.Id);
+            WeightTracker.VerifyAverageOfWeightTracking(responseLoginUser, conversionSystem, userData.Id);
+            WeightTracker.VerifyChangedWeekWeight(responseLoginUser, conversionSystem, userData.Id);
+
+            #endregion
+        }
+
+        [Test, Category("Daily Weight")]
+        public void VerifyChangedWeekWeightByEmail()
         {
             #region Register New User
             string email = RandomHelper.RandomEmail();
@@ -202,40 +267,23 @@ namespace MCMApiTests
             #endregion
 
             #region Add Weight daily
-            int countOfRecods = 5;
-            for (int i = 0; i < countOfRecods; i++)
-            {
-                WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), RandomHelper.RandomDateInThePast(), 0, false);
-            }
-            const string dateFormat = "yyyy-MM-ddTHH:mm:ss";
-            var userProgress = AppDbContext.User.GetProgressDailyByUserId(userId);
-            var weightList = WeightTracker.GetWeightList(responseLoginUser, ConversionSystem.METRIC, 0, countOfRecods + 100);
+            const int recordCount = 30;
+            const int conversionSystem = ConversionSystem.METRIC;
 
-            var weightListIds = weightList.Select(w => w.id);
-            var weightListDates = weightList.Select(w => w.date);
-            var weightListWeights = weightList.Select(w => w.weight);
-
-            Assert.That(userProgress.Select(p => p.Id).SequenceEqual(weightListIds), Is.True, "Ids don't match");
-            Assert.That(userProgress.Select(p => p.Date.ToString(dateFormat)).SequenceEqual(weightListDates), Is.True, "Dates don't match");
-            Assert.That(userProgress.Select(p => p.Weight).SequenceEqual(weightListWeights), Is.True, "Weights don't match");
+            Enumerable.Range(0, recordCount)
+          .ToList()
+          .ForEach(_ =>
+          {
+              var weight = RandomHelper.RandomProgressData("weight");
+              var date = RandomHelper.RandomDateInThePast();
+              WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
+          });
 
             #endregion
 
-            #region Delete Weight daily
+            #region Verify Changed Week Weight daily
 
-            foreach (var weighId in weightListIds)
-            {
-                WeightTracker.DeleteWeight(responseLoginUser, weighId);
-            }
-            WaitUntil.WaitSomeInterval(1000);
-            userProgress = AppDbContext.User.GetProgressDailyByUserId(userId);
-            foreach (var progress in userProgress)
-            {
-                Assert.That(progress.IsDeleted, Is.True, "Ids don't match");
-            }
-            var s = WeightTracker.GetWeightList(responseLoginUser, ConversionSystem.METRIC, 0, countOfRecods + 100);
-
-            Assert.IsTrue(s.Count == 0);
+            WeightTracker.VerifyChangedWeekWeight(responseLoginUser, conversionSystem, userId);
 
             #endregion
         }
@@ -248,35 +296,31 @@ namespace MCMApiTests
         public void DemoTest()
         {
             #region Register New User
-
-            var userData = AppDbContext.User.GetLastUser();
-            var responseLoginUser = SignInRequest.MakeSignIn(userData.Email, Credentials.PASSWORD);
+            //string email = RandomHelper.RandomEmail();
+            //SignUpRequest.RegisterNewUser(email);
+            var responseLoginUser = SignInRequest.MakeSignIn("qatester91311@gmail.com", Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
-
+            string userId = AppDbContext.User.GetUserData("qatester91311@gmail.com").Id;
             #endregion
 
             #region Add Weight daily
-            int countOfRecods = 1000;
-            //for (int i = 0; i < countOfRecods; i++)
-            //{
-            //    WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), RandomHelper.RandomDateInThePast(), 0, false);
-            //}
-            const string dateFormat = "yyyy-MM-ddTHH:mm:ss";
-            var userProgress = AppDbContext.User.GetProgressDailyByUserId(userData.Id);
-            var weightList = WeightTracker.GetWeightList(responseLoginUser, ConversionSystem.METRIC, 0, countOfRecods + 100);
+            const int recordCount = 30;
+            const int conversionSystem = ConversionSystem.METRIC;
 
-            var weightListIds = weightList.Select(w => w.id).Reverse();
-            var weightListDates = weightList.Select(w => w.date).Reverse();
-            var weightListWeights = weightList.Select(w => w.weight).Reverse();
-            //Assert.Multiple(() =>
-            //{
-            //    Assert.That(userProgress.Select(p => p.Id).SequenceEqual(weightListIds), Is.True, "Ids don't match");
-            //    Assert.That(userProgress.Select(p => p.Date.ToString(dateFormat)).SequenceEqual(weightListDates), Is.True, "Dates don't match");
-            //    Assert.That(userProgress.Select(p => p.Weight).SequenceEqual(weightListWeights), Is.True, "Weights don't match");
-            //});
-            WeightTracker.VerifyAverageOfWeightTracking(userProgress, weightList);
+            Enumerable.Range(0, recordCount)
+          .ToList()
+          .ForEach(_ =>
+          {
+              var weight = RandomHelper.RandomProgressData("weight");
+              var date = RandomHelper.RandomDateInThePast();
+              WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
+          });
+            WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userId);
+            WeightTracker.VerifyAverageOfWeightTracking(responseLoginUser, conversionSystem, userId);
+
 
             #endregion
+
         }
     }
 }

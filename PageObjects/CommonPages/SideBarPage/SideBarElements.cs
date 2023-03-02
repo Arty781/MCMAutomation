@@ -72,7 +72,7 @@ namespace MCMAutomation.PageObjects
         public IWebElement btnMyAccount;
 
         [FindsBy(How=How.XPath,Using = "//div[@class='sidebar-info']//p")]
-        public IWebElement textEmail;
+        public IList<IWebElement> textEmail;
 
         #endregion
 

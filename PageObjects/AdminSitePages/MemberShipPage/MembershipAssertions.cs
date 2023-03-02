@@ -53,13 +53,13 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Verify deleting membership")]
-        public MembershipAdmin VerifyDeletingMembership(string membership)
+        public MembershipAdmin VerifyDeletingMembership(string membershipName)
         {
+            const int inputBoxTimeout = 30;
             WaitUntil.WaitForElementToAppear(Pages.CommonPages.Common.messageDeleted);
-
-            InputBox.ElementCtrlA(membershipSearchInput,30, membership);
-            Assert.AreEqual(false, PresenceOfElement.IsElementPresent(By.Name(membership)));
-            
+            InputBox.ElementCtrlA(membershipSearchInput, inputBoxTimeout, membershipName);
+            bool isMembershipPresent = PresenceOfElement.IsElementPresent(By.Name(membershipName));
+            Assert.IsFalse(isMembershipPresent, $"Membership '{membershipName}' was not deleted.");
 
             return this;
         }
@@ -68,13 +68,8 @@ namespace MCMAutomation.PageObjects
         public MembershipAdmin VerifyMembershipNameCbbx(string membership)
         {
             TextBox.GetText(cbbxMembershipName);
-            Assert.AreEqual(membership, cbbxMembershipName.Text);
-            if (membership != cbbxMembershipName.Text)
-            {
-                Console.WriteLine("Membership \"" + membership + "\" is not found");
-            }
-
-
+            Assert.AreEqual(membership, cbbxMembershipName.Text, $"Membership '{membership}' is not found");
+            
             return this;
         }
 
@@ -83,8 +78,6 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.WaitForElementToAppear(emailColumn, 60);
             Assert.AreEqual("qatester92311@xitroo.com", emailColumn.Text);
-
-
             return this;
         }
         

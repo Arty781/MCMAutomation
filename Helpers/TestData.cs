@@ -19,6 +19,7 @@ namespace MCMAutomation.Helpers
     {
         public const string WEBSITE_HOST = "https://mcmstaging-ui.azurewebsites.net/";
         public const string API_HOST = "https://mcmstaging-api.azurewebsites.net";
+        public const string API_HOST_GET = "mcmstaging-api.azurewebsites.net";
     }
 
     public class Credentials
@@ -171,7 +172,7 @@ namespace MCMAutomation.Helpers
 
     public class TDEE
     {
-        public static string[] ActivityLevel =
+        public static List<string> ActivityLevel = new()
             {
             "Sedentary (office job)",
             "Light Exercise (1-2 days/week)",
@@ -199,6 +200,21 @@ namespace MCMAutomation.Helpers
         public const string DIET_2 = "MODERATE FAT / MODERATE CARB";
         public const string DIET_3 = "HIGH FAT / LOW CARB";
 
+        public static List<int> BODY_FAT_FACTOR_MALE = new()
+        {
+            14,
+            20,
+            28,
+            29
+        };
+        public static List<int> BODY_FAT_FACTOR_FEMALE = new()
+        {
+            18,
+            28,
+            38,
+            39
+        };
+
     }
 
     public class MembershipsSKU
@@ -215,11 +231,11 @@ namespace MCMAutomation.Helpers
 
     public class AdditionalOptions
     {
-        public static string additionalCommonOption = "Have you been dieting long term?";
+        public const string ADDITIONAL_COMMON_OPTION = "Have you been dieting long term?";
 
-        public static string additionalPgOption = "Are you in the third trimester of pregnancy?";
+        public const string ADDITIONAL_PG_OPTION = "Are you in the third trimester of pregnancy?";
 
-        public static string[] additionalPpOption =
+        public static List<string> ADDITIONAL_PP_OPTION = new()
         {
             "Are you breastfeeding (less than 5 months postpartum)?",
             "Are you breastfeeding (5-12 months postpartum)?"

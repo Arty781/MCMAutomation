@@ -61,9 +61,9 @@ namespace MCMAutomation.Helpers
             return Random.Next(minValue, maxValue);
         }
 
-        public static int RandomExercise(int maxWeight)
+        public static int RandomExercise(int exerciseCount)
         {
-            return Random.Next(1, maxWeight);
+            return Random.Next(1, exerciseCount);
         }
 
         public static string RandomText(int size)

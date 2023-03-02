@@ -101,16 +101,17 @@ namespace MCMAutomation.APIHelpers
         private static string JsonBody(int count, int workoutId, List<DB.Exercises> exercises)
         {
             WorkoutExercises req = null;
-            if (count == 0)
+            switch (count)
             {
-                req = new()
-                {
-                    ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
-                    Notes = Lorem.Sentence(),
-                    Series = "A",
-                    Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                    WorkoutId = workoutId,
-                    WeekWorkoutExercises = new List<WeekWorkoutExercise>()
+                case 0:
+                    req = new()
+                    {
+                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        Notes = Lorem.Sentence(),
+                        Series = "A",
+                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
+                        WorkoutId = workoutId,
+                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
                     {
                         new WeekWorkoutExercise()
                         {
@@ -145,18 +146,17 @@ namespace MCMAutomation.APIHelpers
                             Week = 4
                         }
                     }
-                };
-            }
-            else if (count == 1)
-            {
-                req = new()
-                {
-                    ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
-                    Notes = Lorem.Sentence(),
-                    Series = "B",
-                    Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                    WorkoutId = workoutId,
-                    WeekWorkoutExercises = new List<WeekWorkoutExercise>()
+                    };
+                    break;
+                case 1:
+                    req = new()
+                    {
+                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        Notes = Lorem.Sentence(),
+                        Series = "B",
+                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
+                        WorkoutId = workoutId,
+                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
                     {
                         new WeekWorkoutExercise()
                         {
@@ -191,18 +191,17 @@ namespace MCMAutomation.APIHelpers
                             Week = 4
                         }
                     }
-                };
-            }
-            else if (count == 2)
-            {
-                req = new()
-                {
-                    ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
-                    Notes = Lorem.Sentence(),
-                    Series = "C1",
-                    Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                    WorkoutId = workoutId,
-                    WeekWorkoutExercises = new List<WeekWorkoutExercise>()
+                    };
+                    break;
+                case 2:
+                    req = new()
+                    {
+                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        Notes = Lorem.Sentence(),
+                        Series = "C1",
+                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
+                        WorkoutId = workoutId,
+                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
                     {
                         new WeekWorkoutExercise()
                         {
@@ -237,18 +236,17 @@ namespace MCMAutomation.APIHelpers
                             Week = 4
                         }
                     }
-                };
-            }
-            else if (count == 3)
-            {
-                req = new()
-                {
-                    ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
-                    Notes = Lorem.Sentence(),
-                    Series = "C2",
-                    Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                    WorkoutId = workoutId,
-                    WeekWorkoutExercises = new List<WeekWorkoutExercise>()
+                    };
+                    break;
+                case 3:
+                    req = new()
+                    {
+                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        Notes = Lorem.Sentence(),
+                        Series = "C2",
+                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
+                        WorkoutId = workoutId,
+                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
                     {
                         new WeekWorkoutExercise()
                         {
@@ -283,18 +281,17 @@ namespace MCMAutomation.APIHelpers
                             Week = 4
                         }
                     }
-                };
-            }
-            else if (count == 4)
-            {
-                req = new()
-                {
-                    ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
-                    Notes = Lorem.Sentence(),
-                    Series = "D",
-                    Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                    WorkoutId = workoutId,
-                    WeekWorkoutExercises = new List<WeekWorkoutExercise>()
+                    };
+                    break;
+                case 4:
+                    req = new()
+                    {
+                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        Notes = Lorem.Sentence(),
+                        Series = "D",
+                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
+                        WorkoutId = workoutId,
+                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
                     {
                         new WeekWorkoutExercise()
                         {
@@ -329,18 +326,17 @@ namespace MCMAutomation.APIHelpers
                             Week = 4
                         }
                     }
-                };
-            }
-            else if (count == 5)
-            {
-                req = new()
-                {
-                    ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
-                    Notes = Lorem.Sentence(),
-                    Series = "E",
-                    Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                    WorkoutId = workoutId,
-                    WeekWorkoutExercises = new List<WeekWorkoutExercise>()
+                    };
+                    break;
+                case 5:
+                    req = new()
+                    {
+                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        Notes = Lorem.Sentence(),
+                        Series = "E",
+                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
+                        WorkoutId = workoutId,
+                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
                     {
                         new WeekWorkoutExercise()
                         {
@@ -375,14 +371,16 @@ namespace MCMAutomation.APIHelpers
                             Week = 4
                         }
                     }
-                };
+                    };
+                    break;
             }
-
-
+            
             return JsonConvert.SerializeObject(req);
         }
 
         #endregion
+
+        #region Requests
 
         public static MembershipsWithUsersResponse GetMembershipsWithUsersList(SignInResponseModel SignIn)
         {
@@ -694,5 +692,40 @@ namespace MCMAutomation.APIHelpers
             }
             Debug.WriteLine("Error message is " + Convert.ToString(resp.BodyStr));
         }
+
+        #endregion
+
+        #region Methods
+
+        public static List<DB.Programs> CreatePrograms(SignInResponseModel responseLoginAdmin, DB.Memberships membership, int programCount)
+        {
+            for (int i = 0; i < programCount; i++)
+            {
+                CreatePrograms(responseLoginAdmin, membership.Id);
+            }
+            var programs = AppDbContext.Programs.GetLastPrograms(programCount);
+            return programs;
+        }
+
+        public static List<DB.Workouts> CreateWorkouts(SignInResponseModel responseLoginAdmin, List<DB.Programs> programs, int programCount)
+        {
+            foreach (var program in programs)
+            {
+                CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+            }
+            var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
+            return workouts;
+        }
+
+        public static void AddExercisesToWorkouts(SignInResponseModel responseLoginAdmin, List<DB.Workouts> workouts)
+        {
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            foreach (var workout in workouts)
+            {
+                AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+            }
+        }
+
+        #endregion
     }
 }

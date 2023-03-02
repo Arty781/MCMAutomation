@@ -26,21 +26,24 @@ namespace MCMAutomation.PageObjects
 
         public ExercisesAdmin EnterExerciseData()
         {
-            
             InputBox.ElementCtrlA(fieldExerciseName, 5, "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss"));
             InputBox.ElementCtrlA(fieldExerciseUrl, 5, "https://player.vimeo.com/video/478282179");
 
-            btnTempoStart[0].Click();
-
-
+            Button.Click(btnTempoStart.FirstOrDefault());
             return this;
         }
 
         [AllureStep("Add Related exercises")]
-        public ExercisesAdmin AddRelatedExercises(string[] relatedExercisesList)
+        public ExercisesAdmin AddRelatedExercises(List<DB.Exercises> relatedExercisesList)
         {
-            Button.Click(btnAddRelatedGymExercise);
-
+            int i = fieldRelatedGymExercise.Count;
+            for (int q = 0; q < i; q++)
+            {
+                Button.Click(fieldRelatedGymExercise.First());
+                InputBox.CbbxElement(fieldRelatedGymExercise.First(), 5, relatedExercisesList[RandomHelper.RandomExercise(relatedExercisesList.Count)].Name);
+                Button.Click(fieldRelatedHomeExercise.First());
+                InputBox.CbbxElement(fieldRelatedHomeExercise.First(), 5, relatedExercisesList[RandomHelper.RandomExercise(relatedExercisesList.Count)].Name);
+            }
 
             return this;
         }
@@ -95,27 +98,32 @@ namespace MCMAutomation.PageObjects
         public ExercisesAdmin RemoveRelatedExercises()
         {
             WaitUntil.WaitForElementToAppear(btnRemoveRelatedExeciseElem);
-            var removeRelatedbtnList = btnRemoveRelatedExecise.Where(x=>x.Enabled).ToList();
 
-            for (int i=0; i < removeRelatedbtnList.Count; i++)
-            {
-                Button.Click(btnRemoveRelatedExeciseElem);
-                WaitUntil.WaitSomeInterval(250);
-            }
+            RemoveExerciseButtons(btnRemoveRelatedExecise);
+            RemoveExerciseButtons(btnRemoveHomeExecise);
 
             return this;
         }
+
+        private void RemoveExerciseButtons(IList<IWebElement> exerciseButtons)
+        {
+            while (exerciseButtons.Any(x => x.Enabled))
+            {
+                var btn = exerciseButtons.First(x => x.Enabled);
+                Button.Click(btn);
+                WaitUntil.WaitSomeInterval(250);
+                WaitUntil.WaitForElementToDisappear(btn);
+            }
+        }
+
+
 
         [AllureStep("Remove Exercise")]
 
         public ExercisesAdmin RemoveExercise(string exercise)
         {
-
-
             SwitcherHelper.ClickRemoveExerciseBtn(exercise);
             Button.Click(btnConfirmationYes);
-            
-
             return this;
         }
     }

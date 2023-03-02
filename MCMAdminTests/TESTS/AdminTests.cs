@@ -12,6 +12,7 @@ using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.EditUser;
 using MCMAutomation.APIHelpers.Client.SignUp;
 using System.Linq;
+using Chilkat;
 
 namespace AdminSiteTests
 {
@@ -226,48 +227,6 @@ namespace AdminSiteTests
             #endregion
 
         }
-
-        //[Test]
-        //[AllureTag("Regression")]
-        //[AllureOwner("Artem Sukharevskyi")]
-        //[AllureSeverity(SeverityLevel.critical)]
-        //[Author("Artem", "qatester91311@gmail.com")]
-        //[AllureSuite("Admin")]
-        //[AllureSubSuite("Memberships")]
-        //public void AddProgramsToNewMembership()
-        //{
-
-        //    Pages.CommonPages.Login
-        //        .GetLogin(Credentials.loginAdmin, Credentials.passwordAdmin);
-        //    Pages.CommonPages.Sidebar
-        //        .VerifyIsLogoDisplayed();
-        //    Pages.CommonPages.PopUp
-        //        .ClosePopUp();
-        //    Pages.CommonPages.Sidebar
-        //        .OpenMemberShipPage();
-        //    Pages.AdminPages.MembershipAdmin
-        //        .ClickCreateBtn()
-        //        .EnterMembershipData();
-        //    Pages.CommonPages.Common
-        //        .ClickSaveBtn();
-
-        //    string memberName = AppDbContext.Memberships.GetLastMembership();
-
-        //    Pages.AdminPages.MembershipAdmin
-        //        .ClickAddProgramsBtn(memberName)
-        //        .VerifyMembershipNameCbbx(memberName)
-        //        .CreatePrograms();
-
-        //    string[] programList = Pages.AdminPages.MembershipAdmin.GetProgramNames();
-
-        //    Pages.AdminPages.MembershipAdmin
-        //        .ClickAddWorkoutBtn()
-        //        .CreateWorkouts(programList);
-
-        //    Pages.CommonPages.Login
-        //        .GetAdminLogout();
-
-        //}
 
         [Test, Category("Memberships")]
         [AllureTag("Regression")]
@@ -635,24 +594,18 @@ namespace AdminSiteTests
             SignUpRequest.RegisterNewUser(email);
             var responseLogin = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
+            string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
             #region Create custom membership
 
-            string userId = AppDbContext.User.GetUserData(email).Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateCustomMembership(responseLoginAdmin, userId);
-            var membershipData = AppDbContext.Memberships.GetLastMembershipByType("custom");
-            int programCount = 3;
-            for (int i = 0; i < programCount; i++)
-            {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id);
-            }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
-            foreach (var program in programs)
-            {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
-            }
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            const int programCount = 3;
+            var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
+            var workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            
             #endregion
 
             #endregion
@@ -697,10 +650,28 @@ namespace AdminSiteTests
         {
             #region Preconditions
 
+            #region Register New User
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
-            var responseLogin = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLogin);
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            #endregion
+
+            #region Add and Activate membership to User
+
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            const int programCount = 3;
+            var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
+            var workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, userId);
+            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+
+            #endregion
 
             #endregion
 
@@ -712,34 +683,6 @@ namespace AdminSiteTests
                 .VerifyIsLogoDisplayed();
             Pages.CommonPages.PopUp
                 .ClosePopUp();
-            Pages.CommonPages.Sidebar
-                .OpenMemberShipPage();
-            Pages.AdminPages.MembershipAdmin
-                .ClickCreateBtn()
-                .EnterMembershipData();
-            Pages.CommonPages.Common
-                .ClickSaveBtn();
-            WaitUntil.WaitForElementToAppear(Pages.AdminPages.MembershipAdmin.membershipSearchInput);
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
-            Pages.AdminPages.MembershipAdmin
-                .ClickAddProgramsBtn(membershipData.Name)
-                .VerifyMembershipNameCbbx(membershipData.Name)
-                .CreatePrograms();
-            List<string> programList = Pages.AdminPages.MembershipAdmin.GetProgramNames();
-            Pages.AdminPages.MembershipAdmin
-                .ClickAddWorkoutBtn()
-                .CreateWorkouts(programList);
-            var exercises = AppDbContext.Exercises.GetExercisesData();
-            Pages.AdminPages.MembershipAdmin
-                .AddWorkoutExercises(programList, exercises);
-            Pages.CommonPages.Sidebar
-                .OpenUsersPage();
-            Pages.AdminPages.UsersAdmin
-                .SearchUser(email)
-                .VerifyDisplayingOfUser(email)
-                .ClickEditUser(email)
-                .AddMembershipToUser(membershipData.Name)
-                .SelectActiveMembership(membershipData.Name);
             Pages.CommonPages.Sidebar
                 .OpenMemberShipPage();
             Pages.AdminPages.MembershipAdmin
@@ -807,6 +750,15 @@ namespace AdminSiteTests
         [AllureSubSuite("Exercises")]
         public void EditExercise()
         {
+            #region Preconditions
+
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithoutRelated(responseLoginAdmin, list);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+
+            #endregion
+
             Pages.CommonPages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.CommonPages.Sidebar
@@ -815,23 +767,11 @@ namespace AdminSiteTests
                 .ClosePopUp();
             Pages.CommonPages.Sidebar
                 .OpenExercisesPage();
-
-            List<string> relatedExerciseList = Pages.AdminPages.ExercisesAdmin.GetExercisesList();
-
             Pages.AdminPages.ExercisesAdmin
-                .ClickCreateExerciseBtn()
-                .EnterExerciseData();
-
-            string exerciseName = TextBox.GetAttribute(Pages.AdminPages.ExercisesAdmin.fieldExerciseName, "value");
-
-            Pages.CommonPages.Common
-                .ClickSaveBtn();
-
-            Pages.AdminPages.ExercisesAdmin
-                .VerifyExerciseIsCreated(exerciseName)
-                .ClickEditExercise(exerciseName)
+                .VerifyExerciseIsCreated(lastExercise.Name)
+                .ClickEditExercise(lastExercise.Name)
                 .ClickAddRelatedExercisesBtn(5)
-                .AddRelatedExercises(relatedExerciseList);
+                .AddRelatedExercises(list);
             Pages.CommonPages.Common
                 .ClickSaveBtn();
             Pages.CommonPages.Login
@@ -839,7 +779,7 @@ namespace AdminSiteTests
 
             #region Postconditions
 
-            AppDbContext.Exercises.DeleteExercises(exerciseName);
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
 
             #endregion
         }
@@ -853,6 +793,15 @@ namespace AdminSiteTests
         [AllureSubSuite("Exercises")]
         public void DeleteRelatedExercises()
         {
+            #region Preconditions
+
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+
+            #endregion
+
             Pages.CommonPages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.CommonPages.Sidebar
@@ -861,31 +810,10 @@ namespace AdminSiteTests
                 .ClosePopUp();
             Pages.CommonPages.Sidebar
                 .OpenExercisesPage();
-
-            List<string> relatedExerciseList = Pages.AdminPages.ExercisesAdmin.GetExercisesList();
-
             Pages.AdminPages.ExercisesAdmin
-                .ClickCreateExerciseBtn()
-                .EnterExerciseData();
-
-            string exerciseName = TextBox.GetAttribute(Pages.AdminPages.ExercisesAdmin.fieldExerciseName, "value");
-
-            Pages.CommonPages.Common
-                .ClickSaveBtn();
-
+                .VerifyExerciseIsCreated(lastExercise.Name);
             Pages.AdminPages.ExercisesAdmin
-                .VerifyExerciseIsCreated(exerciseName);
-            Pages.AdminPages.ExercisesAdmin
-                .ClickEditExercise(exerciseName)
-                .ClickAddRelatedExercisesBtn(5)
-                .AddRelatedExercises(relatedExerciseList);
-            Pages.CommonPages.Common
-                .ClickSaveBtn();
-            WaitUntil.WaitSomeInterval(2000);
-            Pages.CommonPages.PopUp
-                .ClosePopUp();
-            Pages.AdminPages.ExercisesAdmin
-                .ClickEditExercise(exerciseName)
+                .ClickEditExercise(lastExercise.Name)
                 .RemoveRelatedExercises();
             Pages.CommonPages.Common
                 .ClickSaveBtn();
@@ -894,7 +822,7 @@ namespace AdminSiteTests
 
             #region Postconditions
 
-            AppDbContext.Exercises.DeleteExercises(exerciseName);
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
 
             #endregion
         }
@@ -981,6 +909,15 @@ namespace AdminSiteTests
         [AllureSubSuite("Exercises")]
         public void RemoveExercise()
         {
+            #region Preconditions
+
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithoutRelated(responseLoginAdmin, list);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+
+            #endregion
+
             Pages.CommonPages.Login
                 .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             Pages.CommonPages.Sidebar
@@ -990,25 +927,16 @@ namespace AdminSiteTests
             Pages.CommonPages.Sidebar
                 .OpenExercisesPage();
             Pages.AdminPages.ExercisesAdmin
-                .ClickCreateExerciseBtn()
-                .EnterExerciseData();
-
-            string exerciseName = TextBox.GetAttribute(Pages.AdminPages.ExercisesAdmin.fieldExerciseName, "value");
-
-            Pages.CommonPages.Common
-                .ClickSaveBtn();
-
-            Pages.AdminPages.ExercisesAdmin
-                .VerifyExerciseIsCreated(exerciseName)
-                .RemoveExercise(exerciseName)
-                .VerifyExerciseIsRemoved(exerciseName);
+                .VerifyExerciseIsCreated(lastExercise.Name)
+                .RemoveExercise(lastExercise.Name)
+                .VerifyExerciseIsRemoved(lastExercise.Name);
 
             Pages.CommonPages.Login
                 .GetAdminLogout();
 
             #region Postconditions
 
-            AppDbContext.Exercises.DeleteExercises(exerciseName);
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
 
             #endregion
         }
@@ -1025,19 +953,13 @@ namespace AdminSiteTests
         //[Ignore("Debugging test")]
         public void Test()
         {
-            //var responseLogin = SignInRequest.MakeSignIn(Credentials.loginAdmin, Credentials.passwordAdmin);
-            //MembershipsWithUsersRequest.GetMembershipsWithUsersList(responseLogin);
-
-            
-
-            Pages.CommonPages.Login
-                .GetLogin(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            Pages.CommonPages.Sidebar
-                .VerifyIsLogoDisplayed();
-            Pages.CommonPages.PopUp
-                .ClosePopUp();
-            Pages.CommonPages.Sidebar
-                .OpenExercisesPage();
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 20, UserAccount.MALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            var userData = AppDbContext.User.GetUserData(email);
+            Pages.WebPages.Nutrition.VerifyMaintainCaloriesStep01(userData, TDEE.ActivityLevel[0], "Male", "Have you been dieting long term?", "Yes");
         }
 
         [Test]

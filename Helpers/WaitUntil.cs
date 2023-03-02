@@ -20,7 +20,7 @@ namespace MCMAutomation.Helpers
 
         public static void WaitForElementToAppear(IWebElement element, int seconds = 10)
         {
-            Task.Delay(TimeSpan.FromMilliseconds(550)).Wait();
+            Task.Delay(TimeSpan.FromMilliseconds(250)).Wait();
             IWait<IWebDriver> wait = new DefaultWait<IWebDriver>(Browser._Driver)
             {
                 Timeout = TimeSpan.FromSeconds(seconds),
@@ -42,7 +42,8 @@ namespace MCMAutomation.Helpers
                     catch(Exception) { return false; }
                 });
                 Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
-            }catch(Exception) { }
+            }
+            catch(Exception) { }
         }
 
         public static void WaitForElementToDisappear(IWebElement element, int seconds = 10)

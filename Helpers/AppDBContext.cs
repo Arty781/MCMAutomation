@@ -109,6 +109,46 @@ namespace MCMAutomation.Helpers
                 }
                 return list;
             }
+
+            public static DB.Exercises GetLastExerciseData()
+            {
+
+                var row = new DB.Exercises();
+                string query = "SELECT TOP(1) * " +
+                               "FROM [Exercises] WHERE IsDeleted=0 " +
+                               "ORDER BY CreationDate DESC";
+
+                try
+                {
+                    using SqlConnection connection = new(DB.GET_CONNECTION_STRING);
+                    using SqlCommand command = new(query, connection);
+                    connection.Open();
+
+                    using SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        row.Id = reader.GetInt32(0);
+                        row.Name = reader.GetString(1);
+                        row.CreationDate = reader.GetDateTime(2);
+                        row.IsDeleted = reader.GetBoolean(3);
+                        row.VideoURL = reader.GetString(4);
+                        row.TempoBold = reader.GetInt32(5);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+                return row;
+            }
+
             public static List<string> GetExerciseStatus()
             {
                 var list = new List<string>();
@@ -425,22 +465,22 @@ namespace MCMAutomation.Helpers
                         while (reader.Read())
                         {
                             row.Id = reader.GetInt32(0);
-                            row.SKU = reader.GetString(1);
-                            row.Name = reader.GetString(2);
-                            row.Description = reader.GetString(3);
+                            row.Name = reader.GetString(1);
+                            row.Description = reader.GetString(2);
                             row.StartDate = null;
                             row.EndDate = null;
-                            row.URL = reader.GetString(6);
-                            row.Price = reader.GetDecimal(7);
-                            row.CreationDate = reader.GetDateTime(8);
-                            row.IsDeleted = reader.GetBoolean(9);
-                            row.IsCustom = reader.GetBoolean(10);
-                            row.ForPurchase = reader.GetBoolean(11);
-                            row.AccessWeekLength = reader.GetInt32(12);
+                            row.URL = reader.GetString(5);
+                            row.Price = reader.GetDecimal(6);
+                            row.CreationDate = reader.GetDateTime(7);
+                            row.IsDeleted = reader.GetBoolean(8);
+                            row.IsCustom = reader.GetBoolean(9);
+                            row.ForPurchase = reader.GetBoolean(10);
+                            row.AccessWeekLength = reader.GetInt32(11);
                             row.RelatedMembershipGroupId = null;
-                            row.Gender = reader.GetInt32(14);
+                            row.Gender = reader.GetInt32(13);
                             row.PromotionalPopupId = null;
-                            row.Type = reader.GetInt32(16);
+                            row.Type = reader.GetInt32(15);
+                            row.SKU = reader.GetString(16);
                         }
 
                     }
@@ -470,22 +510,22 @@ namespace MCMAutomation.Helpers
                         while (reader.Read())
                         {
                             row.Id = reader.GetInt32(0);
-                            row.SKU = reader.GetString(1);
-                            row.Name = reader.GetString(2);
+                            row.Name = reader.GetString(1);
                             row.Description = null;
                             row.StartDate = null;
                             row.EndDate = null;
-                            row.URL = reader.GetString(6);
-                            row.Price = reader.GetDecimal(7);
-                            row.CreationDate = reader.GetDateTime(8);
-                            row.IsDeleted = reader.GetBoolean(9);
-                            row.IsCustom = reader.GetBoolean(10);
-                            row.ForPurchase = reader.GetBoolean(11);
+                            row.URL = reader.GetString(5);
+                            row.Price = reader.GetDecimal(6);
+                            row.CreationDate = reader.GetDateTime(7);
+                            row.IsDeleted = reader.GetBoolean(8);
+                            row.IsCustom = reader.GetBoolean(9);
+                            row.ForPurchase = reader.GetBoolean(10);
                             row.AccessWeekLength = null;
                             row.RelatedMembershipGroupId = null;
-                            row.Gender = reader.GetInt32(14);
+                            row.Gender = reader.GetInt32(13);
                             row.PromotionalPopupId = null;
-                            row.Type = reader.GetInt32(16);
+                            row.Type = reader.GetInt32(15);
+                            row.SKU = reader.GetString(16);
                         }
                     }
                     catch (Exception ex)
@@ -559,22 +599,22 @@ namespace MCMAutomation.Helpers
                     {
                         var row = new DB.Memberships();
                         row.Id = reader.GetInt32(0);
-                        row.SKU = reader.GetString(1);
-                        row.Name = reader.GetString(2);
-                        row.Description = reader.GetString(3);
+                        row.Name = reader.GetString(1);
+                        row.Description = reader.GetString(2);
                         row.StartDate = null;
                         row.EndDate = null;
-                        row.URL = reader.GetString(6);
-                        row.Price = reader.GetDecimal(7);
-                        row.CreationDate = reader.GetDateTime(8);
-                        row.IsDeleted = reader.GetBoolean(9);
-                        row.IsCustom = reader.GetBoolean(10);
-                        row.ForPurchase = reader.GetBoolean(11);
-                        row.AccessWeekLength = reader.GetInt32(12);
+                        row.URL = reader.GetString(5);
+                        row.Price = reader.GetDecimal(6);
+                        row.CreationDate = reader.GetDateTime(7);
+                        row.IsDeleted = reader.GetBoolean(8);
+                        row.IsCustom = reader.GetBoolean(9);
+                        row.ForPurchase = reader.GetBoolean(10);
+                        row.AccessWeekLength = reader.GetInt32(11);
                         row.RelatedMembershipGroupId = null;
-                        row.Gender = reader.GetInt32(14);
+                        row.Gender = reader.GetInt32(13);
                         row.PromotionalPopupId = null;
-                        row.Type = reader.GetInt32(16);
+                        row.Type = reader.GetInt32(15);
+                        row.SKU = reader.GetString(16);
                         list.Add(row);
                     }
                 }
@@ -599,22 +639,22 @@ namespace MCMAutomation.Helpers
                     {
                         var row = new DB.Memberships();
                         row.Id = reader.GetInt32(0);
-                        row.SKU = reader.GetString(1);
-                        row.Name = reader.GetString(2);
+                        row.Name = reader.GetString(1);
                         row.Description = null;
                         row.StartDate = null;
                         row.EndDate = null;
-                        row.URL = reader.GetString(6);
-                        row.Price = reader.GetDecimal(7);
-                        row.CreationDate = reader.GetDateTime(8);
-                        row.IsDeleted = reader.GetBoolean(9);
-                        row.IsCustom = reader.GetBoolean(10);
-                        row.ForPurchase = reader.GetBoolean(11);
+                        row.URL = reader.GetString(5);
+                        row.Price = reader.GetDecimal(6);
+                        row.CreationDate = reader.GetDateTime(7);
+                        row.IsDeleted = reader.GetBoolean(8);
+                        row.IsCustom = reader.GetBoolean(9);
+                        row.ForPurchase = reader.GetBoolean(10);
                         row.AccessWeekLength = null;
                         row.RelatedMembershipGroupId = null;
-                        row.Gender = reader.GetInt32(14);
+                        row.Gender = reader.GetInt32(13);
                         row.PromotionalPopupId = null;
-                        row.Type = reader.GetInt32(16);
+                        row.Type = reader.GetInt32(15);
+                        row.SKU = reader.GetString(16);
                         list.Add(row);
                     }
                 }
@@ -640,22 +680,22 @@ namespace MCMAutomation.Helpers
                     {
                         var row = new DB.Memberships();
                         row.Id = reader.GetInt32(0);
-                        row.SKU = null;
-                        row.Name = reader.GetString(2);
+                        row.Name = reader.GetString(1);
                         row.Description = null;
                         row.StartDate = null;
                         row.EndDate = null;
                         row.URL = null;
-                        row.Price = reader.GetDecimal(7);
-                        row.CreationDate = reader.GetDateTime(8);
-                        row.IsDeleted = reader.GetBoolean(9);
-                        row.IsCustom = reader.GetBoolean(10);
-                        row.ForPurchase = reader.GetBoolean(11);
-                        row.AccessWeekLength = reader.GetInt32(12);
+                        row.Price = reader.GetDecimal(6);
+                        row.CreationDate = reader.GetDateTime(7);
+                        row.IsDeleted = reader.GetBoolean(8);
+                        row.IsCustom = reader.GetBoolean(9);
+                        row.ForPurchase = reader.GetBoolean(10);
+                        row.AccessWeekLength = reader.GetInt32(11);
                         row.RelatedMembershipGroupId = null;
-                        row.Gender = reader.GetInt32(14);
+                        row.Gender = reader.GetInt32(13);
                         row.PromotionalPopupId = null;
-                        row.Type = reader.GetInt32(16);
+                        row.Type = reader.GetInt32(15);
+                        row.SKU = null;
                         list.Add(row);
                     }
                 }
@@ -1143,6 +1183,46 @@ namespace MCMAutomation.Helpers
             }
 
             public static List<DB.ProgressDaily> GetProgressDailyByUserId(string id)
+            {
+                var list = new List<DB.ProgressDaily>();
+                string query = "SELECT *\r\n  " +
+                               "FROM [dbo].[DailyProgress]\r\n  " +
+                               "where UserId = @UserId and IsDeleted = 0" +
+                               "order by Date";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    command.Parameters.AddWithValue("@UserId", DbType.String).Value = id;
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var progressRow = new DB.ProgressDaily();
+                        progressRow.Id = reader.GetInt32(0);
+                        progressRow.Date = reader.GetDateTime(1);
+                        progressRow.Weight = reader.GetDecimal(2);
+                        progressRow.UserId = reader.GetString(3);
+                        progressRow.CreationDate = reader.GetDateTime(4);
+                        progressRow.IsDeleted = reader.GetBoolean(5);
+                        list.Add(progressRow);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+                return list;
+            }
+
+            public static List<DB.ProgressDaily> GetAllProgressDailyByUserId(string id)
             {
                 var list = new List<DB.ProgressDaily>();
                 string query = "SELECT *\r\n  " +

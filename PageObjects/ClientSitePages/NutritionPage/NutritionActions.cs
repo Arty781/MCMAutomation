@@ -13,6 +13,16 @@ namespace MCMAutomation.PageObjects.ClientSitePages
     public partial class Nutrition
     {
         #region FINDING YOUR ESTIMATED TDEE page
+
+        public string SelectedLevel()
+        {
+            return Pages.WebPages.Nutrition.cbbxActivitylevel.Text;
+        }
+
+        public string Selectedgender()
+        {
+            return SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
+        }
         public Nutrition ClickCalculateBtn()
         {
 
@@ -24,37 +34,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition SelectActivityLevel(int levelNumber)
         {
-            if (levelNumber == 0)
-            {
-                WaitUntil.WaitSomeInterval(250);
-                Button.Click(cbbxActivitylevel);
-                Button.Click(listActivityLevel[levelNumber]);
-            }
-            else if (levelNumber == 1)
-            {
-                WaitUntil.WaitSomeInterval(250);
-                Button.Click(cbbxActivitylevel);
-                Button.Click(listActivityLevel[levelNumber]);
-            }
-            else if (levelNumber == 2)
-            {
-                WaitUntil.WaitSomeInterval(250);
-                Button.Click(cbbxActivitylevel);
-                Button.Click(listActivityLevel[levelNumber]);
-            }
-            else if (levelNumber == 3)
-            {
-                WaitUntil.WaitSomeInterval(250);
-                Button.Click(cbbxActivitylevel);
-                Button.Click(listActivityLevel[levelNumber]);
-            }
-            else if (levelNumber == 4)
-            {
-                WaitUntil.WaitSomeInterval(250);
-                Button.Click(cbbxActivitylevel);
-                Button.Click(listActivityLevel[levelNumber]);
-            }
-
+            WaitUntil.WaitSomeInterval(250);
+            Button.Click(cbbxActivitylevel);
+            Button.Click(listActivityLevel[levelNumber]);
             WaitUntil.WaitSomeInterval(3000);
             return this;
         }

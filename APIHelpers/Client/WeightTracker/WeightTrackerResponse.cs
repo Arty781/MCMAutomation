@@ -73,7 +73,7 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
         {
             var req = new HttpRequest();
             req.HttpVerb = "POST";
-            req.Path = String.Concat("/Progress/AddDaily");
+            req.Path = String.Concat("/Progress/EditDaily");
             req.ContentType = "multipart/form-data";
             req.AddHeader("Connection", "Keep-Alive");
             req.AddHeader("accept-encoding", "gzip, deflate, br");
@@ -113,52 +113,161 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
             Debug.WriteLine("HTTP response status: " + Convert.ToString(resp.StatusCode));
         }
 
-        public static void VerifyAverageOfWeightTracking(List<DB.ProgressDaily> userProgressExpected, List<WeightTrackerResponse> userProgressActual)
+        public static void VerifyIsDeletedProgressDaily(SignInResponseModel responseLoginUser, string userId)
         {
-            List<decimal> averageListExpected = new List<decimal>();
-            List<decimal> averageListActual = new List<decimal>();
-            decimal sum = 0m;
-            int count = 0;
-
-            for (int i = 0; i < userProgressExpected.Count; i++)
+            WaitUntil.WaitSomeInterval(1000);
+            var userProgress = AppDbContext.User.GetAllProgressDailyByUserId(userId);
+            foreach (var progress in userProgress)
             {
-                if(i <= 7)
-                {
-                    var partOfList = userProgressExpected.Take(i+1);
-                    count++;
-                    decimal average = (count == 1) ? 0m : partOfList.Average(p=> p.Weight);
-                    average = decimal.Round(average, 4);
-                    string formattedAverage = average.ToString("0.00000");
-                    decimal finalAverage = decimal.Parse(formattedAverage);
-                    averageListExpected.Add(finalAverage);
-                }
-                else if (i >= 8)
-                {
-                    var partOfList = userProgressExpected.Skip(i-7+1).Take(7);
-                    count++;
-                    decimal average = partOfList.Average(p => p.Weight);
-                    average = decimal.Round(average, 4);
-                    string formattedAverage = average.ToString("0.00000");
-                    decimal finalAverage = decimal.Parse(formattedAverage);
-                    averageListExpected.Add(finalAverage);
-                }
-
+                Assert.That(progress.IsDeleted, Is.True, "Ids don't match");
             }
-            averageListExpected.Reverse();
-            count = 0;
-            for (int i = userProgressActual.Count - 1; i >= 0; i--)
+            var s = WeightTracker.GetWeightList(responseLoginUser, ConversionSystem.METRIC, 0, userProgress.Count);
+
+            Assert.IsTrue(s.Count == 0);
+        }
+
+        public static void VerifyAverageOfWeightTracking(SignInResponseModel responseLoginUser, int conversionSystem, string userId)
+        {
+            var userProgressExpected = AppDbContext.User.GetProgressDailyByUserId(userId);
+            var expectedAverages = CalculateAverages(userProgressExpected, conversionSystem);
+            var weightList = GetWeightList(responseLoginUser, conversionSystem, 0, userProgressExpected.Count);
+            var actualAverages = weightList.Select(x => decimal.Round((decimal)x.averageWeight, 1)).ToList();
+            Assert.Multiple(() =>
             {
-                count++;
-                decimal average = (decimal)userProgressActual[i].averageWeight;
-                average = decimal.Round(average, 4);
-                string formattedAverage = average.ToString("0.00000");
-                decimal finalAverage = decimal.Parse(formattedAverage);
-                averageListActual.Add(finalAverage);
+                Assert.That(actualAverages, Is.EqualTo(expectedAverages).Within(0.6), "Weights don't match");
 
-            }
-            averageListActual.Reverse();
-            Assert.That(averageListExpected.Select(p => p).SequenceEqual(averageListActual), Is.True, "Weights don't match");
+                // Ensure that expected and actual average lists have the same number of elements
+                Assert.That(expectedAverages.Count, Is.EqualTo(actualAverages.Count), "Number of elements doesn't match");
+
+                // Define a tolerance range for the weights
+                decimal tolerance = 0.8m;
+
+                // Find the indices where the expected and actual averages don't match within the tolerance range
+                var mismatchedIndices = expectedAverages.Select((avg, index) => new { avg, index })
+                    .Where(item => Math.Abs(item.avg - actualAverages[item.index]) > tolerance)
+                    .Select(item => item.index)
+                    .ToList();
+
+                // If there are any mismatched indices, output an error message indicating where the mismatch occurred
+                if (mismatchedIndices.Count > 0)
+                {
+                    Assert.Fail($"Max count is: {expectedAverages.Count} \r\n");
+                    foreach (var mismatchedIndex in mismatchedIndices)
+                    {
+                        string errorMessage = $"Weights don't match at index(es): {string.Join(", ", mismatchedIndex)}{string.Concat("\r\n Expected average: ", expectedAverages[mismatchedIndex])}{string.Concat("\r\n Actual average: ", actualAverages[mismatchedIndex])}";
+                        Assert.Fail(errorMessage);
+                    }
+
+                }
+            });
 
         }
+
+        private static List<decimal> CalculateAverages(List<DB.ProgressDaily> progress, int convesionSystem)
+        {
+            var averages = new List<decimal>();
+            int count = 0;
+
+            foreach (var partOfList in progress.Select((p, i) => i <= 6 ? progress.Take(i + 1) : progress.Skip(i - 7 + 1).Take(7)))
+            {
+                count++;
+                decimal average =  
+                  convesionSystem == ConversionSystem.METRIC ?
+                  partOfList.Average(p => p.Weight) :
+                  partOfList.Average(p => decimal.Round(p.Weight * 2.2m, 8));
+
+                averages.Add(ConvertToDecimalWithFixedDecimalPlaces(average));
+            }
+
+            averages.Reverse();
+            return averages;
+        }
+
+        private static decimal ConvertToDecimalWithFixedDecimalPlaces(decimal value)
+        {
+            return (value == 0 || value % 1 == 0) ? decimal.ToInt32(value) : Math.Round(value, 1);
+        }
+
+
+        public static void VerifyAddedWeight(SignInResponseModel responseLoginUser, int conversionSystem, string userId)
+        {
+            const string dateFormat = "yyyy-MM-ddTHH:mm:ss";
+            var userProgress = AppDbContext.User.GetProgressDailyByUserId(userId);
+            var weightList = GetWeightList(responseLoginUser, conversionSystem, 0, userProgress.Count);
+
+            IEnumerable<decimal> weightListWeights = weightList
+                .Select(w => conversionSystem == ConversionSystem.IMPERIAL ? Math.Round(w.weight / 2.2m, 1) : w.weight)
+                .Reverse();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(userProgress.Select(p => p.Id), Is.EqualTo(weightList.Select(w => w.id).Reverse()), "Record IDs don't match.");
+                Assert.That(userProgress.Select(p => p.Date.ToString(dateFormat)), Is.EqualTo(weightList.Select(w => w.date).Reverse()), "Record dates don't match.");
+                Assert.That(userProgress.Select(p => p.Weight), Is.EqualTo(weightListWeights).Within(0.5), "Record weights don't match.");
+            });
+        }
+
+        public static void VerifyChangedWeekWeight(SignInResponseModel responseLoginUser, int conversionSystem, string userId)
+        {
+            var userProgressExpected = AppDbContext.User.GetProgressDailyByUserId(userId);
+            List<decimal> expectedAverages = CalculateAverages(userProgressExpected, conversionSystem);
+            var weightList = GetWeightList(responseLoginUser, conversionSystem, 0, userProgressExpected.Count);
+            var expectedChangeWeek = CalculateWeeklyWeightChanges(expectedAverages);
+            var actualChangeWeek = weightList.Select(x => decimal.Round((decimal)x.changeWeek, 1)).ToList();
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualChangeWeek, Is.EqualTo(expectedChangeWeek).Within(0.6), "Weights don't match");
+
+                // Ensure that expected and actual average lists have the same number of elements
+                Assert.That(expectedChangeWeek.Count, Is.EqualTo(actualChangeWeek.Count), "Number of elements doesn't match");
+
+                // Define a tolerance range for the weights
+                decimal tolerance = 0.8m;
+
+                // Find the indices where the expected and actual averages don't match within the tolerance range
+                var mismatchedIndices = expectedChangeWeek.Select((avg, index) => new { avg, index })
+                    .Where(item => Math.Abs(item.avg - actualChangeWeek[item.index]) > tolerance)
+                    .Select(item => item.index)
+                    .ToList();
+
+                // If there are any mismatched indices, output an error message indicating where the mismatch occurred
+                if (mismatchedIndices.Count > 0)
+                {
+                    Assert.Fail($"Max count is: {expectedChangeWeek.Count} \r\n");
+                    foreach (var mismatchedIndex in mismatchedIndices)
+                    {
+                        string errorMessage = $"Weights don't match at index(es): {string.Join(", ", mismatchedIndex)}{string.Concat("\r\n Expected ChangeWeek: ", expectedChangeWeek[mismatchedIndex])}{string.Concat("\r\n Actual ChangeWeek: ", actualChangeWeek[mismatchedIndex])}";
+                        Assert.Fail(errorMessage);
+                    }
+
+                }
+            });
+        }
+
+        private static List<decimal> CalculateWeeklyWeightChanges(List<decimal> averages)
+        {
+            averages.Reverse();
+            var changeWeeks = averages.Select((average, i) =>
+            {
+                if (i < 7)
+                {
+                    return 0m;
+                }
+                //if (i == 7)
+                //{
+                //    return ConvertToDecimalWithFixedDecimalPlaces(averages[i] - averages[i - 6]);
+                //}
+                else
+                {
+
+                    return ConvertToDecimalWithFixedDecimalPlaces(averages[i] - averages[i - 7]);
+                }
+            }).ToList();
+            changeWeeks.Reverse();
+            return changeWeeks;
+        }
+
+
+
     }
 }

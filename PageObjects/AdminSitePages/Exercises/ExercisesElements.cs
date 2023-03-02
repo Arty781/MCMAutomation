@@ -55,6 +55,9 @@ namespace MCMAutomation.PageObjects
         [FindsBy(How = How.XPath, Using = "//button[@title='Remove Relataed Exercise']")]
         public IList<IWebElement> btnRemoveRelatedExecise;
 
+        [FindsBy(How = How.XPath, Using = "//button[@title='Remove Home Exercise']")]
+        public IList<IWebElement> btnRemoveHomeExecise;
+
         [FindsBy(How = How.XPath, Using = "//button[@title='Remove Relataed Exercise']")]
         public IWebElement btnRemoveRelatedExeciseElem;
 
