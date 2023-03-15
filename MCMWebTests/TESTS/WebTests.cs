@@ -15,6 +15,7 @@ using MCMAutomation.APIHelpers.Client.SignUp;
 using MCMAutomation.APIHelpers.Client.AddProgress;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace MCMAutomation.WebTests
 {
@@ -35,7 +36,7 @@ namespace MCMAutomation.WebTests
         public void RegisterNewUser()
         {
             Pages.WebPages.SignUpUser
-                .GoToSignUpPage();
+            .GoToSignUpPage();
 
             string email = RandomHelper.RandomEmail();
             Pages.WebPages.SignUpUser
@@ -2943,7 +2944,7 @@ namespace MCMAutomation.WebTests
                 .GetUserLogin(email, Credentials.PASSWORD);
             Pages.CommonPages.Sidebar
                 .OpenProgressPage();
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 15; i++)
             {
                 Pages.WebPages.Progress
                     .ClickAddProgressBtnA()

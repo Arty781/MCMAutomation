@@ -40,7 +40,7 @@ namespace MCMAutomation.APIHelpers
         {
             RequestAddExercises req = new()
             {
-                Name = "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss"),
+                Name = "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss'ms'.fff'"),
                 VideoURL = exercises[RandomHelper.RandomExercise(exercises.Count)].VideoURL,
                 TempoBold = 1,
                 RelatedExercises = AddRelatedexercises(exercises)

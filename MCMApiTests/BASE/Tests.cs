@@ -1,4 +1,5 @@
 ﻿using MCMAutomation.APIHelpers;
+using MCMAutomation.APIHelpers.Client.AddProgress;
 using MCMAutomation.APIHelpers.Client.EditUser;
 using MCMAutomation.APIHelpers.Client.SignUp;
 using MCMAutomation.APIHelpers.Client.WeightTracker;
@@ -147,7 +148,7 @@ namespace MCMApiTests
             #endregion
 
             #region Add Weight daily
-            const int recordCount = 30;
+            const int recordCount = 8;
             const int conversionSystem = ConversionSystem.METRIC;
 
             Enumerable.Range(0, recordCount)
@@ -239,20 +240,31 @@ namespace MCMApiTests
         {
             #region Register New User
 
-            var userData = AppDbContext.User.GetUserData("qatester2023-03-2-01-37-09@xitroo.com");
+            var userData = AppDbContext.User.GetUserData("qatester2023-03-6-09-38-42@xitroo.com");
             var responseLoginUser = SignInRequest.MakeSignIn(userData.Email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
 
             #endregion
 
             #region Add Weight daily
-
+            const int recordCount = 60;
             const int conversionSystem = ConversionSystem.METRIC;
+
+            Enumerable.Range(0, recordCount)
+          .ToList()
+          .ForEach(_ =>
+          {
+              var weight = RandomHelper.RandomProgressData("weight");
+              var date = RandomHelper.RandomDateInThePast();
+              WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
+          });
             WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userData.Id);
             WeightTracker.VerifyAverageOfWeightTracking(responseLoginUser, conversionSystem, userData.Id);
             WeightTracker.VerifyChangedWeekWeight(responseLoginUser, conversionSystem, userData.Id);
 
             #endregion
+
+
         }
 
         [Test, Category("Daily Weight")]
@@ -295,31 +307,9 @@ namespace MCMApiTests
         [Test]
         public void DemoTest()
         {
-            #region Register New User
-            //string email = RandomHelper.RandomEmail();
-            //SignUpRequest.RegisterNewUser(email);
-            var responseLoginUser = SignInRequest.MakeSignIn("qatester91311@gmail.com", Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
-            string userId = AppDbContext.User.GetUserData("qatester91311@gmail.com").Id;
-            #endregion
+            var s = DemoTests.MakeSignIn(Credentials.LOGIN, Credentials.PASSWORD);
 
-            #region Add Weight daily
-            const int recordCount = 30;
-            const int conversionSystem = ConversionSystem.METRIC;
-
-            Enumerable.Range(0, recordCount)
-          .ToList()
-          .ForEach(_ =>
-          {
-              var weight = RandomHelper.RandomProgressData("weight");
-              var date = RandomHelper.RandomDateInThePast();
-              WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
-          });
-            WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userId);
-            WeightTracker.VerifyAverageOfWeightTracking(responseLoginUser, conversionSystem, userId);
-
-
-            #endregion
+            DemoTests.GetUsermemberships(s);
 
         }
     }
