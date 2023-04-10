@@ -95,6 +95,12 @@ namespace MCMApiTests
             ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
             var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
             ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+
+            #region Postconditions
+
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
+
+            #endregion
         }
 
         [Test, Category("Exercises")]
@@ -105,18 +111,40 @@ namespace MCMApiTests
             ExercisesRequestPage.AddExercisesWithoutRelated(responseLoginAdmin, list);
             var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
             ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+
+            #region Postconditions
+
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
+
+            #endregion
         }
+
         [Test, Category("Exercises")]
         public void EditExerciseWithRelated()
         {
-            var list = AppDbContext.Exercises.GetExercisesData();
+            // Get exercises data from AppDbContext
+            var exercisesData = AppDbContext.Exercises.GetExercisesData();
+            // Sign in with admin credentials
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
-            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
-            ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
-            var getResponseExercises = ExercisesRequestPage.GetExercisesList(responseLoginAdmin);
-            ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, list, getResponseExercises, lastExercise.Name);
 
+            // Add exercises with related
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, exercisesData);
+
+            // Get the last exercise data
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+
+            // Verify that the exercise was added
+            ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+
+            // Get the list of exercises and edit exercises with related
+            var exercisesList = ExercisesRequestPage.GetExercisesList(responseLoginAdmin);
+            ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, exercisesData, exercisesList, lastExercise.Name);
+
+            #region Postconditions
+
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
+
+            #endregion
         }
 
         [Test, Category("Exercises")]
@@ -129,6 +157,12 @@ namespace MCMApiTests
             ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
             var getResponseExercises = ExercisesRequestPage.GetExercisesList(responseLoginAdmin);
             ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, list, getResponseExercises, lastExercise.Name);
+
+            #region Postconditions
+
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
+
+            #endregion
 
         }
     }

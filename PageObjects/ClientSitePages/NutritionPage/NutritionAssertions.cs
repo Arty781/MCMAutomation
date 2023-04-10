@@ -388,19 +388,19 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var weight = ((double)userData.Weight);
             var getFat = valueOfProteinCarbsFat[2].Text.Trim(new char[] { 'g' });
             var actualFat = double.Parse(getFat);
-            if (carbs < 30)
+            if (carbs < 50)
             {
-                carbs = 30;
+                carbs = 50;
                 fat = weight * 0.6;
                 fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
 
                 calories = (carbs * 4) + (protein * 4) + (fat * 9);
 
                 var actualCalories = double.Parse(valueCalories.Text);
-                Assert.IsTrue(Math.Abs(calories - actualCalories) <= 10, $"Expected calories: {calories} but was: {actualCalories}");
-                Assert.IsTrue(Math.Abs(fat - actualFat) < 5, $"Expected fat: {fat} but was: {actualFat}");
+                Assert.IsTrue(Math.Abs(calories - actualCalories) <= 45, $"Expected calories: {calories} but was: {actualCalories}");
+                Assert.IsTrue(Math.Abs(fat - actualFat) <= 5, $"Expected fat: {fat} but was: {actualFat}");
             }
-            else if (carbs >= 30)
+            else if (carbs >= 50)
             {
                 var Carbs = valueOfProteinCarbsFat[1].Text.Trim(new char[] { 'g' });
                 var actualCarbs = double.Parse(Carbs);

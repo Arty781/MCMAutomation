@@ -2356,7 +2356,7 @@ namespace MCMAutomation.WebTests
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 35, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, 30, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 

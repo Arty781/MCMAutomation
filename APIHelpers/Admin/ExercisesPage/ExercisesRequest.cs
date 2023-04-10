@@ -38,13 +38,12 @@ namespace MCMAutomation.APIHelpers
         }
         private static string JsonBody(List<DB.Exercises> exercises)
         {
-            RequestAddExercises req = new()
-            {
-                Name = "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss'ms'.fff'"),
-                VideoURL = exercises[RandomHelper.RandomExercise(exercises.Count)].VideoURL,
-                TempoBold = 1,
-                RelatedExercises = AddRelatedexercises(exercises)
-            };
+            RequestAddExercises req = new();
+            req.Name = string.Concat("Test Exercise", DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fff"));
+            req.VideoURL = exercises[RandomHelper.RandomExercise(exercises.Count)].VideoURL;
+            req.TempoBold = 1;
+            req.RelatedExercises = AddRelatedexercises(exercises);
+           
 
             return JsonConvert.SerializeObject(req);
         }
@@ -52,7 +51,7 @@ namespace MCMAutomation.APIHelpers
         {
             RequestAddExercises req = new()
             {
-                Name = "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss"),
+                Name = "Test Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fff"),
                 VideoURL = exercises[RandomHelper.RandomExercise(exercises.Count)].VideoURL,
                 TempoBold = 1,
                 RelatedExercises = new List<RelatedExerciseRequest>() { }
@@ -65,7 +64,7 @@ namespace MCMAutomation.APIHelpers
             RequestEditExercises req = new()
             {
                 Id = listGetExercises.Where(p=>p.Name.Contains(exerciseName)).Select(x=>x.Id).First(),
-                Name = "Test Edited Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss"),
+                Name = "Test Edited Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fff"),
                 VideoURL = exercises[RandomHelper.RandomExercise(exercises.Count)].VideoURL,
                 TempoBold = 3,
                 RelatedExercises = AddRelatedexercises(exercises),
@@ -80,7 +79,7 @@ namespace MCMAutomation.APIHelpers
             RequestEditExercises req = new()
             {
                 Id = listGetExercises.Where(p => p.Name.Contains(exerciseName)).Select(x => x.Id).First(),
-                Name = "Test Edited Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss"),
+                Name = "Test Edited Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fff"),
                 VideoURL = exercises[RandomHelper.RandomExercise(exercises.Count)].VideoURL,
                 TempoBold = 3,
                 RelatedExercises = new List<RelatedExerciseRequest>() { },
