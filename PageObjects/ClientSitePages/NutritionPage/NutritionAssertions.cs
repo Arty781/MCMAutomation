@@ -397,7 +397,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 calories = (carbs * 4) + (protein * 4) + (fat * 9);
 
                 var actualCalories = double.Parse(valueCalories.Text);
-                Assert.IsTrue(Math.Abs(calories - actualCalories) <= 45, $"Expected calories: {calories} but was: {actualCalories}");
+                Assert.IsTrue(Math.Abs(calories - actualCalories) <= 25, $"Expected calories: {calories} but was: {actualCalories}");
                 Assert.IsTrue(Math.Abs(fat - actualFat) <= 5, $"Expected fat: {fat} but was: {actualFat}");
             }
             else if (carbs >= 50)
