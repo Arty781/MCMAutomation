@@ -443,8 +443,8 @@ namespace MCMAutomation.APIHelpers
                 ContentType = "multipart/form-data"
             };
             req.AddHeader("Connection", "Keep-Alive");
-            req.AddHeader("accept-encoding", "gzip, deflate, br");
-            req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
+            req.AddHeader("Accept-Encoding", "gzip, deflate, br");
+            req.AddHeader("Authorization", $"Bearer {SignIn.AccessToken}");
 
             req.AddParam("sku", MembershipsSKU.MEMBERSHIP_SKU[1]);
             req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
@@ -459,7 +459,7 @@ namespace MCMAutomation.APIHelpers
             req.AddParam("gender", "0");
             req.AddParam("relatedMembershipIds", "");
             req.AddParam("forPurchase", "true");
-            req.AddParam("membershipLevels", "[]");
+            //req.AddParam("membershipLevels", "[]");
 
             Http http = new Http();
 

@@ -1,4 +1,5 @@
 ﻿using Chilkat;
+using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.WeightTracker;
 using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions;
@@ -9,6 +10,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using static Chilkat.Http;
@@ -41,6 +44,7 @@ namespace MCMAutomation.Helpers
     public class DB
     {
         public const string GET_CONNECTION_STRING = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethodStaging; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
+        public const string GET_CONNECTION_STRING_Live = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethod; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
 
         public class Exercises
         {
@@ -156,6 +160,68 @@ namespace MCMAutomation.Helpers
             public DateTime CreationDate { get; set; }
             public bool IsDeleted { get; set; }
         }
+
+        public class UserMemberships
+        {
+            public int? Id {get; set;}
+            public int? MembershipId    {get; set;}
+            public string? UserId {get; set;}
+            public DateTime? StartOn {get; set;}
+            public bool Active {get; set;}
+            public DateTime? CreationDate    {get; set;}
+            public bool IsDeleted {get; set;}
+            public bool OnPause {get; set;}
+            public DateTime? PauseEnd {get; set;}
+            public DateTime? PauseStart  {get; set;}
+            public bool DisplayedPromotionalPopupId {get; set;}
+            public DateTime? ExpirationDate { get; set; }
+        }
+
+        public class JsonUserExercises
+        {
+            public int? Id { get; set; }
+            public string? SetDescription   { get; set; }
+            public int? WorkoutExerciseId  { get; set; }
+            public string? UserId   { get; set; }
+            public bool? IsDone  { get; set; }
+            public DateTime? CreationDate     { get; set; }
+            public bool? IsDeleted  { get; set; }
+            public DateTime? UpdateDate   { get; set; }
+            public int? UserMembershipId { get; set; }
+
+        }
+
+        
+        public class CombinedUserMemberAndJsonUserEx
+        {
+            public int? Id { get; set; }
+            public int? MembershipId { get; set; }
+            public string? UserId { get; set; }
+            public DateTime? StartOn { get; set; }
+            public bool? Active { get; set; }
+            public DateTime? CreationDate { get; set; }
+            public bool? IsDeleted { get; set; }
+            public bool? OnPause { get; set; }
+            public DateTime? PauseEnd { get; set; }
+            public DateTime? PauseStart { get; set; }
+            public bool? DisplayedPromotionalPopupId { get; set; }
+            public DateTime? ExpirationDate { get; set; }
+
+            public int? Idjue { get; set; }
+            public string? SetDescription { get; set; }
+            public int? WorkoutExerciseId { get; set; }
+            public string? UserIdjue { get; set; }
+            public bool? IsDone { get; set; }
+            public DateTime? CreationDatejue { get; set; }
+            public bool? IsDeletedjue { get; set; }
+            public DateTime? UpdateDate { get; set; }
+            public int? UserMembershipId { get; set; }
+        }
+
+        public class JsonUserExOneField
+        {
+            public int? UserMembershipId { get; set; }
+        }
     }
 
     public class UserAccount
@@ -225,7 +291,8 @@ namespace MCMAutomation.Helpers
             "CMC_TEST_PRODUCT",
             "CMC_TEST_SUBSCRIPTION",
             "CHF-FREE",
-            "CHM-FREE"
+            "CHM-FREE",
+            "YGC3"
         };
     }
 

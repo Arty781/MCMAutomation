@@ -1,4 +1,5 @@
-﻿using MCMAutomation.APIHelpers;
+﻿using AngleSharp.Dom;
+using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.AddProgress;
 using MCMAutomation.APIHelpers.Client.EditUser;
 using MCMAutomation.APIHelpers.Client.SignUp;
@@ -171,6 +172,19 @@ namespace MCMApiTests
     public class UserTests
     {
         [Test, Category("Daily Weight")]
+        public void RegisterUser()
+        {
+            #region Register New User
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            #endregion
+
+
+        }
+
+        [Test, Category("Daily Weight")]
         public void AddWeight()
         {
             #region Register New User
@@ -339,12 +353,78 @@ namespace MCMApiTests
     public class Demo { 
 
         [Test]
-        public void DemoTest()
+
+        public void DemoS()
         {
-            var s = DemoTests.MakeSignIn(Credentials.LOGIN, Credentials.PASSWORD);
-
-            DemoTests.GetUsermemberships(s);
-
+            DemoTest();
         }
+        public List<UserMember> DemoTest()
+        {
+            var listUsers = new List<UserMember>();
+            DateTime start = DateTime.Now.AddDays(-2).Date;
+            DateTime end = DateTime.Now;
+            var listUserMem = AppDbContext.UserMemberships.GetAllUsermembershipInRange(start, end);
+            for (int i = 0; i < 1; i++)
+            {
+                foreach (var item in listUserMem)
+                {
+                    var userMemberList = AppDbContext.UserMemberships.GetAllUsermembershipByUserId(item, start, end);
+                    var listJsonExercises = AppDbContext.UserMemberships.GetUnicUserIdFromUserMembershipsInRange(item, start, end);
+                    try
+                    {
+                        var check = userMemberList.SequenceEqual(listJsonExercises, new CustomClassEqualityComparer());
+                    }
+                    catch(Exception ex)
+                    {
+                        var row = new UserMember()
+                        {
+                            UserId = item.UserId,
+                            UsermembershipId = item.Id,
+                            MembershipId = item.MembershipId,
+                            Error = ex.Message
+                        };
+
+                        listUsers.Add(row);
+                    }
+
+                    
+
+                }
+            }
+            foreach (var listUser in listUsers)
+            {
+                Console.WriteLine("UserId: {0}\nUsermembershipId: {1}\nMembershipId: {2}\n\n\n", listUser.UserId, listUser.UsermembershipId, listUser.MembershipId);
+            }
+            return listUsers;
+        }
+
+        public class UserMember
+        {
+            public string UserId { get; set; }
+            public int? UsermembershipId { get; set; }
+            public int? MembershipId { get; set; }
+            public string? Error { get; set; }
+        }
+
+        class CustomClassEqualityComparer : IEqualityComparer<DB.JsonUserExOneField>
+        {
+            public bool Equals(DB.JsonUserExOneField x, DB.JsonUserExOneField y)
+            {
+                //return x.UserMembershipId == y.UserMembershipId;
+                if (x == null || y == null)
+                    return false;
+
+                if (x.UserMembershipId != y.UserMembershipId)
+                    throw new Exception($"CustomClass values do not match: {x.UserMembershipId} != {y.UserMembershipId}");
+
+                return true;
+            }
+
+            public int GetHashCode(DB.JsonUserExOneField obj)
+            {
+                return obj.UserMembershipId.GetHashCode();
+            }
+        }
+
     }
 }

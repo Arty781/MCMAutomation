@@ -28,7 +28,7 @@ namespace MCMAutomation.APIHelpers.Client.SignUp
 
         public static void RegisterNewUser(string email)
         {
-            string url = String.Concat(Endpoints.API_HOST + "/Account/SignUp");
+            string url = String.Concat(Endpoints.API_HOST_GET + "/Account/SignUp");
             Http req = new()
             {
                 Accept = "application/json"

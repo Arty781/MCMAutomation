@@ -2348,7 +2348,7 @@ namespace MCMAutomation.WebTests
         [AllureSuite("Web")]
         [AllureSubSuite("TDEE")]
 
-        public void VerifyCalculationsForFemaleWith35Fats()
+        public void VerifyCalculationsForFemaleWith30Fats()
         {
             #region Preconditions
 

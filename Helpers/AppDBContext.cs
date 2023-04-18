@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Security.Cryptography;
 using static Chilkat.Http;
 
@@ -14,6 +15,17 @@ namespace MCMAutomation.Helpers
 
     public class AppDbContext
     {
+        private static T GetValueOrDefault<T>(SqlDataReader reader, int index, T defaultValue = default(T))
+        {
+            if (!reader.IsDBNull(index))
+            {
+                return (T)reader.GetValue(index);
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
         public class Exercises
         {
             public static List<JsonUserExercises> GetUserExercisesList(string userEmail, string membershipName)
@@ -45,14 +57,14 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
                         var row = new JsonUserExercises();
-                        row.Id = reader.GetValue(0);
-                        row.SetDescription = reader.GetValue(1);
-                        row.WorkoutExerciseId = reader.GetValue(2);
-                        row.UserId = reader.GetValue(3);
-                        row.IsDone = reader.GetValue(4);
-                        row.CreationDate = reader.GetValue(5);
-                        row.IsDeleted = reader.GetValue(6);
-                        row.UpdatedDate = reader.GetValue(7);
+                        row.Id = GetValueOrDefault<object>(reader, 0);
+                        row.SetDescription = GetValueOrDefault<string>(reader, 1);
+                        row.WorkoutExerciseId = GetValueOrDefault<long>(reader, 2);
+                        row.UserId = GetValueOrDefault<string>(reader, 3);
+                        row.IsDone = GetValueOrDefault<bool>(reader, 4);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        row.UpdatedDate = GetValueOrDefault<DateTime>(reader, 7);
 
 
                         list.Add(row);
@@ -87,12 +99,12 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
                         var row = new DB.Exercises();
-                        row.Id = reader.GetInt32(0);
-                        row.Name = reader.GetString(1);
-                        row.CreationDate = reader.GetDateTime(2);
-                        row.IsDeleted = reader.GetBoolean(3);
-                        row.VideoURL = reader.GetString(4);
-                        row.TempoBold = reader.GetInt32(5);
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.Name = GetValueOrDefault<string>(reader, 1);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 2);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 3);
+                        row.VideoURL = GetValueOrDefault<string>(reader, 4);
+                        row.TempoBold = GetValueOrDefault<int>(reader, 5);
                         list.Add(row);
                     }
 
@@ -127,12 +139,12 @@ namespace MCMAutomation.Helpers
                     using SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        row.Id = reader.GetInt32(0);
-                        row.Name = reader.GetString(1);
-                        row.CreationDate = reader.GetDateTime(2);
-                        row.IsDeleted = reader.GetBoolean(3);
-                        row.VideoURL = reader.GetString(4);
-                        row.TempoBold = reader.GetInt32(5);
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.Name = GetValueOrDefault<string>(reader, 1);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 2);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 3);
+                        row.VideoURL = GetValueOrDefault<string>(reader, 4);
+                        row.TempoBold = GetValueOrDefault<int>(reader, 5);
                     }
 
                 }
@@ -164,7 +176,7 @@ namespace MCMAutomation.Helpers
                     using SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        var str = reader.GetValue(3).ToString();
+                        var str = GetValueOrDefault<string>(reader, 3);
                         list.Add(str);
 
                     }
@@ -238,13 +250,13 @@ namespace MCMAutomation.Helpers
                         while (reader.Read())
                         {
                             var row = new DB.Workouts();
-                            row.Id = reader.GetInt32(0);
-                            row.Name = reader.GetString(1);
-                            row.WeekDay = reader.GetInt32(2);
-                            row.ProgramId = reader.GetInt32(3);
-                            row.CreationDate = reader.GetDateTime(4);
-                            row.IsDeleted = reader.GetBoolean(5);
-                            row.Type = reader.GetInt32(6);
+                            row.Id = GetValueOrDefault<int>(reader, 0);
+                            row.Name = GetValueOrDefault<string>(reader, 1);
+                            row.WeekDay = GetValueOrDefault<int>(reader, 2);
+                            row.ProgramId = GetValueOrDefault<int>(reader, 3);
+                            row.CreationDate = GetValueOrDefault<DateTime>(reader, 4);
+                            row.IsDeleted = GetValueOrDefault<bool>(reader, 5);
+                            row.Type = GetValueOrDefault<int>(reader, 6);
 
                             list.Add(row);
                         }
@@ -288,9 +300,9 @@ namespace MCMAutomation.Helpers
                         while (reader.Read())
                         {
                             var row = new DB.CopyMembershipPrograms();
-                            row.MembershipName = reader.GetString(0);
-                            row.ProgramName = reader.GetString(1);
-                            row.WorkoutName = reader.GetString(2);
+                            row.MembershipName = GetValueOrDefault<string>(reader, 0);
+                            row.ProgramName = GetValueOrDefault<string>(reader, 1);
+                            row.WorkoutName = GetValueOrDefault<string>(reader, 2);
 
                             list.Add(row);
 
@@ -328,23 +340,23 @@ namespace MCMAutomation.Helpers
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        row.Id = reader.GetInt32(0);
-                        row.Name = reader.GetString(1);
-                        row.Description = null;
-                        row.StartDate = null;
-                        row.EndDate = null;
-                        row.URL = reader.GetString(5);
-                        row.Price = reader.GetDecimal(6);
-                        row.CreationDate = reader.GetDateTime(7);
-                        row.IsDeleted = reader.GetBoolean(8);
-                        row.IsCustom = reader.GetBoolean(9);
-                        row.ForPurchase = reader.GetBoolean(10);
-                        row.AccessWeekLength = null;
-                        row.RelatedMembershipGroupId = null;
-                        row.Gender = reader.GetInt32(13);
-                        row.PromotionalPopupId = null;
-                        row.Type = reader.GetInt32(15);
-                        row.SKU = reader.GetString(16);
+                        row.Id = GetValueOrDefault<Int32>(reader, 0);
+                        row.Name = GetValueOrDefault<string>(reader, 1);
+                        row.Description = GetValueOrDefault<string>(reader, 2);
+                        row.StartDate = GetValueOrDefault<DateTime>(reader, 3);
+                        row.EndDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.URL = GetValueOrDefault<string>(reader, 5);
+                        row.Price = GetValueOrDefault<decimal>(reader, 6);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 7);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 8);
+                        row.IsCustom = GetValueOrDefault<bool>(reader, 9);
+                        row.ForPurchase = GetValueOrDefault<bool>(reader, 10);
+                        row.AccessWeekLength = GetValueOrDefault<int>(reader, 11);
+                        row.RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 12);
+                        row.Gender = GetValueOrDefault<int>(reader, 13);
+                        row.PromotionalPopupId = GetValueOrDefault<int>(reader, 14);
+                        row.Type = GetValueOrDefault<int>(reader, 15);
+                        row.SKU = GetValueOrDefault<string>(reader, 16);
                     }
                 }
                 catch (Exception ex)
@@ -417,23 +429,25 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
                         membership = new DB.Memberships();
-                        membership.Id = reader.GetInt32(0);
-                        membership.Name = reader.GetString(1);
-                        membership.Description = null;
-                        membership.StartDate = null;
-                        membership.EndDate = null;
-                        membership.URL = reader.GetString(5);
-                        membership.Price = reader.GetDecimal(6);
-                        membership.CreationDate = reader.GetDateTime(7);
-                        membership.IsDeleted = reader.GetBoolean(8);
-                        membership.IsCustom = reader.GetBoolean(9);
-                        membership.ForPurchase = reader.GetBoolean(10);
-                        membership.AccessWeekLength = reader.GetInt32(11);
-                        membership.RelatedMembershipGroupId = null;
-                        membership.Gender = reader.GetInt32(13);
-                        membership.PromotionalPopupId = null;
-                        membership.Type = reader.GetInt32(15);
-                        membership.SKU = reader.GetString(16);
+                        membership.Id = GetValueOrDefault<int>(reader, 0);
+                        membership.SKU = GetValueOrDefault<string>(reader, 1);
+                        membership.Name = GetValueOrDefault<string>(reader, 2);
+
+                        membership.Description = GetValueOrDefault<string>(reader,3);
+                        membership.StartDate = GetValueOrDefault<DateTime>(reader,4);
+                        membership.EndDate = GetValueOrDefault<DateTime>(reader,5);
+                        membership.URL = GetValueOrDefault<string>(reader, 6);
+                        membership.Price = GetValueOrDefault<decimal>(reader, 7);
+                        membership.CreationDate = GetValueOrDefault<DateTime>(reader, 8);
+                        membership.IsDeleted = GetValueOrDefault<bool>(reader, 9);
+                        membership.IsCustom = GetValueOrDefault<bool>(reader, 10);
+                        membership.ForPurchase = GetValueOrDefault<bool>(reader, 11);
+                        membership.AccessWeekLength = GetValueOrDefault<int>(reader, 12);
+                        membership.RelatedMembershipGroupId = GetValueOrDefault<int>(reader,13);
+                        membership.Gender = GetValueOrDefault<int>(reader, 14);
+                        membership.PromotionalPopupId = GetValueOrDefault<int>(reader,15);
+                        membership.Type = GetValueOrDefault<int>(reader, 16);
+                        
                     }
                 }
                 catch (Exception ex)
@@ -962,6 +976,182 @@ namespace MCMAutomation.Helpers
                     SqlConnection.ClearAllPools();
                 }
             }
+
+            public static List<DB.UserMemberships> GetAllUsermembershipInRange(DateTime start, DateTime end)
+            {
+                var list = new List<DB.UserMemberships>();
+                string query = "Select *\r\n  " +
+                               "From UserMemberships \r\n  " +
+                               $"where IsDeleted = 0 and CreationDate between '{start}' and '{end}'";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.UserMemberships();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        row.UserId = GetValueOrDefault<string>(reader, 2);
+                        row.StartOn = GetValueOrDefault<DateTime>(reader, 3);
+                        row.Active = GetValueOrDefault<bool>(reader, 4);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        row.OnPause = GetValueOrDefault<bool>(reader, 7);
+                        row.PauseEnd = GetValueOrDefault<DateTime>(reader, 8);
+                        row.PauseStart = GetValueOrDefault<DateTime>(reader, 9);
+                        row.DisplayedPromotionalPopupId = GetValueOrDefault<bool>(reader, 10);
+                        row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 11);
+
+                        list.Add(row);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+
+                return list;
+            }
+
+            public static List<DB.JsonUserExOneField> GetAllUsermembershipByUserId(DB.UserMemberships userMember, DateTime start, DateTime end)
+            {
+                var list = new List<DB.JsonUserExOneField>();
+                string query = "Select distinct Id \r\n  " +
+                               "From UserMemberships \r\n  " +
+                               $"where UserId = '{userMember.UserId}';";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.JsonUserExOneField();
+                        row.UserMembershipId = GetValueOrDefault<int>(reader, 0);
+
+                        list.Add(row);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+
+                return list;
+            }
+
+            public static List<DB.JsonUserExOneField> GetUnicUserIdFromUserMembershipsInRange(DB.UserMemberships userMember, DateTime start, DateTime end)
+            {
+                var list = new List<DB.JsonUserExOneField>();
+                string query = "select distinct jue.UserMembershipId from JsonUserExercises jue\r\n  " +
+                               "inner join WorkoutExercises we on we.Id = jue.WorkoutExerciseId\r\n  " +
+                               "inner join Workouts w on w.Id = we.WorkoutId\r\n  " +
+                               "inner join Programs p on p.Id = w.ProgramId\r\n  " +
+                               "inner join UserMemberships um on um.MembershipId = p.MembershipId\r\n  " +
+                               $"where jue.UserId = '{userMember.UserId}'" +
+                               "order by jue.UserMembershipId;";
+
+                if (userMember.UserId != "44745389-8adc-4e8d-95b4-eac1d0dfa1db" || userMember.UserId != "d30d9f54-f658-4d7b-910c-cba8887184fb")
+                {
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                        SqlCommand command = new(query, db);
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new DB.JsonUserExOneField();
+                                //row.Id = GetValueOrDefault<int>(reader, 0);
+                                //row.MembershipId = GetValueOrDefault<int>(reader, 1);
+                                //row.UserId = GetValueOrDefault<string>(reader, 2);
+                                //row.StartOn = GetValueOrDefault<DateTime>(reader, 3);
+                                //row.Active = GetValueOrDefault<bool>(reader, 4);
+                                //row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                                //row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                                //row.OnPause = GetValueOrDefault<bool>(reader, 7);
+                                //row.PauseEnd = GetValueOrDefault<DateTime>(reader, 8);
+                                //row.PauseStart = GetValueOrDefault<DateTime>(reader, 9);
+                                //row.DisplayedPromotionalPopupId = GetValueOrDefault<bool>(reader, 10);
+                                //row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 11);
+                                //row.Idjue = GetValueOrDefault<int>(reader, 12);
+                                //row.SetDescription = GetValueOrDefault<string>(reader, 13);
+                                //row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 14);
+                                //row.UserIdjue = GetValueOrDefault<string>(reader, 15);
+                                //row.IsDone = GetValueOrDefault<bool>(reader, 16);
+                                //row.CreationDatejue = GetValueOrDefault<DateTime>(reader, 17);
+                                //row.IsDeletedjue = GetValueOrDefault<bool>(reader, 18);
+                                //row.UpdateDate = GetValueOrDefault<DateTime>(reader, 19);
+                                row.UserMembershipId = GetValueOrDefault<int>(reader, 0);
+
+                                list.Add(row);
+                            }
+                        }
+                        else if (!reader.HasRows)
+                        {
+                            var row = new DB.JsonUserExOneField();
+                            //row.Id = null;
+                            //row.MembershipId = null;
+                            //row.UserId = null;
+                            //row.StartOn = null;
+                            //row.Active = null;
+                            //row.CreationDate = null;
+                            //row.IsDeleted = null;
+                            //row.OnPause = null;
+                            //row.PauseEnd = null;
+                            //row.PauseStart = null;
+                            //row.DisplayedPromotionalPopupId = null;
+                            //row.ExpirationDate = null;
+                            //row.Idjue = null;
+                            //row.SetDescription = null;
+                            //row.WorkoutExerciseId = null;
+                            //row.UserIdjue = null;
+                            //row.IsDone = null;
+                            //row.CreationDatejue = null;
+                            //row.IsDeletedjue = null;
+                            //row.UpdateDate = null;
+                            row.UserMembershipId = null;
+
+                            list.Add(row);
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Помилка у юзера з Ид: {0}\r\n{1}", userMember.UserId, ex.StackTrace);
+                    }
+                    finally
+                    {
+
+                        // Забезпечуємо вивільнення ресурсів
+                        SqlConnection.ClearAllPools();
+                    }
+                }
+                return list;
+            }
         }
 
         public class Progress
@@ -1259,6 +1449,59 @@ namespace MCMAutomation.Helpers
                     // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
+                return list;
+            }
+        }
+
+        public class JsonUserExercisesReq
+        {
+            public static List<DB.JsonUserExercises> GetJsonUserExercisesByUserId(DB.UserMemberships user)
+            {
+                var list = new List<DB.JsonUserExercises>();
+                string query = $"select distinct jue.* " +
+                               $"from JsonUserExercises jue\r\n  " +
+                               $"inner join WorkoutExercises we on we.Id = jue.WorkoutExerciseId\r\n  " +
+                               $"inner join Workouts w on w.Id = we.WorkoutId\r\n  " +
+                               $"inner join Programs p on p.Id = w.ProgramId\r\n  " +
+                               $"inner join UserMemberships um on um.MembershipId = p.MembershipId\r\n  " +
+                               $"where jue.UserId = '{user.UserId}' and jue.UserMembershipId = '{user.Id}'";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new DB.JsonUserExercises();
+                            row.Id = GetValueOrDefault<int>(reader, 0);
+                            row.SetDescription = GetValueOrDefault<string>(reader, 1);
+                            row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 2);
+                            row.UserId = GetValueOrDefault<string>(reader, 3);
+                            row.IsDone = GetValueOrDefault<bool>(reader, 4);
+                            row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                            row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                            row.UpdateDate = GetValueOrDefault<DateTime>(reader, 7);
+                            row.UserMembershipId = GetValueOrDefault<int>(reader, 8);
+
+                            list.Add(row);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+
                 return list;
             }
         }

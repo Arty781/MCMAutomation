@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using MCMAutomation.Helpers;
@@ -282,9 +283,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public void VerifyNutritionData(DB.AspNetUsers userData, string goal, string tier, string SKU, string gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories)
         {
             var protein = CalculateProtein(userData, goal, tier, gender, SKU);
-            var fat = CalculateFats(userData, diet);
+            var fat = CalculateFats(userData, diet, phase, goal);
             var carbs = CalculateCarbs(expectedCalories, protein, fat);
-            CalculateCalories(userData, goal, tier, SKU, calories, phase, valuMoreThan2Kg, previousCalories, carbs, protein, fat);
+            CalculateCalories(userData, goal, tier, SKU, calories, expectedCalories, phase, valuMoreThan2Kg, previousCalories, carbs, protein, fat);
         }
 
         private int CalculateProtein(DB.AspNetUsers userData, string goal, string tier, string gender, string SKU)
@@ -301,7 +302,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     protein = (int)protein;
                     break;
                 default:
-                    if ((gender == "Female" && bodyFat > 30) || (gender == "Male" && bodyFat > 25))
+                    if ((gender == "Female" && bodyFat > 30) || (gender == "Male" && bodyFat >= 25))
                     {
                         protein = weight * 1.6;
                         protein = (int)protein;
@@ -337,28 +338,70 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return (int)Math.Round(protein, 0, MidpointRounding.AwayFromZero);
         }
 
-        private double CalculateFats(DB.AspNetUsers userData, string diet)
+        private double CalculateFats(DB.AspNetUsers userData, string diet, string phase, string goal)
         {
             double weight = (double)userData.Weight;
-            double fat;
+            double fat = 0;
 
-            switch (diet)
+            switch (goal)
             {
-                case TDEE.DIET_1:
-                    fat = weight * 0.7;
-                    fat = (int)fat;
+                case TDEE.GOAL_MAINTAIN:
+                case TDEE.GOAL_CUT:
+                case TDEE.GOAL_BUILD:
+                    switch (phase)
+                    {
+                        case TDEE.PHASE_1:
+                        case TDEE.PHASE_2:
+                            fat = diet switch
+                            {
+                                TDEE.DIET_1 => (int)(weight * 0.8),
+                                TDEE.DIET_2 => (int)(weight * 1),
+                                TDEE.DIET_3 => (double)(int)(weight * 1.3),
+                                _ => throw new ArgumentException($"Invalid diet value: {diet}"),
+                            };
+                            break;
+                        case TDEE.PHASE_3:
+                            fat = diet switch
+                            {
+                                TDEE.DIET_1 => (int)(weight * 0.7),
+                                TDEE.DIET_2 => (int)(weight * 0.8),
+                                TDEE.DIET_3 => (double)(int)(weight * 1),
+                                _ => throw new ArgumentException($"Invalid diet value: {diet}"),
+                            };
+                            break;
+                        default:
+                            fat = diet switch
+                            {
+                                TDEE.DIET_1 => (int)(weight * 0.8),
+                                TDEE.DIET_2 => (int)(weight * 1),
+                                TDEE.DIET_3 => (double)(int)(weight * 1.3),
+                                _ => throw new ArgumentException($"Invalid diet value: {diet}"),
+                            };
+                            break;
+                    }
                     break;
-                case TDEE.DIET_2:
-                    fat = weight * 0.8;
-                    fat = (int)fat;
+                case TDEE.GOAL_REVERSE:
+                    switch (diet)
+                    {
+                        case TDEE.DIET_1:
+                            fat = weight * 0.8;
+                            fat = (int)fat;
+                            break;
+                        case TDEE.DIET_2:
+                            fat = weight * 1;
+                            fat = (int)fat;
+                            break;
+                        case TDEE.DIET_3:
+                            fat = weight * 1.3;
+                            fat = (int)fat;
+                            break;
+                        default:
+                            throw new ArgumentException($"Invalid diet value: {diet}");
+                    }
+
                     break;
-                case TDEE.DIET_3:
-                    fat = weight * 1;
-                    fat = (int)fat;
-                    break;
-                default:
-                    throw new ArgumentException($"Invalid diet value: {diet}");
             }
+            
 
             double actualFat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
 
@@ -383,16 +426,21 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             return actualCarbs;
         }
-        private void CalculateCalories(DB.AspNetUsers userData, string goal, string tier, string SKU, double calories, string phase, string valuMoreThan2Kg, double previousCalories, double carbs, double protein, double fat)
+        private void CalculateCalories(DB.AspNetUsers userData, string goal, string tier, string SKU, double calories, double expectedCalories, string phase, string valuMoreThan2Kg, double previousCalories, double carbs, double protein, double fat)
         {
             var weight = ((double)userData.Weight);
             var getFat = valueOfProteinCarbsFat[2].Text.Trim(new char[] { 'g' });
             var actualFat = double.Parse(getFat);
             if (carbs < 50)
             {
-                carbs = 50;
-                fat = weight * 0.6;
-                fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
+                carbs = 50;                
+                var remainder = expectedCalories - (carbs * 4) - (protein * 4);
+                fat = Math.Round(remainder/9, 0, MidpointRounding.AwayFromZero); ;
+                if(fat < weight * 0.6)
+                {
+                    fat = weight * 0.6;
+                    fat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
+                }
 
                 calories = (carbs * 4) + (protein * 4) + (fat * 9);
 
