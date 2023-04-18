@@ -85,8 +85,6 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             DateTime birthdate = userData.Birthdate;
             var currentTime = DateTime.Now;
             var age = (int)((currentTime - birthdate).TotalDays) / 365;
-            Console.WriteLine($"Age: {age}");
-
             var weight = ((double)userData.Weight);
             var bodyFat = ((double)userData.Bodyfat);
             var bodyFatPercentage = ((double)userData.Bodyfat)/100;
@@ -167,7 +165,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     maintainCalories *= 1;
                 }
             }
-            Console.WriteLine($"Maintain calories are \"{maintainCalories}\"");
+            
             double caloriesWeb = int.Parse(TextBox.GetAttribute(inputCalories, "value"));
             Assert.IsTrue(Math.Abs(maintainCalories - caloriesWeb) <= 50, $"MaintainCalories difference is: {Math.Abs(maintainCalories - caloriesWeb)}");
 
@@ -469,46 +467,31 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                             switch (tier)
                             {
                                 case TDEE.TIER_1:
-                                    switch (phase)
+                                    finishcalories = phase switch
                                     {
-                                        case TDEE.PHASE_1:
-                                            finishcalories = Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                        case TDEE.PHASE_2:
-                                            finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                        case TDEE.PHASE_3:
-                                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                    }
+                                        TDEE.PHASE_1 => Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero),
+                                        TDEE.PHASE_2 => Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero),
+                                        TDEE.PHASE_3 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
+                                        _ => throw new ArgumentException($"Invalid calories value: {calories}"),
+                                    };
                                     break;
                                 case TDEE.TIER_2:
-                                    switch (phase)
+                                    finishcalories = phase switch
                                     {
-                                        case TDEE.PHASE_1:
-                                            finishcalories = Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                        case TDEE.PHASE_2:
-                                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                        case TDEE.PHASE_3:
-                                            finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                    }
+                                        TDEE.PHASE_1 => Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero),
+                                        TDEE.PHASE_2 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
+                                        TDEE.PHASE_3 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
+                                        _ => throw new ArgumentException($"Invalid calories value: {calories}"),
+                                    };
                                     break;
                                 case TDEE.TIER_3:
-                                    switch (phase)
+                                    finishcalories = phase switch
                                     {
-                                        case TDEE.PHASE_1:
-                                            finishcalories = Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                        case TDEE.PHASE_2:
-                                            finishcalories = Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                        case TDEE.PHASE_3:
-                                            finishcalories = Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero);
-                                            break;
-                                    }
+                                        TDEE.PHASE_1 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
+                                        TDEE.PHASE_2 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
+                                        TDEE.PHASE_3 => Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero),
+                                        _ => throw new ArgumentException($"Invalid calories value: {calories}"),
+                                    };
                                     break;
                             }
                         } 
@@ -520,40 +503,29 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                         switch (tier)
                         {
                             case TDEE.TIER_1:
-                                switch (phase)
+                                finishcalories = phase switch
                                 {
-                                    case TDEE.PHASE_1:
-                                        finishcalories = Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero);
-                                        break;
-                                }
-                                break;
+                                    TDEE.PHASE_1 => Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero),
+                                    _ => throw new ArgumentException($"Invalid calories value: {calories}"),
+                                };
+                                break;                                
                             case TDEE.TIER_2:
-                                switch (phase)
+                                finishcalories = phase switch
                                 {
-                                    case TDEE.PHASE_1:
-                                        finishcalories = Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero);
-                                        break;
-                                    case TDEE.PHASE_2:
-                                        finishcalories = Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero);
-                                        break;
-                                    case TDEE.PHASE_3:
-                                        finishcalories = Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero);
-                                        break;
-                                }
+                                    TDEE.PHASE_1 => Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero),
+                                    TDEE.PHASE_2 => Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero),
+                                    TDEE.PHASE_3 => Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero),
+                                    _ => throw new ArgumentException($"Invalid calories value: {calories}"),
+                                };
                                 break;
                             case TDEE.TIER_3:
-                                switch (phase)
+                                finishcalories = phase switch
                                 {
-                                    case TDEE.PHASE_1:
-                                        finishcalories = Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero);
-                                        break;
-                                    case TDEE.PHASE_2:
-                                        finishcalories = Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero);
-                                        break;
-                                    case TDEE.PHASE_3:
-                                        finishcalories = Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero);
-                                        break;
-                                }
+                                    TDEE.PHASE_1 => Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero),
+                                    TDEE.PHASE_2 => Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero),
+                                    TDEE.PHASE_3 => Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero),
+                                    _ => throw new ArgumentException($"Invalid calories value: {calories}"),
+                                };
                                 break;
                         }
                         break;
@@ -592,6 +564,10 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 Assert.IsTrue(Math.Abs(finishcalories - actualCalories) <= 10, $"Expected calories: {finishcalories} but was: {actualCalories}");
                 Assert.IsTrue(Math.Abs(carbs - actualCarbs) < 5, $"Expected carbs: {carbs} but was: {actualCarbs}");
                 Assert.IsTrue(Math.Abs(fat - actualFat) < 5, $"Expected fat: {fat} but was: {actualFat}");
+                Console.WriteLine($"Expected calories are \"{finishcalories}\"");
+                Console.WriteLine($"Expected carbs are \"{carbs}\"");
+                Console.WriteLine($"Expected protein is \"{protein}\"");
+                Console.WriteLine($"Expected fat is \"{fat}\"");
             }
         }
     }
