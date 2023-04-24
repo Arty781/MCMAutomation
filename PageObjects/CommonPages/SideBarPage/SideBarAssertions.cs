@@ -25,7 +25,7 @@ namespace MCMAutomation.PageObjects
         {
             WaitUntil.WaitForElementToAppear(textEmail.Where(x=>x.Text.Contains(email)).Select(x=>x).FirstOrDefault(), 10);
             WaitUntil.WaitSomeInterval(1000);
-            Assert.IsTrue(textEmail.First().Text == email);
+            Assert.IsTrue(textEmail.FirstOrDefault().Text == email);
             
 
             return this;

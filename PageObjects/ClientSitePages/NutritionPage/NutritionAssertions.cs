@@ -300,7 +300,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     protein = (int)protein;
                     break;
                 default:
-                    if ((gender == "Female" && bodyFat > 30) || (gender == "Male" && bodyFat >= 25))
+                    if ((gender == "Female" && bodyFat >= 30) || (gender == "Male" && bodyFat >= 25))
                     {
                         protein = weight * 1.6;
                         protein = (int)protein;
@@ -343,9 +343,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             switch (goal)
             {
-                case TDEE.GOAL_MAINTAIN:
                 case TDEE.GOAL_CUT:
-                case TDEE.GOAL_BUILD:
                     switch (phase)
                     {
                         case TDEE.PHASE_1:
@@ -378,6 +376,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                             break;
                     }
                     break;
+                case TDEE.GOAL_MAINTAIN:
+                case TDEE.GOAL_BUILD:
                 case TDEE.GOAL_REVERSE:
                     switch (diet)
                     {

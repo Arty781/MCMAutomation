@@ -436,13 +436,13 @@ namespace MCMAutomation.APIHelpers
 
         public static void CreateProductMembership(SignInResponseModel SignIn)
         {
-            HttpRequest req = new HttpRequest
+            HttpRequest req = new()
             {
                 HttpVerb = "POST",
-                Path = "/Admin/AddMembership",
-                ContentType = "multipart/form-data"
+                Path = "/Admin/AddMembership"
             };
             req.AddHeader("Connection", "Keep-Alive");
+            req.AddHeader("ContentType", "multipart/form-data");
             req.AddHeader("Accept-Encoding", "gzip, deflate, br");
             req.AddHeader("Authorization", $"Bearer {SignIn.AccessToken}");
 
