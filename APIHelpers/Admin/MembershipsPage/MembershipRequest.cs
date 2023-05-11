@@ -100,13 +100,16 @@ namespace MCMAutomation.APIHelpers
 
         private static string JsonBody(int count, int workoutId, List<DB.Exercises> exercises)
         {
-            WorkoutExercises req = null;
+            WorkoutExercises? req = null;
+            var exercisesWithTempoZero = exercises.Where(ex=>ex.TempoBold == 0).Select(ex=>ex).ToList();
+            var exercisesWithTempoOne = exercises.Where(ex => ex.TempoBold == 1).Select(ex => ex).ToList();
+            var exercisesWithTempoThree = exercises.Where(ex => ex.TempoBold == 3).Select(ex => ex).ToList();
             switch (count)
             {
                 case 0:
                     req = new()
                     {
-                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        ExerciseId = exercisesWithTempoZero[RandomHelper.RandomExercise(exercisesWithTempoZero.Count)].Id,
                         Notes = Lorem.Sentence(),
                         Series = "A",
                         Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
@@ -124,9 +127,9 @@ namespace MCMAutomation.APIHelpers
                         new WeekWorkoutExercise()
                         {
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "10-15",
+                            Reps = "3x10-3x15",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "2010",
+                            Tempo = "2010+3010",
                             Week = 2
                         },
                         new WeekWorkoutExercise()
@@ -134,7 +137,7 @@ namespace MCMAutomation.APIHelpers
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "10-15",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "2010",
+                            Tempo = "3 x 2310 + 3 x 2010",
                             Week = 3
                         },
                         new WeekWorkoutExercise()
@@ -142,7 +145,7 @@ namespace MCMAutomation.APIHelpers
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "10-15",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "2010",
+                            Tempo = "3x2310+3x2010",
                             Week = 4
                         }
                     }
@@ -151,7 +154,7 @@ namespace MCMAutomation.APIHelpers
                 case 1:
                     req = new()
                     {
-                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        ExerciseId = exercisesWithTempoOne[RandomHelper.RandomExercise(exercisesWithTempoOne.Count)].Id,
                         Notes = Lorem.Sentence(),
                         Series = "B",
                         Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
@@ -161,9 +164,9 @@ namespace MCMAutomation.APIHelpers
                         new WeekWorkoutExercise()
                         {
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
+                            Reps = "5+5",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
+                            Tempo = "2013 + 2010",
                             Week = 1
                         },
                         new WeekWorkoutExercise()
@@ -171,7 +174,7 @@ namespace MCMAutomation.APIHelpers
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
+                            Tempo = "2010+5020",
                             Week = 2
                         },
                         new WeekWorkoutExercise()
@@ -179,7 +182,7 @@ namespace MCMAutomation.APIHelpers
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
+                            Tempo = "30X0",
                             Week = 3
                         },
                         new WeekWorkoutExercise()
@@ -187,7 +190,7 @@ namespace MCMAutomation.APIHelpers
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
+                            Tempo = "X010",
                             Week = 4
                         }
                     }
@@ -196,7 +199,7 @@ namespace MCMAutomation.APIHelpers
                 case 2:
                     req = new()
                     {
-                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        ExerciseId = exercisesWithTempoThree[RandomHelper.RandomExercise(exercisesWithTempoThree.Count)].Id,
                         Notes = Lorem.Sentence(),
                         Series = "C1",
                         Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
@@ -216,7 +219,7 @@ namespace MCMAutomation.APIHelpers
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
+                            Tempo = "3 x 2310 + 3 x 2010",
                             Week = 2
                         },
                         new WeekWorkoutExercise()
@@ -241,7 +244,7 @@ namespace MCMAutomation.APIHelpers
                 case 3:
                     req = new()
                     {
-                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        ExerciseId = exercisesWithTempoZero[RandomHelper.RandomExercise(exercisesWithTempoZero.Count)].Id,
                         Notes = Lorem.Sentence(),
                         Series = "C2",
                         Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
@@ -269,7 +272,7 @@ namespace MCMAutomation.APIHelpers
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
+                            Tempo = "3 x 2310 + 3 x 2010",
                             Week = 3
                         },
                         new WeekWorkoutExercise()
@@ -286,7 +289,7 @@ namespace MCMAutomation.APIHelpers
                 case 4:
                     req = new()
                     {
-                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        ExerciseId = exercisesWithTempoThree[RandomHelper.RandomExercise(exercisesWithTempoThree.Count)].Id,
                         Notes = Lorem.Sentence(),
                         Series = "D",
                         Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
@@ -331,7 +334,7 @@ namespace MCMAutomation.APIHelpers
                 case 5:
                     req = new()
                     {
-                        ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                        ExerciseId = exercisesWithTempoOne[RandomHelper.RandomExercise(exercisesWithTempoOne.Count)].Id,
                         Notes = Lorem.Sentence(),
                         Series = "E",
                         Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
@@ -554,10 +557,11 @@ namespace MCMAutomation.APIHelpers
             {
                 HttpVerb = "POST",
                 Path = "/Admin/AddCustomMembership",
-                ContentType = "multipart/form-data"
+                ContentType = "multipart/form-data"                
             };
             req.AddHeader("Connection", "Keep-Alive");
             req.AddHeader("accept-encoding", "gzip, deflate, br");
+            req.AddHeader("Accept", "application/json, text/plain, */*");
             req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
 
             req.AddParam("name", "00Created New Custom Membership " + DateTime.Now.ToString("yyyy-MMM-ddd HH-mm-ss -ff"));
@@ -568,7 +572,7 @@ namespace MCMAutomation.APIHelpers
             req.AddParam("image", "undefined");
             req.AddParam("userId", $"{UserId}");
 
-            Http http = new Http();
+            Http http = new();
 
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
@@ -640,7 +644,7 @@ namespace MCMAutomation.APIHelpers
             };
 
             string url = String.Concat(Endpoints.API_HOST + "/Admin/AddRangeWorkoutExercises");
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, workouts.Id, exercises));
                 if (http.LastStatus != 200 )
@@ -713,7 +717,7 @@ namespace MCMAutomation.APIHelpers
             {
                 CreateWorkouts(responseLoginAdmin, program.Id, programCount);
             }
-            var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
+            var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programs);
             return workouts;
         }
 

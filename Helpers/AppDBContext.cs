@@ -231,17 +231,18 @@ namespace MCMAutomation.Helpers
 
         public class Workouts
         {
-            public static List<DB.Workouts> GetLastWorkoutsData(int workoutCount)
+            public static List<DB.Workouts> GetLastWorkoutsData(List<DB.Programs> programs)
             {
+                WaitUntil.WaitSomeInterval(5000);
                 var list = new List<DB.Workouts>();
-                string query = $"SELECT TOP(@count) *" +
-                                "FROM [Workouts] WHERE IsDeleted=0" +
-                                "ORDER BY CreationDate DESC";
+                string query = $"SELECT * " +
+                               $"FROM [Workouts] WHERE IsDeleted=0 and ProgramId BETWEEN {programs.LastOrDefault().Id} and {programs.FirstOrDefault().Id} " +
+                               "ORDER BY CreationDate DESC";
                 try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
-                    command.Parameters.AddWithValue("@count", DbType.Int32).Value = workoutCount;
+                    command.Parameters.AddWithValue("@count", DbType.Int32).Value = programs.Count;
                     db.Open();
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -327,6 +328,7 @@ namespace MCMAutomation.Helpers
         {
             public static DB.Memberships? GetLastMembership()
             {
+                WaitUntil.WaitSomeInterval(5000);
                 var row = new DB.Memberships();
                 string query = "SELECT TOP(1)*" +
                                              "FROM [Memberships] WHERE IsDeleted=0" +
@@ -341,22 +343,23 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
                         row.Id = GetValueOrDefault<Int32>(reader, 0);
-                        row.Name = GetValueOrDefault<string>(reader, 1);
-                        row.Description = GetValueOrDefault<string>(reader, 2);
-                        row.StartDate = GetValueOrDefault<DateTime>(reader, 3);
-                        row.EndDate = GetValueOrDefault<DateTime>(reader, 4);
-                        row.URL = GetValueOrDefault<string>(reader, 5);
-                        row.Price = GetValueOrDefault<decimal>(reader, 6);
-                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 7);
-                        row.IsDeleted = GetValueOrDefault<bool>(reader, 8);
-                        row.IsCustom = GetValueOrDefault<bool>(reader, 9);
-                        row.ForPurchase = GetValueOrDefault<bool>(reader, 10);
-                        row.AccessWeekLength = GetValueOrDefault<int>(reader, 11);
-                        row.RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 12);
-                        row.Gender = GetValueOrDefault<int>(reader, 13);
-                        row.PromotionalPopupId = GetValueOrDefault<int>(reader, 14);
-                        row.Type = GetValueOrDefault<int>(reader, 15);
-                        row.SKU = GetValueOrDefault<string>(reader, 16);
+                        row.SKU = GetValueOrDefault<string>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.Description = GetValueOrDefault<string>(reader, 3);
+                        row.StartDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.EndDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.URL = GetValueOrDefault<string>(reader, 6);
+                        row.Price = GetValueOrDefault<decimal>(reader, 7);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 8);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 9);
+                        row.IsCustom = GetValueOrDefault<bool>(reader, 10);
+                        row.ForPurchase = GetValueOrDefault<bool>(reader, 11);
+                        row.AccessWeekLength = GetValueOrDefault<int>(reader, 12);
+                        row.RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 13);
+                        row.Gender = GetValueOrDefault<int>(reader, 14);
+                        row.PromotionalPopupId = GetValueOrDefault<int>(reader, 15);
+                        row.Type = GetValueOrDefault<int>(reader, 16);
+                        
                     }
                 }
                 catch (Exception ex)
@@ -768,8 +771,8 @@ namespace MCMAutomation.Helpers
                                                 "(Select Id From Memberships where Name like @membership)\r\n\r\n" +
                                              "Delete from RelatedMembershipGroups\r\n where ParentMembershipId in " +
                                                 "(select id From Memberships\r\n  where Name like @membership)\r\n\r\n" +
-                                             "delete from MultiLevelMembershipGroups\r\nwhere ParentMembershipId in " +
-                                                "(select id From Memberships\r\n  where Name like @membership)\r\n\r\n" +
+                                             //"delete from MultiLevelMembershipGroups\r\nwhere ParentMembershipId in " +
+                                             //   "(select id From Memberships\r\n  where Name like @membership)\r\n\r\n" +
                                              "delete from PagesInMemberships\r\n where MembershipId in " +
                                                 "(Select Id From Memberships where Name like @membership)\r\n\r\n" +
                                              "delete From Memberships\r\n  where Name like @membership";
@@ -797,6 +800,77 @@ namespace MCMAutomation.Helpers
                     SqlConnection.ClearAllPools();
                 }
 
+            }
+
+            public class Insert
+            {
+                public static void InsertMembership(int lastMemberId, string membershipSKU)
+                {
+                    string query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
+                        "INSERT [Memberships] (Id, SKU, Name, Description, StartDate, EndDate, URL, Price, CreationDate, IsDeleted, IsCustom, ForPurchase, AccessWeekLength, RelatedMembershipGroupId, Gender, PromotionalPopupId, Type)\r\n" +
+                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', {"null"}, {"null"}, \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{16}\', '{null}', \'{0}\', {"null"}, \'{0}\')\r\n" +
+                        "SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+                        
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                        var rowsAffected = command.ExecuteNonQueryAsync();
+                        Console.WriteLine(rowsAffected);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    }
+                    finally
+                    {
+
+                        // Забезпечуємо вивільнення ресурсів
+                        SqlConnection.ClearAllPools();
+                    }
+
+                }
+
+                public static void InsertCustomMembership(int lastMemberId, string membershipSKU)
+                {
+                    string query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
+                        "INSERT [Memberships] (Id, SKU, Name, Description, StartDate, EndDate, URL, Price, CreationDate, IsDeleted, IsCustom, ForPurchase, AccessWeekLength, RelatedMembershipGroupId, Gender, PromotionalPopupId, Type)\r\n" +
+                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', {"null"}, {"null"}, \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{16}\', '{null}', \'{0}\', {"null"}, \'{0}\')\r\n" +
+                        "SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                        var rowsAffected = command.ExecuteNonQueryAsync();
+                        Console.WriteLine(rowsAffected);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    }
+                    finally
+                    {
+
+                        // Забезпечуємо вивільнення ресурсів
+                        SqlConnection.ClearAllPools();
+                    }
+
+                }
             }
         }
 

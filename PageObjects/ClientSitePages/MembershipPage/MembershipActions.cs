@@ -43,9 +43,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Select Phase")]
         public MembershipUser SelectPhaseAndWeek(int phaseNum, int weekNum)
         {
-            Button.Click(selectPhaseBtn[phaseNum - 1]);
+            Button.Click(selectPhaseBtn[phaseNum]);
             Button.Click(weekSelectorInput);
-            Button.Click(listWeekNumber[weekNum - 1]);
+            Button.Click(listWeekNumber[weekNum]);
             Button.Click(viewTrainingProgramBtn);
             return this;
         }
@@ -96,7 +96,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public MembershipUser OpenCompletedWorkout()
         {
             WaitUntil.WaitForElementToAppear(textDayTitle[0]);
-            WaitUntil.WaitSomeInterval(2500);
+            WaitUntil.WaitSomeInterval(1500);
             WaitUntil.WaitForElementToAppear(btnCompletedWorkoutsElem);
             Button.Click(btnCompletedWorkouts.LastOrDefault());
 
@@ -127,8 +127,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             var weightList = weightInput.Where(x => x.Displayed).ToList();
             foreach (var weight in weightList)
             {
-                WaitUntil.WaitSomeInterval(150);
-                InputBox.ElementCtrlA(weight, 5, RandomHelper.RandomNumber(150));
+                InputBox.ElementCtrlA(weight, 5, RandomHelper.RandomNumFromOne(150).ToString());
             }
                
             return this;
@@ -246,14 +245,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             for (int i = 0; i < programsCount; i++)
             {
-                int phaseNum = i + 1;
-                int weekNum = i + 1;
+                int phaseNum = i;
+                int weekNum = i;
                 OpenMembership();
                 SelectPhaseAndWeek(phaseNum, weekNum);
-                int weekNumber = Pages.WebPages.MembershipUser.GetWeekNumber();
-                SelectWeek(weekNumber);
-                Pages.CommonPages.Sidebar
-                     .OpenMemberShipPageUser();
+                int weeksCount = Pages.WebPages.MembershipUser.GetWeekNumber();
+                SelectWeek(weeksCount);
+                OpenMembershipPage();
             } 
         }
 
@@ -264,8 +262,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             {
                 Pages.WebPages.MembershipUser
                     .SelectWeekNumber(q);
-                int countWorkouts = Pages.WebPages.MembershipUser.GetWorkoutsCount();
-                for (int j = 0; j < countWorkouts; j++)
+                int workoutsCount = Pages.WebPages.MembershipUser.GetWorkoutsCount();
+                for (int j = 0; j < workoutsCount; j++)
                 {
                     OpenWorkoutAndEnterWeight();
                 }

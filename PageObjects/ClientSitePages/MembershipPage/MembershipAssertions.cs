@@ -63,10 +63,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public int GetWorkoutsCount()
         {
             WaitUntil.WaitSomeInterval(1500);
-            WaitUntil.WaitForElementToAppear(workoutBtn[0]);
-            var count = workoutBtn.Where(x => x.Displayed).Count();
-
-            return count;
+            WaitUntil.WaitForElementToAppear(workoutBtn.FirstOrDefault());
+            return workoutBtn.Where(x => x.Enabled).Count();
         }
 
         [AllureStep("Verify added weight")]
@@ -78,10 +76,25 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             }
 
             WaitUntil.WaitForElementToAppear(inputAddedWeightElem);
+            List<string> expectedText = expectedWeights;
+            List<string> actualText = GetInputWeights();
 
-            var inputWeights = GetInputWeights();
-            CollectionAssert.AreEquivalent(expectedWeights, inputWeights,
-                $"Expected added weights to match {string.Join(", ", expectedWeights)}, but found {string.Join(", ", inputWeights)}");
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualText, Is.EqualTo(expectedText), "Texts don't match");
+                Assert.That(expectedText.Count, Is.EqualTo(actualText.Count), "Number of elements doesn't match");
+
+                var mismatchedIndices = expectedText.Select((text, index) => new { text, index })
+                    .Where(item => !actualText[item.index].Equals(item.text))
+                    .Select(item => item.index)
+                    .ToList();
+
+                if (mismatchedIndices.Count > 0)
+                {
+                    string errorMessage = $"Expected text does not match the actual text at index(es): {string.Join(", ", mismatchedIndices)}";
+                    Assert.Fail(errorMessage);
+                }
+            });
         }
 
         private List<string> GetInputWeights()

@@ -35,14 +35,15 @@ namespace MCMApiTests
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser);
+            //EditUserRequest.EditUser(responseLoginUser);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
             #region Add and Activate membership to User
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -59,7 +60,8 @@ namespace MCMApiTests
         public void CreateProductMembership()
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
             DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 2;
@@ -71,7 +73,7 @@ namespace MCMApiTests
             foreach (var program in programs)
             {
                 MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programs);
                 foreach (var workout in workouts)
                 {
                     MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
@@ -356,7 +358,10 @@ namespace MCMApiTests
 
         public void DemoS()
         {
-            DemoTest();
+            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
+            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
         }
         public List<UserMember> DemoTest()
         {

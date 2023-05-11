@@ -2820,7 +2820,8 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -2880,7 +2881,8 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -2948,13 +2950,14 @@ namespace MCMAutomation.WebTests
             var responseLogin = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLogin);
             string userId = AppDbContext.User.GetUserData(email).Id;
-            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
 
             #endregion
 
             #region Create Product membership
 
-            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -2975,7 +2978,8 @@ namespace MCMAutomation.WebTests
 
             #region Create Subscription membership
 
-            MembershipRequest.CreateSubscriptionMembership(responseLoginAdmin);
+            lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[2]);
             membershipData = AppDbContext.Memberships.GetLastMembership();
             programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
             workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
@@ -3094,7 +3098,7 @@ namespace MCMAutomation.WebTests
             Pages.CommonPages.Common
                 .ClickSaveBtn();
             Pages.CommonPages.Sidebar
-                .OpenMyAccount(email);
+                .OpenMyAccount(expectedData.LastOrDefault());
 
             List<string> actualData = Pages.WebPages.UserProfile.GetUserDataBeforeSaving();
             Pages.WebPages.UserProfile
