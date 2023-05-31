@@ -331,7 +331,7 @@ namespace MCMAutomation.Helpers
                 WaitUntil.WaitSomeInterval(5000);
                 var row = new DB.Memberships();
                 string query = "SELECT TOP(1)*" +
-                                             "FROM [Memberships] WHERE IsDeleted=0" +
+                                             "FROM [Memberships] " +
                                              "ORDER BY CreationDate DESC";
                 try
                 {
@@ -815,7 +815,7 @@ namespace MCMAutomation.Helpers
                 }
                 finally
                 {
-
+                    WaitUntil.WaitSomeInterval(5000);
                     // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }

@@ -184,7 +184,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public double GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories)
+        public double GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories, int eightWeek)
         {
             double finishcalories = 0;
 
@@ -196,29 +196,64 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     else
                     {
                         double multiplier = 0;
-                        switch (tier)
+                        if (eightWeek == 8)
                         {
-                            case TDEE.TIER_1:
-                                multiplier = 0.8;
-                                break;
-                            case TDEE.TIER_2:
-                                multiplier = 0.75;
-                                break;
-                            case TDEE.TIER_3:
-                                multiplier = 0.7;
-                                break;
+                            switch (tier)
+                            {
+                                case TDEE.TIER_1:
+                                    multiplier = 0.8;
+                                    break;
+                                case TDEE.TIER_2:
+                                    multiplier = 0.75;
+                                    break;
+                                case TDEE.TIER_3:
+                                    multiplier = 0.7;
+                                    break;
+                                default:
+                                    throw new ArgumentException("Invalid tier value");
+                            }
+                            switch (phase)
+                            {
+                                case TDEE.PHASE_1:
+                                    finishcalories = Math.Round(calories * (multiplier - 0.05));
+                                    break;
+                                case TDEE.PHASE_2:
+                                    finishcalories = Math.Round(calories * (multiplier - 0.1));
+                                    break;
+                                default:
+                                    throw new ArgumentException("Invalid phase value");
+                            }
                         }
-                        switch (phase)
+                        else
                         {
-                            case TDEE.PHASE_1:
-                                finishcalories = Math.Round(calories * multiplier);
-                                break;
-                            case TDEE.PHASE_2:
-                                finishcalories = Math.Round(calories * (multiplier - 0.05));
-                                break;
-                            case TDEE.PHASE_3:
-                                finishcalories = Math.Round(calories * (multiplier - 0.1));
-                                break;
+                            switch (tier)
+                            {
+                                case TDEE.TIER_1:
+                                    multiplier = 0.8;
+                                    break;
+                                case TDEE.TIER_2:
+                                    multiplier = 0.75;
+                                    break;
+                                case TDEE.TIER_3:
+                                    multiplier = 0.7;
+                                    break;
+                                default:
+                                    throw new ArgumentException("Invalid tier value");
+                            }
+                            switch (phase)
+                            {
+                                case TDEE.PHASE_1:
+                                    finishcalories = Math.Round(calories * multiplier);
+                                    break;
+                                case TDEE.PHASE_2:
+                                    finishcalories = Math.Round(calories * (multiplier - 0.05));
+                                    break;
+                                case TDEE.PHASE_3:
+                                    finishcalories = Math.Round(calories * (multiplier - 0.1));
+                                    break;
+                                default:
+                                    throw new ArgumentException("Invalid phase value");
+                            }
                         }
                     }
                     break;

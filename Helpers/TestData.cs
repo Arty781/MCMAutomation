@@ -292,7 +292,8 @@ namespace MCMAutomation.Helpers
             "CMC_TEST_SUBSCRIPTION",
             "CHF-FREE",
             "CHM-FREE",
-            "YGC3"
+            "YGC3",
+            $"CH{DateTime.Now.Date}-MS"
         };
     }
 
