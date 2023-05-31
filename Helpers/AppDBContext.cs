@@ -379,7 +379,7 @@ namespace MCMAutomation.Helpers
             {
 
                 var list = new DB.Memberships();
-                string query = "SELECT Name, SKU " +
+                string query = "SELECT *" +
                                "FROM Memberships WHERE Id in (Select MembershipId from UserMemberships " +
                                                               "WHERE UserId in " +
                                                               "(select Id from [AspNetUsers] " +
@@ -396,9 +396,24 @@ namespace MCMAutomation.Helpers
                     {
                         list = new DB.Memberships()
                         {
-                            Name = reader.GetString(0),
-                            SKU = reader.GetString(1)
-                        };
+                            Id = GetValueOrDefault<int>(reader, 0),
+                            SKU = GetValueOrDefault<string>(reader, 1),
+                            Name = GetValueOrDefault<string>(reader, 2),
+                            Description = GetValueOrDefault<string>(reader, 3),
+                            StartDate = GetValueOrDefault<DateTime>(reader, 4),
+                            EndDate = GetValueOrDefault<DateTime>(reader, 5),
+                            URL = GetValueOrDefault<string>(reader, 6),
+                            Price = GetValueOrDefault<decimal>(reader, 7),
+                            CreationDate = GetValueOrDefault<DateTime>(reader, 8),
+                            IsDeleted = GetValueOrDefault<bool>(reader, 9),
+                            IsCustom = GetValueOrDefault<bool>(reader, 10),
+                            ForPurchase = GetValueOrDefault<bool>(reader, 11),
+                            AccessWeekLength = GetValueOrDefault<int>(reader, 12),
+                            RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 13),
+                            Gender = GetValueOrDefault<int>(reader, 14),
+                            PromotionalPopupId = GetValueOrDefault<int>(reader, 15),
+                            Type = GetValueOrDefault<int>(reader, 16)
+                    };
                     }
 
                 }
@@ -416,7 +431,7 @@ namespace MCMAutomation.Helpers
             }
             public static DB.Memberships GetActiveMembershipNameBySKU(string SKU)
             {
-
+                WaitUntil.WaitSomeInterval();
                 var membership = new DB.Memberships();
                 string query = "SELECT TOP(1) * " +
                                "FROM Memberships " +
@@ -760,6 +775,11 @@ namespace MCMAutomation.Helpers
                                              "Delete from Workouts\r\n  where ProgramId in " +
                                                 "(select Id from Programs where MembershipId in " +
                                                 "(Select Id From Memberships where Name like @membership))\r\n  \r\n" +
+                                             "Delete from PushNotifications\r\n  " +
+                                                "where Id in (Select Id from PushNotificationInMemberships\r\n  " +
+                                                "where MembershipId in (Select Id From Memberships where Name like @membership));\r\n\r\n" +
+                                             "Delete from PushNotificationInMemberships\r\n  " +
+                                                "where MembershipId in (Select Id From Memberships where Name like @membership);" +
                                              "delete from Media\r\nwhere ProgramId in " +
                                                 "(select id from Programs\r\n where MembershipId in " +
                                                 "(Select Id From Memberships where Name like @membership))\r\n\r\n" +
@@ -808,7 +828,7 @@ namespace MCMAutomation.Helpers
                 {
                     string query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
                         "INSERT [Memberships] (Id, SKU, Name, Description, StartDate, EndDate, URL, Price, CreationDate, IsDeleted, IsCustom, ForPurchase, AccessWeekLength, RelatedMembershipGroupId, Gender, PromotionalPopupId, Type)\r\n" +
-                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', {"null"}, {"null"}, \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{16}\', '{null}', \'{0}\', {"null"}, \'{0}\')\r\n" +
+                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', \'{DateTime.Now.Date}\', \'{DateTime.Now.AddHours(1344).Date}\', \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{0}\', {"null"}, \'{0}\', {"null"}, \'{0}\')\r\n" +
                         "SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
                     try
                     {

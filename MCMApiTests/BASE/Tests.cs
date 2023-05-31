@@ -64,7 +64,7 @@ namespace MCMApiTests
             AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
             DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            int programCount = 2;
+            int programCount = 1;
             for (int i = 0; i < programCount; i++)
             {
                 MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
@@ -91,11 +91,49 @@ namespace MCMApiTests
     public class AdminExercisesTests
     {
         [Test, Category("Exercises")]
-        public void AddExerciseWithRelated()
+        public void AddExerciseWithGymRelated()
         {
+            bool home = false;
+            bool all = false;
             var list = AppDbContext.Exercises.GetExercisesData();
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list, home, all);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+            ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+
+            #region Postconditions
+
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
+
+            #endregion
+        }
+
+        [Test, Category("Exercises")]
+        public void AddExerciseWithHomeRelated()
+        {
+            bool home = true;
+            bool all = false;
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list, home, all);
+            var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
+            ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
+
+            #region Postconditions
+
+            AppDbContext.Exercises.DeleteExercises(lastExercise.Name);
+
+            #endregion
+        }
+
+        [Test, Category("Exercises")]
+        public void AddExerciseWithRelated()
+        {
+            bool home = false;
+            bool all = true;
+            var list = AppDbContext.Exercises.GetExercisesData();
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list, home, all);
             var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
             ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
 
@@ -125,13 +163,11 @@ namespace MCMApiTests
         [Test, Category("Exercises")]
         public void EditExerciseWithRelated()
         {
-            // Get exercises data from AppDbContext
-            var exercisesData = AppDbContext.Exercises.GetExercisesData();
-            // Sign in with admin credentials
+            bool home = false;
+            bool all = true;
+            var list = AppDbContext.Exercises.GetExercisesData();
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-
-            // Add exercises with related
-            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, exercisesData);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list, home, all);
 
             // Get the last exercise data
             var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
@@ -141,7 +177,7 @@ namespace MCMApiTests
 
             // Get the list of exercises and edit exercises with related
             var exercisesList = ExercisesRequestPage.GetExercisesList(responseLoginAdmin);
-            ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, exercisesData, exercisesList, lastExercise.Name);
+            ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, list, exercisesList, lastExercise.Name, home, all);
 
             #region Postconditions
 
@@ -153,13 +189,15 @@ namespace MCMApiTests
         [Test, Category("Exercises")]
         public void EditExerciseWithoutRelated()
         {
+            bool home = false;
+            bool all = true;
             var list = AppDbContext.Exercises.GetExercisesData();
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list, home, all);
             var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
             ExercisesRequestPage.VerifyExerciseAdded(responseLoginAdmin, lastExercise.Name);
             var getResponseExercises = ExercisesRequestPage.GetExercisesList(responseLoginAdmin);
-            ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, list, getResponseExercises, lastExercise.Name);
+            ExercisesRequestPage.EditExercisesWithRelated(responseLoginAdmin, list, getResponseExercises, lastExercise.Name, home, all);
 
             #region Postconditions
 

@@ -358,7 +358,7 @@ namespace MCMAutomation.PageObjects
                 {
                     CopyWorkoutMembership(workoutName, membershipData, currentMembership);
                 }
-                ClickBackButton(workoutNames.Count);
+                ClickBackButton();
             }
             return this;
         }
@@ -403,6 +403,12 @@ namespace MCMAutomation.PageObjects
             {
                 Button.Click(backBtn);
             }
+            WaitUntil.WaitSomeInterval(1500);
+        }
+
+        private void ClickBackButton()
+        {
+            Button.Click(backBtn);
             WaitUntil.WaitSomeInterval(1500);
         }
 

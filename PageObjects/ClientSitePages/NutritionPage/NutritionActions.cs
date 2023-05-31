@@ -1,4 +1,5 @@
-﻿using MCMAutomation.Helpers;
+﻿using Chilkat;
+using MCMAutomation.Helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using RimuTec.Faker;
@@ -63,6 +64,22 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             return this;
         }
+
+        public int GetNumberOfWeeks(string email)
+        {
+            DateTime? endDate = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(email).EndDate;
+            DateTime? startDate = AppDbContext.Memberships.GetActiveMembershipsNameAndSkuByEmail(email).StartDate;
+
+            if (endDate.HasValue && startDate.HasValue)
+            {
+                TimeSpan duration = endDate.Value - startDate.Value;
+                int numberOfWeeks = (int)(duration.TotalDays / 7);
+                return numberOfWeeks;
+            }
+
+            return 0; // Or any other default value if dates are null
+        }
+
 
         public Nutrition SelectImperial()
         {

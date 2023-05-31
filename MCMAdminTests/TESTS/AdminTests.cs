@@ -400,8 +400,9 @@ namespace AdminSiteTests
             #endregion
 
             #region Create Membership
+            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateProductMembership(responseLoginAdmin);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             int programCount = 3;
             for (int i = 0; i < programCount; i++)
@@ -800,10 +801,11 @@ namespace AdminSiteTests
         public void DeleteRelatedExercises()
         {
             #region Preconditions
-
+            bool home = false;
+            bool all = true;
             var list = AppDbContext.Exercises.GetExercisesData();
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list);
+            ExercisesRequestPage.AddExercisesWithRelated(responseLoginAdmin, list, home, all);
             var lastExercise = AppDbContext.Exercises.GetLastExerciseData();
 
             #endregion

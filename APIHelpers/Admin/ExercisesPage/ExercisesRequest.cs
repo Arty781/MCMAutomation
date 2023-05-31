@@ -14,35 +14,57 @@ namespace MCMAutomation.APIHelpers
 {
     public class ExercisesRequestPage
     {
-        private static List<RelatedExerciseRequest> AddRelatedexercises(List<DB.Exercises> exercises)
+        private static List<RelatedExerciseRequest> AddRelatedexercises(List<DB.Exercises> exercises, bool home, bool all)
         {
             var relatedExercises = new List<RelatedExerciseRequest>();
-
-            for (int i = 0; i < 10; i++)
+            if (all == true)
             {
-                var relatedExercise = new RelatedExerciseRequest();
-                if (i <= 5)
+                for (int i = 0; i < 10; i++)
                 {
-                    relatedExercise.ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id;
-                    relatedExercise.ExerciseType = 0;
+                    var relatedExercise = new RelatedExerciseRequest();
+                    if (i <= 5)
+                    {
+                        relatedExercise.ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id;
+                        relatedExercise.ExerciseType = 0;
+                    }
+                    else if (i <= 10)
+                    {
+                        relatedExercise.ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id;
+                        relatedExercise.ExerciseType = 1;
+                    }
+                    relatedExercises.Add(relatedExercise);
                 }
-                else if (i <= 10)
+            }
+            else
+            {
+                for (int i = 0; i < 10; i++)
                 {
-                    relatedExercise.ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id;
-                    relatedExercise.ExerciseType = 1;
+                    var relatedExercise = new RelatedExerciseRequest();
+                    if (home == false && i <= 5)
+                    {
+                        relatedExercise.ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id;
+                        relatedExercise.ExerciseType = 0;
+                        relatedExercises.Add(relatedExercise);
+                    }
+                    else if (home == true && i > 5 && i <= 10)
+                    {
+                        relatedExercise.ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id;
+                        relatedExercise.ExerciseType = 1;
+                        relatedExercises.Add(relatedExercise);
+                    }
+                    
                 }
-                relatedExercises.Add(relatedExercise);
             }
 
             return relatedExercises;
         }
-        private static string JsonBody(List<DB.Exercises> exercises)
+        private static string JsonBody(List<DB.Exercises> exercises, bool home, bool all)
         {
             RequestAddExercises req = new();
             req.Name = string.Concat("Test Exercise", DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fff"));
             req.VideoURL = exercises[RandomHelper.RandomExercise(exercises.Count)].VideoURL;
             req.TempoBold = 1;
-            req.RelatedExercises = AddRelatedexercises(exercises);
+            req.RelatedExercises = AddRelatedexercises(exercises, home, all);
            
 
             return JsonConvert.SerializeObject(req);
@@ -59,7 +81,7 @@ namespace MCMAutomation.APIHelpers
 
             return JsonConvert.SerializeObject(req);
         }
-        private static string JsonBody(List<DB.Exercises> exercises, List<ResponseGetExercises> listGetExercises, string exerciseName)
+        private static string JsonBody(List<DB.Exercises> exercises, List<ResponseGetExercises> listGetExercises, string exerciseName, bool home, bool all)
         {
             RequestEditExercises req = new()
             {
@@ -67,7 +89,7 @@ namespace MCMAutomation.APIHelpers
                 Name = "Test Edited Exercise" + DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fff"),
                 VideoURL = exercises[RandomHelper.RandomExercise(exercises.Count)].VideoURL,
                 TempoBold = 3,
-                RelatedExercises = AddRelatedexercises(exercises),
+                RelatedExercises = AddRelatedexercises(exercises, home, all),
                 GroupId = listGetExercises.Where(p => p.Name.Contains(exerciseName)).Select(x => x.GroupId).First()
             };
 
@@ -88,7 +110,7 @@ namespace MCMAutomation.APIHelpers
 
             return JsonConvert.SerializeObject(req);
         }
-        public static void AddExercisesWithRelated(SignInResponseModel SignIn, List<DB.Exercises> exercises)
+        public static void AddExercisesWithRelated(SignInResponseModel SignIn, List<DB.Exercises> exercises, bool home, bool all)
         {
             Http http = new()
             {
@@ -96,7 +118,7 @@ namespace MCMAutomation.APIHelpers
                 AuthToken = "Bearer " + SignIn.AccessToken
             };
             string url = String.Concat(Endpoints.API_HOST + "/Admin/AddExercise");
-            HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(exercises));
+            HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(exercises, home, all));
             if (http.LastMethodSuccess == false)
             {
                 Debug.WriteLine(http.LastErrorText);
@@ -163,7 +185,7 @@ namespace MCMAutomation.APIHelpers
             Assert.IsTrue(countdownResponse.Any(e => e.Name.Contains(exerciseName)), $"Exercise with name {exerciseName} was not found.");
         }
 
-        public static void EditExercisesWithRelated(SignInResponseModel SignIn, List<DB.Exercises> exercises, List<ResponseGetExercises> listGetExercises, string exerciseName)
+        public static void EditExercisesWithRelated(SignInResponseModel SignIn, List<DB.Exercises> exercises, List<ResponseGetExercises> listGetExercises, string exerciseName, bool home, bool all)
         {
             Http http = new()
             {
@@ -171,7 +193,7 @@ namespace MCMAutomation.APIHelpers
                 AuthToken = "Bearer " + SignIn.AccessToken
             };
             string url = String.Concat(Endpoints.API_HOST + "/Admin/EditExercise");
-            HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(exercises, listGetExercises, exerciseName));
+            HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(exercises, listGetExercises, exerciseName, home, all));
             if (http.LastMethodSuccess == false)
             {
                 Debug.WriteLine(http.LastErrorText);

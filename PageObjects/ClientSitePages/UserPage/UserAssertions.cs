@@ -18,7 +18,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             userData.Add(TextBox.GetAttribute(inputFirstName, "value"));
             userData.Add(TextBox.GetAttribute(inputLastName, "value"));
-            userData.Add(TextBox.GetAttribute(inputBirthDate, "value"));
+            userData.Add(DateTime.Parse(TextBox.GetAttribute(inputBirthDate, "value")).AddDays(-1).ToString("yyyy-MM-dd"));
             userData.Add(TextBox.GetAttribute(inputProtein, "value"));
             userData.Add(TextBox.GetAttribute(inputCalories, "value"));
             userData.Add(TextBox.GetAttribute(inputMaintenanceCalories, "value"));

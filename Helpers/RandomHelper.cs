@@ -80,7 +80,7 @@ namespace MCMAutomation.Helpers
 
         public static string RandomAge()
         {
-            return DateTime.Now.AddYears(-Random.Next(18, 65)).ToString("yyyy-MM-dd");
+            return DateTime.Now.AddYears(-Random.Next(18, 65)).ToString("yyyy-MM-dd hh:mm:ss");
         }
 
         public static string RandomDateInThePast()

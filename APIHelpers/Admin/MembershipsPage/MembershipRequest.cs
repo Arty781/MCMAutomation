@@ -644,7 +644,7 @@ namespace MCMAutomation.APIHelpers
             };
 
             string url = String.Concat(Endpoints.API_HOST + "/Admin/AddRangeWorkoutExercises");
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 1; i++)
             {
                 HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, workouts.Id, exercises));
                 if (http.LastStatus != 200 )
@@ -730,6 +730,33 @@ namespace MCMAutomation.APIHelpers
             }
         }
 
+        public static void CreateProductMembership(string sku)
+        {
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, sku);
+            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            var exercises = AppDbContext.Exercises.GetExercisesData();
+            int programCount = 1;
+            for (int i = 0; i < programCount; i++)
+            {
+                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
+            }
+            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
+            foreach (var program in programs)
+            {
+                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
+                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programs);
+                foreach (var workout in workouts)
+                {
+                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
+                }
+
+            }
+        }
+
         #endregion
+
+
     }
 }

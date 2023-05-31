@@ -6,6 +6,7 @@ using OpenQA.Selenium;
 using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,9 +107,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Click Complete Workout Btn")]
         public MembershipUser ClickCompleteWorkoutBtn()
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             Button.Click(completeWorkoutBtn);
             WaitUntil.WaitForElementToAppear(weekSelectorCbbx, 20);
+
+            stopwatch.Stop();
+            long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+            Console.WriteLine("Request evaluation time: " + elapsedMilliseconds + " ms");
 
             return this;
         }
@@ -123,11 +130,20 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         public MembershipUser AddWeight()
         {
             WaitUntil.WaitForElementToAppear(weightInput.FirstOrDefault());
-
-            var weightList = weightInput.Where(x => x.Displayed).ToList();
+            int i = 0;
+            IList<IWebElement> weightList = weightInput.Where(x => x.Displayed).ToList();
+            
             foreach (var weight in weightList)
             {
-                InputBox.ElementCtrlA(weight, 5, RandomHelper.RandomNumFromOne(150).ToString());
+                if (i == 0)
+                {
+                    InputBox.ElementCtrlA(weight, 5, RandomHelper.RandomNumFromOne(150).ToString());
+                }
+                else
+                {
+                    weight.SendKeys(RandomHelper.RandomNumFromOne(150).ToString());
+                }
+                i++;
             }
                
             return this;
@@ -176,7 +192,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     for (int i = 0; i < notesList.Count; i++)
                     {
                         notesList[i].Click();
-                        InputBox.ElementCtrlA(notesInputelem, 10, Lorem.Paragraph());
+                        InputBox.ElementCtrlA(notesInputelem, 10, Lorem.ParagraphByChars(240));
                         Button.Click(saveNotesBtnElem);
                     }
             }
@@ -188,7 +204,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 for (int i = 0; i < notesList.Count; i++)
                 {
                     notesList[i].Click();
-                    InputBox.ElementCtrlA(notesInputelem, 10, Lorem.Paragraph());
+                    InputBox.ElementCtrlA(notesInputelem, 10, Lorem.ParagraphByChars(240));
                     Button.Click(saveNotesBtnElem);
                 }
 
