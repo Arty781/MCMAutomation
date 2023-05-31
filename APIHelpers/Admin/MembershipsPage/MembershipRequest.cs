@@ -730,11 +730,11 @@ namespace MCMAutomation.APIHelpers
             }
         }
 
-        public static void CreateProductMembership(string sku)
+        public static void CreateProductMembership(string sku, bool eightWeeks)
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, sku);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, sku, eightWeeks);
             DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 1;

@@ -824,17 +824,29 @@ namespace MCMAutomation.Helpers
 
             public class Insert
             {
-                public static void InsertMembership(int lastMemberId, string membershipSKU)
+                public static void InsertMembership(int lastMemberId, string membershipSKU, bool eightWeeks)
                 {
-                    string query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
+                    string query;
+                    if(eightWeeks == true)
+                    {
+                        query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
                         "INSERT [Memberships] (Id, SKU, Name, Description, StartDate, EndDate, URL, Price, CreationDate, IsDeleted, IsCustom, ForPurchase, AccessWeekLength, RelatedMembershipGroupId, Gender, PromotionalPopupId, Type)\r\n" +
                         $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', \'{DateTime.Now.Date}\', \'{DateTime.Now.AddHours(1344).Date}\', \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{0}\', {"null"}, \'{0}\', {"null"}, \'{0}\')\r\n" +
                         "SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
+                    }
+                    else
+                    {
+                        query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
+                                       "INSERT [Memberships] (Id, SKU, Name, Description, StartDate, EndDate, URL, Price, CreationDate, IsDeleted, IsCustom, ForPurchase, AccessWeekLength, RelatedMembershipGroupId, Gender, PromotionalPopupId, Type)\r\n" +
+                                       $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', {"null"}, {"null"}, \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{12}\', {"null"}, \'{0}\', {"null"}, \'{0}\')\r\n" +
+                                       "SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
+                    }
+                    
                     try
                     {
                         SqlConnection db = new(DB.GET_CONNECTION_STRING);
                         SqlCommand command = new(query, db);
-                        
+
                         db.Open();
 
                         SqlDataReader reader = command.ExecuteReader();

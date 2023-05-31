@@ -70,10 +70,10 @@ namespace AdminSiteTests
         public void AddProgramsToExistingMembership()
         {
             #region Preconditions
-
+            bool eightWeeks = false;
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
 
             #endregion
@@ -315,9 +315,10 @@ namespace AdminSiteTests
 
             #region create Product Membership for New User
 
+            bool eightWeeks = false;
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
 
             #endregion
@@ -400,9 +401,10 @@ namespace AdminSiteTests
             #endregion
 
             #region Create Membership
+            bool eightWeeks = false;
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             int programCount = 3;
             for (int i = 0; i < programCount; i++)

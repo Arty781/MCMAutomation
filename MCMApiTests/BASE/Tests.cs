@@ -40,10 +40,10 @@ namespace MCMApiTests
             #endregion
 
             #region Add and Activate membership to User
-
+            bool eightWeeks = false;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -59,9 +59,10 @@ namespace MCMApiTests
         [Test, Category("Memberships")]
         public void CreateProductMembership()
         {
+            bool eightWeeks = false;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
             DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 1;
@@ -396,9 +397,10 @@ namespace MCMApiTests
 
         public void DemoS()
         {
+            bool eightWeeks = false;
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1]);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
         }
         public List<UserMember> DemoTest()
