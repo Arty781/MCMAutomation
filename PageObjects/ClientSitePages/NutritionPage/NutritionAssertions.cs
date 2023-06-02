@@ -184,10 +184,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public double GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories, int eightWeek)
+        public double GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories, string eightWeekSKU)
         {
-            double finishcalories = 0;
-
+            double finishcalories;
             switch (goal)
             {
                 case TDEE.GOAL_CUT:
@@ -195,65 +194,39 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                         finishcalories = calories - 500;
                     else
                     {
-                        double multiplier = 0;
-                        if (eightWeek == 8)
+                        double multiplier;
+                        if (eightWeekSKU.StartsWith("CH") == true)
                         {
-                            switch (tier)
+                            multiplier = tier switch
                             {
-                                case TDEE.TIER_1:
-                                    multiplier = 0.8;
-                                    break;
-                                case TDEE.TIER_2:
-                                    multiplier = 0.75;
-                                    break;
-                                case TDEE.TIER_3:
-                                    multiplier = 0.7;
-                                    break;
-                                default:
-                                    throw new ArgumentException("Invalid tier value");
-                            }
-                            switch (phase)
+                                TDEE.TIER_1 => 0.8,
+                                TDEE.TIER_2 => 0.75,
+                                TDEE.TIER_3 => 0.7,
+                                _ => throw new ArgumentException("Invalid tier value"),
+                            };
+                            finishcalories = phase switch
                             {
-                                case TDEE.PHASE_1:
-                                    finishcalories = Math.Round(calories * (multiplier - 0.05));
-                                    break;
-                                case TDEE.PHASE_2:
-                                    finishcalories = Math.Round(calories * (multiplier - 0.1));
-                                    break;
-                                default:
-                                    throw new ArgumentException("Invalid phase value");
-                            }
+                                TDEE.PHASE_1 => Math.Round(calories * (multiplier - 0.05)),
+                                TDEE.PHASE_2 => Math.Round(calories * (multiplier - 0.1)),
+                                _ => throw new ArgumentException("Invalid phase value"),
+                            };
                         }
                         else
                         {
-                            switch (tier)
+                            multiplier = tier switch
                             {
-                                case TDEE.TIER_1:
-                                    multiplier = 0.8;
-                                    break;
-                                case TDEE.TIER_2:
-                                    multiplier = 0.75;
-                                    break;
-                                case TDEE.TIER_3:
-                                    multiplier = 0.7;
-                                    break;
-                                default:
-                                    throw new ArgumentException("Invalid tier value");
-                            }
-                            switch (phase)
+                                TDEE.TIER_1 => 0.8,
+                                TDEE.TIER_2 => 0.75,
+                                TDEE.TIER_3 => 0.7,
+                                _ => throw new ArgumentException("Invalid tier value"),
+                            };
+                            finishcalories = phase switch
                             {
-                                case TDEE.PHASE_1:
-                                    finishcalories = Math.Round(calories * multiplier);
-                                    break;
-                                case TDEE.PHASE_2:
-                                    finishcalories = Math.Round(calories * (multiplier - 0.05));
-                                    break;
-                                case TDEE.PHASE_3:
-                                    finishcalories = Math.Round(calories * (multiplier - 0.1));
-                                    break;
-                                default:
-                                    throw new ArgumentException("Invalid phase value");
-                            }
+                                TDEE.PHASE_1 => Math.Round(calories * multiplier),
+                                TDEE.PHASE_2 => Math.Round(calories * (multiplier - 0.05)),
+                                TDEE.PHASE_3 => Math.Round(calories * (multiplier - 0.1)),
+                                _ => throw new ArgumentException("Invalid phase value"),
+                            };
                         }
                     }
                     break;
@@ -263,31 +236,20 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     break;
 
                 case TDEE.GOAL_BUILD:
-                    double buildMultiplier = 0;
-                    switch (tier)
+                    double buildMultiplier = tier switch
                     {
-                        case TDEE.TIER_1:
-                            buildMultiplier = 1;
-                            break;
-                        case TDEE.TIER_2:
-                            buildMultiplier = 1.05;
-                            break;
-                        case TDEE.TIER_3:
-                            buildMultiplier = 1.2;
-                            break;
-                    }
-                    switch (phase)
+                        TDEE.TIER_1 => 1,
+                        TDEE.TIER_2 => 1.05,
+                        TDEE.TIER_3 => 1.2,
+                        _ => throw new ArgumentException("Invalid tier value"),
+                    };
+                    finishcalories = phase switch
                     {
-                        case TDEE.PHASE_1:
-                            finishcalories = Math.Round(calories * buildMultiplier);
-                            break;
-                        case TDEE.PHASE_2:
-                            finishcalories = Math.Round(calories * (buildMultiplier + 0.05));
-                            break;
-                        case TDEE.PHASE_3:
-                            finishcalories = Math.Round(calories * (buildMultiplier + 0.15));
-                            break;
-                    }
+                        TDEE.PHASE_1 => Math.Round(calories * buildMultiplier),
+                        TDEE.PHASE_2 => Math.Round(calories * (buildMultiplier + 0.05)),
+                        TDEE.PHASE_3 => Math.Round(calories * (buildMultiplier + 0.15)),
+                        _ => throw new ArgumentException("Invalid phase value"),
+                    };
                     break;
 
                 case TDEE.GOAL_REVERSE:
@@ -295,19 +257,17 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                         finishcalories = previousCalories + 300;
                     else
                     {
-                        double reverseMultiplier = 0;
-                        switch (tier)
+                        double reverseMultiplier = tier switch
                         {
-                            case TDEE.TIER_CONSERVATIVE:
-                                reverseMultiplier = 1.07;
-                                break;
-                            case TDEE.TIER_AGGRESSIVE:
-                                reverseMultiplier = 1.2;
-                                break;
-                        }
+                            TDEE.TIER_CONSERVATIVE => 1.07,
+                            TDEE.TIER_AGGRESSIVE => 1.2,
+                            _ => throw new ArgumentException("Invalid tier value"),
+                        };
                         finishcalories = Math.Round(previousCalories + (calories * (reverseMultiplier - 1)));
                     }
                     break;
+                default:
+                    throw new ArgumentException("Invalid goal value");
             }
 
             return finishcalories;
@@ -325,41 +285,23 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             double weight = (double)userData.Weight;
             double bodyFat = (double)userData.Bodyfat;
-            double protein = 0d;
-            switch (goal)
+            double protein = goal switch
             {
-                case TDEE.GOAL_BUILD:
-                case TDEE.GOAL_MAINTAIN:
-                case TDEE.GOAL_REVERSE:
-                    protein = weight * 2;
-                    protein = (int)protein;
-                    break;
-                default:
-                    if ((gender == "Female" && bodyFat >= 30) || (gender == "Male" && bodyFat >= 25))
-                    {
-                        protein = weight * 1.6;
-                        protein = (int)protein;
-                    }
-                    else
-                    {
-                        if (SKU == MembershipsSKU.MEMBERSHIP_SKU[0])
+                TDEE.GOAL_BUILD or
+                TDEE.GOAL_MAINTAIN or
+                TDEE.GOAL_REVERSE => (int)weight * 2,
+                _ => gender == "Female" && bodyFat >= 30 || gender == "Male" && bodyFat >= 25
+                    ? (int)(weight * 1.6)
+                    : SKU == MembershipsSKU.MEMBERSHIP_SKU[0]
+                        ? (int)(weight * 2)
+                        : tier switch
                         {
-                            protein = weight * 2;
-                            protein = (int)protein;
+                            TDEE.TIER_1 or TDEE.TIER_2 => (int)(weight * 2),
+                            TDEE.TIER_CONSERVATIVE or TDEE.TIER_3 => (int)Math.Round(weight * 2.2, 0, MidpointRounding.AwayFromZero),
+                            _ => throw new ArgumentException("Invalid tier value"),
                         }
-                        else if (SKU != MembershipsSKU.MEMBERSHIP_SKU[0])
-                        {
-                            protein = tier switch
-                            {
-                                TDEE.TIER_1 or TDEE.TIER_2 => weight * 2,
-                                TDEE.TIER_CONSERVATIVE or TDEE.TIER_3 => Math.Round(weight * 2.2, 0, MidpointRounding.AwayFromZero),
-                                _ => throw new ArgumentException("Invalid tier value"),
-                            };
-                            protein = (int)protein;
-                        }
-                    }
-                    break;
-            }
+            };
+
 
             double actualProtein = double.Parse(valueOfProteinCarbsFat[0].Text.Trim('g'));
 
