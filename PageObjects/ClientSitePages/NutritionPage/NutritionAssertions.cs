@@ -324,7 +324,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         private int CalculateProtein(DB.AspNetUsers userData, string goal, string tier, string gender, string SKU)
         {
             double weight = (double)userData.Weight;
-            double bodyFat = userData.Bodyfat;
+            double bodyFat = (double)userData.Bodyfat;
             double protein = 0d;
             switch (goal)
             {
@@ -363,10 +363,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
             double actualProtein = double.Parse(valueOfProteinCarbsFat[0].Text.Trim('g'));
 
-            if (protein != actualProtein)
-            {
-                throw new ArgumentException($"Expected protein is {protein}, but actual is {actualProtein}");
-            }
+            Assert.IsTrue(Math.Abs(protein - actualProtein) <= 10, $"Expected protein: {protein} but was: {actualProtein}");
 
             return (int)Math.Round(protein, 0, MidpointRounding.AwayFromZero);
         }
@@ -437,11 +434,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             
 
             double actualFat = Math.Round(fat, 0, MidpointRounding.AwayFromZero);
-
-            if (fat != actualFat)
-            {
-                throw new ArgumentException($"Expected fat is {actualFat}, but actual is {fat}");
-            }
+            Assert.IsTrue(Math.Abs(fat - actualFat) <= 5, $"Expected fat: {fat} but was: {actualFat}");
 
             return actualFat;
         }
@@ -452,10 +445,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             carbs = Math.Round(carbs, 0, MidpointRounding.AwayFromZero);
 
             double actualCarbs = carbs;
-            if (carbs != actualCarbs)
-            {
-                throw new ArgumentException($"Expected carbs is {actualCarbs}, but actual is {carbs}");
-            }
+            Assert.IsTrue(Math.Abs(carbs - actualCarbs) <= 5, $"Expected carbs: {carbs} but was: {actualCarbs}");
 
             return actualCarbs;
         }

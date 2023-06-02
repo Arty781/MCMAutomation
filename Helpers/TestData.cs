@@ -124,7 +124,7 @@ namespace MCMAutomation.Helpers
             public decimal Weight { get; set; }
             public int Height { get; set; }
             public int ActivityLevel { get; set; }
-            public int Bodyfat { get; set; }
+            public decimal Bodyfat { get; set; }
             public int Calories { get; set; }
             public bool Active { get; set; }
             public DateTime DateTime { get; set; }

@@ -831,7 +831,7 @@ namespace MCMAutomation.Helpers
                     {
                         query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
                         "INSERT [Memberships] (Id, SKU, Name, Description, StartDate, EndDate, URL, Price, CreationDate, IsDeleted, IsCustom, ForPurchase, AccessWeekLength, RelatedMembershipGroupId, Gender, PromotionalPopupId, Type)\r\n" +
-                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', \'{DateTime.Now.Date}\', \'{DateTime.Now.AddHours(1344).Date}\', \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{0}\', {"null"}, \'{0}\', {"null"}, \'{0}\')\r\n" +
+                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', \'{DateTime.Now.Date}\', \'{DateTime.Now.AddHours(1644).Date}\', \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{0}\', {"null"}, \'{0}\', {"null"}, \'{0}\')\r\n" +
                         "SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
                     }
                     else
@@ -1319,7 +1319,7 @@ namespace MCMAutomation.Helpers
                         user.Weight = reader.GetDecimal(7);
                         user.Height = reader.GetInt32(8);
                         user.ActivityLevel = reader.GetInt32(9);
-                        user.Bodyfat = reader.GetInt32(10);
+                        user.Bodyfat = reader.GetDecimal(10);
                         user.Calories = reader.GetInt32(11);
                         user.Active = reader.GetBoolean(12);
                         user.DateTime = reader.GetDateTime(13);
@@ -1385,7 +1385,7 @@ namespace MCMAutomation.Helpers
                         user.Weight = reader.GetDecimal(7);
                         user.Height = reader.GetInt32(8);
                         user.ActivityLevel = reader.GetInt32(9);
-                        user.Bodyfat = reader.GetInt32(10);
+                        user.Bodyfat = reader.GetDecimal(10);
                         user.Calories = reader.GetInt32(11);
                         user.Active = reader.GetBoolean(12);
                         user.DateTime = reader.GetDateTime(13);

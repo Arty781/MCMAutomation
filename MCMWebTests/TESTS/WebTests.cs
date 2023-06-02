@@ -82,10 +82,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15."+ RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -201,10 +202,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -325,10 +327,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, 15.45, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -445,10 +448,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.MALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -1041,10 +1045,10 @@ namespace MCMAutomation.WebTests
             tier = Pages.WebPages.Nutrition.textActiveTier.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn()
-                .Step04SelectPhase3()
-                .ClickNextBtn();
+                .Step04SelectPhase3();
             phase = Pages.WebPages.Nutrition.textActivePhase.Text;
             Pages.WebPages.Nutrition
+                .ClickNextBtn()
                 .Step05SelectDiet2();
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
@@ -1207,6 +1211,7 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
@@ -2352,10 +2357,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.MALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -2736,10 +2742,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -2870,10 +2877,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -2989,10 +2997,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -3113,10 +3122,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -3233,10 +3243,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.MALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -5007,10 +5018,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.MALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
@@ -5391,10 +5403,11 @@ namespace MCMAutomation.WebTests
             #region Preconditions
 
             #region Register New User
+            var bodyFat = decimal.Parse("15." + RandomHelper.RandomNumFromOne(99));
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.FEMALE);
+            EditUserRequest.EditUser(responseLoginUser, bodyFat, UserAccount.FEMALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 

@@ -20,9 +20,14 @@ namespace MCMAutomation.Helpers
             return Random.Next(0, maxNum);
         }
 
-        public static int RandomNumFromOne(int maxNumber)
+        public static int RandomNumFromOne(int maxNumber = 99)
         {
             return Random.Next(1, maxNumber);
+        }
+
+        public static int RandomWeight(int maxNumber = 150)
+        {
+            return Random.Next(50, maxNumber);
         }
 
         public static int RandomProgressData(string bodyPart)

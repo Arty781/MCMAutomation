@@ -27,7 +27,7 @@ namespace MCMAutomation.APIHelpers.Client.EditUser
             req.AddParam("gender", "2");
             req.AddParam("carbs", "260");
             req.AddParam("photo", "null");
-            req.AddParam("weight", "59");
+            req.AddParam("weight", $"{RandomHelper.RandomWeight()}.{RandomHelper.RandomNumFromOne()}");
             req.AddParam("calories", "1000");
             req.AddParam("type", "RD:EDIT_ACCOUNT_ACTION");
             req.AddParam("conversionSystem", "2");
@@ -53,7 +53,7 @@ namespace MCMAutomation.APIHelpers.Client.EditUser
             Debug.WriteLine("HTTP response status: " + Convert.ToString(resp.StatusCode));
         }
 
-        public static void EditUser(SignInResponseModel SignIn, int bodyFat, int gender)
+        public static void EditUser(SignInResponseModel SignIn, dynamic bodyFat, int gender)
         {
 
 
@@ -73,7 +73,7 @@ namespace MCMAutomation.APIHelpers.Client.EditUser
             req.AddParam("gender", $"{gender}");
             req.AddParam("carbs", "260");
             req.AddParam("photo", "null");
-            req.AddParam("weight", "59");
+            req.AddParam("weight", $"{RandomHelper.RandomWeight()}.{RandomHelper.RandomNumFromOne()}");
             req.AddParam("calories", "1000");
             req.AddParam("type", "RD:EDIT_ACCOUNT_ACTION");
             req.AddParam("conversionSystem", "2");

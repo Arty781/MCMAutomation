@@ -33,7 +33,7 @@ namespace MCMAutomation.Helpers
                 {
                     try
                     {
-                        if (element?.Enabled == true || element?.Displayed == true)
+                        if (element.Enabled == true || element.Displayed == true)
                         {
                             return true;
                         }
@@ -43,7 +43,7 @@ namespace MCMAutomation.Helpers
                 });
                 Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
             }
-            catch(Exception) { }
+            catch(Exception) { throw new ArgumentException(wait.Message); }
         }
 
         public static void WaitForElementToDisappear(IWebElement element, int seconds = 10)
@@ -71,7 +71,7 @@ namespace MCMAutomation.Helpers
                             });
                 Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
             }
-            catch(Exception) { }
+            catch(Exception) { throw new ArgumentException(wait.Message); }
         }
 
 
