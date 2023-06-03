@@ -25,11 +25,11 @@ namespace MCMAutomation.PageObjects
         public SignUpUser EnterData(string email)
         {
             InputBox.ElementCtrlA(inputFirstName,10, Name.FirstName());
-            InputBox.ElementCtrlA(inputLastName, 10, Name.LastName());
-            InputBox.ElementCtrlA(inputEmail, 10, email);
-            InputBox.ElementCtrlA(inputConfirmEmail, 10, email);
-            InputBox.ElementCtrlA(inputPassword, 10, "Qaz11111!");
-            InputBox.ElementCtrlA(inputConfirmPassword, 10, "Qaz11111!");
+            inputLastName.SendKeys(Name.LastName());
+            inputEmail.SendKeys(email);
+            inputConfirmEmail.SendKeys(email);
+            inputPassword.SendKeys("Qaz11111!");
+            inputConfirmPassword.SendKeys("Qaz11111!");
             
 
             return this;

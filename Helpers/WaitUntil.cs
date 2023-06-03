@@ -58,17 +58,17 @@ namespace MCMAutomation.Helpers
             try
             {
                 wait.Until(driver =>
-                            {
-                                try
-                                {
-                                    if (element?.Enabled != true || element?.Displayed != true)
-                                    {
-                                        return true;
-                                    }
-                                    return false;
-                                }
-                                catch(Exception) { return true; }
-                            });
+                {
+                    try
+                    {
+                        if (element?.Enabled != true || element?.Displayed != true)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    catch (Exception) { return true; }
+                });
                 Task.Delay(TimeSpan.FromMilliseconds(350)).Wait();
             }
             catch(Exception) { throw new ArgumentException(wait.Message); }

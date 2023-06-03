@@ -34,7 +34,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter membership data")]
         public MembershipAdmin EnterMembershipData()
         {
-            InputBox.ElementCtrlA(skuInput, 20, MembershipsSKU.MEMBERSHIP_SKU[1] + DateTime.Now.ToString("hh:mm:ss"));
+            InputBox.ElementCtrlA(skuInput, 20, MembershipsSKU.SKU_PRODUCT + DateTime.Now.ToString("hh:mm:ss"));
             InputBox.ElementCtrlA(membershipNameInput, 20, "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
             InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
             InputBox.ElementCtrlA(inputAccessWeek, 10, "16" + Keys.Enter);
@@ -48,7 +48,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter membership data")]
         public MembershipAdmin EnterSubscriptionMembershipData()
         {
-            InputBox.ElementCtrlA(skuInput, 20, MembershipsSKU.MEMBERSHIP_SKU[1] + DateTime.Now.ToString("hh:mm:ss"));
+            InputBox.ElementCtrlA(skuInput, 20, MembershipsSKU.SKU_PRODUCT + DateTime.Now.ToString("hh:mm:ss"));
             InputBox.ElementCtrlA(membershipNameInput, 20, "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
             InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.ParagraphByChars(792));
             InputBox.ElementCtrlA(priceInput, 10, "100");
@@ -116,7 +116,7 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Enter membership data edited")]
         public MembershipAdmin EditMembershipData()
         {
-            InputBox.ElementCtrlA(skuInput, 20, MembershipsSKU.MEMBERSHIP_SKU[1]);
+            InputBox.ElementCtrlA(skuInput, 20, MembershipsSKU.SKU_PRODUCT);
             InputBox.ElementCtrlA(membershipNameInput, 20, "Edited New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
             InputBox.ElementCtrlA(membershipDescriptionInput, 20, Lorem.Paragraph());
             InputBox.ElementCtrlA(inputAccessWeek, 10, "16");

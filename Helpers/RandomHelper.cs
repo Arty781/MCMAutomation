@@ -30,41 +30,20 @@ namespace MCMAutomation.Helpers
             return Random.Next(50, maxNumber);
         }
 
-        public static int RandomProgressData(string bodyPart)
-        {
-            int minValue = 0;
-            int maxValue = 0;
-
-            switch (bodyPart.ToLower())
+        public static int RandomProgressData(string bodyPart) =>
+            bodyPart.ToLower() switch
             {
-                case "weight":
-                    minValue = 45;
-                    maxValue = 150;
-                    break;
-                case "waist":
-                    minValue = 45;
-                    maxValue = 120;
-                    break;
-                case "hip":
-                    minValue = 80;
-                    maxValue = 150;
-                    break;
-                case "thigh":
-                    minValue = 45;
-                    maxValue = 150;
-                    break;
-                case "chest":
-                    minValue = 80;
-                    maxValue = 200;
-                    break;
-                case "arm":
-                    minValue = 20;
-                    maxValue = 100;
-                    break;
-            }
-
-            return Random.Next(minValue, maxValue);
-        }
+                "weight" => (minValue: 45, maxValue: 150),
+                "waist" => (minValue: 45, maxValue: 120),
+                "hip" => (minValue: 80, maxValue: 150),
+                "thigh" => (minValue: 45, maxValue: 150),
+                "chest" => (minValue: 80, maxValue: 200),
+                "arm" => (minValue: 20, maxValue: 100),
+                _ => throw new ArgumentException($"Invalid body part: {bodyPart}")
+            } switch
+            {
+                (int minValue, int maxValue) => new Random().Next(minValue, maxValue + 1)
+            };
 
         public static int RandomExercise(int exerciseCount)
         {

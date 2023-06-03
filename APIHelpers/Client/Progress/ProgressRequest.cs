@@ -24,12 +24,12 @@ namespace MCMAutomation.APIHelpers.Client.AddProgress
             req.AddHeader("accept-encoding", "gzip, deflate, br");
             req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
 
-            req.AddParam("weight", $"{RandomHelper.RandomProgressData("weight")}");
-            req.AddParam("waist", $"{RandomHelper.RandomProgressData("waist")}");
-            req.AddParam("hip", $"{RandomHelper.RandomProgressData("hip")}");
-            req.AddParam("thigh", $"{RandomHelper.RandomProgressData("thigh")}");
-            req.AddParam("chest", $"{RandomHelper.RandomProgressData("chest")}");
-            req.AddParam("arm", $"{RandomHelper.RandomProgressData("arm")}");
+            req.AddParam("weight", $"{RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT)}");
+            req.AddParam("waist", $"{RandomHelper.RandomProgressData(ProgressBodyPart.WAIST)}");
+            req.AddParam("hip", $"{RandomHelper.RandomProgressData(ProgressBodyPart.HIP)}");
+            req.AddParam("thigh", $"{RandomHelper.RandomProgressData(ProgressBodyPart.THIGH)}");
+            req.AddParam("chest", $"{RandomHelper.RandomProgressData(ProgressBodyPart.CHEST)}");
+            req.AddParam("arm", $"{RandomHelper.RandomProgressData(ProgressBodyPart.ARM)}");
             req.AddParam("conversionSystem", "2");
             req.AddParam("frontPhoto", "");
             req.AddParam("backPhoto", "");

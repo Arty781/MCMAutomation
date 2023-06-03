@@ -73,7 +73,7 @@ namespace AdminSiteTests
             bool eightWeeks = false;
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
 
             #endregion
@@ -318,7 +318,7 @@ namespace AdminSiteTests
             bool eightWeeks = false;
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
 
             #endregion
@@ -404,7 +404,7 @@ namespace AdminSiteTests
             bool eightWeeks = false;
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             int programCount = 3;
             for (int i = 0; i < programCount; i++)
@@ -969,7 +969,7 @@ namespace AdminSiteTests
             EditUserRequest.EditUser(responseLoginUser, 20, UserAccount.MALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             var userData = AppDbContext.User.GetUserData(email);
-            Pages.WebPages.Nutrition.VerifyMaintainCaloriesStep01(userData, TDEE.ActivityLevel[0], "Male", "Have you been dieting long term?", "Yes");
+            Pages.WebPages.Nutrition.VerifyMaintainCaloriesStep01(userData, TDEE.ActivityLevel.SEDETARY, "Male", "Have you been dieting long term?", "Yes");
         }
 
         [Test]

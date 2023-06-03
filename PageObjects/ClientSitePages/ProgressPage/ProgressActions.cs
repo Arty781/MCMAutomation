@@ -45,7 +45,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Weight")]
         public Progress EnterWeight()
         {
-            InputBox.ElementCtrlA(inputWeight, 10, RandomHelper.RandomNumber(2000));
+            InputBox.ElementCtrlA(inputWeight, 10, RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT).ToString());
 
             return this;
         }
@@ -53,7 +53,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Waist")]
         public Progress EnterWaist()
         {
-            InputBox.ElementCtrlA(inputWaist, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputWaist, 10, RandomHelper.RandomProgressData(ProgressBodyPart.WAIST).ToString());
 
             return this;
         }
@@ -61,7 +61,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Chest")]
         public Progress EnterChest()
         {
-            InputBox.ElementCtrlA(inputChest, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputChest, 10, RandomHelper.RandomProgressData(ProgressBodyPart.CHEST).ToString());
 
             return this;
         }
@@ -69,7 +69,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Arm")]
         public Progress EnterArm()
         {
-            InputBox.ElementCtrlA(inputArm, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputArm, 10, RandomHelper.RandomProgressData(ProgressBodyPart.ARM).ToString());
 
             return this;
         }
@@ -77,7 +77,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Hips")]
         public Progress EnterHips()
         {
-            InputBox.ElementCtrlA(inputHip, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputHip, 10, RandomHelper.RandomProgressData(ProgressBodyPart.HIP).ToString());
 
             return this;
         }
@@ -85,7 +85,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         [AllureStep("Enter Thigh")]
         public Progress EnterThigh()
         {
-            InputBox.ElementCtrlA(inputThigh, 10, RandomHelper.RandomNumber(400));
+            InputBox.ElementCtrlA(inputThigh, 10, RandomHelper.RandomProgressData(ProgressBodyPart.THIGH).ToString());
 
             return this;
         }

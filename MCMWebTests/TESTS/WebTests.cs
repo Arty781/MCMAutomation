@@ -16,6 +16,7 @@ using MCMAutomation.APIHelpers.Client.AddProgress;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using static MCMAutomation.Helpers.AdditionalOptions;
 
 namespace MCMAutomation.WebTests
 {
@@ -57,6 +58,12 @@ namespace MCMAutomation.WebTests
                 .VerifyDisplayingReferringBtn();
             Pages.CommonPages.Login
                 .GetUserLogout();
+
+            #region Postconditions
+
+            AppDbContext.User.DeleteUser(email);
+
+            #endregion
         }
 
 
@@ -116,7 +123,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -153,7 +160,7 @@ namespace MCMAutomation.WebTests
 
             #region Select additional options
 
-            selectedAdditionalOption = AdditionalOptions.ADDITIONAL_PP_OPTION[0];
+            selectedAdditionalOption = AdditionalOptions.PpOptions.BREASTFEEDING_LESS;
             Pages.WebPages.Nutrition
                 .SelectYesOfAdditionalOptions(selectedAdditionalOption);
             textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
@@ -173,10 +180,10 @@ namespace MCMAutomation.WebTests
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
                 .ClickNextBtn()
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -236,7 +243,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -275,7 +282,7 @@ namespace MCMAutomation.WebTests
 
             #region Select additional options
 
-            selectedAdditionalOption = AdditionalOptions.ADDITIONAL_PP_OPTION[1];
+            selectedAdditionalOption = PpOptions.BREASTFEEDING_MORE;
 
             Pages.WebPages.Nutrition
                 .SelectYesOfAdditionalOptions(selectedAdditionalOption);
@@ -299,9 +306,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -361,7 +368,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -421,9 +428,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -482,7 +489,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -538,9 +545,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             #endregion
 
@@ -600,7 +607,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -652,9 +659,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             #endregion
 
@@ -694,9 +701,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -718,7 +725,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -789,9 +796,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -826,9 +833,9 @@ namespace MCMAutomation.WebTests
 
         //    #region Add and Activate membership to User
 
-        //    MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1]);
+        //    MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT);
         //    var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-        //    var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+        //    var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
         //    MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
         //    int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
         //    MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -850,7 +857,7 @@ namespace MCMAutomation.WebTests
         //    double maintanceCalories = 0d;
         //    string goal = string.Empty;
         //    double expectedCalories = 0d;
-        //    var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+        //    var weekNumberSKU = membership.SKU;
 
         //    #endregion
 
@@ -920,9 +927,9 @@ namespace MCMAutomation.WebTests
         //    diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
         //    Pages.WebPages.Nutrition
         //        .ClickNextBtn();
-        //    expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+        //    expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
         //    Pages.WebPages.Nutrition
-        //        .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+        //        .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
         //    #endregion
 
         //    Pages.CommonPages.Login
@@ -960,9 +967,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -984,7 +991,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -1053,9 +1060,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -1091,9 +1098,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -1115,7 +1122,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -1183,9 +1190,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -1222,9 +1229,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -1246,7 +1253,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -1316,9 +1323,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -1354,9 +1361,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -1378,7 +1385,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -1447,9 +1454,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -1485,9 +1492,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -1510,7 +1517,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -1579,9 +1586,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -1618,9 +1625,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -1642,7 +1649,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -1711,9 +1718,9 @@ namespace MCMAutomation.WebTests
             Pages.WebPages.Nutrition
                  .ClickNextBtn();
 
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -1749,9 +1756,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -1773,7 +1780,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -1839,9 +1846,9 @@ namespace MCMAutomation.WebTests
 
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -1877,9 +1884,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -1901,7 +1908,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -1957,9 +1964,9 @@ namespace MCMAutomation.WebTests
 
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -1995,7 +2002,7 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership("BBB1", eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("BBB1");
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
@@ -2019,7 +2026,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -2069,9 +2076,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -2107,9 +2114,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -2131,7 +2138,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -2204,9 +2211,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -2242,9 +2249,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -2266,7 +2273,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -2328,9 +2335,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             #endregion
 
             Pages.CommonPages.Login
@@ -2368,9 +2375,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -2392,7 +2399,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -2454,9 +2461,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             #endregion
 
             Pages.CommonPages.Login
@@ -2493,9 +2500,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1],eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT,eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -2517,7 +2524,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -2580,9 +2587,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             #endregion
 
             Pages.CommonPages.Login
@@ -2619,9 +2626,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1],eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT,eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -2643,7 +2650,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -2713,9 +2720,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -2753,9 +2760,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[1]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_PRODUCT);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -2777,7 +2784,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -2838,9 +2845,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -2911,7 +2918,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -2948,7 +2955,7 @@ namespace MCMAutomation.WebTests
 
             #region Select additional options
 
-            selectedAdditionalOption = AdditionalOptions.ADDITIONAL_PP_OPTION[0];
+            selectedAdditionalOption = PpOptions.BREASTFEEDING_LESS;
             Pages.WebPages.Nutrition
                 .SelectYesOfAdditionalOptions(selectedAdditionalOption);
             textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(selectedAdditionalOption);
@@ -2968,10 +2975,10 @@ namespace MCMAutomation.WebTests
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
                 .ClickNextBtn()
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -3031,7 +3038,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -3070,7 +3077,7 @@ namespace MCMAutomation.WebTests
 
             #region Select additional options
 
-            selectedAdditionalOption = AdditionalOptions.ADDITIONAL_PP_OPTION[1];
+            selectedAdditionalOption = PpOptions.BREASTFEEDING_MORE;
 
             Pages.WebPages.Nutrition
                 .SelectYesOfAdditionalOptions(selectedAdditionalOption);
@@ -3094,9 +3101,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -3156,7 +3163,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -3216,9 +3223,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -3277,7 +3284,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -3333,9 +3340,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             #endregion
 
@@ -3395,7 +3402,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -3447,9 +3454,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             #endregion
 
@@ -3489,9 +3496,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -3513,7 +3520,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -3584,9 +3591,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -3622,9 +3629,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -3646,7 +3653,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -3715,9 +3722,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -3753,9 +3760,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = false;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -3777,7 +3784,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -3845,9 +3852,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -3883,9 +3890,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -3907,7 +3914,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -3977,9 +3984,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -4015,9 +4022,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -4039,7 +4046,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -4108,9 +4115,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -4146,9 +4153,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -4171,7 +4178,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -4240,9 +4247,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -4279,9 +4286,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -4303,7 +4310,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -4372,9 +4379,9 @@ namespace MCMAutomation.WebTests
             Pages.WebPages.Nutrition
                  .ClickNextBtn();
 
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -4410,9 +4417,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -4434,7 +4441,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -4500,9 +4507,9 @@ namespace MCMAutomation.WebTests
 
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -4538,9 +4545,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -4562,7 +4569,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -4618,9 +4625,9 @@ namespace MCMAutomation.WebTests
 
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -4656,7 +4663,7 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_PRODUCT, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("BBB1");
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
@@ -4680,7 +4687,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -4730,9 +4737,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -4768,9 +4775,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -4792,7 +4799,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -4865,9 +4872,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -4903,9 +4910,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -4927,7 +4934,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -4989,9 +4996,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             #endregion
 
             Pages.CommonPages.Login
@@ -5029,9 +5036,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -5053,7 +5060,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -5115,9 +5122,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             #endregion
 
             Pages.CommonPages.Login
@@ -5154,9 +5161,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -5178,7 +5185,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -5241,9 +5248,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             #endregion
 
             Pages.CommonPages.Login
@@ -5280,9 +5287,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -5304,7 +5311,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -5374,9 +5381,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -5414,9 +5421,9 @@ namespace MCMAutomation.WebTests
             #region Add and Activate membership to User
 
             bool eightWeeks = true;
-            MembershipRequest.CreateProductMembership(MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            MembershipRequest.CreateProductMembership(MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.MEMBERSHIP_SKU[6]);
+            var membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU(MembershipsSKU.SKU_CHALLENGE);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
@@ -5438,7 +5445,7 @@ namespace MCMAutomation.WebTests
             double maintanceCalories = 0d;
             string goal = string.Empty;
             double expectedCalories = 0d;
-            var weekNumber = Pages.WebPages.Nutrition.GetNumberOfWeeks(email);
+            var weekNumberSKU = membership.SKU;
 
             #endregion
 
@@ -5499,9 +5506,9 @@ namespace MCMAutomation.WebTests
             diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             Pages.WebPages.Nutrition
                 .ClickNextBtn();
-            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+            expectedCalories = Pages.WebPages.Nutrition.GetCaloriesStep06(maintanceCalories, goal, tier, phase, membershipData.SKU, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
             Pages.WebPages.Nutrition
-                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumber);
+                .VerifyNutritionData(userData, goal, tier, membershipData.SKU, selectedGender, expectedCalories, diet, maintanceCalories, phase, textOfMoreThan2KgSelected, previousCalories, weekNumberSKU);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -5551,7 +5558,7 @@ namespace MCMAutomation.WebTests
             bool eightWeeks = false;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -5613,7 +5620,7 @@ namespace MCMAutomation.WebTests
             bool eightWeeks = false;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -5689,7 +5696,7 @@ namespace MCMAutomation.WebTests
             bool eightWeeks = false;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -5711,7 +5718,7 @@ namespace MCMAutomation.WebTests
             #region Create Subscription membership
 
             lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[2], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_SUBSCRIPTION, eightWeeks);
             membershipData = AppDbContext.Memberships.GetLastMembership();
             programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
             workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);

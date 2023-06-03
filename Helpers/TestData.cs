@@ -238,14 +238,14 @@ namespace MCMAutomation.Helpers
 
     public class TDEE
     {
-        public static List<string> ActivityLevel = new()
-            {
-            "Sedentary (office job)",
-            "Light Exercise (1-2 days/week)",
-            "Moderate Exercise (3-5 days/week)",
-            "Heavy Exercise (6-7 days/week)",
-            "Athlete (2x per day)"
-        };
+        public class ActivityLevel
+        {
+            public const string SEDETARY = "Sedentary (office job)";
+            public const string LIGHT = "Light Exercise (1-2 days/week)";
+            public const string MODERATE = "Moderate Exercise (3-5 days/week)";
+            public const string HEAVY = "Heavy Exercise (6-7 days/week)";
+            public const string ATHLETE = "Athlete (2x per day)";
+        }
 
         public const string GOAL_CUT = "CUT";
         public const string GOAL_MAINTAIN = "MAINTAIN";
@@ -285,16 +285,14 @@ namespace MCMAutomation.Helpers
 
     public class MembershipsSKU
     {
-        public static readonly string[] MEMBERSHIP_SKU =
-        {
-            "PP-1",
-            "CMC_TEST_PRODUCT",
-            "CMC_TEST_SUBSCRIPTION",
-            "CHF-FREE",
-            "CHM-FREE",
-            "YGC3",
-            $"CH{DateTime.Now.Date}-MS"
-        };
+        public const string SKU_PP1 = "PP-1";
+        public const string SKU_PRODUCT = "CMC_TEST_PRODUCT";
+        public const string SKU_SUBSCRIPTION = "CMC_TEST_SUBSCRIPTION";
+        public const string SKU_CHF_FREE = "CHF-FREE";
+        public const string SKU_CHM_FREE = "CHM-FREE";
+        public const string SKU_YGC3 = "YGC3";
+        public readonly static string SKU_CHALLENGE = $"CH{DateTime.Now.Date}-MS";
+
     }
 
     public class AdditionalOptions
@@ -303,11 +301,12 @@ namespace MCMAutomation.Helpers
 
         public const string ADDITIONAL_PG_OPTION = "Are you in the third trimester of pregnancy?";
 
-        public static List<string> ADDITIONAL_PP_OPTION = new()
+        public class PpOptions
         {
-            "Are you breastfeeding (less than 5 months postpartum)?",
-            "Are you breastfeeding (5-12 months postpartum)?"
-        };
+            public const string BREASTFEEDING_LESS = "Are you breastfeeding (less than 5 months postpartum)?";
+            public const string BREASTFEEDING_MORE = "Are you breastfeeding (5-12 months postpartum)?";
+
+        }
     }
 
     public class ArdPhases
@@ -372,5 +371,15 @@ namespace MCMAutomation.Helpers
 
             return control;
         }
+    }
+
+    public class ProgressBodyPart
+    {
+        public const string WEIGHT = "weight";
+        public const string WAIST = "waist";
+        public const string HIP = "hip";
+        public const string THIGH = "thigh";
+        public const string CHEST = "chest";
+        public const string ARM = "arm";
     }
 }

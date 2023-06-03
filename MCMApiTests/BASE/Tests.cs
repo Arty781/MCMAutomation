@@ -43,7 +43,7 @@ namespace MCMApiTests
             bool eightWeeks = false;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
             const int programCount = 3;
             var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
@@ -62,7 +62,7 @@ namespace MCMApiTests
             bool eightWeeks = true;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[6], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_CHALLENGE, eightWeeks);
             DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 1;
@@ -244,7 +244,7 @@ namespace MCMApiTests
           .ToList()
           .ForEach(_ =>
           {
-              var weight = RandomHelper.RandomProgressData("weight");
+              var weight = RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT);
               var date = RandomHelper.RandomDateInThePast();
               WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
           });
@@ -272,7 +272,7 @@ namespace MCMApiTests
             const int conversionSystem = ConversionSystem.METRIC;
             for (int i = 0; i < countOfRecods; i++)
             {
-                WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), RandomHelper.RandomDateInThePast(), 0, false);
+                WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT), RandomHelper.RandomDateInThePast(), 0, false);
             }
             WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userId);
 
@@ -282,7 +282,7 @@ namespace MCMApiTests
             var weightList = WeightTracker.GetWeightList(responseLoginUser, conversionSystem, 0, countOfRecods);
             foreach (var weight in weightList)
             {
-                WeightTracker.EditWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), ConversionSystem.METRIC, weight.id);
+                WeightTracker.EditWeight(responseLoginUser, RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT), ConversionSystem.METRIC, weight.id);
             }
             WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userId);
 
@@ -305,7 +305,7 @@ namespace MCMApiTests
             var conversionSystem = ConversionSystem.METRIC;
             for (int i = 0; i < countOfRecods; i++)
             {
-                WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData("weight"), RandomHelper.RandomDateInThePast(), conversionSystem, false);
+                WeightTracker.AddWeight(responseLoginUser, RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT), RandomHelper.RandomDateInThePast(), conversionSystem, false);
             }
             
             
@@ -343,7 +343,7 @@ namespace MCMApiTests
           .ToList()
           .ForEach(_ =>
           {
-              var weight = RandomHelper.RandomProgressData("weight");
+              var weight = RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT);
               var date = RandomHelper.RandomDateInThePast();
               WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
           });
@@ -375,7 +375,7 @@ namespace MCMApiTests
           .ToList()
           .ForEach(_ =>
           {
-              var weight = RandomHelper.RandomProgressData("weight");
+              var weight = RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT);
               var date = RandomHelper.RandomDateInThePast();
               WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
           });
@@ -400,7 +400,7 @@ namespace MCMApiTests
             bool eightWeeks = false;
             var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.MEMBERSHIP_SKU[1], eightWeeks);
+            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
             DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
         }
         public List<UserMember> DemoTest()
