@@ -246,25 +246,69 @@ namespace MCMAutomation.Helpers
             public const string HEAVY = "Heavy Exercise (6-7 days/week)";
             public const string ATHLETE = "Athlete (2x per day)";
         }
+        public class ActivityLevelNumber
+        {
+            public const int SEDETARY = 0;
+            public const int LIGHT = 1;
+            public const int MODERATE = 2;
+            public const int HEAVY = 3;
+            public const int ATHLETE = 4;
+        }
 
-        public const string GOAL_CUT = "CUT";
-        public const string GOAL_MAINTAIN = "MAINTAIN";
-        public const string GOAL_BUILD = "BUILD";
-        public const string GOAL_REVERSE = "REVERSE";
+        public class Goals
+        {
+            public const string GOAL_CUT = "CUT";
+            public const string GOAL_MAINTAIN = "MAINTAIN";
+            public const string GOAL_BUILD = "BUILD";
+            public const string GOAL_REVERSE = "REVERSE";
+        }
+        
+        public class Tiers
+        {
+            public const string TIER_1 = "TIER 1";
+            public const string TIER_2 = "TIER 2";
+            public const string TIER_3 = "TIER 3";
+            public const string TIER_CONSERVATIVE = "CONSERVATIVE";
+            public const string TIER_AGGRESSIVE = "AGGRESSIVE";
+        }
+        
+        public class Phases
+        {
+            public const string PHASE_1 = "Phase 1";
+            public const string PHASE_2 = "Phase 2";
+            public const string PHASE_3 = "Phase 3";
+        }
 
-        public const string TIER_1 = "TIER 1";
-        public const string TIER_2 = "TIER 2";
-        public const string TIER_3 = "TIER 3";
-        public const string TIER_CONSERVATIVE = "CONSERVATIVE";
-        public const string TIER_AGGRESSIVE = "AGGRESSIVE";
+        public class Diets
+        {
+            public const string DIET_1 = "LOW FAT / HIGH CARB";
+            public const string DIET_2 = "MODERATE FAT / MODERATE CARB";
+            public const string DIET_3 = "HIGH FAT / LOW CARB";
+        }
 
-        public const string PHASE_1 = "Phase 1";
-        public const string PHASE_2 = "Phase 2";
-        public const string PHASE_3 = "Phase 3";
+        public class ArdPhases
+        {
+            public const string ARD_PHASE_ONE_TWO = "1-2";
+            public const string ARD_PHASE_THREE_FOUR = "3-4";
+            public const string ARD_PHASE_FIVE_SIX = "5-6";
+            public const string ARD_PHASE_SEVEN_EIGHT = "7-8";
+            public const string ARD_PHASE_NEIN_TEN = "9-10";
+            public const string ARD_PHASE_ELEVEN_TWELVE = "11-12";
+        }
 
-        public const string DIET_1 = "LOW FAT / HIGH CARB";
-        public const string DIET_2 = "MODERATE FAT / MODERATE CARB";
-        public const string DIET_3 = "HIGH FAT / LOW CARB";
+        public class AdditionalOptions
+        {
+            public const string ADDITIONAL_COMMON_OPTION = "Have you been dieting long term?";
+
+            public const string ADDITIONAL_PG_OPTION = "Are you in the third trimester of pregnancy?";
+
+            public class PpOptions
+            {
+                public const string BREASTFEEDING_LESS = "Are you breastfeeding (less than 5 months postpartum)?";
+                public const string BREASTFEEDING_MORE = "Are you breastfeeding (5-12 months postpartum)?";
+
+            }
+        }
 
         public static List<int> BODY_FAT_FACTOR_MALE = new()
         {
@@ -295,32 +339,9 @@ namespace MCMAutomation.Helpers
 
     }
 
-    public class AdditionalOptions
-    {
-        public const string ADDITIONAL_COMMON_OPTION = "Have you been dieting long term?";
+    
 
-        public const string ADDITIONAL_PG_OPTION = "Are you in the third trimester of pregnancy?";
-
-        public class PpOptions
-        {
-            public const string BREASTFEEDING_LESS = "Are you breastfeeding (less than 5 months postpartum)?";
-            public const string BREASTFEEDING_MORE = "Are you breastfeeding (5-12 months postpartum)?";
-
-        }
-    }
-
-    public class ArdPhases
-    {
-        public static string[] ardPhase =
-        {
-            "1-2",
-            "3-4",
-            "5-6",
-            "7-8",
-            "9-10",
-            "11-12"
-        };
-    }
+    
 
     public class Headers
     {

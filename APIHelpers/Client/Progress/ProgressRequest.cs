@@ -12,7 +12,7 @@ namespace MCMAutomation.APIHelpers.Client.AddProgress
 {
     public class ProgressRequest
     {
-        public static void AddProgress(SignInResponseModel SignIn)
+        public static void AddProgress(SignInResponseModel SignIn, int conversionSystem)
         {
 
 
@@ -30,7 +30,7 @@ namespace MCMAutomation.APIHelpers.Client.AddProgress
             req.AddParam("thigh", $"{RandomHelper.RandomProgressData(ProgressBodyPart.THIGH)}");
             req.AddParam("chest", $"{RandomHelper.RandomProgressData(ProgressBodyPart.CHEST)}");
             req.AddParam("arm", $"{RandomHelper.RandomProgressData(ProgressBodyPart.ARM)}");
-            req.AddParam("conversionSystem", "2");
+            req.AddParam("conversionSystem", $"{conversionSystem}");
             req.AddParam("frontPhoto", "");
             req.AddParam("backPhoto", "");
             req.AddParam("sidePhoto", "");

@@ -7,7 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
+using static MCMAutomation.Helpers.TDEE;
 
 namespace MCMAutomation.PageObjects.ClientSitePages
 {
@@ -24,21 +27,23 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         {
             return SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
         }
-        public Nutrition ClickCalculateBtn()
+        public Nutrition ClickCalculateBtn(out double maintanceCalories)
         {
 
             Button.Click(btnCalculate);
             WaitUntil.WaitSomeInterval(250);
+            maintanceCalories = GetCalories();
 
             return this;
         }
 
-        public Nutrition SelectActivityLevel(int levelNumber)
+        public Nutrition SelectActivityLevel(int levelNumber, out string level)
         {
             WaitUntil.WaitSomeInterval(250);
             Button.Click(cbbxActivitylevel);
             Button.Click(listActivityLevel[levelNumber]);
             WaitUntil.WaitSomeInterval(3000);
+            level = Pages.WebPages.Nutrition.cbbxActivitylevel.Text;
             return this;
         }
 
@@ -49,18 +54,20 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public Nutrition SelectMale()
+        public Nutrition SelectMale(out string selectedGender)
         {
-            Button.Click(SwitcherHelper.NutritionSelector("Gender")[0]);
+            Button.Click(SwitcherHelper.GenderSelector().FirstOrDefault());
             WaitUntil.WaitSomeInterval(250);
+            selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
 
             return this;
         }
 
-        public Nutrition SelectFemale()
+        public Nutrition SelectFemale(out string selectedGender)
         {
-            Button.Click(SwitcherHelper.NutritionSelector("Gender")[1]);
+            Button.Click(SwitcherHelper.GenderSelector().LastOrDefault());
             WaitUntil.WaitSomeInterval(250);
+            selectedGender = SwitcherHelper.GetTexOfSelectedtNutritionSelector("Gender");
 
             return this;
         }
@@ -83,7 +90,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition SelectImperial()
         {
-            Button.Click(SwitcherHelper.NutritionSelector("Preferred Conversion System")[0]);
+            Button.Click(SwitcherHelper.ConversionSystemSelector().FirstOrDefault());
             WaitUntil.WaitSomeInterval(250);
 
             return this;
@@ -91,26 +98,28 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         public Nutrition SelectMetric()
         {
-            Button.Click(SwitcherHelper.NutritionSelector("Preferred Conversion System")[1]);
+            Button.Click(SwitcherHelper.ConversionSystemSelector().LastOrDefault());
             WaitUntil.WaitSomeInterval(250);
 
             return this;
         }
 
-        public Nutrition SelectYesOfAdditionalOptions(string title)
+        public Nutrition SelectYesOfAdditionalOptions(string title, out string textSelectedAdditionalOptions)
         {
             var togglesList = Element.FindElementsByXpath($"//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label");
             Button.Click(togglesList.FirstOrDefault());
             WaitUntil.WaitSomeInterval(250);
+            textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(title);
 
             return this;
         }
 
-        public Nutrition SelectNoOfAdditionalOptions(string title)
+        public Nutrition SelectNoOfAdditionalOptions(string title, out string textSelectedAdditionalOptions)
         {
             var togglesList = Element.FindElementsByXpath($"//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label");
             Button.Click(togglesList.LastOrDefault());
             WaitUntil.WaitSomeInterval(250);
+            textSelectedAdditionalOptions = SwitcherHelper.GetTexOfSelectedtNutritionSelector(title);
 
             return this;
         }
@@ -194,78 +203,78 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #region Step02
 
-        public Nutrition Step02SelectCut()
+        public Nutrition Step02SelectCut(out string goal)
         {
-            WaitUntil.WaitForElementToAppear(btnCut);
-            btnCut.Click();
-            btnCut.Click();
+            Button.Click(btnCut);
+            Button.Click(btnCut);
             WaitUntil.WaitSomeInterval(250);
+            goal = Pages.WebPages.Nutrition.textActiveGoal.Text;
+
             return this;
         }
 
-        public Nutrition Step02SelectMainTain()
+        public Nutrition Step02SelectMainTain(out string goal)
         {
             try
             {
                 if (btnCut.Displayed == true)
                 {
-                    WaitUntil.WaitForElementToAppear(btnMaintain);
-                    btnMaintain.Click();
+                    Button.Click(btnMaintain);
                     WaitUntil.WaitSomeInterval(250);
                 }
             }
             catch (NoSuchElementException)
             {
-                WaitUntil.WaitForElementToAppear(btnMaintain);
-                btnMaintain.Click();
-                btnMaintain.Click();
+                Button.Click(btnMaintain);
+                Button.Click(btnMaintain);
                 WaitUntil.WaitSomeInterval(250);
             }
-            
+            goal = Pages.WebPages.Nutrition.textActiveGoal.Text;
 
             return this;
         }
 
-        public Nutrition Step02SelectBuild()
+        public Nutrition Step02SelectBuild(out string goal)
         {
-            WaitUntil.WaitForElementToAppear(btnBuild);
-            btnBuild.Click();
+            Button.Click(btnBuild);
             WaitUntil.WaitSomeInterval(250);
+            goal = Pages.WebPages.Nutrition.textActiveGoal.Text;
             return this;
         }
-        public Nutrition Step02SelectReverse()
+        public Nutrition Step02SelectReverse(out string goal)
         {
-            WaitUntil.WaitForElementToAppear(btnReverse);
-            btnReverse.Click();
+            Button.Click(btnReverse);
             WaitUntil.WaitSomeInterval(250);
+
+            goal = Pages.WebPages.Nutrition.textActiveGoal.Text;
             return this;
         }
         #endregion
 
         #region Step03
 
-        public Nutrition Step03SelectTier1()
+        public Nutrition Step03SelectTier1(out string tier)
         {
-            WaitUntil.WaitForElementToAppear(btnTier1);
-            btnTier1.Click();
-            btnTier1.Click();
+            Button.Click(btnTier1);
+            Button.Click(btnTier1);
             WaitUntil.WaitSomeInterval(250);
+            tier = Pages.WebPages.Nutrition.textActiveTier.Text;
             return this;
         }
 
-        public Nutrition Step03SelectTier2()
+        public Nutrition Step03SelectTier2(out string tier)
         {
-            WaitUntil.WaitForElementToAppear(btnTier2);
-            btnTier2.Click();
+            Button.Click(btnTier2);
             WaitUntil.WaitSomeInterval(250);
+            tier = Pages.WebPages.Nutrition.textActiveTier.Text;
             return this;
         }
 
-        public Nutrition Step03SelectTier3()
+        public Nutrition Step03SelectTier3(out string tier)
         {
-            WaitUntil.WaitForElementToAppear(btnTier3);
-            btnTier3.Click();
+            Button.Click(btnTier3);
             WaitUntil.WaitSomeInterval(250);
+            tier = Pages.WebPages.Nutrition.textActiveTier.Text;
             return this;
         }
 
@@ -273,28 +282,28 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #region Step04
 
-        public Nutrition Step04SelectPhase1()
+        public Nutrition Step04SelectPhase1(out string phase)
         {
-            WaitUntil.WaitForElementToAppear(btnPhase1);
-            btnPhase1.Click();
-            btnPhase1.Click();
+            Button.Click(btnPhase1);
+            Button.Click(btnPhase1);
             WaitUntil.WaitSomeInterval(250);
+            phase = Pages.WebPages.Nutrition.textActivePhase.Text;
             return this;
         }
 
-        public Nutrition Step04SelectPhase2()
+        public Nutrition Step04SelectPhase2(out string phase)
         {
-            WaitUntil.WaitForElementToAppear(btnPhase2);
-            btnPhase2.Click();
+            Button.Click(btnPhase2);
             WaitUntil.WaitSomeInterval(250);
+            phase = Pages.WebPages.Nutrition.textActivePhase.Text;
             return this;
         }
 
-        public Nutrition Step04SelectPhase3()
+        public Nutrition Step04SelectPhase3(out string phase)
         {
-            WaitUntil.WaitForElementToAppear(btnPhase3);
-            btnPhase3.Click();
+            Button.Click(btnPhase3);
             WaitUntil.WaitSomeInterval(250);
+            phase = Pages.WebPages.Nutrition.textActivePhase.Text;
             return this;
         }
 
@@ -302,34 +311,34 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #region Step05
 
-        public Nutrition Step05SelectDiet1()
+        public Nutrition Step05SelectDiet1(out string diet)
         {
-            WaitUntil.WaitForElementToAppear(btnDiet1);
-            btnDiet1.Click();
-            btnDiet1.Click();
+            Button.Click(btnDiet1);
+            Button.Click(btnDiet1);
             WaitUntil.WaitSomeInterval(250);
+            diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             return this;
         }
 
-        public Nutrition Step05SelectDiet2()
+        public Nutrition Step05SelectDiet2(out string diet)
         {
-            WaitUntil.WaitForElementToAppear(btnDiet2);
-            btnDiet2.Click();
+            Button.Click(btnDiet2);
             WaitUntil.WaitSomeInterval(250);
+            diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             return this;
         }
 
-        public Nutrition Step05SelectDiet3()
+        public Nutrition Step05SelectDiet3(out string diet)
         {
-            WaitUntil.WaitForElementToAppear(btnDiet3);
-            btnDiet3.Click();
+            Button.Click(btnDiet3);
             WaitUntil.WaitSomeInterval(250);
+            diet = Pages.WebPages.Nutrition.textActiveDiet.Text;
             return this;
         }
 
         #region Step05 for ARD
 
-        public double GetPreviousCalories(double previousCalories, double maintanceCalories)
+        public Nutrition GetPreviousCalories(double maintanceCalories, out double previousCalories)
         {
             
             if (inputPrevCalories.GetAttribute("value") == "")
@@ -341,14 +350,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             previousCalories = double.Parse(TextBox.GetAttribute(inputPrevCalories, "value"));
             Console.WriteLine("previousCalories are " + previousCalories);
 
-            return previousCalories;
+            return this;
         }
 
-        public string GetTextOnStep06()
+        public Nutrition GetTextOnStep06(out string selectedText)
         {
-            string selectedText = Browser._Driver.FindElement(By.XPath("//label[contains(@class,'checked')]/span[2]")).Text;
+            WaitUntil.WaitForElementToAppear(Browser._Driver.FindElement(By.XPath("//label[contains(@class,'checked')]/span[2]")));
+            selectedText = Browser._Driver.FindElement(By.XPath("//label[contains(@class,'checked')]/span[2]")).Text;
 
-            return selectedText;
+            return this;
         }
 
         #endregion

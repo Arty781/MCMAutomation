@@ -149,11 +149,12 @@ namespace MCMAutomation.PageObjects
         }
 
         [AllureStep("Click \"Add programs\" button")]
-        public MembershipAdmin ClickAddProgramsBtn(string memberName)
+        public MembershipAdmin ClickAddProgramsBtn(string memberName, out List<string> programNames)
         {
             WaitUntil.WaitForElementToAppear(membershipAddProgramsBtn, 30);
             SwitcherHelper.ClickAddProgramBtn(memberName);
             WaitUntil.WaitForElementToAppear(btnAddProgram, 30);
+            programNames = Pages.AdminPages.MembershipAdmin.GetProgramNames();
 
             return this;
         }
@@ -425,7 +426,7 @@ namespace MCMAutomation.PageObjects
                 WaitUntil.WaitForElementToAppear(addExerciseBtn);
                 Button.Click(addExerciseBtn);
                 AddExercises(workoutNames, exercises);
-                ClickBackButton(workoutButtons.Count);
+                ClickBackButton(0);
             }
 
             return this;
@@ -445,10 +446,10 @@ namespace MCMAutomation.PageObjects
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "A");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
                             InputBox.ElementCtrlA(setsExerciseInput.FirstOrDefault(), 10, "6");
-                            InputBox.ElementCtrlA(repsExerciseInput.FirstOrDefault(), 10, "4,4,4,5,7,8");
-                            InputBox.ElementCtrlA(restExerciseInput.FirstOrDefault(), 10, "60");
-                            InputBox.ElementCtrlA(tempoExerciseInput.FirstOrDefault(), 10, "20X0");
-                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            repsExerciseInput.FirstOrDefault().SendKeys("4,4,4,5,7,8");
+                            restExerciseInput.FirstOrDefault().SendKeys("60");
+                            tempoExerciseInput.FirstOrDefault().SendKeys("20X0");
+                            notesExerciseInput.SendKeys(TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.CommonPages.Common.ClickSaveBtn();
                             break;
@@ -464,28 +465,28 @@ namespace MCMAutomation.PageObjects
                                 switch (q)
                                 {
                                     case 0:
-                                        InputBox.ElementCtrlA(setsExerciseInput[q], 10, "4");
-                                        InputBox.ElementCtrlA(repsExerciseInput[q], 10, "10-12");
-                                        InputBox.ElementCtrlA(restExerciseInput[q], 10, "30");
-                                        InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2X10");
+                                        setsExerciseInput[q].SendKeys("4");
+                                        repsExerciseInput[q].SendKeys("10-12");
+                                        restExerciseInput[q].SendKeys("30");
+                                        tempoExerciseInput[q].SendKeys("2X10");
                                         break;
                                     case 1:
-                                        InputBox.ElementCtrlA(setsExerciseInput[q], 10, "3");
-                                        InputBox.ElementCtrlA(repsExerciseInput[q], 10, "7-9");
-                                        InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
-                                        InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
+                                        setsExerciseInput[q].SendKeys("3");
+                                        repsExerciseInput[q].SendKeys("7-9");
+                                        restExerciseInput[q].SendKeys("60");
+                                        tempoExerciseInput[q].SendKeys("2010");
                                         break;
                                     case 2:
-                                        InputBox.ElementCtrlA(setsExerciseInput[q], 10, "5");
-                                        InputBox.ElementCtrlA(repsExerciseInput[q], 10, "12-16");
-                                        InputBox.ElementCtrlA(restExerciseInput[q], 10, "10");
-                                        InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
+                                        setsExerciseInput[q].SendKeys("5");
+                                        repsExerciseInput[q].SendKeys("12-16");
+                                        restExerciseInput[q].SendKeys("10");
+                                        tempoExerciseInput[q].SendKeys("2010");
                                         break;
                                     case 3:
-                                        InputBox.ElementCtrlA(setsExerciseInput[q], 10, "7");
-                                        InputBox.ElementCtrlA(repsExerciseInput[q], 10, "10-12");
-                                        InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
-                                        InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "2010");
+                                        setsExerciseInput[q].SendKeys("7");
+                                        repsExerciseInput[q].SendKeys("10-12");
+                                        restExerciseInput[q].SendKeys("60");
+                                        tempoExerciseInput[q].SendKeys("2010");
                                         break;
                                 }
                             }
@@ -495,11 +496,11 @@ namespace MCMAutomation.PageObjects
                         case 3:
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "C1");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
-                            InputBox.ElementCtrlA(setsExerciseInput.FirstOrDefault(), 10, "7");
-                            InputBox.ElementCtrlA(repsExerciseInput.FirstOrDefault(), 10, "15-20 Each");
-                            InputBox.ElementCtrlA(restExerciseInput.FirstOrDefault(), 10, "60");
-                            InputBox.ElementCtrlA(tempoExerciseInput.FirstOrDefault(), 10, "201X");
-                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            setsExerciseInput.FirstOrDefault().SendKeys("7");
+                            repsExerciseInput.FirstOrDefault().SendKeys("15-20 Each");
+                            restExerciseInput.FirstOrDefault().SendKeys("60");
+                            tempoExerciseInput.FirstOrDefault().SendKeys("201X");
+                            notesExerciseInput.SendKeys(TextBox.GetAttribute(exercisesTitle, "title"));
 
                             Pages.CommonPages.Common.ClickSaveBtn();
                             break;
@@ -515,28 +516,28 @@ namespace MCMAutomation.PageObjects
                                 switch (q)
                                 {
                                     case 0:
-                                        InputBox.ElementCtrlA(setsExerciseInput[q], 10, "4");
-                                        InputBox.ElementCtrlA(repsExerciseInput[q], 10, "3,4,5,6");
-                                        InputBox.ElementCtrlA(restExerciseInput[q], 10, "30");
-                                        InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                        setsExerciseInput[q].SendKeys("4");
+                                        repsExerciseInput[q].SendKeys("3,4,5,6");
+                                        restExerciseInput[q].SendKeys("30");
+                                        tempoExerciseInput[q].SendKeys("3010");
                                         break;
                                     case 1:
-                                        InputBox.ElementCtrlA(setsExerciseInput[q], 10, "3");
-                                        InputBox.ElementCtrlA(repsExerciseInput[q], 10, "5,5,5");
-                                        InputBox.ElementCtrlA(restExerciseInput[q], 10, "60");
-                                        InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                        setsExerciseInput[q].SendKeys("3");
+                                        repsExerciseInput[q].SendKeys("5,5,5");
+                                        restExerciseInput[q].SendKeys("60");
+                                        tempoExerciseInput[q].SendKeys("3010");
                                         break;
                                     case 2:
-                                        InputBox.ElementCtrlA(setsExerciseInput[q], 10, "5");
-                                        InputBox.ElementCtrlA(repsExerciseInput[q], 10, "6,8,9,7,3");
-                                        InputBox.ElementCtrlA(restExerciseInput[q], 10, "10");
-                                        InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                        setsExerciseInput[q].SendKeys("5");
+                                        repsExerciseInput[q].SendKeys("6,8,9,7,3");
+                                        restExerciseInput[q].SendKeys("10");
+                                        tempoExerciseInput[q].SendKeys("3010");
                                         break;
                                     case 3:
-                                        InputBox.ElementCtrlA(setsExerciseInput[q], 10, "7");
-                                        InputBox.ElementCtrlA(repsExerciseInput[q], 10, "4,4,4,5,7,8");
-                                        InputBox.ElementCtrlA(restExerciseInput[q], 10, "5");
-                                        InputBox.ElementCtrlA(tempoExerciseInput[q], 10, "3010");
+                                        setsExerciseInput[q].SendKeys("7");
+                                        repsExerciseInput[q].SendKeys("4,4,4,5,7,8,10");
+                                        restExerciseInput[q].SendKeys("5");
+                                        tempoExerciseInput[q].SendKeys("3010");
                                         break;
                                 }
 
@@ -549,20 +550,20 @@ namespace MCMAutomation.PageObjects
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "D");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
                             InputBox.ElementCtrlA(setsExerciseInput.FirstOrDefault(), 10, "6");
-                            InputBox.ElementCtrlA(repsExerciseInput.FirstOrDefault(), 10, "4,4,4,5,7,8");
-                            InputBox.ElementCtrlA(restExerciseInput.FirstOrDefault(), 10, "60");
-                            InputBox.ElementCtrlA(tempoExerciseInput.FirstOrDefault(), 10, "2010");
-                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            repsExerciseInput.FirstOrDefault().SendKeys("4,4,4,5,7,8");
+                            restExerciseInput.FirstOrDefault().SendKeys("60");
+                            tempoExerciseInput.FirstOrDefault().SendKeys("2010");
+                            notesExerciseInput.SendKeys(TextBox.GetAttribute(exercisesTitle, "title"));
                             Pages.CommonPages.Common.ClickSaveBtn();
                             break; 
                         case 6:
                             InputBox.ElementCtrlA(seriesExerciseInput, 10, "E");
                             exercisesCbbxElem.SendKeys(exercises[RandomHelper.RandomExercise(exercises.Count)].Name + Keys.Enter);
-                            InputBox.ElementCtrlA(setsExerciseInput.FirstOrDefault(), 10, "5");
-                            InputBox.ElementCtrlA(repsExerciseInput.FirstOrDefault(), 10, "4,4,4,5,7");
-                            InputBox.ElementCtrlA(restExerciseInput.FirstOrDefault(), 10, "60");
-                            InputBox.ElementCtrlA(tempoExerciseInput.FirstOrDefault(), 10, "2111");
-                            InputBox.ElementCtrlA(notesExerciseInput, 10, TextBox.GetAttribute(exercisesTitle, "title"));
+                            setsExerciseInput.FirstOrDefault().SendKeys("5");
+                            repsExerciseInput.FirstOrDefault().SendKeys("4,4,4,5,7");
+                            restExerciseInput.FirstOrDefault().SendKeys("60");
+                            tempoExerciseInput.FirstOrDefault().SendKeys("2111");
+                            notesExerciseInput.SendKeys(TextBox.GetAttribute(exercisesTitle, "title"));
                             Pages.CommonPages.Common.ClickSaveBtn();
                             break; 
                     }

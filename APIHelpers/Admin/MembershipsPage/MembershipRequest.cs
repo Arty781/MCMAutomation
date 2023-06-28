@@ -17,72 +17,23 @@ namespace MCMAutomation.APIHelpers
 
         private static string JsonBody(int count, int programId)
         {
-            WorkoutsModel req = null;
-            if (count == 0)
+            WorkoutsModel req = new()
             {
-                req = new()
-                {
-                    ProgramId = programId,
-                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
-                    WeekDay = 1,
-                };
-            }
-            else if (count == 1)
-            {
-                req = new()
-                {
-                    ProgramId = programId,
-                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
-                    WeekDay = 2,
-                };
-            }
-            else if (count == 2)
-            {
-                req = new()
-                {
-                    ProgramId = programId,
-                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
-                    WeekDay = 3,
-                };
-            }
-            else if (count == 3)
-            {
-                req = new()
-                {
-                    ProgramId = programId,
-                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
-                    WeekDay = 4,
-                };
-            }
-            else if (count == 4)
-            {
-                req = new()
-                {
-                    ProgramId = programId,
-                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
-                    WeekDay = 5,
-                };
-            }
-            else if (count == 5)
-            {
-                req = new()
-                {
-                    ProgramId = programId,
-                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
-                    WeekDay = 6,
-                };
-            }
-            else if (count == 6)
-            {
-                req = new()
-                {
-                    ProgramId = programId,
-                    Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}",
-                    WeekDay = 7,
-                };
-            }
+                ProgramId = programId,
+                Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}"
+            };
 
-
+            req.WeekDay = count switch
+            {
+                0 => 1,
+                1 => 2,
+                2 => 3,
+                3 => 4,
+                4 => 5,
+                5 => 6,
+                6 => (long)7,
+                _ => throw new Exception("Invalid count value"),
+            };
             return JsonConvert.SerializeObject(req);
         }
 
@@ -100,284 +51,126 @@ namespace MCMAutomation.APIHelpers
 
         private static string JsonBody(int count, int workoutId, List<DB.Exercises> exercises)
         {
-            WorkoutExercises? req = null;
+            
             var exercisesWithTempoZero = exercises.Where(ex=>ex.TempoBold == 0).Select(ex=>ex).ToList();
             var exercisesWithTempoOne = exercises.Where(ex => ex.TempoBold == 1).Select(ex => ex).ToList();
             var exercisesWithTempoThree = exercises.Where(ex => ex.TempoBold == 3).Select(ex => ex).ToList();
+            WorkoutExercises? req = new()
+            {
+                Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
+                WorkoutId = workoutId,
+                Notes = Lorem.Sentence()
+            };
             switch (count)
             {
                 case 0:
-                    req = new()
-                    {
-                        ExerciseId = exercisesWithTempoZero[RandomHelper.RandomExercise(exercisesWithTempoZero.Count)].Id,
-                        Notes = Lorem.Sentence(),
-                        Series = "A",
-                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                        WorkoutId = workoutId,
-                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
-                    {
-                        new WeekWorkoutExercise()
+                    req.ExerciseId = exercisesWithTempoZero[RandomHelper.RandomExercise(exercisesWithTempoZero.Count)].Id;
+                    req.Series = "A";
+                    req.WeekWorkoutExercises = Enumerable.Range(1, 4)
+                        .Select(week => new WeekWorkoutExercise
                         {
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "10-15",
+                            Reps = week == 2 ? "3x10-3x15" : "10-15",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "2010",
-                            Week = 1
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "3x10-3x15",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "2010+3010",
-                            Week = 2
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "10-15",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3 x 2310 + 3 x 2010",
-                            Week = 3
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "10-15",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3x2310+3x2010",
-                            Week = 4
-                        }
-                    }
-                    };
+                            Tempo = week switch
+                            {
+                                1 => "2010",
+                                2 => "2010+3010",
+                                3 => "3 x 2310 + 3 x 2010",
+                                4 => "3x2310+3x2010",
+                                _ => throw new InvalidOperationException("Invalid week value")
+                            },
+                            Week = week
+                        })
+                        .ToList();
                     break;
+
                 case 1:
-                    req = new()
-                    {
-                        ExerciseId = exercisesWithTempoOne[RandomHelper.RandomExercise(exercisesWithTempoOne.Count)].Id,
-                        Notes = Lorem.Sentence(),
-                        Series = "B",
-                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                        WorkoutId = workoutId,
-                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
-                    {
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5+5",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "2013 + 2010",
-                            Week = 1
-                        },
-                        new WeekWorkoutExercise()
+                    req.ExerciseId = exercisesWithTempoOne[RandomHelper.RandomExercise(exercisesWithTempoOne.Count)].Id;
+                    req.Series = "B";
+                    req.WeekWorkoutExercises = Enumerable.Range(1, 4)
+                        .Select(week => new WeekWorkoutExercise
                         {
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "2010+5020",
-                            Week = 2
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "30X0",
-                            Week = 3
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "X010",
-                            Week = 4
-                        }
-                    }
-                    };
+                            Tempo = week switch
+                            {
+                                1 => "2013 + 2010",
+                                2 => "2010+5020",
+                                3 => "30X0",
+                                4 => "X010",
+                                _ => throw new InvalidOperationException("Invalid week value")
+                            },
+                            Week = week
+                        })
+                        .ToList();
                     break;
+
                 case 2:
-                    req = new()
-                    {
-                        ExerciseId = exercisesWithTempoThree[RandomHelper.RandomExercise(exercisesWithTempoThree.Count)].Id,
-                        Notes = Lorem.Sentence(),
-                        Series = "C1",
-                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                        WorkoutId = workoutId,
-                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
-                    {
-                        new WeekWorkoutExercise()
+                    req.ExerciseId = exercisesWithTempoThree[RandomHelper.RandomExercise(exercisesWithTempoThree.Count)].Id;
+                    req.Series = "C1";
+                    req.WeekWorkoutExercises = Enumerable.Range(1, 4)
+                        .Select(week => new WeekWorkoutExercise
                         {
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 1
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                           Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3 x 2310 + 3 x 2010",
-                            Week = 2
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 3
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 4
-                        }
-                    }
-                    };
+                            Tempo = week == 2 ? "3 x 2310 + 3 x 2010" : "3010",
+                            Week = week
+                        })
+                        .ToList();
                     break;
+
                 case 3:
-                    req = new()
-                    {
-                        ExerciseId = exercisesWithTempoZero[RandomHelper.RandomExercise(exercisesWithTempoZero.Count)].Id,
-                        Notes = Lorem.Sentence(),
-                        Series = "C2",
-                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                        WorkoutId = workoutId,
-                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
-                    {
-                        new WeekWorkoutExercise()
+                    req.ExerciseId = exercisesWithTempoZero[RandomHelper.RandomExercise(exercisesWithTempoZero.Count)].Id;
+                    req.Series = "C2";
+                    req.WeekWorkoutExercises = Enumerable.Range(1, 4)
+                        .Select(week => new WeekWorkoutExercise
                         {
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 1
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 2
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3 x 2310 + 3 x 2010",
-                            Week = 3
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 4
-                        }
-                    }
-                    };
+                            Tempo = week == 3 ? "3 x 2310 + 3 x 2010" : "3010",
+                            Week = week
+                        })
+                        .ToList();
                     break;
+
                 case 4:
-                    req = new()
-                    {
-                        ExerciseId = exercisesWithTempoThree[RandomHelper.RandomExercise(exercisesWithTempoThree.Count)].Id,
-                        Notes = Lorem.Sentence(),
-                        Series = "D",
-                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                        WorkoutId = workoutId,
-                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
-                    {
-                        new WeekWorkoutExercise()
+                    req.ExerciseId = exercisesWithTempoThree[RandomHelper.RandomExercise(exercisesWithTempoThree.Count)].Id;
+                    req.Series = "D";
+                    req.WeekWorkoutExercises = Enumerable.Range(1, 4)
+                        .Select(week => new WeekWorkoutExercise
                         {
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-7",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
                             Tempo = "3011",
-                            Week = 1
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3011",
-                            Week = 2
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3011",
-                            Week = 3
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-7",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3011",
-                            Week = 4
-                        }
-                    }
-                    };
+                            Week = week
+                        })
+                        .ToList();
                     break;
+
                 case 5:
-                    req = new()
-                    {
-                        ExerciseId = exercisesWithTempoOne[RandomHelper.RandomExercise(exercisesWithTempoOne.Count)].Id,
-                        Notes = Lorem.Sentence(),
-                        Series = "E",
-                        Type = "RD : ADD__RANGE_WORKOUT_EXERCISE",
-                        WorkoutId = workoutId,
-                        WeekWorkoutExercises = new List<WeekWorkoutExercise>()
-                    {
-                        new WeekWorkoutExercise()
+                    req.ExerciseId = exercisesWithTempoOne[RandomHelper.RandomExercise(exercisesWithTempoOne.Count)].Id;
+                    req.Series = "E";
+                    req.WeekWorkoutExercises = Enumerable.Range(1, 4)
+                        .Select(week => new WeekWorkoutExercise
                         {
                             Sets = RandomHelper.RandomNumFromOne(10).ToString(),
                             Reps = "5-6",
                             Rest = RandomHelper.RandomNumFromOne(90).ToString(),
                             Tempo = "3010",
-                            Week = 1
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-6",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 2
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-6",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 3
-                        },
-                        new WeekWorkoutExercise()
-                        {
-                            Sets = RandomHelper.RandomNumFromOne(10).ToString(),
-                            Reps = "5-6",
-                            Rest = RandomHelper.RandomNumFromOne(90).ToString(),
-                            Tempo = "3010",
-                            Week = 4
-                        }
-                    }
-                    };
+                            Week = week
+                        })
+                        .ToList();
                     break;
+
+                default:
+                    throw new InvalidOperationException("Invalid count value");
             }
-            
+
             return JsonConvert.SerializeObject(req);
         }
 
@@ -437,21 +230,22 @@ namespace MCMAutomation.APIHelpers
             return list;
         }
 
-        public static void CreateProductMembership(SignInResponseModel SignIn)
+        public static void CreateProductMembership(SignInResponseModel SignIn, string sku)
         {
             HttpRequest req = new()
             {
                 HttpVerb = "POST",
-                Path = "/Admin/AddMembership"
+                Path = "/Admin/AddMembership",
+                ContentType = "multipart/form-data"
             };
             req.AddHeader("Connection", "Keep-Alive");
-            req.AddHeader("ContentType", "multipart/form-data");
+            req.AddHeader("Accept","application /json, text/plain, */*");
             req.AddHeader("Accept-Encoding", "gzip, deflate, br");
             req.AddHeader("Authorization", $"Bearer {SignIn.AccessToken}");
 
-            req.AddParam("sku", MembershipsSKU.SKU_PRODUCT);
-            req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
-            req.AddParam("description", Lorem.ParagraphByChars(792));
+            req.AddParam("sku", sku);
+            req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d-hh-mm"));
+            req.AddParam("description", Lorem.ParagraphByChars(400));
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
             req.AddParam("price", "100");
@@ -466,7 +260,7 @@ namespace MCMAutomation.APIHelpers
 
             Http http = new Http();
 
-            HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
+            HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
             if (http.LastMethodSuccess != true)
             {
                 Console.WriteLine(http.LastErrorText);
@@ -489,7 +283,7 @@ namespace MCMAutomation.APIHelpers
 
             req.AddParam("sku", MembershipsSKU.SKU_SUBSCRIPTION);
             req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
-            req.AddParam("description", Lorem.ParagraphByChars(792));
+            req.AddParam("description", Lorem.ParagraphByChars(450));
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
             req.AddParam("price", "100");
@@ -527,7 +321,7 @@ namespace MCMAutomation.APIHelpers
 
             req.AddParam("sku", MembershipsSKU.SKU_PRODUCT);
             req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh:mm"));
-            req.AddParam("description", Lorem.ParagraphByChars(792));
+            req.AddParam("description", Lorem.ParagraphByChars(450));
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
             req.AddParam("price", "0");
@@ -565,7 +359,7 @@ namespace MCMAutomation.APIHelpers
             req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
 
             req.AddParam("name", "00Created New Custom Membership " + DateTime.Now.ToString("yyyy-MMM-ddd HH-mm-ss -ff"));
-            req.AddParam("description", Lorem.ParagraphByChars(792));
+            req.AddParam("description", Lorem.ParagraphByChars(450));
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
             req.AddParam("accessWeekLength", "16");
@@ -583,59 +377,65 @@ namespace MCMAutomation.APIHelpers
             Console.WriteLine("Error message is " + Convert.ToString(resp.BodyStr));
         }
 
-        public static void CreatePrograms(SignInResponseModel SignIn, int MembershipId)
+        public static void CreatePrograms(SignInResponseModel SignIn, int MembershipId, int countPrograms, out List<DB.Programs> programs)
         {
-            HttpRequest req = new()
+            for (int i = 0; i < countPrograms; i++)
             {
-                HttpVerb = "POST",
-                Path = "/Admin/AddProgram",
-                ContentType = "multipart/form-data"
-            };
-            req.AddHeader("Connection", "Keep-Alive");
-            req.AddHeader("accept-encoding", "gzip, deflate, br");
-            req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
+                HttpRequest req = new()
+                {
+                    HttpVerb = "POST",
+                    Path = "/Admin/AddProgram",
+                    ContentType = "multipart/form-data"
+                };
+                req.AddHeader("Connection", "Keep-Alive");
+                req.AddHeader("accept-encoding", "gzip, deflate, br");
+                req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
 
-            req.AddParam("programName", "Phase " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}");
-            req.AddParam("numberOfWeeks", "4");
-            req.AddParam("steps", "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
-            req.AddParam("availableDate", String.Empty);
-            req.AddParam("expirationDate", String.Empty);
-            req.AddParam("membershipId", $"{MembershipId}");
-            req.AddParam("image", "undefined");
+                req.AddParam("programName", "Phase " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -fffff}");
+                req.AddParam("numberOfWeeks", "4");
+                req.AddParam("steps", "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                req.AddParam("availableDate", String.Empty);
+                req.AddParam("expirationDate", String.Empty);
+                req.AddParam("membershipId", $"{MembershipId}");
+                req.AddParam("image", "undefined");
 
-            Http http = new();
 
-            HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
-            if (http.LastMethodSuccess != true)
-            {
-                Debug.WriteLine(http.LastErrorText);
-                return;
+                Http http = new();
+                HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
+                if (http.LastMethodSuccess != true)
+                {
+                    Debug.WriteLine(http.LastErrorText);
+                }
+                Debug.WriteLine(resp.BodyStr);
             }
-            Debug.WriteLine(resp.BodyStr);
+            programs = AppDbContext.Programs.GetLastPrograms(countPrograms);
+
         }
 
-        public static void CreateWorkouts(SignInResponseModel SignIn, int programId, int programCount)
+        public static void CreateWorkouts(SignInResponseModel SignIn, List<DB.Programs> programs, int programCount, out List<DB.Workouts> workouts)
         {
             Http http = new()
             {
                 Accept = "application/json",
                 AuthToken = "Bearer " + SignIn.AccessToken
             };
-
-            string url = String.Concat(Endpoints.API_HOST + "/Admin/AddWorkout");
-            for(int i = 0; i < programCount; i++)
+            foreach (var program in programs)
             {
-                HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, programId));
-                if (http.LastMethodSuccess == false)
+                for (int i = 0; i < programCount; i++)
                 {
-                    Debug.WriteLine(http.LastErrorText);
+                    HttpResponse resp = http.PostJson2(String.Concat(Endpoints.API_HOST + "/Admin/AddWorkout"), "application/json", JsonBody(i, program.Id));
+                    if (http.LastMethodSuccess == false)
+                    {
+                        Debug.WriteLine(http.LastErrorText);
+                    }
+                    Debug.WriteLine(resp.BodyStr);
                 }
-                Debug.WriteLine(resp.BodyStr);
             }
             
+            workouts = AppDbContext.Workouts.GetLastWorkoutsData(programs);
         }
         
-        public static void AddExercisesToMembership(SignInResponseModel SignIn, DB.Workouts workouts, List<DB.Exercises> exercises)
+        public static void AddExercisesToMembership(SignInResponseModel SignIn, List<DB.Workouts> workouts, List<DB.Exercises> exercises)
         {
             Http http = new()
             {
@@ -644,29 +444,34 @@ namespace MCMAutomation.APIHelpers
             };
 
             string url = String.Concat(Endpoints.API_HOST + "/Admin/AddRangeWorkoutExercises");
-            for (int i = 0; i < 1; i++)
+            foreach (var workout in workouts)
             {
-                HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, workouts.Id, exercises));
-                if (http.LastStatus != 200 )
+                for (int i = 0; i < 3; i++)
                 {
-                    Debug.WriteLine(http.LastErrorText);
+                    HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(i, workout.Id, exercises));
+                    if (http.LastStatus != 200)
+                    {
+                        Debug.WriteLine(http.LastErrorText);
+                    }
+                    Debug.WriteLine(resp.BodyStr);
                 }
-                Debug.WriteLine(resp.BodyStr);
             }
+            
         }
 
         public static void AddUsersToMembership(SignInResponseModel SignIn, int MembershipId, string UserId)
         {
-            Http http = new Http();
-
-            http.Accept = "application/json";
-            http.AuthToken = "Bearer " + SignIn.AccessToken;
+            Http http = new()
+            {
+                Accept = "application/json",
+                AuthToken = "Bearer " + SignIn.AccessToken
+            };
 
             string url = String.Concat(Endpoints.API_HOST + "/Admin/AddUsersToMembership");
             string jsonRequestBody = "{" +
                                         $"\r\n\"membershipId\": {MembershipId}" + "," +
-                                        "\r\n \"type\": \"RD : ADD_MEMBERSHIP_TO_USER\"" + "," +
-                                        $"\r\n \"userId\": \"{UserId}\"" + "}";
+                                        "\r\n\"type\": \"RD : ADD_MEMBERSHIP_TO_USER\"" + "," +
+                                        $"\r\n\"userId\": \"{UserId}\"" + "}";
             HttpResponse resp = http.PostJson2(url, "application/json", jsonRequestBody);
             if (http.LastMethodSuccess == false)
             {
@@ -703,56 +508,32 @@ namespace MCMAutomation.APIHelpers
 
         public static List<DB.Programs> CreatePrograms(SignInResponseModel responseLoginAdmin, DB.Memberships membership, int programCount)
         {
-            for (int i = 0; i < programCount; i++)
-            {
-                CreatePrograms(responseLoginAdmin, membership.Id);
-            }
-            var programs = AppDbContext.Programs.GetLastPrograms(programCount);
+            CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
             return programs;
         }
 
         public static List<DB.Workouts> CreateWorkouts(SignInResponseModel responseLoginAdmin, List<DB.Programs> programs, int programCount)
         {
-            foreach (var program in programs)
-            {
-                CreateWorkouts(responseLoginAdmin, program.Id, programCount);
-            }
-            var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programs);
+            CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
             return workouts;
         }
 
         public static void AddExercisesToWorkouts(SignInResponseModel responseLoginAdmin, List<DB.Workouts> workouts)
         {
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            foreach (var workout in workouts)
-            {
-                AddExercisesToMembership(responseLoginAdmin, workout, exercises);
-            }
+            AddExercisesToMembership(responseLoginAdmin, workouts, exercises);
         }
 
-        public static void CreateProductMembership(string sku, bool eightWeeks)
+        public static void CreateProductMembership()
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, sku, eightWeeks);
-            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
+            DB.Memberships membership = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 1;
-            for (int i = 0; i < programCount; i++)
-            {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
-            }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
-            foreach (var program in programs)
-            {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programs);
-                foreach (var workout in workouts)
-                {
-                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
-                }
-
-            }
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
+            MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workouts, exercises);
         }
 
         #endregion

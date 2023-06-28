@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TextCopy;
 
 namespace MCMAutomation.Helpers
 {
@@ -13,7 +14,7 @@ namespace MCMAutomation.Helpers
         public static void Click(IWebElement element)
         {
             WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 60);
-            WaitUntil.WaitSomeInterval(500);
+            WaitUntil.WaitSomeInterval(300);
             WaitUntil.WaitForElementToAppear(element, 30);
 
             element.Click();
@@ -158,6 +159,26 @@ namespace MCMAutomation.Helpers
             WaitUntil.WaitSomeInterval(250);
             var elem = Browser._Driver.FindElements(By.XPath(xpathString)).ToList();
             return elem;
+        }
+
+        
+    }
+
+    public class ClipboardHelper
+    {
+        public static void SetText(string text)
+        {
+            try
+            {
+                Clipboard clipboard = new();
+                clipboard.SetText(text);
+                Console.WriteLine("Text added to clipboard: " + text);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that may occur while setting the text
+                Console.WriteLine("Error setting text to clipboard: " + ex.Message);
+            }
         }
     }
 }

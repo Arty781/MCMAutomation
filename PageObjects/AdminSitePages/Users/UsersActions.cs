@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using MCMAutomation.PageObjects.ClientSitePages;
 
 namespace MCMAutomation.PageObjects
 {
@@ -17,8 +16,9 @@ namespace MCMAutomation.PageObjects
 
         public UsersAdmin SearchUser(string email)
         {
+            ClipboardHelper.SetText(email);
             WaitUntil.WaitForElementToAppear(inputSearch);
-            inputSearch.SendKeys(email + Keys.Enter);
+            inputSearch.SendKeys(Keys.Control + "V" + Keys.Enter);
             return this;
         }
 

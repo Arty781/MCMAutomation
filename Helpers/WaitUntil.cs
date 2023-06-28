@@ -25,7 +25,7 @@ namespace MCMAutomation.Helpers
             {
                 Timeout = TimeSpan.FromSeconds(seconds),
                 PollingInterval = TimeSpan.FromMilliseconds(100),
-                Message = "The search element is not visible"
+                Message = $"The search element is not visible after {seconds} sec"
             };
             try
             {
@@ -53,7 +53,7 @@ namespace MCMAutomation.Helpers
             {
                 Timeout = TimeSpan.FromSeconds(seconds),
                 PollingInterval = TimeSpan.FromMilliseconds(100),
-                Message = "The search element is still visible"
+                Message = $"The search element is still visible after {seconds} sec"
             };
             try
             {
@@ -61,7 +61,7 @@ namespace MCMAutomation.Helpers
                 {
                     try
                     {
-                        if (element?.Enabled != true || element?.Displayed != true)
+                        if (element.Enabled == false || element.Displayed == false)
                         {
                             return true;
                         }

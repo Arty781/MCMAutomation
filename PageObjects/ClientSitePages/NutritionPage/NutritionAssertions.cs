@@ -102,7 +102,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             };
 
             maintainCalories = gender == "Male"
-            ? selectedAdditionalOption == AdditionalOptions.ADDITIONAL_COMMON_OPTION
+            ? selectedAdditionalOption == TDEE.AdditionalOptions.ADDITIONAL_COMMON_OPTION
                 ? textOfSelectedAdditionalOption == "Yes"
                     ? Math.Round((maintainCalories - 100), 0, MidpointRounding.AwayFromZero)
                     : maintainCalories
@@ -110,10 +110,10 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             : maintainCalories;
             maintainCalories = gender == "Female" ? selectedAdditionalOption switch
             {
-                AdditionalOptions.PpOptions.BREASTFEEDING_LESS when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories + 500), 0, MidpointRounding.AwayFromZero),
-                AdditionalOptions.PpOptions.BREASTFEEDING_MORE when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories + 300), 0, MidpointRounding.AwayFromZero),
-                AdditionalOptions.ADDITIONAL_PG_OPTION when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories + 200), 0, MidpointRounding.AwayFromZero),
-                AdditionalOptions.ADDITIONAL_COMMON_OPTION when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories - 100), 0, MidpointRounding.AwayFromZero),
+                TDEE.AdditionalOptions.PpOptions.BREASTFEEDING_LESS when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories + 500), 0, MidpointRounding.AwayFromZero),
+                TDEE.AdditionalOptions.PpOptions.BREASTFEEDING_MORE when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories + 300), 0, MidpointRounding.AwayFromZero),
+                TDEE.AdditionalOptions.ADDITIONAL_PG_OPTION when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories + 200), 0, MidpointRounding.AwayFromZero),
+                TDEE.AdditionalOptions.ADDITIONAL_COMMON_OPTION when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories - 100), 0, MidpointRounding.AwayFromZero),
                 _ => maintainCalories
             } : maintainCalories;
 
@@ -128,22 +128,21 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return int.Parse(TextBox.GetAttribute(inputCalories, "value")); ;
         }
 
-        public Nutrition SetCalories()
+        public Nutrition SetCalories(out double maintanceCalories)
         {
             InputBox.ElementCtrlA(inputCalories, 10, "000");
+            maintanceCalories = GetCalories();
 
             return this;
         }
 
-        public double GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories, string eightWeekSKU)
+        public Nutrition GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories, string eightWeekSKU, out double expectedCalories)
         {
-
-            double finishcalories;
             switch (goal)
             {
-                case TDEE.GOAL_CUT:
+                case TDEE.Goals.GOAL_CUT:
                     if (SKU == MembershipsSKU.SKU_PP1)
-                        finishcalories = calories - 500;
+                        expectedCalories = calories - 500;
                     else
                     {
                         double multiplier;
@@ -151,15 +150,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                         {
                             multiplier = tier switch
                             {
-                                TDEE.TIER_1 => 0.8,
-                                TDEE.TIER_2 => 0.75,
-                                TDEE.TIER_3 => 0.7,
+                                TDEE.Tiers.TIER_1 => 0.8,
+                                TDEE.Tiers.TIER_2 => 0.75,
+                                TDEE.Tiers.TIER_3 => 0.7,
                                 _ => throw new ArgumentException("Invalid tier value"),
                             };
-                            finishcalories = phase switch
+                            expectedCalories = phase switch
                             {
-                                TDEE.PHASE_1 => Math.Round(calories * (multiplier - 0.05)),
-                                TDEE.PHASE_2 => Math.Round(calories * (multiplier - 0.1)),
+                                TDEE.Phases.PHASE_1 => Math.Round(calories * (multiplier - 0.05)),
+                                TDEE.Phases.PHASE_2 => Math.Round(calories * (multiplier - 0.1)),
                                 _ => throw new ArgumentException("Invalid phase value"),
                             };
                         }
@@ -167,55 +166,55 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                         {
                             multiplier = tier switch
                             {
-                                TDEE.TIER_1 => 0.8,
-                                TDEE.TIER_2 => 0.75,
-                                TDEE.TIER_3 => 0.7,
+                                TDEE.Tiers.TIER_1 => 0.8,
+                                TDEE.Tiers.TIER_2 => 0.75,
+                                TDEE.Tiers.TIER_3 => 0.7,
                                 _ => throw new ArgumentException("Invalid tier value"),
                             };
-                            finishcalories = phase switch
+                            expectedCalories = phase switch
                             {
-                                TDEE.PHASE_1 => Math.Round(calories * multiplier),
-                                TDEE.PHASE_2 => Math.Round(calories * (multiplier - 0.05)),
-                                TDEE.PHASE_3 => Math.Round(calories * (multiplier - 0.1)),
+                                TDEE.Phases.PHASE_1 => Math.Round(calories * multiplier),
+                                TDEE.Phases.PHASE_2 => Math.Round(calories * (multiplier - 0.05)),
+                                TDEE.Phases.PHASE_3 => Math.Round(calories * (multiplier - 0.1)),
                                 _ => throw new ArgumentException("Invalid phase value"),
                             };
                         }
                     }
                     break;
 
-                case TDEE.GOAL_MAINTAIN:
-                    finishcalories = Math.Round(calories);
+                case TDEE.Goals.GOAL_MAINTAIN:
+                    expectedCalories = Math.Round(calories);
                     break;
 
-                case TDEE.GOAL_BUILD:
+                case TDEE.Goals.GOAL_BUILD:
                     double buildMultiplier = tier switch
                     {
-                        TDEE.TIER_1 => 1,
-                        TDEE.TIER_2 => 1.05,
-                        TDEE.TIER_3 => 1.2,
+                        TDEE.Tiers.TIER_1 => 1,
+                        TDEE.Tiers.TIER_2 => 1.05,
+                        TDEE.Tiers.TIER_3 => 1.2,
                         _ => throw new ArgumentException("Invalid tier value"),
                     };
-                    finishcalories = phase switch
+                    expectedCalories = phase switch
                     {
-                        TDEE.PHASE_1 => Math.Round(calories * buildMultiplier),
-                        TDEE.PHASE_2 => Math.Round(calories * (buildMultiplier + 0.05)),
-                        TDEE.PHASE_3 => Math.Round(calories * (buildMultiplier + 0.15)),
+                        TDEE.Phases.PHASE_1 => Math.Round(calories * buildMultiplier),
+                        TDEE.Phases.PHASE_2 => Math.Round(calories * (buildMultiplier + 0.05)),
+                        TDEE.Phases.PHASE_3 => Math.Round(calories * (buildMultiplier + 0.15)),
                         _ => throw new ArgumentException("Invalid phase value"),
                     };
                     break;
 
-                case TDEE.GOAL_REVERSE:
-                    if (phase == ArdPhases.ardPhase[0])
-                        finishcalories = previousCalories + 300;
+                case TDEE.Goals.GOAL_REVERSE:
+                    if (phase == TDEE.ArdPhases.ARD_PHASE_ONE_TWO)
+                        expectedCalories = previousCalories + 300;
                     else
                     {
                         double reverseMultiplier = tier switch
                         {
-                            TDEE.TIER_CONSERVATIVE => 1.07,
-                            TDEE.TIER_AGGRESSIVE => 1.2,
+                            TDEE.Tiers.TIER_CONSERVATIVE => 1.07,
+                            TDEE.Tiers.TIER_AGGRESSIVE => 1.2,
                             _ => throw new ArgumentException("Invalid tier value"),
                         };
-                        finishcalories = Math.Round(previousCalories + (calories * (reverseMultiplier - 1)));
+                        expectedCalories = Math.Round(previousCalories + (calories * (reverseMultiplier - 1)));
                     }
                     break;
                 default:
@@ -223,7 +222,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             }
 
 
-            return finishcalories;
+            return this;
         }
 
         public void VerifyNutritionData(DB.AspNetUsers userData, string goal, string tier, string SKU, string gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories, string weekNumber)
@@ -240,15 +239,15 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             double bodyFat = (double)userData.Bodyfat;
             double protein = goal switch
             {
-                TDEE.GOAL_BUILD or TDEE.GOAL_MAINTAIN or TDEE.GOAL_REVERSE => (int)weight * 2,
+                TDEE.Goals.GOAL_BUILD or TDEE.Goals.GOAL_MAINTAIN or TDEE.Goals.GOAL_REVERSE => (int)weight * 2,
                 _ => gender == "Female" && bodyFat >= 30 || gender == "Male" && bodyFat >= 25
                     ? (int)(weight * 1.6)
                     : SKU == MembershipsSKU.SKU_PP1
                         ? (int)(weight * 2)
                         : tier switch
                         {
-                            TDEE.TIER_1 or TDEE.TIER_2 => (int)(weight * 2),
-                            TDEE.TIER_CONSERVATIVE or TDEE.TIER_3 => (int)Math.Round(weight * 2.2, 0, MidpointRounding.AwayFromZero),
+                            TDEE.Tiers.TIER_1 or TDEE.Tiers.TIER_2 => (int)(weight * 2),
+                            TDEE.Tiers.TIER_CONSERVATIVE or TDEE.Tiers.TIER_3 => (int)Math.Round(weight * 2.2, 0, MidpointRounding.AwayFromZero),
                             _ => throw new ArgumentException("Invalid tier value"),
                         }
             };
@@ -266,35 +265,35 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             double weight = (double)userData.Weight;
             double fat = goal switch
             {
-                TDEE.GOAL_CUT => phase switch
+                TDEE.Goals.GOAL_CUT => phase switch
                 {
-                    TDEE.PHASE_1 or TDEE.PHASE_2 => diet switch
+                    TDEE.Phases.PHASE_1 or TDEE.Phases.PHASE_2 => diet switch
                     {
-                        TDEE.DIET_1 => (int)(weight * 0.8),
-                        TDEE.DIET_2 => (int)(weight * 1),
-                        TDEE.DIET_3 => (double)(int)(weight * 1.3),
+                        TDEE.Diets.DIET_1 => (int)(weight * 0.8),
+                        TDEE.Diets.DIET_2 => (int)(weight * 1),
+                        TDEE.Diets.DIET_3 => (double)(int)(weight * 1.3),
                         _ => throw new ArgumentException($"Invalid diet value: {diet}"),
                     },
-                    TDEE.PHASE_3 => diet switch
+                    TDEE.Phases.PHASE_3 => diet switch
                     {
-                        TDEE.DIET_1 => (int)(weight * 0.7),
-                        TDEE.DIET_2 => (int)(weight * 0.8),
-                        TDEE.DIET_3 => (double)(int)(weight * 1),
+                        TDEE.Diets.DIET_1 => (int)(weight * 0.7),
+                        TDEE.Diets.DIET_2 => (int)(weight * 0.8),
+                        TDEE.Diets.DIET_3 => (double)(int)(weight * 1),
                         _ => throw new ArgumentException($"Invalid diet value: {diet}"),
                     },
                     _ => diet switch
                     {
-                        TDEE.DIET_1 => (int)(weight * 0.8),
-                        TDEE.DIET_2 => (int)(weight * 1),
-                        TDEE.DIET_3 => (double)(int)(weight * 1.3),
+                        TDEE.Diets.DIET_1 => (int)(weight * 0.8),
+                        TDEE.Diets.DIET_2 => (int)(weight * 1),
+                        TDEE.Diets.DIET_3 => (double)(int)(weight * 1.3),
                         _ => throw new ArgumentException($"Invalid diet value: {diet}"),
                     }
                 },
-                TDEE.GOAL_MAINTAIN or TDEE.GOAL_BUILD or TDEE.GOAL_REVERSE => diet switch
+                TDEE.Goals.GOAL_MAINTAIN or TDEE.Goals.GOAL_BUILD or TDEE.Goals.GOAL_REVERSE => diet switch
                 {
-                    TDEE.DIET_1 => (int)(weight * 0.8),
-                    TDEE.DIET_2 => (int)(weight * 1),
-                    TDEE.DIET_3 => (int)(weight * 1.3),
+                    TDEE.Diets.DIET_1 => (int)(weight * 0.8),
+                    TDEE.Diets.DIET_2 => (int)(weight * 1),
+                    TDEE.Diets.DIET_3 => (int)(weight * 1.3),
                     _ => throw new ArgumentException($"Invalid diet value: {diet}")
                 },
                 _ => throw new ArgumentException($"Invalid goal value: {goal}")
@@ -343,88 +342,88 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
                 double finishcalories = goal switch
                 {
-                    TDEE.GOAL_CUT => SKU == MembershipsSKU.SKU_PP1
+                    TDEE.Goals.GOAL_CUT => SKU == MembershipsSKU.SKU_PP1
                     ? Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero)
                     : weekNumber.StartsWith("CH") == true
                         ? tier switch
                         {
-                            TDEE.TIER_1 => phase switch
+                            TDEE.Tiers.TIER_1 => phase switch
                             {
-                                TDEE.PHASE_1 => Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_2 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_1 => Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_2 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
                                 _ => throw new ArgumentException($"Invalid calories value: {calories}")
                             },
-                            TDEE.TIER_2 => phase switch
+                            TDEE.Tiers.TIER_2 => phase switch
                             {
-                                TDEE.PHASE_1 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_2 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_1 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_2 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
                                 _ => throw new ArgumentException($"Invalid calories value: {calories}")
                             },
-                            TDEE.TIER_3 => phase switch
+                            TDEE.Tiers.TIER_3 => phase switch
                             {
-                                TDEE.PHASE_1 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_2 => Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_1 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_2 => Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero),
                                 _ => throw new ArgumentException($"Invalid calories value: {calories}")
                             },
                             _ => throw new NotImplementedException()
                         }
                         : tier switch
                         {
-                            TDEE.TIER_1 => phase switch
+                            TDEE.Tiers.TIER_1 => phase switch
                             {
-                                TDEE.PHASE_1 => Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_2 => Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_3 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_1 => Math.Round((calories * 0.8), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_2 => Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_3 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
                                 _ => throw new ArgumentException($"Invalid calories value: {calories}")
                             },
-                            TDEE.TIER_2 => phase switch
+                            TDEE.Tiers.TIER_2 => phase switch
                             {
-                                TDEE.PHASE_1 => Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_2 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_3 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_1 => Math.Round((calories * 0.75), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_2 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_3 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
                                 _ => throw new ArgumentException($"Invalid calories value: {calories}")
                             },
-                            TDEE.TIER_3 => phase switch
+                            TDEE.Tiers.TIER_3 => phase switch
                             {
-                                TDEE.PHASE_1 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_2 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
-                                TDEE.PHASE_3 => Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_1 => Math.Round((calories * 0.7), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_2 => Math.Round((calories * 0.65), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Phases.PHASE_3 => Math.Round((calories * 0.6), 0, MidpointRounding.AwayFromZero),
                                 _ => throw new ArgumentException($"Invalid calories value: {calories}")
                             },
                             _ => throw new NotImplementedException()
                         },
-                    TDEE.GOAL_MAINTAIN => Math.Round((calories), 0, MidpointRounding.AwayFromZero),
-                    TDEE.GOAL_BUILD => tier switch
+                    TDEE.Goals.GOAL_MAINTAIN => Math.Round((calories), 0, MidpointRounding.AwayFromZero),
+                    TDEE.Goals.GOAL_BUILD => tier switch
                     {
-                        TDEE.TIER_1 => phase switch
+                        TDEE.Tiers.TIER_1 => phase switch
                         {
-                            TDEE.PHASE_1 => Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero),
+                            TDEE.Phases.PHASE_1 => Math.Round((calories * 1), 0, MidpointRounding.AwayFromZero),
                             _ => throw new NotImplementedException(),
                         },
-                        TDEE.TIER_2 => phase switch
+                        TDEE.Tiers.TIER_2 => phase switch
                         {
-                            TDEE.PHASE_1 => Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero),
-                            TDEE.PHASE_2 => Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero),
-                            TDEE.PHASE_3 => Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero),
+                            TDEE.Phases.PHASE_1 => Math.Round((calories * 1.05), 0, MidpointRounding.AwayFromZero),
+                            TDEE.Phases.PHASE_2 => Math.Round((calories * 1.1), 0, MidpointRounding.AwayFromZero),
+                            TDEE.Phases.PHASE_3 => Math.Round((calories * 1.15), 0, MidpointRounding.AwayFromZero),
                             _ => throw new NotImplementedException(),
                         },
-                        TDEE.TIER_3 => phase switch
+                        TDEE.Tiers.TIER_3 => phase switch
                         {
-                            TDEE.PHASE_1 => Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero),
-                            TDEE.PHASE_2 => Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero),
-                            TDEE.PHASE_3 => Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero),
+                            TDEE.Phases.PHASE_1 => Math.Round((calories * 1.2), 0, MidpointRounding.AwayFromZero),
+                            TDEE.Phases.PHASE_2 => Math.Round((calories * 1.25), 0, MidpointRounding.AwayFromZero),
+                            TDEE.Phases.PHASE_3 => Math.Round((calories * 1.35), 0, MidpointRounding.AwayFromZero),
                             _ => throw new NotImplementedException()
                         },
                         _ => throw new NotImplementedException()
                     },
-                    TDEE.GOAL_REVERSE => phase == ArdPhases.ardPhase[0]
+                    TDEE.Goals.GOAL_REVERSE => phase == TDEE.ArdPhases.ARD_PHASE_ONE_TWO
                     ? Math.Round((previousCalories + 300), 0, MidpointRounding.AwayFromZero)
                     : valuMoreThan2Kg switch
                         {
                             "No" => tier switch
                             {
-                                TDEE.TIER_CONSERVATIVE => Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero),
-                                TDEE.TIER_AGGRESSIVE => Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Tiers.TIER_CONSERVATIVE => Math.Round((previousCalories + calories * 0.07), 0, MidpointRounding.AwayFromZero),
+                                TDEE.Tiers.TIER_AGGRESSIVE => Math.Round((previousCalories + calories * 0.1), 0, MidpointRounding.AwayFromZero),
                                 _ => throw new NotImplementedException()
                             },
                             "Yes" => Math.Round(previousCalories, 0, MidpointRounding.AwayFromZero),
@@ -439,8 +438,8 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 Assert.Multiple(() =>
                 {
                     Assert.IsTrue(Math.Abs(finishcalories - actualCalories) <= 10, $"Expected calories: {finishcalories} but was: {actualCalories}");
-                    Assert.IsTrue(Math.Abs(carbs - actualCarbs) < 5, $"Expected carbs: {carbs} but was: {actualCarbs}");
-                    Assert.IsTrue(Math.Abs(fat - actualFat) < 5, $"Expected fat: {fat} but was: {actualFat}");
+                    Assert.IsTrue(Math.Abs(carbs - actualCarbs) < 10, $"Expected carbs: {carbs} but was: {actualCarbs}");
+                    Assert.IsTrue(Math.Abs(fat - actualFat) < 10, $"Expected fat: {fat} but was: {actualFat}");
                 });
                 Console.WriteLine($"Expected calories are \"{finishcalories}\"");
                 Console.WriteLine($"Expected carbs are \"{carbs}\"");

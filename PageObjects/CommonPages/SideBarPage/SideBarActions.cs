@@ -68,7 +68,7 @@ namespace MCMAutomation.PageObjects
         {
             Button.Click(nutritionTb);
             WaitUntil.WaitForElementToAppear(Pages.WebPages.Nutrition.btnCalculate, 30);
-            
+
             return this;
         }
 

@@ -59,28 +59,17 @@ namespace MCMApiTests
         [Test, Category("Memberships")]
         public void CreateProductMembership()
         {
-            bool eightWeeks = true;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_CHALLENGE, eightWeeks);
-            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
+            DB.Memberships membership = AppDbContext.Memberships.GetLastMembership();
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            int programCount = 1;
-            for (int i = 0; i < programCount; i++)
-            {
-                MembershipRequest.CreatePrograms(responseLoginAdmin, membershipId.Id);
-            }
-            List<DB.Programs> programs = AppDbContext.Programs.GetLastPrograms(programCount);
-            foreach (var program in programs)
-            {
-                MembershipRequest.CreateWorkouts(responseLoginAdmin, program.Id, programCount);
-                var workouts = AppDbContext.Workouts.GetLastWorkoutsData(programs);
-                foreach (var workout in workouts)
-                {
-                    MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workout, exercises);
-                }
+            int programCount = 3;
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
+            MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workouts, exercises);
+                
 
-            }
+            
         }
 
         
@@ -225,19 +214,39 @@ namespace MCMApiTests
 
         }
 
+        [Test, Category("Weekly Progress")]
+        public void AddWeeklyProgress()
+        {
+            string email = "qatester91311@gmail.com";
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
+            string userId = AppDbContext.User.GetUserData(email).Id;
+            const int conversionSystem = ConversionSystem.METRIC;
+
+            #region Add Progress as User
+
+            for (int i = 0; i < 8; i++)
+            {
+                ProgressRequest.AddProgress(responseLoginUser, conversionSystem);
+                AppDbContext.Progress.UpdateUserProgressDate(userId);
+            }
+            #endregion
+        }
+
         [Test, Category("Daily Weight")]
         public void AddWeight()
         {
             #region Register New User
-            string email = RandomHelper.RandomEmail();
-            SignUpRequest.RegisterNewUser(email);
+            //string email = RandomHelper.RandomEmail();
+            string email = "qatester91311@gmail.com";
+            //ignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
             #region Add Weight daily
-            const int recordCount = 8;
+            const int recordCount = 30;
             const int conversionSystem = ConversionSystem.METRIC;
 
             Enumerable.Range(0, recordCount)
@@ -245,8 +254,9 @@ namespace MCMApiTests
           .ForEach(_ =>
           {
               var weight = RandomHelper.RandomProgressData(ProgressBodyPart.WEIGHT);
-              var date = RandomHelper.RandomDateInThePast();
+              var date = DateTime.Now.ToString("yyyy-MM-dd");
               WeightTracker.AddWeight(responseLoginUser, weight, date, conversionSystem, false);
+              AppDbContext.Progress.UpdateUserDailyProgressDate(userId);
           });
             WeightTracker.VerifyAddedWeight(responseLoginUser, conversionSystem, userId);
             WeightTracker.VerifyAverageOfWeightTracking(responseLoginUser, conversionSystem, userId);
@@ -391,17 +401,15 @@ namespace MCMApiTests
     }
 
     [TestFixture]
-    public class Demo { 
+    public class Demo 
+    { 
 
         [Test]
 
         public void DemoS()
         {
-            bool eightWeeks = false;
-            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
         }
         public List<UserMember> DemoTest()
         {

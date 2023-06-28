@@ -22,8 +22,13 @@ namespace MCMAutomation.PageObjects
         [AllureStep("Get Program names")]
         public List<string> GetProgramNames()
         {
-            WaitUntil.WaitForElementToAppear(nameProgramTitleElem);
-            var programNames = nameProgramTitle.Where(x => x.Displayed).Select(x=>x.Text).ToList();
+            var programNames = new List<string>();
+            if (nameProgramTitle.Count != 0)
+            {
+                WaitUntil.WaitForElementToAppear(nameProgramTitleElem);
+                programNames = nameProgramTitle.Where(x => x.Displayed).Select(x => x.Text).ToList();
+            }
+            
             return programNames;
         }
 

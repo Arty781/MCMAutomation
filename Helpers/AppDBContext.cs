@@ -332,6 +332,7 @@ namespace MCMAutomation.Helpers
                 var row = new DB.Memberships();
                 string query = "SELECT TOP(1)*" +
                                              "FROM [Memberships] " +
+                                             "WHERE isDeleted = 0 " +
                                              "ORDER BY CreationDate DESC";
                 try
                 {
@@ -831,7 +832,7 @@ namespace MCMAutomation.Helpers
                     {
                         query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
                         "INSERT [Memberships] (Id, SKU, Name, Description, StartDate, EndDate, URL, Price, CreationDate, IsDeleted, IsCustom, ForPurchase, AccessWeekLength, RelatedMembershipGroupId, Gender, PromotionalPopupId, Type)\r\n" +
-                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', \'{DateTime.Now.Date}\', \'{DateTime.Now.AddHours(1644).Date}\', \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{0}\', {"null"}, \'{0}\', {"null"}, \'{0}\')\r\n" +
+                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', \'{DateTime.Now.Date}\', \'{DateTime.Now.AddHours(720).Date}\', \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{0}\', {"null"}, \'{0}\', {"null"}, \'{0}\')\r\n" +
                         "SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
                     }
                     else
@@ -1269,6 +1270,33 @@ namespace MCMAutomation.Helpers
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new("UPDATE [Progress] set " +
                                              "CreationDate = DateAdd(DD, -7, CreationDate) where UserId = @userId", db);
+                    command.Parameters.AddWithValue("@userId", DbType.String).Value = userId;
+                    db.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        continue;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+            }
+
+            public static void UpdateUserDailyProgressDate(string userId)
+            {
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new("UPDATE [DailyProgress] set " +
+                                             "CreationDate = DateAdd(DD, -1, CreationDate), Date = DateAdd(DD, -1, Date) where UserId = @userId", db);
                     command.Parameters.AddWithValue("@userId", DbType.String).Value = userId;
                     db.Open();
                     SqlDataReader reader = command.ExecuteReader();

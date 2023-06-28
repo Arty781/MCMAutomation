@@ -15,22 +15,30 @@ namespace MCMAutomation.Helpers
         #region TDEE actions User
 
         private static IWebElement _element;
-        public static IList<IWebElement> NutritionSelector(string title)
+
+        public static IList<IWebElement> ConversionSystemSelector()
         {
             WaitUntil.WaitSomeInterval(1500);
-            return Element.FindElementsByXpath($"//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label"); 
+            return Element.FindElementsByXpath($"//label[@title='Preferred Conversion System']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label");
         }
-
+        public static IList<IWebElement> GenderSelector()
+        {
+            WaitUntil.WaitSomeInterval(1500);
+            return Element.FindElementsByXpath($"//label[@title='Gender']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label");
+        }
+        
         public static string GetTexOfSelectedtNutritionSelector(string title)
         {
             WaitUntil.WaitSomeInterval(1500);
             return Element.FindElementByXpath($"//label[@title='{title}']/ancestor::div[@class='ant-row ant-form-item radio']//div[contains(@class,'ant-radio-group')]//label[contains(@class,'checked')]").Text;
         }
 
-        public static void SelectNumberOfWeekForARD(string week)
+        public static void SelectNumberOfWeekForARD(string week, out string phase)
         {
             WaitUntil.WaitSomeInterval(1500);
             Element.FindElementByXpath($"//p[contains(text(), '{week}')]/ancestor::div[contains(@class,'week  ')]").Click();
+            phase = SwitcherHelper.GetTextOfSelectNumberOfWeekForARD();
+            WaitUntil.WaitSomeInterval(1500);
         }
 
         public static string GetTextOfSelectNumberOfWeekForARD()
@@ -164,7 +172,10 @@ namespace MCMAutomation.Helpers
             WaitUntil.WaitForElementToAppear(btnDeleteProgram, 60);
             Button.Click(btnDeleteProgram);
             Button.Click(Pages.CommonPages.Common.btnConfirmationYes);
-            WaitUntil.WaitForElementToDisappear(btnDeleteProgram, 30);
+            WaitUntil.WaitSomeInterval();
+            IWebElement? elem = Pages.AdminPages.MembershipAdmin.nameProgramTitle.Where(x => x.Text == programName).Select(x => x).FirstOrDefault();
+            WaitUntil.WaitForElementToDisappear(elem, 30);
+            
         }
 
         public static void SelectCopyMembership(string membershipName, string currentMembership)
