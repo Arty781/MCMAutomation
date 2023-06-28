@@ -136,7 +136,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public Nutrition GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories, string eightWeekSKU, out double expectedCalories)
+        public Nutrition GetCaloriesStep06(double calories, string goal, string tier, string phase, string SKU, string valuMoreThan2Kg, double previousCalories, out double expectedCalories)
         {
             switch (goal)
             {
@@ -146,7 +146,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     else
                     {
                         double multiplier;
-                        if (eightWeekSKU.StartsWith("CH") == true)
+                        if (SKU.StartsWith("CH") == true)
                         {
                             multiplier = tier switch
                             {
@@ -225,12 +225,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return this;
         }
 
-        public void VerifyNutritionData(DB.AspNetUsers userData, string goal, string tier, string SKU, string gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories, string weekNumber)
+        public void VerifyNutritionData(DB.AspNetUsers userData, string goal, string tier, string SKU, string gender, double expectedCalories, string diet, double calories, string phase, string valuMoreThan2Kg, double previousCalories)
         {
             var protein = CalculateProtein(userData, goal, tier, gender, SKU);
             var fat = CalculateFats(userData, diet, phase, goal);
             var carbs = CalculateCarbs(expectedCalories, protein, fat);
-            CalculateCalories(userData, goal, tier, SKU, calories, expectedCalories, phase, valuMoreThan2Kg, previousCalories, carbs, protein, fat, weekNumber);
+            CalculateCalories(userData, goal, tier, SKU, calories, expectedCalories, phase, valuMoreThan2Kg, previousCalories, carbs, protein, fat);
         }
 
         private int CalculateProtein(DB.AspNetUsers userData, string goal, string tier, string gender, string SKU)
@@ -307,7 +307,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             return Math.Round(carbs, 0, MidpointRounding.AwayFromZero);
 
         }
-        private void CalculateCalories(DB.AspNetUsers userData, string goal, string tier, string SKU, double calories, double expectedCalories, string phase, string valuMoreThan2Kg, double previousCalories, double carbs, double protein, double fat, string weekNumber)
+        private void CalculateCalories(DB.AspNetUsers userData, string goal, string tier, string SKU, double calories, double expectedCalories, string phase, string valuMoreThan2Kg, double previousCalories, double carbs, double protein, double fat)
         {
             var weight = ((double)userData.Weight);
             var getFat = valueOfProteinCarbsFat[2].Text.Trim(new char[] { 'g' });
@@ -344,7 +344,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 {
                     TDEE.Goals.GOAL_CUT => SKU == MembershipsSKU.SKU_PP1
                     ? Math.Round((calories - 500), 0, MidpointRounding.AwayFromZero)
-                    : weekNumber.StartsWith("CH") == true
+                    : SKU.StartsWith("CH") == true
                         ? tier switch
                         {
                             TDEE.Tiers.TIER_1 => phase switch

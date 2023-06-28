@@ -1474,9 +1474,15 @@ namespace MCMAutomation.Helpers
                                                                         "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
                                              "delete from Progress where UserId in (" +
                                                                         "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
+                                             "delete from DailyProgress where UserId in (" +
+                                                                        "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
                                              "delete from UserExercises where UserId in (" +
                                                                         "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
                                              "delete from GlobalDisplayedPopups where UserId in (" +
+                                                                        "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
+                                             "delete from UserWorkouts where UserId in (" +
+                                                                        "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
+                                             "delete from MovedWorkouts where UserId in (" +
                                                                         "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +
                                              "delete from Logins where UserId in (" +
                                                                         "SELECT id FROM [dbo].[AspNetUsers] where email like @email)\r\n" +

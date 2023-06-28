@@ -47,10 +47,8 @@ namespace MCMAutomation.APIHelpers.Client.EditUser
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Debug.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Debug.WriteLine("HTTP response status: " + Convert.ToString(resp.StatusCode));
         }
 
         public static void EditUser(SignInResponseModel SignIn, dynamic bodyFat, int gender)
@@ -93,10 +91,8 @@ namespace MCMAutomation.APIHelpers.Client.EditUser
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Debug.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Debug.WriteLine("HTTP response status: " + Convert.ToString(resp.StatusCode));
         }
     }
 }

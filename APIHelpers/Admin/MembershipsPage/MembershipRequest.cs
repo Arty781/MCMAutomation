@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Telegram.Bot.Types;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Linq;
+using static MCMAutomation.Helpers.AppDbContext;
 
 namespace MCMAutomation.APIHelpers
 {
@@ -194,7 +195,7 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Console.WriteLine(http.LastErrorText);
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
             var countdownResponse = JsonConvert.DeserializeObject<MembershipsWithUsersResponse>(resp.BodyStr);
             return countdownResponse;
@@ -216,7 +217,7 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Console.WriteLine(http.LastErrorText);
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
             var countdownResponse = JsonConvert.DeserializeObject<List<MembershipSummaryResponse>>(resp.BodyStr);
             List<MembershipSummaryResponse> list= new List < MembershipSummaryResponse >();
@@ -263,10 +264,8 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Console.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Console.WriteLine("Error message is " + Convert.ToString(resp.BodyStr));
         }
 
         public static void CreateSubscriptionMembership(SignInResponseModel SignIn)
@@ -301,10 +300,8 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Console.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Console.WriteLine("Error message is " + Convert.ToString(resp.BodyStr));
         }
 
         public static void CreateMultilevelMembership(SignInResponseModel SignIn)
@@ -339,10 +336,8 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Console.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Console.WriteLine("Error message is " + Convert.ToString(resp.BodyStr));
         }
 
         public static void CreateCustomMembership(SignInResponseModel SignIn, string UserId)
@@ -371,10 +366,8 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Console.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Console.WriteLine("Error message is " + Convert.ToString(resp.BodyStr));
         }
 
         public static void CreatePrograms(SignInResponseModel SignIn, int MembershipId, int countPrograms, out List<DB.Programs> programs)
@@ -404,9 +397,8 @@ namespace MCMAutomation.APIHelpers
                 HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
                 if (http.LastMethodSuccess != true)
                 {
-                    Debug.WriteLine(http.LastErrorText);
+                    throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
                 }
-                Debug.WriteLine(resp.BodyStr);
             }
             programs = AppDbContext.Programs.GetLastPrograms(countPrograms);
 
@@ -424,7 +416,7 @@ namespace MCMAutomation.APIHelpers
                 for (int i = 0; i < programCount; i++)
                 {
                     HttpResponse resp = http.PostJson2(String.Concat(Endpoints.API_HOST + "/Admin/AddWorkout"), "application/json", JsonBody(i, program.Id));
-                    if (http.LastMethodSuccess == false)
+                    if (!resp.StatusCode.ToString().StartsWith("2"))
                     {
                         Debug.WriteLine(http.LastErrorText);
                     }
@@ -473,33 +465,36 @@ namespace MCMAutomation.APIHelpers
                                         "\r\n\"type\": \"RD : ADD_MEMBERSHIP_TO_USER\"" + "," +
                                         $"\r\n\"userId\": \"{UserId}\"" + "}";
             HttpResponse resp = http.PostJson2(url, "application/json", jsonRequestBody);
-            if (http.LastMethodSuccess == false)
+            if (!resp.StatusCode.ToString().StartsWith("2"))
             {
-                Debug.WriteLine(http.LastErrorText);
+                throw new ArgumentException(url +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Debug.WriteLine(resp.BodyStr);
         }
 
         public static void ActivateUserMembership(SignInResponseModel SignIn, int userMembershipId, string userId)
         {
             HttpRequest req = new HttpRequest
             {
-                HttpVerb = "GET",
-                Path = $"/Admin/SelectActiveMembership/{userId}/{userMembershipId}"
+                HttpVerb = "POST",
+                Path = $"/Admin/SelectActiveMembership"
             };
             req.AddHeader("Connection", "Keep-Alive");
             req.AddHeader("accept-encoding", "gzip, deflate, br");
             req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
+            req.AddHeader("accept", "application/json");
+            req.AddHeader("Content-Type", "application/json;charset=UTF-8");
+            req.LoadBodyFromString("{" +
+                                    $"\r\n\"userMembershipId\": {userMembershipId}" + "," +
+                                    $"\r\n\"userId\": \"{userId}\"" + "," +
+                                    $"\"startOn\": \"{DateTime.UtcNow.AddDays(-14).Date}\"" + "}", "utf-8");
 
             Http http = new Http();
 
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
-            if (http.LastMethodSuccess != true)
+            if (!resp.StatusCode.ToString().StartsWith("2"))
             {
-                Debug.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Debug.WriteLine("Error message is " + Convert.ToString(resp.BodyStr));
         }
 
         #endregion

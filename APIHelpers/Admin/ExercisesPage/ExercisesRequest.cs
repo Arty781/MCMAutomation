@@ -119,7 +119,7 @@ namespace MCMAutomation.APIHelpers
             };
             string url = String.Concat(Endpoints.API_HOST + "/Admin/AddExercise");
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(exercises, home, all));
-            if (http.LastMethodSuccess == false)
+            if (!resp.StatusCode.ToString().StartsWith("2"))
             {
                 Debug.WriteLine(http.LastErrorText);
             }
@@ -134,7 +134,7 @@ namespace MCMAutomation.APIHelpers
             };
             string url = String.Concat(Endpoints.API_HOST + "/Admin/AddExercise");
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBodyWithoutRelated(exercises));
-            if (http.LastMethodSuccess == false)
+            if (!resp.StatusCode.ToString().StartsWith("2"))
             {
                 Debug.WriteLine(http.LastErrorText);
             }
@@ -157,7 +157,7 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Console.WriteLine(http.LastErrorText);
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
             var countdownResponse = JsonConvert.DeserializeObject<List<ResponseGetExercises>>(resp.BodyStr);
             return countdownResponse;
@@ -179,7 +179,7 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Console.WriteLine(http.LastErrorText);
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
             var countdownResponse = JsonConvert.DeserializeObject<List<ResponseGetExercises>>(resp.BodyStr);
             Assert.IsTrue(countdownResponse.Any(e => e.Name.Contains(exerciseName)), $"Exercise with name {exerciseName} was not found.");
@@ -194,7 +194,7 @@ namespace MCMAutomation.APIHelpers
             };
             string url = String.Concat(Endpoints.API_HOST + "/Admin/EditExercise");
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(exercises, listGetExercises, exerciseName, home, all));
-            if (http.LastMethodSuccess == false)
+            if (!resp.StatusCode.ToString().StartsWith("2"))
             {
                 Debug.WriteLine(http.LastErrorText);
             }
@@ -210,7 +210,7 @@ namespace MCMAutomation.APIHelpers
             };
             string url = String.Concat(Endpoints.API_HOST + "/Admin/EditExercise");
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBodyWithoutRelated(exercises, listGetExercises, exerciseName));
-            if (http.LastMethodSuccess == false)
+            if (!resp.StatusCode.ToString().StartsWith("2"))
             {
                 Debug.WriteLine(http.LastErrorText);
             }

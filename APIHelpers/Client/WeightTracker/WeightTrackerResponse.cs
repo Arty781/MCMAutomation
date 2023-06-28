@@ -31,10 +31,8 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Debug.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Debug.WriteLine("HTTP response status: " + Convert.ToString(resp.StatusCode));
         }
 
         public static List<WeightTrackerResponse> GetWeightList(SignInResponseModel SignIn, int conversionSystem, int countSkipRecords, int countTakeRecords)
@@ -47,7 +45,7 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
 
             string url = String.Concat(Endpoints.API_HOST + "/Progress/GetDailyList");
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(conversionSystem, countSkipRecords, countTakeRecords));
-                if (http.LastMethodSuccess == false)
+                if (!resp.StatusCode.ToString().StartsWith("2"))
                 {
                     Debug.WriteLine(http.LastErrorText);
                 }
@@ -88,10 +86,8 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Debug.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Debug.WriteLine("HTTP response status: " + Convert.ToString(resp.StatusCode));
         }
 
         public static void DeleteWeight(SignInResponseModel SignIn, int id)
@@ -107,10 +103,8 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (http.LastMethodSuccess != true)
             {
-                Debug.WriteLine(http.LastErrorText);
-                return;
+                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
-            Debug.WriteLine("HTTP response status: " + Convert.ToString(resp.StatusCode));
         }
 
         public static void VerifyIsDeletedProgressDaily(SignInResponseModel responseLoginUser, string userId)

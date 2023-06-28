@@ -34,7 +34,7 @@ namespace MCMAutomation.APIHelpers
 
             string url = String.Concat(Endpoints.API_HOST + "/Account/SignIn");
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(login, password));
-            if (http.LastMethodSuccess == false)
+            if (!resp.StatusCode.ToString().StartsWith("2"))
             {
                 Debug.WriteLine(http.LastErrorText);
             }
@@ -70,7 +70,7 @@ namespace MCMAutomation.APIHelpers
 
             string url = String.Concat(Endpoints.API_HOST + "/Account/SignIn");
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(login, password));
-            if (http.LastMethodSuccess == false)
+            if (!resp.StatusCode.ToString().StartsWith("2"))
             {
                 Debug.WriteLine(http.LastErrorText);
             }
@@ -113,7 +113,7 @@ namespace MCMAutomation.APIHelpers
                     HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
                     if (http.LastMethodSuccess != true)
                     {
-                        Console.WriteLine(http.LastErrorText);
+                        throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
                     }
                 }
             });
@@ -152,13 +152,11 @@ namespace MCMAutomation.APIHelpers
                     HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
                     if (http.LastMethodSuccess != true)
                     {
-                        Console.WriteLine(http.LastErrorText);
+                        throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
                     }
 
                     stopwatch.Stop();
-
                     double duration = stopwatch.Elapsed.TotalSeconds;
-
                     Console.WriteLine($"Duration of request: {duration}");
                 }
                 
