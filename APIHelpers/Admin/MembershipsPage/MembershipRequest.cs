@@ -268,6 +268,92 @@ namespace MCMAutomation.APIHelpers
             }
         }
 
+        public static void CreateSubAllMembership(SignInResponseModel SignIn, string sku)
+        {
+            HttpRequest req = new()
+            {
+                HttpVerb = "POST",
+                Path = "/Admin/AddMembership",
+                ContentType = "multipart/form-data"
+            };
+            req.AddHeader("Connection", "Keep-Alive");
+            req.AddHeader("Accept", "application /json, text/plain, */*");
+            req.AddHeader("Accept-Encoding", "gzip, deflate, br");
+            req.AddHeader("Authorization", $"Bearer {SignIn.AccessToken}");
+
+            req.AddParam("sku", sku);
+            req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d-hh-mm") + " of SubAll");
+            req.AddParam("description", Lorem.ParagraphByChars(400));
+            req.AddParam("startDate", "");
+            req.AddParam("endDate", "");
+            req.AddParam("price", "100");
+            req.AddParam("accessWeekLength", "");
+            req.AddParam("url", "https://mcmstaging-ui.azurewebsites.net/programs/all");
+            req.AddParam("type", "2");
+            req.AddParam("image", "undefined");
+            req.AddParam("gender", "0");
+            req.AddParam("relatedMembershipIds", "");
+            req.AddParam("forPurchase", "true");
+            req.AddParam("SubAllMemberships", "[" +
+                $"{{\r\n\"subAllMembershipId\": 53,\r\n\"description\": \"{Lorem.ParagraphByChars(250)}\"\r\n}}," +
+                $"\r\n{{\r\n\"subAllMembershipId\": 54,\r\n\"description\": \"{Lorem.ParagraphByChars(250)}\"\r\n}}," +
+                $"\r\n{{\r\n\"subAllMembershipId\": 55,\r\n\"description\": \"{Lorem.ParagraphByChars(250)}\"\r\n}}" +
+                "]");
+
+            Http http = new Http();
+
+            HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
+            if (http.LastMethodSuccess != true)
+            {
+                throw new ArgumentException(resp.Domain + req.Path + "\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
+            }
+        }
+
+        public static void EditSubAllMembership(SignInResponseModel SignIn, string sku, int id, List<DB.SubAllMembershipModel> subAllmemberships)
+        {
+            HttpRequest req = new()
+            {
+                HttpVerb = "POST",
+                Path = "/Admin/EditMembership",
+                ContentType = "multipart/form-data"
+            };
+            req.AddHeader("Connection", "Keep-Alive");
+            req.AddHeader("Accept", "application /json, text/plain, */*");
+            req.AddHeader("Accept-Encoding", "gzip, deflate, br");
+            req.AddHeader("Authorization", $"Bearer {SignIn.AccessToken}");
+
+            req.AddParam("id", $"{id}");
+            req.AddParam("sku", sku);
+            req.AddParam("name", "00Edited New Membership " + DateTime.Now.ToString("yyyy-MM-d-hh-mm") + " of SubAll");
+            req.AddParam("description", Lorem.ParagraphByChars(400));
+            req.AddParam("startDate", "");
+            req.AddParam("endDate", "");
+            req.AddParam("price", "100");
+            req.AddParam("accessWeekLength", "");
+            req.AddParam("url", "https://mcmstaging-ui.azurewebsites.net/programs/all");
+            req.AddParam("type", "2");
+            req.AddParam("image", "undefined");
+            req.AddParam("gender", "0");
+            req.AddParam("relatedMembershipIds", "");
+            req.AddParam("forPurchase", "true");
+            req.AddParam("SubAllMemberships", "[" +
+                $"{{\r\n\"id\": {subAllmemberships[0].Id}, \r\n\"subAllMembershipId\": 53,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+                $"\r\n{{\r\n\"id\": {subAllmemberships[1].Id}, \r\n\"subAllMembershipId\": 54,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+                $"\r\n{{\r\n\"id\": {subAllmemberships[2].Id}, \r\n\"subAllMembershipId\": 55,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+                $"\r\n{{\r\n\"subAllMembershipId\": 241,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+                $"\r\n{{\r\n\"subAllMembershipId\": 242,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+                $"\r\n{{\r\n\"subAllMembershipId\": 243,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}" +
+                "]");
+
+            Http http = new Http();
+
+            HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
+            if (http.LastMethodSuccess != true)
+            {
+                throw new ArgumentException(resp.Domain + req.Path + "\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
+            }
+        }
+
         public static void CreateSubscriptionMembership(SignInResponseModel SignIn)
         {
             HttpRequest req = new HttpRequest
@@ -475,18 +561,13 @@ namespace MCMAutomation.APIHelpers
         {
             HttpRequest req = new HttpRequest
             {
-                HttpVerb = "POST",
-                Path = $"/Admin/SelectActiveMembership"
+                HttpVerb = "GET",
+                Path = $"/Admin/SelectActiveMembership/{userId}/{userMembershipId}"
             };
             req.AddHeader("Connection", "Keep-Alive");
             req.AddHeader("accept-encoding", "gzip, deflate, br");
             req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
             req.AddHeader("accept", "application/json");
-            req.AddHeader("Content-Type", "application/json;charset=UTF-8");
-            req.LoadBodyFromString("{" +
-                                    $"\r\n\"userMembershipId\": {userMembershipId}" + "," +
-                                    $"\r\n\"userId\": \"{userId}\"" + "," +
-                                    $"\"startOn\": \"{DateTime.UtcNow.AddDays(-14).Date}\"" + "}", "utf-8");
 
             Http http = new Http();
 

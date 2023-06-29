@@ -68,7 +68,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         }
 
         [AllureStep("Verify added weight")]
-        public void VerifyAddedWeights(List<string> expectedWeights)
+        public MembershipUser VerifyAddedWeights(List<string> expectedWeights)
         {
             if (expectedWeights == null)
             {
@@ -95,6 +95,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                     Assert.Fail(errorMessage);
                 }
             });
+            return this;
         }
 
         private List<string> GetInputWeights()

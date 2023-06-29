@@ -26,7 +26,8 @@ namespace MCMApiTests
 
     [TestFixture]
 
-    public class AdminMembershipsTests {
+    public class AdminMembershipsTests 
+    {
 
         [Test, Category("Memberships")]
         public void AddMembershipToUser()
@@ -72,7 +73,28 @@ namespace MCMApiTests
             
         }
 
-        
+        [Test, Category("Memberships")]
+        public void CreateSubAllMembership()
+        {
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER);
+
+        }
+
+        [Test, Category("Memberships")]
+        public void EditSubAllMembership()
+        {
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER);
+            DB.Memberships membership = AppDbContext.Memberships.GetLastMembership();
+            var subAllMemberships = AppDbContext.SubAllMemberships.GetSubAllMembershipsGroup(membership.Id);
+            MembershipRequest.EditSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, membership.Id, subAllMemberships);
+            membership = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.DeleteMembership(membership.Name);
+
+        }
+
+
 
 
     }
@@ -199,7 +221,7 @@ namespace MCMApiTests
     }
 
     [TestFixture]
-    public class UserTests
+    public class Register
     {
         [Test, Category("Daily Weight")]
         public void RegisterUser()
@@ -213,6 +235,12 @@ namespace MCMApiTests
 
 
         }
+
+    }
+
+    [TestFixture]
+    public class Progress
+    {
 
         [Test, Category("Weekly Progress")]
         public void AddWeeklyProgress()
@@ -401,6 +429,16 @@ namespace MCMApiTests
     }
 
     [TestFixture]
+    public class Memberships
+    {
+        [Test, Category("Memberships")]
+        public void GetUserMemberships()
+        {
+
+        }
+    }
+
+        [TestFixture]
     public class Demo 
     { 
 

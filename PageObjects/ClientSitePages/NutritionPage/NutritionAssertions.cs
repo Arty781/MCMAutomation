@@ -316,7 +316,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             {
                 carbs = 50;                
                 var remainder = expectedCalories - (carbs * 4) - (protein * 4);
-                fat = Math.Round(remainder/9, 0, MidpointRounding.AwayFromZero); ;
+                fat = Math.Round(remainder/9, 0, MidpointRounding.AwayFromZero);
                 if(fat < weight * 0.6)
                 {
                     fat = weight * 0.6;

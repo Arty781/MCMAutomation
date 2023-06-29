@@ -110,7 +110,7 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
         public static void VerifyIsDeletedProgressDaily(SignInResponseModel responseLoginUser, string userId)
         {
             WaitUntil.WaitSomeInterval(1000);
-            var userProgress = AppDbContext.User.GetAllProgressDailyByUserId(userId);
+            var userProgress = AppDbContext.Progress.GetAllProgressDailyByUserId(userId);
             foreach (var progress in userProgress)
             {
                 Assert.That(progress.IsDeleted, Is.True, "Ids don't match");
@@ -122,7 +122,7 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
 
         public static void VerifyAverageOfWeightTracking(SignInResponseModel responseLoginUser, int conversionSystem, string userId)
         {
-            var userProgressExpected = AppDbContext.User.GetProgressDailyByUserId(userId);
+            var userProgressExpected = AppDbContext.Progress.GetProgressDailyByUserId(userId);
             var expectedAverages = CalculateAverages(userProgressExpected, conversionSystem);
             var weightList = GetWeightList(responseLoginUser, conversionSystem, 0, userProgressExpected.Count);
             var actualAverages = weightList.Select(x => decimal.Round((decimal)x.averageWeight, 1)).ToList();
@@ -186,7 +186,7 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
         public static void VerifyAddedWeight(SignInResponseModel responseLoginUser, int conversionSystem, string userId)
         {
             const string dateFormat = "yyyy-MM-ddTHH:mm:ss";
-            var userProgress = AppDbContext.User.GetProgressDailyByUserId(userId);
+            var userProgress = AppDbContext.Progress.GetProgressDailyByUserId(userId);
             var weightList = GetWeightList(responseLoginUser, conversionSystem, 0, userProgress.Count);
 
             IEnumerable<decimal> weightListWeights = weightList
@@ -203,7 +203,7 @@ namespace MCMAutomation.APIHelpers.Client.WeightTracker
 
         public static void VerifyChangedWeekWeight(SignInResponseModel responseLoginUser, int conversionSystem, string userId)
         {
-            var userProgressExpected = AppDbContext.User.GetProgressDailyByUserId(userId);
+            var userProgressExpected = AppDbContext.Progress.GetProgressDailyByUserId(userId);
             List<decimal> expectedAverages = CalculateAverages(userProgressExpected, conversionSystem);
             var weightList = GetWeightList(responseLoginUser, conversionSystem, 0, userProgressExpected.Count);
             var expectedChangeWeek = CalculateWeeklyWeightChanges(expectedAverages);

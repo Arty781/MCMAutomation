@@ -73,7 +73,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -111,7 +111,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -150,7 +150,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -184,7 +184,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -218,7 +218,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -265,7 +265,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -312,7 +312,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -365,7 +365,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -420,7 +420,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -471,7 +471,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -519,7 +519,7 @@ namespace MCMAutomation.Helpers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                     }
                     finally
                     {
@@ -563,7 +563,7 @@ namespace MCMAutomation.Helpers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                     }
                     finally
                     {
@@ -606,7 +606,7 @@ namespace MCMAutomation.Helpers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                     }
                     finally
                     {
@@ -653,7 +653,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -693,7 +693,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -734,7 +734,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -812,7 +812,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -860,7 +860,7 @@ namespace MCMAutomation.Helpers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                     }
                     finally
                     {
@@ -894,7 +894,7 @@ namespace MCMAutomation.Helpers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                     }
                     finally
                     {
@@ -941,7 +941,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -979,7 +979,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1012,7 +1012,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1044,7 +1044,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1074,7 +1074,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1119,7 +1119,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1155,7 +1155,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1248,7 +1248,7 @@ namespace MCMAutomation.Helpers
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Помилка у юзера з Ид: {0}\r\n{1}", userMember.UserId, ex.StackTrace);
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                     }
                     finally
                     {
@@ -1280,7 +1280,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1307,7 +1307,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1315,6 +1315,86 @@ namespace MCMAutomation.Helpers
                     // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
+            }
+
+            public static List<DB.ProgressDaily> GetProgressDailyByUserId(string id)
+            {
+                var list = new List<DB.ProgressDaily>();
+                string query = "SELECT *\r\n  " +
+                               "FROM [dbo].[DailyProgress]\r\n  " +
+                               "where UserId = @UserId and IsDeleted = 0" +
+                               "order by Date";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    command.Parameters.AddWithValue("@UserId", DbType.String).Value = id;
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var progressRow = new DB.ProgressDaily();
+                        progressRow.Id = reader.GetInt32(0);
+                        progressRow.Date = reader.GetDateTime(1);
+                        progressRow.Weight = reader.GetDecimal(2);
+                        progressRow.UserId = reader.GetString(3);
+                        progressRow.CreationDate = reader.GetDateTime(4);
+                        progressRow.IsDeleted = reader.GetBoolean(5);
+                        list.Add(progressRow);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+                return list;
+            }
+
+            public static List<DB.ProgressDaily> GetAllProgressDailyByUserId(string id)
+            {
+                var list = new List<DB.ProgressDaily>();
+                string query = "SELECT *\r\n  " +
+                               "FROM [dbo].[DailyProgress]\r\n  " +
+                               "where UserId = @UserId " +
+                               "order by Date";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    command.Parameters.AddWithValue("@UserId", DbType.String).Value = id;
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var progressRow = new DB.ProgressDaily();
+                        progressRow.Id = reader.GetInt32(0);
+                        progressRow.Date = reader.GetDateTime(1);
+                        progressRow.Weight = reader.GetDecimal(2);
+                        progressRow.UserId = reader.GetString(3);
+                        progressRow.CreationDate = reader.GetDateTime(4);
+                        progressRow.IsDeleted = reader.GetBoolean(5);
+                        list.Add(progressRow);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+                return list;
             }
         }
 
@@ -1375,7 +1455,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1441,7 +1521,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1503,7 +1583,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1512,85 +1592,7 @@ namespace MCMAutomation.Helpers
                 }
             }
 
-            public static List<DB.ProgressDaily> GetProgressDailyByUserId(string id)
-            {
-                var list = new List<DB.ProgressDaily>();
-                string query = "SELECT *\r\n  " +
-                               "FROM [dbo].[DailyProgress]\r\n  " +
-                               "where UserId = @UserId and IsDeleted = 0" +
-                               "order by Date";
-                try
-                {
-                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
-                    SqlCommand command = new(query, db);
-                    command.Parameters.AddWithValue("@UserId", DbType.String).Value = id;
-                    db.Open();
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        var progressRow = new DB.ProgressDaily();
-                        progressRow.Id = reader.GetInt32(0);
-                        progressRow.Date = reader.GetDateTime(1);
-                        progressRow.Weight = reader.GetDecimal(2);
-                        progressRow.UserId = reader.GetString(3);
-                        progressRow.CreationDate = reader.GetDateTime(4);
-                        progressRow.IsDeleted = reader.GetBoolean(5);
-                        list.Add(progressRow);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
-                }
-                finally
-                {
-
-                    // Забезпечуємо вивільнення ресурсів
-                    SqlConnection.ClearAllPools();
-                }
-                return list;
-            }
-
-            public static List<DB.ProgressDaily> GetAllProgressDailyByUserId(string id)
-            {
-                var list = new List<DB.ProgressDaily>();
-                string query = "SELECT *\r\n  " +
-                               "FROM [dbo].[DailyProgress]\r\n  " +
-                               "where UserId = @UserId " +
-                               "order by Date";
-                try
-                {
-                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
-                    SqlCommand command = new(query, db);
-                    command.Parameters.AddWithValue("@UserId", DbType.String).Value = id;
-                    db.Open();
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        var progressRow = new DB.ProgressDaily();
-                        progressRow.Id = reader.GetInt32(0);
-                        progressRow.Date = reader.GetDateTime(1);
-                        progressRow.Weight = reader.GetDecimal(2);
-                        progressRow.UserId = reader.GetString(3);
-                        progressRow.CreationDate = reader.GetDateTime(4);
-                        progressRow.IsDeleted = reader.GetBoolean(5);
-                        list.Add(progressRow);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
-                }
-                finally
-                {
-
-                    // Забезпечуємо вивільнення ресурсів
-                    SqlConnection.ClearAllPools();
-                }
-                return list;
-            }
+            
         }
 
         public class JsonUserExercisesReq
@@ -1633,7 +1635,7 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Помилка: {0}\r\n{1}", ex.Message, ex.StackTrace);
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
                 }
                 finally
                 {
@@ -1646,5 +1648,48 @@ namespace MCMAutomation.Helpers
             }
         }
 
+        public class SubAllMemberships
+        {
+            public static List<DB.SubAllMembershipModel>? GetSubAllMembershipsGroup(int membershipId)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                var list = new List<DB.SubAllMembershipModel>();
+                string query = "SELECT *" +
+                               "FROM [SubAllMembershipGroups] " +
+                               $"WHERE isDeleted = 0 AND ParentMembershipId = {membershipId}";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.SubAllMembershipModel();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.ParentMembershipId = GetValueOrDefault<int>(reader, 1);
+                        row.SubAllMembershipId = GetValueOrDefault<int>(reader, 2);
+                        row.Description = GetValueOrDefault<string>(reader, 3);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 5);
+                        list.Add(row);
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+
+                return list;
+            }
+        }
     }
 }

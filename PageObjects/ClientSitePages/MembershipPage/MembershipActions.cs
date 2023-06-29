@@ -42,12 +42,13 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         #region Select phase
 
         [AllureStep("Select Phase")]
-        public MembershipUser SelectPhaseAndWeek(int phaseNum, int weekNum)
+        public MembershipUser SelectPhaseAndWeek(int phaseNum, int weekNum, out int countWorkouts)
         {
             Button.Click(selectPhaseBtn[phaseNum]);
             Button.Click(weekSelectorInput);
             Button.Click(listWeekNumber[weekNum]);
             Button.Click(viewTrainingProgramBtn);
+            countWorkouts = Pages.WebPages.MembershipUser.GetWorkoutsCount();
             return this;
         }
 
@@ -80,6 +81,22 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         #endregion
 
         #region Workouts page
+
+        public MembershipUser AddWeightAndEnterNotes(int countWorkouts)
+        {
+            for (int j = 0; j < countWorkouts; j++)
+            {
+                Pages.WebPages.MembershipUser
+                    .OpenWorkout()
+                    .AddWeight(out List<string> addedWeightList)
+                    .EnterNotes()
+                    .ClickCompleteWorkoutBtn()
+                    .OpenCompletedWorkout()
+                    .VerifyAddedWeights(addedWeightList)
+                    .ClickBackBtn();
+            }
+            return this;
+        }
 
         [AllureStep("Open workout")]
         public MembershipUser OpenWorkout()
@@ -127,8 +144,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         #region Enter Data For Exercises
 
         [AllureStep("Add Weight")]
-        public MembershipUser AddWeight()
+        public MembershipUser AddWeight(out List<string> addedWeightList)
         {
+            WaitUntil.WaitForElementToDisappear(Pages.CommonPages.Common.loader, 10);
             WaitUntil.WaitForElementToAppear(weightInput.FirstOrDefault());
             int i = 0;
             IList<IWebElement> weightList = weightInput.Where(x => x.Displayed).ToList();
@@ -145,7 +163,9 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 }
                 i++;
             }
-               
+
+            addedWeightList = Pages.WebPages.MembershipUser.GetWeightData();
+
             return this;
         }
 
@@ -264,8 +284,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
                 int phaseNum = i;
                 int weekNum = i;
                 OpenMembership();
-                SelectPhaseAndWeek(phaseNum, weekNum);
-                int weeksCount = Pages.WebPages.MembershipUser.GetWeekNumber();
+                SelectPhaseAndWeek(phaseNum, weekNum, out int weeksCount);
                 SelectWeek(weeksCount);
                 OpenMembershipPage();
             } 
@@ -288,8 +307,7 @@ namespace MCMAutomation.PageObjects.ClientSitePages
         private void OpenWorkoutAndEnterWeight()
         {
             OpenWorkout();
-            AddWeight();
-            List<string> addedWeightList = Pages.WebPages.MembershipUser.GetWeightData();
+            AddWeight(out List<string> addedWeightList);
             EnterNotes();
             ClickCompleteWorkoutBtn();
             OpenCompletedWorkout();

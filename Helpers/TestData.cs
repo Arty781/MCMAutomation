@@ -222,6 +222,16 @@ namespace MCMAutomation.Helpers
         {
             public int? UserMembershipId { get; set; }
         }
+
+        public class SubAllMembershipModel
+        {
+            public int? Id {get; set;}
+            public int? ParentMembershipId {get; set;}
+            public int? SubAllMembershipId {get; set;}
+            public string? Description {get; set;}
+            public DateTime? CreationDate {get; set;}
+            public bool? IsDeleted { get; set; }
+        }
     }
 
     public class UserAccount
@@ -336,6 +346,7 @@ namespace MCMAutomation.Helpers
         public const string SKU_CHM_FREE = "CHM-FREE";
         public const string SKU_YGC3 = "YGC3";
         public readonly static string SKU_CHALLENGE = $"CH{DateTime.Now.Date}-MS";
+        public readonly static string SKU_SUBALL_MEMBER = $"SUB-ALL-{DateTime.Now.Date}";
 
     }
 

@@ -37,18 +37,26 @@ namespace MCMAutomation.Helpers
         [TearDown]
         public static void TearDown()
         {
-            
+
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-               
+
                 TelegramHelper.SendMessage();
+                AppDbContext.User.DeleteUser($"qatester{DateTime.Now:yyyy-MM}%@xitroo.com");
+                AppDbContext.Memberships.DeleteMembership($"00Created New Membership {DateTime.Now:yyyy-MM}%");
+                AppDbContext.Exercises.DeleteExercises($"Test Exercise{DateTime.Now:yyyy-MM}%");
                 Browser.Close();
             }
-            else if(Browser._Driver != null)
+            else if (Browser._Driver != null)
             {
+                AppDbContext.User.DeleteUser($"qatester{DateTime.Now:yyyy-MM}%@xitroo.com");
+                AppDbContext.Memberships.DeleteMembership($"00Created New Membership {DateTime.Now:yyyy-MM}%");
+                AppDbContext.Exercises.DeleteExercises($"Test Exercise{DateTime.Now:yyyy-MM}%");
                 Browser.Close();
             }
-            
+
+
+
         }
     }
 }

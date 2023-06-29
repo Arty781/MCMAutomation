@@ -2343,22 +2343,8 @@ namespace MCMAutomation.WebTests
                 .ClosePopUp();
             Pages.WebPages.MembershipUser
                 .OpenMembership()
-                .SelectPhaseAndWeek(1, 0);
-            int countWorkouts = Pages.WebPages.MembershipUser.GetWorkoutsCount();
-            for (int j = 0; j < countWorkouts; j++)
-            {
-                Pages.WebPages.MembershipUser
-                    .OpenWorkout()
-                    .AddWeight();
-                List<string> addedWeightList = Pages.WebPages.MembershipUser.GetWeightData();
-                Pages.WebPages.MembershipUser
-                    .EnterNotes()
-                    .ClickCompleteWorkoutBtn()
-                    .OpenCompletedWorkout()
-                    .VerifyAddedWeights(addedWeightList);
-                Pages.WebPages.MembershipUser
-                    .ClickBackBtn();
-            }
+                .SelectPhaseAndWeek(1, 0, out int countWorkouts)
+                .AddWeightAndEnterNotes(countWorkouts);
 
             Pages.CommonPages.Login
                 .GetUserLogout();
@@ -2453,7 +2439,7 @@ namespace MCMAutomation.WebTests
             Pages.WebPages.MembershipUser
                 .ConfirmMembershipActivation()
                 .OpenMembership()
-                .SelectPhaseAndWeek(1, 1)
+                .SelectPhaseAndWeek(1, 1, out int countWorkouts)
                 .VerifyDisplayedDownloadBtn();
             Pages.WebPages.MembershipUser
                 .OpenMembershipPage();
@@ -2461,7 +2447,7 @@ namespace MCMAutomation.WebTests
             Pages.WebPages.MembershipUser
                 .ConfirmMembershipActivation()
                 .OpenMembership()
-                .SelectPhaseAndWeek(1, 1)
+                .SelectPhaseAndWeek(1, 1, out countWorkouts)
                 .VerifyDisplayedDownloadBtn();
             Pages.WebPages.MembershipUser
                 .OpenMembershipPage();
@@ -2469,7 +2455,7 @@ namespace MCMAutomation.WebTests
             Pages.WebPages.MembershipUser
                 .ConfirmMembershipActivation()
                 .OpenMembership()
-                .SelectPhaseAndWeek(1, 1)
+                .SelectPhaseAndWeek(1, 1, out countWorkouts)
                 .VerifyDisplayedDownloadBtn();
 
             Pages.CommonPages.Login

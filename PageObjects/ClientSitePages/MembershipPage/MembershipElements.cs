@@ -101,17 +101,18 @@ namespace MCMAutomation.PageObjects.ClientSitePages
 
         #region Exercises page
 
-        [FindsBy(How = How.XPath, Using = "//tr//td[4]//input[@class='view-workout_table_input']")]
+        [FindsBy(How = How.XPath, Using = "//td[@class='view-workout_table_cell-weight']/input")]
         public IList<IWebElement> weightInput;
 
-        [FindsBy(How = How.XPath, Using = "//tr//td[4]//input[@class='view-workout_table_input']")]
+        [FindsBy(How = How.XPath, Using = "//td[@class='view-workout_table_cell-weight']/input")]
         public IWebElement weightInputElem;
 
-        [FindsBy(How=How.XPath,Using = "//tbody//td//span[@class='view-workout_table_readonly']")]
+        [FindsBy(How=How.XPath,Using = "//td[@class='view-workout_table_cell-weight']/span")]
         public IList<IWebElement> outputWeight;
 
         [FindsBy(How = How.XPath, Using = "//tr//td[5]//input[@class='view-workout_table_input']")]
         public IList<IWebElement> repsInput;
+
         [FindsBy(How = How.XPath, Using = "//tr//td[5]//input[@class='view-workout_table_input']")]
         public IWebElement repsInputElem;
 
