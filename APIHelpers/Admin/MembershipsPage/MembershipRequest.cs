@@ -9,6 +9,7 @@ using Telegram.Bot.Types;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Linq;
 using static MCMAutomation.Helpers.AppDbContext;
+using static MCMAutomation.APIHelpers.Client.Membership.MembershipModel;
 
 namespace MCMAutomation.APIHelpers
 {
@@ -175,6 +176,23 @@ namespace MCMAutomation.APIHelpers
             return JsonConvert.SerializeObject(req);
         }
 
+        private static string JsonSubAllBody(List<DB.Memberships>? memberships, int numberOfMemberships)
+        {
+            List<SubAllMembershipsReq> body = new();
+            for (int i=1; i<numberOfMemberships; i++)
+            {
+                SubAllMembershipsReq req = new()
+                {
+                    SubAllMembershipId = memberships[RandomHelper.RandomNumFromOne(memberships.Count)].Id,
+                    Description = Lorem.ParagraphByChars(50)
+                };
+                body.Add(req);
+            }
+
+            return JsonConvert.SerializeObject(body);
+        }
+
+
         #endregion
 
         #region Requests
@@ -268,7 +286,7 @@ namespace MCMAutomation.APIHelpers
             }
         }
 
-        public static void CreateSubAllMembership(SignInResponseModel SignIn, string sku)
+        public static void CreateSubAllMembership(SignInResponseModel SignIn, string sku, List<DB.Memberships>? memberships, int numberOfMemberships)
         {
             HttpRequest req = new()
             {
@@ -294,11 +312,7 @@ namespace MCMAutomation.APIHelpers
             req.AddParam("gender", "0");
             req.AddParam("relatedMembershipIds", "");
             req.AddParam("forPurchase", "true");
-            req.AddParam("SubAllMemberships", "[" +
-                $"{{\r\n\"subAllMembershipId\": 53,\r\n\"description\": \"{Lorem.ParagraphByChars(250)}\"\r\n}}," +
-                $"\r\n{{\r\n\"subAllMembershipId\": 54,\r\n\"description\": \"{Lorem.ParagraphByChars(250)}\"\r\n}}," +
-                $"\r\n{{\r\n\"subAllMembershipId\": 55,\r\n\"description\": \"{Lorem.ParagraphByChars(250)}\"\r\n}}" +
-                "]");
+            req.AddParam("SubAllMemberships", JsonSubAllBody(memberships, numberOfMemberships));
 
             Http http = new Http();
 
@@ -557,7 +571,7 @@ namespace MCMAutomation.APIHelpers
             }
         }
 
-        public static void ActivateUserMembership(SignInResponseModel SignIn, int userMembershipId, string userId)
+        public static void ActivateUserMembership(SignInResponseModel SignIn, int? userMembershipId, string userId)
         {
             HttpRequest req = new HttpRequest
             {
@@ -574,7 +588,7 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.SynchronousRequest("mcmstaging-api.azurewebsites.net", 443, true, req);
             if (!resp.StatusCode.ToString().StartsWith("2"))
             {
-                throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
+                throw new ArgumentException("Request " + resp.Domain + req.Path + "\r\n was failed with: " + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
         }
 
@@ -582,17 +596,17 @@ namespace MCMAutomation.APIHelpers
 
         #region Methods
 
-        public static List<DB.Programs> CreatePrograms(SignInResponseModel responseLoginAdmin, DB.Memberships membership, int programCount)
-        {
-            CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
-            return programs;
-        }
+        //public static List<DB.Programs> CreatePrograms(SignInResponseModel responseLoginAdmin, DB.Memberships membership, int programCount)
+        //{
+        //    CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
+        //    return programs;
+        //}
 
-        public static List<DB.Workouts> CreateWorkouts(SignInResponseModel responseLoginAdmin, List<DB.Programs> programs, int programCount)
-        {
-            CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
-            return workouts;
-        }
+        //public static List<DB.Workouts> CreateWorkouts(SignInResponseModel responseLoginAdmin, List<DB.Programs> programs, int programCount)
+        //{
+        //    CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
+        //    return workouts;
+        //}
 
         public static void AddExercisesToWorkouts(SignInResponseModel responseLoginAdmin, List<DB.Workouts> workouts)
         {
@@ -604,7 +618,7 @@ namespace MCMAutomation.APIHelpers
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            DB.Memberships membership = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 1;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);

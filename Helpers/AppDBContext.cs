@@ -326,10 +326,10 @@ namespace MCMAutomation.Helpers
 
         public class Memberships
         {
-            public static DB.Memberships? GetLastMembership()
+            public static void GetLastMembership(out DB.Memberships membership)
             {
                 WaitUntil.WaitSomeInterval(5000);
-                var row = new DB.Memberships();
+                membership = new();
                 string query = "SELECT TOP(1)*" +
                                              "FROM [Memberships] " +
                                              "WHERE isDeleted = 0 " +
@@ -343,7 +343,57 @@ namespace MCMAutomation.Helpers
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        row.Id = GetValueOrDefault<Int32>(reader, 0);
+                        membership.Id = GetValueOrDefault<Int32>(reader, 0);
+                        membership.SKU = GetValueOrDefault<string>(reader, 1);
+                        membership.Name = GetValueOrDefault<string>(reader, 2);
+                        membership.Description = GetValueOrDefault<string>(reader, 3);
+                        membership.StartDate = GetValueOrDefault<DateTime>(reader, 4);
+                        membership.EndDate = GetValueOrDefault<DateTime>(reader, 5);
+                        membership.URL = GetValueOrDefault<string>(reader, 6);
+                        membership.Price = GetValueOrDefault<decimal>(reader, 7);
+                        membership.CreationDate = GetValueOrDefault<DateTime>(reader, 8);
+                        membership.IsDeleted = GetValueOrDefault<bool>(reader, 9);
+                        membership.IsCustom = GetValueOrDefault<bool>(reader, 10);
+                        membership.ForPurchase = GetValueOrDefault<bool>(reader, 11);
+                        membership.AccessWeekLength = GetValueOrDefault<int>(reader, 12);
+                        membership.RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 13);
+                        membership.Gender = GetValueOrDefault<int>(reader, 14);
+                        membership.PromotionalPopupId = GetValueOrDefault<int>(reader, 15);
+                        membership.Type = GetValueOrDefault<int>(reader, 16);
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+                    SqlConnection.ClearAllPools();
+                }
+
+            }
+
+            public static List<DB.Memberships>? GetAllMemberships()
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                List<DB.Memberships>? list = new();
+                
+                string query = "SELECT *" +
+                                             "FROM [Memberships] " +
+                                             "WHERE isDeleted = 0 " +
+                                             "ORDER BY CreationDate DESC";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.Memberships();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
                         row.SKU = GetValueOrDefault<string>(reader, 1);
                         row.Name = GetValueOrDefault<string>(reader, 2);
                         row.Description = GetValueOrDefault<string>(reader, 3);
@@ -360,7 +410,7 @@ namespace MCMAutomation.Helpers
                         row.Gender = GetValueOrDefault<int>(reader, 14);
                         row.PromotionalPopupId = GetValueOrDefault<int>(reader, 15);
                         row.Type = GetValueOrDefault<int>(reader, 16);
-                        
+                        list.Add(row);
                     }
                 }
                 catch (Exception ex)
@@ -369,12 +419,11 @@ namespace MCMAutomation.Helpers
                 }
                 finally
                 {
-
                     // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
 
-                return row;
+                return list;
             }
             public static DB.Memberships GetActiveMembershipsNameAndSkuByEmail(string email)
             {
@@ -960,9 +1009,8 @@ namespace MCMAutomation.Helpers
             {
                 int str = 0;
                 string query = "Select top(1) id from UserMemberships\r\n" +
-                                             "where UserId in (" +
-                                             "Select id FROM AspNetUsers where Email = @email)\r\n" +
-                                             "order by CreationDate desc";
+                                             "where UserId in (Select id FROM AspNetUsers where Email = @email)\r\n" +
+                                             "order by Id desc";
                 try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
@@ -983,8 +1031,6 @@ namespace MCMAutomation.Helpers
                 }
                 finally
                 {
-
-                    // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
 
@@ -1016,8 +1062,6 @@ namespace MCMAutomation.Helpers
                 }
                 finally
                 {
-
-                    // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
 
@@ -1078,8 +1122,6 @@ namespace MCMAutomation.Helpers
                 }
                 finally
                 {
-
-                    // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
             }
@@ -1259,6 +1301,104 @@ namespace MCMAutomation.Helpers
                 }
                 return list;
             }
+
+            public static void GetAllUsermembershipByUserId(DB.AspNetUsers user, out List<DB.UserMemberships> userMemberships)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                userMemberships = new List<DB.UserMemberships>();
+                string query = "SELECT * \r\n" +
+                               "FROM [dbo].[UserMemberships] \r\n" +
+                               $"where UserId = '{user.Id}'";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.UserMemberships();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        row.UserId = GetValueOrDefault<string>(reader, 2);
+                        row.StartOn = GetValueOrDefault<DateTime>(reader, 3);
+                        row.Active = GetValueOrDefault<bool>(reader, 4);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        row.OnPause = GetValueOrDefault<bool>(reader, 7);
+                        row.PauseEnd = GetValueOrDefault<DateTime>(reader, 8);
+                        row.PauseStart = GetValueOrDefault<DateTime>(reader, 9);
+                        row.DisplayedPromotionalPopupId = GetValueOrDefault<bool>(reader, 10);
+                        row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 11);
+                        row.ParentSubAllUserMembershipId = GetValueOrDefault<int>(reader, 12);
+
+                        userMemberships.Add(row);
+                    }
+                    var nonNullParentIds = userMemberships
+                        .Where(x => x.ParentSubAllUserMembershipId != null && x.ParentSubAllUserMembershipId !=0)
+                        .Select(x => x.ParentSubAllUserMembershipId.Value)
+                        .ToList();
+
+                    var filteredMemberships = userMemberships
+                        .Where(x => x.ParentSubAllUserMembershipId == null || !nonNullParentIds.Contains((int)x.Id))
+                        .ToList();
+
+                    userMemberships = filteredMemberships;
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+                    SqlConnection.ClearAllPools();
+                }
+
+            }
+
+            public static void GetLastUsermembershipByUserId(DB.AspNetUsers user, out DB.UserMemberships userMembership)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                userMembership = new();
+                string query = "SELECT * \r\n" +
+                               "FROM [dbo].[UserMemberships] \r\n" +
+                               $"where UserId = '{user.Id}' and ParentSubAllUserMembershipId is not null";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        userMembership.Id = GetValueOrDefault<int>(reader, 0);
+                        userMembership.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        userMembership.UserId = GetValueOrDefault<string>(reader, 2);
+                        userMembership.StartOn = GetValueOrDefault<DateTime>(reader, 3);
+                        userMembership.Active = GetValueOrDefault<bool>(reader, 4);
+                        userMembership.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        userMembership.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        userMembership.OnPause = GetValueOrDefault<bool>(reader, 7);
+                        userMembership.PauseEnd = GetValueOrDefault<DateTime>(reader, 8);
+                        userMembership.PauseStart = GetValueOrDefault<DateTime>(reader, 9);
+                        userMembership.DisplayedPromotionalPopupId = GetValueOrDefault<bool>(reader, 10);
+                        userMembership.ExpirationDate = GetValueOrDefault<DateTime>(reader, 11);
+                        userMembership.ParentSubAllUserMembershipId = GetValueOrDefault<int>(reader, 12);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+                    SqlConnection.ClearAllPools();
+                }
+
+            }
         }
 
         public class Progress
@@ -1284,8 +1424,6 @@ namespace MCMAutomation.Helpers
                 }
                 finally
                 {
-
-                    // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
             }

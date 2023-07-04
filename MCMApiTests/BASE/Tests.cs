@@ -2,6 +2,7 @@
 using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.AddProgress;
 using MCMAutomation.APIHelpers.Client.EditUser;
+using MCMAutomation.APIHelpers.Client.Membership;
 using MCMAutomation.APIHelpers.Client.SignUp;
 using MCMAutomation.APIHelpers.Client.WeightTracker;
 using MCMAutomation.APIHelpers.SignInPage;
@@ -36,19 +37,18 @@ namespace MCMApiTests
             string email = RandomHelper.RandomEmail();
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            //EditUserRequest.EditUser(responseLoginUser);
+            EditUserRequest.EditUser(responseLoginUser);
             string userId = AppDbContext.User.GetUserData(email).Id;
             #endregion
 
             #region Add and Activate membership to User
-            bool eightWeeks = false;
+
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
             const int programCount = 3;
-            var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
-            var workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
             MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
@@ -62,7 +62,7 @@ namespace MCMApiTests
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            DB.Memberships membership = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
@@ -77,7 +77,8 @@ namespace MCMApiTests
         public void CreateSubAllMembership()
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER);
+            var listOfMemberships = AppDbContext.Memberships.GetAllMemberships().Where(x=> x.SKU != null && !x.SKU.StartsWith("CH")).ToList();
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
 
         }
 
@@ -85,11 +86,12 @@ namespace MCMApiTests
         public void EditSubAllMembership()
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER);
-            DB.Memberships membership = AppDbContext.Memberships.GetLastMembership();
+            var listOfMemberships = AppDbContext.Memberships.GetAllMemberships().Where(x => x.Type == 0 && x.IsDeleted == false).ToList();
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
             var subAllMemberships = AppDbContext.SubAllMemberships.GetSubAllMembershipsGroup(membership.Id);
             MembershipRequest.EditSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, membership.Id, subAllMemberships);
-            membership = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.GetLastMembership(out membership);
             AppDbContext.Memberships.DeleteMembership(membership.Name);
 
         }
@@ -432,9 +434,75 @@ namespace MCMApiTests
     public class Memberships
     {
         [Test, Category("Memberships")]
-        public void GetUserMemberships()
+        public void CompleteSuballMemberships()
         {
+            #region Register New User
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            var user = AppDbContext.User.GetUserData(email);
+            #endregion
 
+            #region Add and Activate membership to User
+
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            var listOfMemberships = AppDbContext.Memberships.GetAllMemberships()
+                .Where(x => x.SKU != null && !x.SKU.StartsWith("CH")
+                                          && !x.Name.Contains("test", StringComparison.OrdinalIgnoreCase)
+                                          && !x.Name.Contains("jenna", StringComparison.OrdinalIgnoreCase)
+                                          && !x.Name.Contains("lorem", StringComparison.OrdinalIgnoreCase)
+                                          && !x.Name.Contains("phoenix", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, user.Id);
+
+            #endregion
+
+            #region Steps to Complete memberships
+
+            AppDbContext.UserMemberships.GetAllUsermembershipByUserId(user, out List<DB.UserMemberships> userMemberships);
+            foreach (var userMember in userMemberships)
+            {
+                MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMember.Id, user.Id);
+                ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser);
+            }
+
+            #endregion
+        }
+
+        [Test, Category("Memberships")]
+        public void CompleteProductMembership()
+        {
+            #region Register New User
+            string email = RandomHelper.RandomEmail();
+            SignUpRequest.RegisterNewUser(email);
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            var user = AppDbContext.User.GetUserData(email);
+            #endregion
+
+            #region Add and Activate membership to User
+
+            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
+            const int programCount = 3;
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
+            MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, user.Id);
+            AppDbContext.UserMemberships.GetLastUsermembershipByUserId(user, out DB.UserMemberships userMembership);
+            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembership.Id, user.Id);
+
+            #endregion
+
+            #region UserSteps
+
+            ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser);
+
+            #endregion
         }
     }
 
@@ -446,8 +514,55 @@ namespace MCMApiTests
 
         public void DemoS()
         {
+            #region Register New User
+            string email = "qatester91311@gmail.com";
+            SignUpRequest.RegisterNewUser(email);
+            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            EditUserRequest.EditUser(responseLoginUser);
+            var user = AppDbContext.User.GetUserData(email);
+            #endregion
+
+            #region Add and Activate membership to User
+
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
+            var listOfMemberships = AppDbContext.Memberships.GetAllMemberships()
+                .Where(x => x.SKU != null && !x.SKU.StartsWith("CH") 
+                    && !x.Name.Contains("test", StringComparison.OrdinalIgnoreCase) 
+                    && !x.Name.Contains("jenna", StringComparison.OrdinalIgnoreCase) 
+                    && !x.Name.Contains("lorem", StringComparison.OrdinalIgnoreCase)
+                    && !x.Name.Contains("phoenix", StringComparison.OrdinalIgnoreCase)
+                    && !x.Name.Contains("Building The Bikini Body Home Part 1", StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, user.Id);
+            //MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
+            //const int programCount = 3;
+            //MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
+            //MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
+            //MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
+            //AppDbContext.Memberships.GetLastMembership(out membershipData);
+            //MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, user.Id);
+            AppDbContext.UserMemberships.GetAllUsermembershipByUserId(user, out List<DB.UserMemberships> userMemberships);
+            foreach ( var userMember in userMemberships)
+            {
+                MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMember.Id, user.Id);
+                ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser);
+            }
+
+            #endregion
+
+            #region UserSteps
+
+            //ClientMembershipRequest.GetUserMemberships(responseLoginUser, out List<MembershipModel.GetMembership> getUserMemberships);
+            //ClientMembershipRequest.GetActiveMembershipForRandomPhase(responseLoginUser, out MembershipModel.GetActiveMembership getActiveMembership);
+            //ClientMembershipRequest.GetWorkoutsListForFirstWeek(responseLoginUser, getActiveMembership, -14, out List<MembershipModel.GetListByProgramWeekResponse> getWorkoutsListByProgramWeek);
+            //ClientMembershipRequest.GetUserWorkoutExercisesForFirstWeek(responseLoginUser, getActiveMembership, getWorkoutsListByProgramWeek, out MembershipModel.GetUserWorkoutExercisesResponse getUserWorkoutExercises);
+            //ClientMembershipRequest.SaveCompletedWorkoutForFirstWeek(responseLoginUser, getActiveMembership, getWorkoutsListByProgramWeek, getUserWorkoutExercises);
+
+            //ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser);
+
+            #endregion
         }
         public List<UserMember> DemoTest()
         {

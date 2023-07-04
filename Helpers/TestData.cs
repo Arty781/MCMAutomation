@@ -175,6 +175,7 @@ namespace MCMAutomation.Helpers
             public DateTime? PauseStart  {get; set;}
             public bool DisplayedPromotionalPopupId {get; set;}
             public DateTime? ExpirationDate { get; set; }
+            public int? ParentSubAllUserMembershipId { get; set;}
         }
 
         public class JsonUserExercises

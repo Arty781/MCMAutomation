@@ -2262,12 +2262,12 @@ namespace MCMAutomation.WebTests
 
             bool eightWeeks = false;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.Insert.InsertMembership(membership.Id, MembershipsSKU.SKU_PRODUCT, eightWeeks);
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
             const int programCount = 3;
-            var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
-            var workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
             MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
@@ -2324,10 +2324,10 @@ namespace MCMAutomation.WebTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
             const int programCount = 3;
-            var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
-            var workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
             MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
@@ -2384,12 +2384,12 @@ namespace MCMAutomation.WebTests
 
             bool eightWeeks = false;
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_PRODUCT, eightWeeks);
-            DB.Memberships membershipData = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships lastMembership);
+            AppDbContext.Memberships.Insert.InsertMembership(lastMembership.Id, MembershipsSKU.SKU_PRODUCT, eightWeeks);
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
             const int programCount = 3;
-            var programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
-            var workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
             MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
 
             #endregion
@@ -2397,20 +2397,20 @@ namespace MCMAutomation.WebTests
             #region Create Custom membership
 
             MembershipRequest.CreateCustomMembership(responseLoginAdmin, userId);
-            membershipData = AppDbContext.Memberships.GetLastMembership();
-            programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
-            workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            AppDbContext.Memberships.GetLastMembership(out membershipData);
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out workouts);
             MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
 
             #endregion
 
             #region Create Subscription membership
 
-            lastmemberId = AppDbContext.Memberships.GetLastMembership().Id;
-            AppDbContext.Memberships.Insert.InsertMembership(lastmemberId, MembershipsSKU.SKU_SUBSCRIPTION, eightWeeks);
-            membershipData = AppDbContext.Memberships.GetLastMembership();
-            programs = MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData, programCount);
-            workouts = MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount);
+            AppDbContext.Memberships.GetLastMembership(out lastMembership);
+            AppDbContext.Memberships.Insert.InsertMembership(lastMembership.Id, MembershipsSKU.SKU_SUBSCRIPTION, eightWeeks);
+            AppDbContext.Memberships.GetLastMembership(out membershipData);
+            MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out programs);
+            MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out workouts);
             MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
 
             #endregion
@@ -2571,7 +2571,7 @@ namespace MCMAutomation.WebTests
 
             #region Add and Activate membership to User
             string userId = AppDbContext.User.GetUserData(email).Id;
-            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipId);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
@@ -2649,9 +2649,9 @@ namespace MCMAutomation.WebTests
 
             #region Add and Activate membership to User
             var userId = AppDbContext.User.GetUserData(email);
-            DB.Memberships membershipId = AppDbContext.Memberships.GetLastMembership();
+            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.Id, userId.Id);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId.Id);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId.Id);
             #endregion
