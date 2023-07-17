@@ -553,17 +553,17 @@ namespace MCMAutomation.APIHelpers
 
         public static void AddUsersToMembership(SignInResponseModel SignIn, int MembershipId, string UserId)
         {
+            string url = String.Concat(Endpoints.API_HOST + "/Admin/AddUsersToMembership");
+            string jsonRequestBody = "{" +
+                                        $"\r\n\"membershipId\": {MembershipId}" + "," +
+                                        "\r\n\"type\": \"RD : ADD_MEMBERSHIP_TO_USER\"" + "," +
+                                        $"\r\n\"userId\": \"{UserId}\"" + "}";
             Http http = new()
             {
                 Accept = "application/json",
                 AuthToken = "Bearer " + SignIn.AccessToken
             };
 
-            string url = String.Concat(Endpoints.API_HOST + "/Admin/AddUsersToMembership");
-            string jsonRequestBody = "{" +
-                                        $"\r\n\"membershipId\": {MembershipId}" + "," +
-                                        "\r\n\"type\": \"RD : ADD_MEMBERSHIP_TO_USER\"" + "," +
-                                        $"\r\n\"userId\": \"{UserId}\"" + "}";
             HttpResponse resp = http.PostJson2(url, "application/json", jsonRequestBody);
             if (!resp.StatusCode.ToString().StartsWith("2"))
             {

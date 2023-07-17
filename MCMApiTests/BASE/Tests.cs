@@ -1,5 +1,8 @@
 ﻿using AngleSharp.Dom;
+using CsvHelper;
 using MCMAutomation.APIHelpers;
+using MCMAutomation.APIHelpers.Admin.PagesEducationPage;
+using MCMAutomation.APIHelpers.Admin.VideosPage;
 using MCMAutomation.APIHelpers.Client.AddProgress;
 using MCMAutomation.APIHelpers.Client.EditUser;
 using MCMAutomation.APIHelpers.Client.Membership;
@@ -8,6 +11,11 @@ using MCMAutomation.APIHelpers.Client.WeightTracker;
 using MCMAutomation.APIHelpers.SignInPage;
 using MCMAutomation.Helpers;
 using NUnit.Framework;
+using System.Formats.Asn1;
+using System.Globalization;
+using System.IO;
+using Telegram.Bot.Types;
+using static MCMAutomation.APIHelpers.Admin.VideosPage.Videos;
 
 namespace MCMApiTests
 {
@@ -78,7 +86,7 @@ namespace MCMApiTests
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var listOfMemberships = AppDbContext.Memberships.GetAllMemberships().Where(x=> x.SKU != null && !x.SKU.StartsWith("CH")).ToList();
-            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, "MCM_BIKINI_SUB", listOfMemberships, 6);
 
         }
 
@@ -229,7 +237,7 @@ namespace MCMApiTests
         public void RegisterUser()
         {
             #region Register New User
-            string email = RandomHelper.RandomEmail();
+            string email = "qatester92311@putsbox.com";
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser, 15, UserAccount.MALE);
@@ -437,7 +445,7 @@ namespace MCMApiTests
         public void CompleteSuballMemberships()
         {
             #region Register New User
-            string email = RandomHelper.RandomEmail();
+            string email = "qatester91311@gmail.com";
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser);
@@ -448,13 +456,16 @@ namespace MCMApiTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var listOfMemberships = AppDbContext.Memberships.GetAllMemberships()
-                .Where(x => x.SKU != null && !x.SKU.StartsWith("CH")
-                                          && !x.Name.Contains("test", StringComparison.OrdinalIgnoreCase)
-                                          && !x.Name.Contains("jenna", StringComparison.OrdinalIgnoreCase)
-                                          && !x.Name.Contains("lorem", StringComparison.OrdinalIgnoreCase)
-                                          && !x.Name.Contains("phoenix", StringComparison.OrdinalIgnoreCase))
-                .ToList();
-            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
+                                                                .Where(x => x.SKU != null
+                                                                    && !x.SKU.StartsWith("CH")
+                                                                    && !x.Name.Contains("test", StringComparison.OrdinalIgnoreCase)
+                                                                    && !x.Name.Contains("jenna", StringComparison.OrdinalIgnoreCase)
+                                                                    && !x.Name.Contains("lorem", StringComparison.OrdinalIgnoreCase)
+                                                                    && !x.Name.Contains("phoenix", StringComparison.OrdinalIgnoreCase)
+                                                                    && !x.Name.Contains("Building The Bikini Body Free Trial", StringComparison.OrdinalIgnoreCase)
+                                                                    && x.StartDate == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                                                                .ToList();
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 3);
             AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, user.Id);
 
@@ -463,11 +474,11 @@ namespace MCMApiTests
             #region Steps to Complete memberships
 
             AppDbContext.UserMemberships.GetAllUsermembershipByUserId(user, out List<DB.UserMemberships> userMemberships);
-            foreach (var userMember in userMemberships)
-            {
-                MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMember.Id, user.Id);
-                ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser);
-            }
+            //foreach (var userMember in userMemberships)
+            //{
+            //    MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMember.Id, user.Id);
+            //    ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser, -15);
+            //}
 
             #endregion
         }
@@ -476,7 +487,7 @@ namespace MCMApiTests
         public void CompleteProductMembership()
         {
             #region Register New User
-            string email = RandomHelper.RandomEmail();
+            string email = "qatester91311@gmail.com";
             SignUpRequest.RegisterNewUser(email);
             var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
             EditUserRequest.EditUser(responseLoginUser);
@@ -500,7 +511,7 @@ namespace MCMApiTests
 
             #region UserSteps
 
-            ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser);
+            ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser, -72);
 
             #endregion
         }
@@ -514,56 +525,39 @@ namespace MCMApiTests
 
         public void DemoS()
         {
-            #region Register New User
-            string email = "qatester91311@gmail.com";
-            SignUpRequest.RegisterNewUser(email);
-            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser);
-            var user = AppDbContext.User.GetUserData(email);
-            #endregion
+            var we = AppDbContext.WorkoutExercises.GetWorkoutExercises().Where(g => g.IsDeleted == false).Select(g => g);
+            var duplicateRecords = we
+            .GroupBy(r => new { r.WorkoutId, r.Series })
+            .Where(g => g.Count() > 1)
+            .SelectMany(g => g)
+            .GroupBy(r => new { r.WorkoutId, r.Series, r.WorkoutExerciseGroupId })
+            .Where(g => g.Count() == 1)
+            .SelectMany(g => g)
+            .ToList();
 
-            #region Add and Activate membership to User
-
-            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            var listOfMemberships = AppDbContext.Memberships.GetAllMemberships()
-                .Where(x => x.SKU != null && !x.SKU.StartsWith("CH") 
-                    && !x.Name.Contains("test", StringComparison.OrdinalIgnoreCase) 
-                    && !x.Name.Contains("jenna", StringComparison.OrdinalIgnoreCase) 
-                    && !x.Name.Contains("lorem", StringComparison.OrdinalIgnoreCase)
-                    && !x.Name.Contains("phoenix", StringComparison.OrdinalIgnoreCase)
-                    && !x.Name.Contains("Building The Bikini Body Home Part 1", StringComparison.OrdinalIgnoreCase))
-                .ToList();
-            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, user.Id);
-            //MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            //const int programCount = 3;
-            //MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
-            //MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
-            //MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
-            //AppDbContext.Memberships.GetLastMembership(out membershipData);
-            //MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, user.Id);
-            AppDbContext.UserMemberships.GetAllUsermembershipByUserId(user, out List<DB.UserMemberships> userMemberships);
-            foreach ( var userMember in userMemberships)
+            // Provide the file path where you want to save the CSV file
+            var filePath = Path.Combine("E:\\Users\\ARTY\\Downloads\\MCM_WORKOUT_EXERCISES.csv");
+            if (!System.IO.File.Exists(filePath))
             {
-                MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMember.Id, user.Id);
-                ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser);
+                System.IO.File.Create(filePath);
+            }
+            // Create a StreamWriter to write to the CSV file
+            using var writer = new StreamWriter(filePath);
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            // Write the CSV header based on the WorkoutExercises class properties
+            csv.WriteHeader<DB.WorkoutExercises>();
+            csv.NextRecord();
+
+            // Write each duplicate record to the CSV file
+            foreach (var record in duplicateRecords)
+            {
+                csv.WriteRecord(record);
+                csv.NextRecord();
             }
 
-            #endregion
-
-            #region UserSteps
-
-            //ClientMembershipRequest.GetUserMemberships(responseLoginUser, out List<MembershipModel.GetMembership> getUserMemberships);
-            //ClientMembershipRequest.GetActiveMembershipForRandomPhase(responseLoginUser, out MembershipModel.GetActiveMembership getActiveMembership);
-            //ClientMembershipRequest.GetWorkoutsListForFirstWeek(responseLoginUser, getActiveMembership, -14, out List<MembershipModel.GetListByProgramWeekResponse> getWorkoutsListByProgramWeek);
-            //ClientMembershipRequest.GetUserWorkoutExercisesForFirstWeek(responseLoginUser, getActiveMembership, getWorkoutsListByProgramWeek, out MembershipModel.GetUserWorkoutExercisesResponse getUserWorkoutExercises);
-            //ClientMembershipRequest.SaveCompletedWorkoutForFirstWeek(responseLoginUser, getActiveMembership, getWorkoutsListByProgramWeek, getUserWorkoutExercises);
-
-            //ClientMembershipRequest.GetActiveMembershipForAllPhases(responseLoginUser);
-
-            #endregion
         }
+
+
         public List<UserMember> DemoTest()
         {
             var listUsers = new List<UserMember>();

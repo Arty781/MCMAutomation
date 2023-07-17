@@ -30,16 +30,16 @@ namespace MCMAutomation.APIHelpers.Client.Membership
         private static string JsonBody(MembershipModel.GetActiveMembership activeMembership, MembershipModel.Program program, int numberOfDays, int weekNumber)
         {
             MembershipModel.GetListByProgramWeekRequest body = new();
-            
-                body.ProgramId = program.Id;
-                body.ProgramWeek = weekNumber;
+
+            body.ProgramId = program.Id;
+            body.ProgramWeek = weekNumber;
             if (weekNumber == 1)
             {
-                body.StartOn = DateTime.Now.AddDays(numberOfDays).Date;
+                body.StartOn = RandomHelper.RandomMondayByDays(numberOfDays);
             }
-                body.IsMobile = true;
-                body.UserMembershipId = activeMembership.Id;
-            
+            body.IsMobile = true;
+            body.UserMembershipId = activeMembership.Id;
+
 
             return JsonConvert.SerializeObject(body);
 
@@ -246,7 +246,7 @@ namespace MCMAutomation.APIHelpers.Client.Membership
             }
         }
 
-        public static void GetActiveMembershipForAllPhases(SignInResponseModel loginResponse)
+        public static void GetActiveMembershipForAllPhases(SignInResponseModel loginResponse, int numberOfDays)
         {
             HttpRequest req = new()
             {
@@ -268,7 +268,7 @@ namespace MCMAutomation.APIHelpers.Client.Membership
             var response = JsonConvert.DeserializeObject<MembershipModel.GetActiveMembership>(resp.BodyStr);
             foreach (var phase in response.Programs)
             {
-                GetWorkoutsListForAllPhases(loginResponse, response, phase, -45);
+                GetWorkoutsListForAllPhases(loginResponse, response, phase, numberOfDays);
             }
             
         }

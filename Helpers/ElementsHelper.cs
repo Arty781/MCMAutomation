@@ -1,9 +1,13 @@
-﻿using MCMAutomation.PageObjects;
+﻿using CONFIG_JSON;
+using HtmlAgilityPack;
+using MCMAutomation.PageObjects;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TextCopy;
 
@@ -180,5 +184,30 @@ namespace MCMAutomation.Helpers
                 Console.WriteLine("Error setting text to clipboard: " + ex.Message);
             }
         }
+    }
+
+    public class ParseHelper
+    {
+        public static void AddLinksToList(string html, out List<string> links)
+        {
+            links = new();
+            // Load HTML code into an HtmlDocument object
+            HtmlDocument htmlDoc = new();
+            htmlDoc.LoadHtml(html);
+
+            HtmlNodeCollection iframeNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='iframe-wrapper']/iframe");
+            if (iframeNodes != null)
+            {
+                foreach (HtmlNode iframeNode in iframeNodes)
+                {
+                    string src = iframeNode.GetAttributeValue("src", "");
+                    links.Add(src);
+                }
+            }
+
+        }
+
+
+
     }
 }

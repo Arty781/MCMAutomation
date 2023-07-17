@@ -71,5 +71,32 @@ namespace MCMAutomation.Helpers
         {
             return DateTime.Now.AddDays(-Random.Next(1, 365)).ToString("yyyy-MM-dd");
         }
+
+        public static DateTime MostRecentMonday()
+        {
+            DateTime currentDate = DateTime.Now;
+            int numberOfDaysC = 0;
+
+            while (currentDate.AddDays(numberOfDaysC).DayOfWeek != DayOfWeek.Monday)
+            {
+                numberOfDaysC--;
+            }
+
+            DateTime mostRecentMonday = currentDate.AddDays(numberOfDaysC).Date;
+            return mostRecentMonday;
+        }
+
+        public static DateTime RandomMondayByDays(int numOfDays)
+        {
+            DateTime currentDate = DateTime.Now;
+
+            while (currentDate.AddDays(numOfDays).DayOfWeek != DayOfWeek.Monday)
+            {
+                numOfDays = numOfDays >= 0 ? numOfDays + 1 : numOfDays - 1;
+            }
+
+            DateTime mostRecentMonday = currentDate.AddDays(numOfDays).Date;
+            return mostRecentMonday;
+        }
     }
 }

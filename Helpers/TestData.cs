@@ -3,6 +3,7 @@ using MCMAutomation.APIHelpers;
 using MCMAutomation.APIHelpers.Client.WeightTracker;
 using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions;
+using Newtonsoft.Json;
 using OpenQA.Selenium;
 using RimuTec.Faker;
 using System;
@@ -66,6 +67,24 @@ namespace MCMAutomation.Helpers
             public bool IsDeleted { get; set; }
             public int Type { get; set; }
 
+        }
+
+        public class WorkoutExercises
+        {
+            public int? Id { get; set; }
+            public int? WorkoutId { get; set; }
+            public int? ExerciseId { get; set; }
+            public int? Sets { get; set; }
+            public string? Reps { get; set; }
+            public string? Tempo { get; set; }
+            public int? Rest { get; set; }
+            public DateTime? CreationDate { get; set; }
+            public bool? IsDeleted { get; set; }
+            public string? Series { get; set; }
+            public string? Notes { get; set; }
+            public int? Week { get; set; }
+            public string? SimultaneouslyCreatedIds { get; set; }
+            public int? WorkoutExerciseGroupId { get; set; }
         }
 
         public class Programs
@@ -232,6 +251,37 @@ namespace MCMAutomation.Helpers
             public string? Description {get; set;}
             public DateTime? CreationDate {get; set;}
             public bool? IsDeleted { get; set; }
+        }
+
+        public class Pages
+        {
+            public int Id { get; set; }
+            public string Title { get; set; }
+            public string NavigationLabel { get; set; }
+            public string Content { get; set; }
+            public int Order { get; set; }
+            public DateTime CreationDate { get; set; }
+            public bool IsDeleted { get; set; }
+        }
+
+        public class PagesInMemberships
+        {
+            public int Id { get; set; }
+            public int PageId { get; set; }
+            public int MembershipId { get; set; }
+            public DateTime CreationDate { get; set; }
+            public bool IsDeleted { get; set; }
+        }
+
+        public class VideosHelper
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string Url { get; set; }
+            public bool IsForAllMemberships { get; set; }
+            public DateTime CreationDate { get; set; }
+            public bool IsDeleted { get; set; }
         }
     }
 
@@ -414,5 +464,165 @@ namespace MCMAutomation.Helpers
         public const string THIGH = "thigh";
         public const string CHEST = "chest";
         public const string ARM = "arm";
+    }
+
+    public class VideoAdmin
+    {
+        public static List<string> TAGS = new()
+        {
+            "gym workouts",
+            "strength training",
+            "weightlifting",
+            "bodybuilding",
+            "muscle building",
+            "fitness tips",
+            "workout routines",
+            "exercise motivation",
+            "gym vlogs",
+            "fitness challenges",
+            "cardio workouts",
+            "HIIT workouts",
+            "crossfit training",
+            "kettlebell exercises",
+            "resistance training",
+            "functional training",
+            "circuit training",
+            "bodyweight exercises",
+            "gym transformations",
+            "workout motivation",
+            "gym progress",
+            "fitness goals",
+            "gym inspiration",
+            "gym equipment",
+            "gym reviews",
+            "workout apparel",
+            "gym accessories",
+            "gym diet",
+            "nutrition tips",
+            "healthy eating",
+            "meal prepping",
+            "protein shakes",
+            "pre-workout supplements",
+            "post-workout recovery",
+            "fitness trackers",
+            "gym gadgets",
+            "fitness apps",
+            "gym music",
+            "workout playlists",
+            "fitness influencers",
+            "gym lifestyle",
+            "gym humor",
+            "gym fails",
+            "gym challenges",
+            "gym buddies",
+            "gym etiquette",
+            "gym tips for beginners",
+            "gym hacks",
+            "gym myths debunked",
+            "home workouts",
+            "online fitness classes",
+            "gym vs. outdoor workouts",
+            "stretching exercises",
+            "yoga for strength",
+            "pilates workouts",
+            "barre workouts",
+            "group fitness classes",
+            "spin classes",
+            "kickboxing workouts",
+            "boxing training",
+            "Zumba workouts",
+            "dance fitness",
+            "core exercises",
+            "abs workouts",
+            "glute workouts",
+            "leg day workouts",
+            "arm workouts",
+            "chest workouts",
+            "back workouts",
+            "shoulder workouts",
+            "bicep workouts",
+            "tricep workouts",
+            "full-body workouts",
+            "gym challenges",
+            "body transformation challenges",
+            "fitness competitions",
+            "powerlifting competitions",
+            "strongman competitions",
+            "bodybuilding competitions",
+            "gym motivation quotes",
+            "gym progress photos",
+            "gym selfie",
+            "fitness apparel hauls",
+            "fitness recipe videos",
+            "workout tutorial videos",
+            "gym equipment demonstrations",
+            "fitness Q&A sessions",
+            "workout recovery tips",
+            "workout injury prevention",
+            "gym safety tips",
+            "fitness mindset",
+            "gym time management",
+            "gym for mental health",
+            "gym for stress relief",
+            "fitness for seniors",
+            "fitness for kids",
+            "gym for pregnancy",
+            "gym for rehabilitation",
+            "gym for overall wellness"
+        };
+
+        public static List<string> CATEGORIES = new()
+        {
+            "Full Body Workouts",
+            "Strength Training",
+            "Muscle Building",
+            "Fat Loss",
+            "Cardio Workouts",
+            "Weightlifting Techniques",
+            "Bodyweight Exercises",
+            "HIIT (High-Intensity Interval Training)",
+            "CrossFit Workouts",
+            "Powerlifting",
+            "Functional Training",
+            "Gymnastics Training",
+            "Yoga for Fitness",
+            "Pilates Workouts",
+            "Core Strengthening",
+            "Abs Workouts",
+            "Leg Day Workouts",
+            "Upper Body Workouts",
+            "Chest Workouts",
+            "Back Workouts",
+            "Arm Workouts",
+            "Shoulder Workouts",
+            "Bicep Workouts",
+            "Tricep Workouts",
+            "Glute Workouts",
+            "Strength and Conditioning",
+            "Circuit Training",
+            "Bodybuilding Tips",
+            "Fitness Challenges",
+            "Gym Equipment Reviews",
+            "Workout Motivation",
+            "Nutrition and Diet Tips",
+            "Supplement Recommendations",
+            "Fitness Transformation Stories",
+            "Workout Routines for Beginners",
+            "Gym Safety and Injury Prevention",
+            "Flexibility and Stretching",
+            "Gym Apparel and Gear Reviews",
+            "Gym Etiquette",
+            "Exercise Science and Physiology",
+            "Female Fitness",
+            "Male Fitness",
+            "Senior Fitness",
+            "Fitness for Kids and Teens",
+            "Pre- and Postnatal Fitness",
+            "Weight Management",
+            "Sports-Specific Training",
+            "Gymnastics Skills and Techniques",
+            "Bodyweight Training for Travelers",
+            "Fitness Q&A and Expert Interviews"
+        };
     }
 }

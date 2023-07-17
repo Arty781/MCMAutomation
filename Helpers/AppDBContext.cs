@@ -324,6 +324,51 @@ namespace MCMAutomation.Helpers
             }
         }
 
+        public class WorkoutExercises
+        {
+            public static List<DB.WorkoutExercises> GetWorkoutExercises()
+            {
+                var list = new List<DB.WorkoutExercises>();
+                string query = "SELECT *\r\n" +
+                               "FROM WorkoutExercises;";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new DB.WorkoutExercises();
+                            row.Id = GetValueOrDefault<int>(reader, 0);
+                            row.WorkoutId = GetValueOrDefault<int>(reader, 1);
+                            row.ExerciseId = GetValueOrDefault<int>(reader, 2);
+                            row.Sets = GetValueOrDefault<int>(reader, 3);
+                            row.Reps = GetValueOrDefault<string>(reader, 4);
+                            row.Tempo = GetValueOrDefault<string>(reader, 5);
+                            row.Rest = GetValueOrDefault<int>(reader, 6);
+                            row.CreationDate = GetValueOrDefault<DateTime?>(reader, 7);
+                            row.IsDeleted = GetValueOrDefault<bool>(reader, 8);
+                            row.Series = GetValueOrDefault<string>(reader, 9);
+                            row.Notes = GetValueOrDefault<string>(reader, 10);
+                            row.Week = GetValueOrDefault<int>(reader, 11);
+                            row.SimultaneouslyCreatedIds = GetValueOrDefault<string>(reader, 12);
+                            row.WorkoutExerciseGroupId = GetValueOrDefault<int>(reader, 13);
+
+                            list.Add(row);
+
+                        }
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+                return list;
+            }
+        }
+
         public class Memberships
         {
             public static void GetLastMembership(out DB.Memberships membership)
@@ -1361,9 +1406,9 @@ namespace MCMAutomation.Helpers
             {
                 WaitUntil.WaitSomeInterval(5000);
                 userMembership = new();
-                string query = "SELECT * \r\n" +
+                string query = "SELECT TOP(1) * \r\n" +
                                "FROM [dbo].[UserMemberships] \r\n" +
-                               $"where UserId = '{user.Id}' and ParentSubAllUserMembershipId is not null";
+                               $"where UserId = '{user.Id}' or (UserId = '{user.Id}' and ParentSubAllUserMembershipId is not null)";
                 try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
@@ -1555,40 +1600,40 @@ namespace MCMAutomation.Helpers
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        user.Id = reader.GetString(0);
-                        user.FirstName = reader.GetString(1);
-                        user.LastName = reader.GetString(2);
-                        user.Email = reader.GetString(3);
-                        user.ConversionSystem = reader.GetInt32(4);
-                        user.Gender = reader.GetInt32(5);
-                        user.Birthdate = reader.GetDateTime(6);
-                        user.Weight = reader.GetDecimal(7);
-                        user.Height = reader.GetInt32(8);
-                        user.ActivityLevel = reader.GetInt32(9);
-                        user.Bodyfat = reader.GetDecimal(10);
-                        user.Calories = reader.GetInt32(11);
-                        user.Active = reader.GetBoolean(12);
-                        user.DateTime = reader.GetDateTime(13);
-                        user.UserName = reader.GetString(14);
-                        user.NormalizedUserName = reader.GetString(15);
-                        user.NormalizedEmail = reader.GetString(16);
-                        user.EmailConfirmed = reader.GetBoolean(17);
-                        user.PasswordHash = reader.GetString(18);
-                        user.SecurityStamp = reader.GetString(19);
-                        user.ConcurrencyStamp = reader.GetString(20);
-                        user.PhoneNumber = null;
-                        user.PhoneNumberConfirmed = reader.GetBoolean(22);
-                        user.TwoFactorEnabled = reader.GetBoolean(23);
-                        user.LockoutEnd = null;
-                        user.LockoutEnabled = reader.GetBoolean(25);
-                        user.AccessFailedCount = reader.GetInt32(26);
-                        user.IsDeleted = reader.GetBoolean(27);
-                        user.IsMainAdmin = reader.GetBoolean(28);
-                        user.LastGeneratedIdentityToken = null;
-                        user.Carbs = reader.GetInt32(30);
-                        user.Fats = reader.GetInt32(31);
-                        user.MaintenanceCalories = reader.GetInt32(32);
-                        user.Protein = reader.GetInt32(33);
+                        user.Id = GetValueOrDefault<string>(reader, 0);
+                        user.FirstName = GetValueOrDefault<string>(reader, 1);
+                        user.LastName = GetValueOrDefault<string>(reader, 2);
+                        user.Email = GetValueOrDefault<string>(reader, 3);
+                        user.ConversionSystem = GetValueOrDefault<int>(reader, 4);
+                        user.Gender = GetValueOrDefault<int>(reader, 5);
+                        user.Birthdate = GetValueOrDefault<DateTime>(reader, 6);
+                        user.Weight = GetValueOrDefault<decimal>(reader, 7);
+                        user.Height = GetValueOrDefault<int>(reader, 8);
+                        user.ActivityLevel = GetValueOrDefault<int>(reader, 9);
+                        user.Bodyfat = GetValueOrDefault<decimal>(reader, 10);
+                        user.Calories = GetValueOrDefault<int>(reader, 11);
+                        user.Active = GetValueOrDefault<bool>(reader, 12);
+                        user.DateTime = GetValueOrDefault<DateTime>(reader, 13);
+                        user.UserName = GetValueOrDefault<string>(reader, 14);
+                        user.NormalizedUserName = GetValueOrDefault<string>(reader, 15);
+                        user.NormalizedEmail =  GetValueOrDefault<string>(reader, 16);
+                        user.EmailConfirmed = GetValueOrDefault<bool>(reader, 17);
+                        user.PasswordHash = GetValueOrDefault<string>(reader, 18);
+                        user.SecurityStamp = GetValueOrDefault<string>(reader, 19);
+                        user.ConcurrencyStamp = GetValueOrDefault<string>(reader, 20);
+                        user.PhoneNumber = GetValueOrDefault<string>(reader, 21);
+                        user.PhoneNumberConfirmed = GetValueOrDefault<bool>(reader, 22);
+                        user.TwoFactorEnabled = GetValueOrDefault<bool>(reader, 23);
+                        user.LockoutEnd = GetValueOrDefault<DateTime?>(reader, 24);
+                        user.LockoutEnabled = GetValueOrDefault<bool>(reader, 25);
+                        user.AccessFailedCount = GetValueOrDefault<int>(reader, 26);
+                        user.IsDeleted = GetValueOrDefault<bool>(reader, 27);
+                        user.IsMainAdmin = GetValueOrDefault<bool>(reader, 28);
+                        user.LastGeneratedIdentityToken = GetValueOrDefault<string>(reader, 29);
+                        user.Carbs = GetValueOrDefault<int>(reader, 30);
+                        user.Fats = GetValueOrDefault<int>(reader, 31);
+                        user.MaintenanceCalories = GetValueOrDefault<int>(reader, 32);
+                        user.Protein = GetValueOrDefault<int>(reader, 33);
                     }
                 }
                 catch (Exception ex)
@@ -1827,6 +1872,127 @@ namespace MCMAutomation.Helpers
                 }
 
                 return list;
+            }
+        }
+
+        public class PagesDb
+        {
+            public static void GetAllPages(out List<DB.Pages>? pages)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                pages = new();
+                string query = "SELECT *" +
+                               "FROM [Pages] " +
+                               "WHERE isDeleted = 0";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.Pages();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.Title = GetValueOrDefault<string>(reader, 1);
+                        row.NavigationLabel = GetValueOrDefault<string>(reader, 2);
+                        row.Content = GetValueOrDefault<string>(reader, 3);
+                        row.Order = GetValueOrDefault<int>(reader, 4);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        pages.Add(row);
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+            }
+
+            public static void GetPagesInMemberships(out List<DB.PagesInMemberships>? pagesInMemberships)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                pagesInMemberships = new();
+                string query = "SELECT *" +
+                               "FROM [PagesInMemberships] " +
+                               "WHERE isDeleted = 0";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.PagesInMemberships();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.PageId = GetValueOrDefault<int>(reader, 1);
+                        row.MembershipId = GetValueOrDefault<int>(reader, 2);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 3);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 4);
+                        pagesInMemberships.Add(row);
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+
+            }
+
+        }
+
+        public class VideosHelper
+        {
+            public static void GetAllVideos(out List<DB.VideosHelper>? videos)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                videos = new();
+                string query = "SELECT *" +
+                               "FROM [Videos] " +
+                               "WHERE isDeleted = 0";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.VideosHelper();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.Name = GetValueOrDefault<string>(reader, 1);
+                        row.Description = GetValueOrDefault<string>(reader, 2);
+                        row.Url = GetValueOrDefault<string>(reader, 3);
+                        row.IsForAllMemberships = GetValueOrDefault<bool>(reader, 4);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        videos.Add(row);
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+            }
+
+            public static void UpdateAllVideoById(int videoId, string url)
+            {
+                string query = "UPDATE [Videos] " +
+                               $"SET Url = '{url}'" +
+                               $"WHERE Id = {videoId}";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        continue;
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+
             }
         }
     }
