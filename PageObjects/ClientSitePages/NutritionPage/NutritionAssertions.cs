@@ -101,13 +101,12 @@ namespace MCMAutomation.PageObjects.ClientSitePages
             _ => throw new ArgumentException("Invalid ActivityLevel value")
             };
 
-            maintainCalories = gender == "Male"
-            ? selectedAdditionalOption == TDEE.AdditionalOptions.ADDITIONAL_COMMON_OPTION
-                ? textOfSelectedAdditionalOption == "Yes"
-                    ? Math.Round((maintainCalories - 100), 0, MidpointRounding.AwayFromZero)
-                    : maintainCalories
-                : maintainCalories
-            : maintainCalories;
+            maintainCalories = gender == "Male" ? selectedAdditionalOption switch
+            {
+                TDEE.AdditionalOptions.ADDITIONAL_COMMON_OPTION when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories - 100), 0, MidpointRounding.AwayFromZero),
+                _ => maintainCalories
+            } : maintainCalories;
+
             maintainCalories = gender == "Female" ? selectedAdditionalOption switch
             {
                 TDEE.AdditionalOptions.PpOptions.BREASTFEEDING_LESS when textOfSelectedAdditionalOption == "Yes" => Math.Round((maintainCalories + 500), 0, MidpointRounding.AwayFromZero),
