@@ -22,7 +22,7 @@ namespace MCMAutomation.APIHelpers
             WorkoutsModel req = new()
             {
                 ProgramId = programId,
-                Name = "Workout " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -ff}"
+                Name = $"{count+1} Workout " + $"{DateTime.Now:HH-mm-ss -fffff}"
             };
 
             req.WeekDay = count switch
@@ -184,7 +184,55 @@ namespace MCMAutomation.APIHelpers
                 SubAllMembershipsReq req = new()
                 {
                     SubAllMembershipId = memberships[RandomHelper.RandomNumFromOne(memberships.Count)].Id,
-                    Description = Lorem.ParagraphByChars(50)
+                    Description = $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>" +
+                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>" +
+                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>" +
+                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>" +
+                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>" +
+                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>" +
+                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>" +
+                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>"
+
                 };
                 body.Add(req);
             }
@@ -484,7 +532,7 @@ namespace MCMAutomation.APIHelpers
                 req.AddHeader("accept-encoding", "gzip, deflate, br");
                 req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
 
-                req.AddParam("programName", "Phase " + $"{DateTime.Now:yyyy-MMM-ddd HH-mm-ss -fffff}");
+                req.AddParam("programName", $"{i+1} Phase " + $"{DateTime.Now:HH-mm-ss -fffff}");
                 req.AddParam("numberOfWeeks", "4");
                 req.AddParam("steps", "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
                 req.AddParam("availableDate", String.Empty);

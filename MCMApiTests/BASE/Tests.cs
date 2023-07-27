@@ -72,7 +72,7 @@ namespace MCMApiTests
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
             AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
             var exercises = AppDbContext.Exercises.GetExercisesData();
-            int programCount = 3;
+            int programCount = 4;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
             MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workouts, exercises);
@@ -86,7 +86,7 @@ namespace MCMApiTests
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var listOfMemberships = AppDbContext.Memberships.GetAllMemberships().Where(x=> x.SKU != null && !x.SKU.StartsWith("CH")).ToList();
-            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, "MCM_BIKINI_SUB", listOfMemberships, 6);
+            MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
 
         }
 
@@ -499,7 +499,7 @@ namespace MCMApiTests
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
             AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
-            const int programCount = 3;
+            const int programCount = 4;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
             MembershipRequest.AddExercisesToWorkouts(responseLoginAdmin, workouts);
@@ -527,6 +527,69 @@ namespace MCMApiTests
         {
             var we = AppDbContext.WorkoutExercises.GetWorkoutExercises().Where(g => g.IsDeleted == false).Select(g => g);
             var duplicateRecords = we
+            .GroupBy(r => new { r.WorkoutId, r.Series, r.WorkoutExerciseGroupId })
+            .Where(g => g.Count() > 1)
+            .SelectMany(g => g)
+            .GroupBy(r => new { r.WorkoutId, r.Series })
+            .Where(g => g.Count() > 1)
+            .SelectMany(g => g)
+            .ToList();
+
+            List<DB.CombinedWorkoutExercisesData> combRecords = new();
+            List<DB.JsonUserExercises> listJsonUserExercises = new();
+            foreach (var record in duplicateRecords)
+            {
+                combRecords.AddRange(AppDbContext.WorkoutExercises.GetCombinedDataOfWorkoutExercises(record.WorkoutId, record.Series));
+            }
+
+            foreach (var record in combRecords)
+            {
+                listJsonUserExercises.AddRange(AppDbContext.JsonUserExercisesReq.GetJsonUserExercisesByWorkoutExerciseId(record.WorkoutExerciseId));
+            }
+            var file1Path = Path.Combine("E:\\Users\\ARTY\\Downloads\\Combined_WORKOUT_EXERCISES_Data.csv");
+            using (var writer = new StreamWriter(file1Path))
+            {
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    // Write the CSV header based on the WorkoutExercises class properties
+                    csv.WriteHeader<DB.CombinedWorkoutExercisesData>();
+                    csv.NextRecord();
+
+                    // Write each duplicate record to the CSV file
+                    foreach (var record in combRecords)
+                    {
+                        csv.WriteRecord(record);
+                        csv.NextRecord();
+                    }
+                }
+            }
+
+            // Provide the file path where you want to save the CSV file
+            var file2Path = Path.Combine("E:\\Users\\ARTY\\Downloads\\JSON_EXERCISES_Data.csv");
+            using (var writer2 = new StreamWriter(file2Path))
+            {
+                using (var csv2 = new CsvWriter(writer2, CultureInfo.InvariantCulture))
+                {
+                    // Write the CSV header based on the WorkoutExercises class properties
+                    csv2.WriteHeader<DB.JsonUserExercises>();
+                    csv2.NextRecord();
+
+                    // Write each duplicate record to the CSV file
+                    foreach (var record in listJsonUserExercises)
+                    {
+                        csv2.WriteRecord(record);
+                        csv2.NextRecord();
+                    }
+                }
+            }
+
+        }
+
+        [Test]
+        public void DemoTest()
+        {
+            var we = AppDbContext.WorkoutExercises.GetWorkoutExercises().Where(g => g.IsDeleted == false).Select(g => g);
+            var duplicateRecords = we
             .GroupBy(r => new { r.WorkoutId, r.Series })
             .Where(g => g.Count() > 1)
             .SelectMany(g => g)
@@ -535,67 +598,54 @@ namespace MCMApiTests
             .SelectMany(g => g)
             .ToList();
 
-            // Provide the file path where you want to save the CSV file
-            var filePath = Path.Combine("E:\\Users\\ARTY\\Downloads\\MCM_WORKOUT_EXERCISES.csv");
-            if (!System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Create(filePath);
-            }
-            // Create a StreamWriter to write to the CSV file
-            using var writer = new StreamWriter(filePath);
-            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            // Write the CSV header based on the WorkoutExercises class properties
-            csv.WriteHeader<DB.WorkoutExercises>();
-            csv.NextRecord();
-
-            // Write each duplicate record to the CSV file
+            List<DB.CombinedWorkoutExercisesData> combRecords = new();
+            List<DB.JsonUserExercises> listJsonUserExercises = new();
             foreach (var record in duplicateRecords)
             {
-                csv.WriteRecord(record);
-                csv.NextRecord();
+                combRecords.AddRange(AppDbContext.WorkoutExercises.GetCombinedDataOfWorkoutExercises(record.WorkoutId, record.Series));
             }
 
-        }
-
-
-        public List<UserMember> DemoTest()
-        {
-            var listUsers = new List<UserMember>();
-            DateTime start = DateTime.Now.AddDays(-2).Date;
-            DateTime end = DateTime.Now;
-            var listUserMem = AppDbContext.UserMemberships.GetAllUsermembershipInRange(start, end);
-            for (int i = 0; i < 1; i++)
+            foreach (var record in combRecords)
             {
-                foreach (var item in listUserMem)
+                listJsonUserExercises.AddRange(AppDbContext.JsonUserExercisesReq.GetJsonUserExercisesByWorkoutExerciseId(record.WorkoutExerciseId));
+            }
+            var file1Path = Path.Combine("E:\\Users\\ARTY\\Downloads\\Combined_WORKOUT_EXERCISES_Data.csv");
+            using (var writer = new StreamWriter(file1Path))
+            {
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
-                    var userMemberList = AppDbContext.UserMemberships.GetAllUsermembershipByUserId(item, start, end);
-                    var listJsonExercises = AppDbContext.UserMemberships.GetUnicUserIdFromUserMembershipsInRange(item, start, end);
-                    try
+                    // Write the CSV header based on the WorkoutExercises class properties
+                    csv.WriteHeader<DB.CombinedWorkoutExercisesData>();
+                    csv.NextRecord();
+
+                    // Write each duplicate record to the CSV file
+                    foreach (var record in combRecords)
                     {
-                        var check = userMemberList.SequenceEqual(listJsonExercises, new CustomClassEqualityComparer());
+                        csv.WriteRecord(record);
+                        csv.NextRecord();
                     }
-                    catch(Exception ex)
-                    {
-                        var row = new UserMember()
-                        {
-                            UserId = item.UserId,
-                            UsermembershipId = item.Id,
-                            MembershipId = item.MembershipId,
-                            Error = ex.Message
-                        };
-
-                        listUsers.Add(row);
-                    }
-
-                    
-
                 }
             }
-            foreach (var listUser in listUsers)
+
+            // Provide the file path where you want to save the CSV file
+            var file2Path = Path.Combine("E:\\Users\\ARTY\\Downloads\\JSON_EXERCISES_Data.csv");
+            using (var writer2 = new StreamWriter(file2Path))
             {
-                Console.WriteLine("UserId: {0}\nUsermembershipId: {1}\nMembershipId: {2}\n\n\n", listUser.UserId, listUser.UsermembershipId, listUser.MembershipId);
+                using (var csv2 = new CsvWriter(writer2, CultureInfo.InvariantCulture))
+                {
+                    // Write the CSV header based on the WorkoutExercises class properties
+                    csv2.WriteHeader<DB.JsonUserExercises>();
+                    csv2.NextRecord();
+
+                    // Write each duplicate record to the CSV file
+                    foreach (var record in listJsonUserExercises)
+                    {
+                        csv2.WriteRecord(record);
+                        csv2.NextRecord();
+                    }
+                }
             }
-            return listUsers;
+
         }
 
         public class UserMember

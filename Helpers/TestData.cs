@@ -45,7 +45,7 @@ namespace MCMAutomation.Helpers
     public class DB
     {
         public const string GET_CONNECTION_STRING = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethodStaging; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
-        public const string GET_CONNECTION_STRING_Live = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethod; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
+        //public const string GET_CONNECTION_STRING_Live = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethod; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
 
         public class Exercises
         {
@@ -85,6 +85,25 @@ namespace MCMAutomation.Helpers
             public int? Week { get; set; }
             public string? SimultaneouslyCreatedIds { get; set; }
             public int? WorkoutExerciseGroupId { get; set; }
+        }
+
+        public class CombinedWorkoutExercisesData
+        {
+            public int? WorkoutExerciseId { get; set; }
+            public int? WorkoutId { get; set; }
+            public int? ExerciseId { get; set; }
+            public bool? IsDeleted { get; set; }
+            public string? Series { get; set; }
+            public int? WorkoutExerciseGroupId { get; set; }
+            public DateTime? WorkoutExercisesCreationDate { get; set; }
+            public int? MembershipId { get; set; }
+            public DateTime? MembershipStartDate { get; set; }
+            public DateTime? MembershipEndDate { get; set; }
+            public int? MembershipAccessWeekLength { get; set; }
+            public int? ProgramId { get; set; }
+            public DateTime? ProgramStartDate { get; set; }
+            public DateTime? ProgramEndDate { get; set; }
+
         }
 
         public class Programs

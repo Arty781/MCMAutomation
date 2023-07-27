@@ -333,7 +333,7 @@ namespace MCMAutomation.Helpers
                                "FROM WorkoutExercises;";
                 try
                 {
-                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
                     db.Open();
 
@@ -357,6 +357,55 @@ namespace MCMAutomation.Helpers
                             row.Week = GetValueOrDefault<int>(reader, 11);
                             row.SimultaneouslyCreatedIds = GetValueOrDefault<string>(reader, 12);
                             row.WorkoutExerciseGroupId = GetValueOrDefault<int>(reader, 13);
+
+                            list.Add(row);
+
+                        }
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+                return list;
+            }
+
+            public static List<DB.CombinedWorkoutExercisesData> GetCombinedDataOfWorkoutExercises(int? workoutId, string series)
+            {
+                var list = new List<DB.CombinedWorkoutExercisesData>();
+                string query = "SELECT we.Id, we.WorkoutId, we.ExerciseId, we.IsDeleted,we.Series, we.WorkoutExerciseGroupId, we.CreationDate WorkoutExerciseCreationDate, " +
+                               "m.Id MembershipId, m.StartDate MembershipStartDate, m.EndDate MembershipEndDate, m.AccessWeekLength MembershipAccessWeekLength, " +
+                               "p.Id ProgramId,  p.AvailableDate ProgramStartDate, p.ExpirationDate ProgramEndDate \r\n" +
+                               "FROM WorkoutExercises we\r\n " +
+                               "LEFT JOIN Exercises e ON e.id = we.ExerciseId\r\n " +
+                               "LEFT JOIN Workouts w ON w.id = we.WorkoutId\r\n " +
+                               "LEFT JOIN Programs p ON p.Id = w.ProgramId\r\n " +
+                               "LEFT JOIN Memberships m ON m.Id = p.MembershipId\r\n " +
+                               $"WHERE we.WorkoutId = {workoutId} and we.Series = '{series}';";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new DB.CombinedWorkoutExercisesData();
+                            row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 0);
+                            row.WorkoutId = GetValueOrDefault<int>(reader, 1);
+                            row.ExerciseId = GetValueOrDefault<int>(reader, 2);
+                            row.IsDeleted = GetValueOrDefault<bool>(reader, 3);
+                            row.Series = GetValueOrDefault<string>(reader, 4);                            
+                            row.WorkoutExerciseGroupId = GetValueOrDefault<int>(reader, 5);
+                            row.WorkoutExercisesCreationDate = GetValueOrDefault<DateTime?>(reader, 6);
+                            row.MembershipId = GetValueOrDefault<int>(reader, 7);
+                            row.MembershipStartDate = GetValueOrDefault<DateTime?>(reader, 8);
+                            row.MembershipEndDate = GetValueOrDefault<DateTime?>(reader, 9);
+                            row.MembershipAccessWeekLength = GetValueOrDefault<int>(reader, 10);
+                            row.ProgramId = GetValueOrDefault<int>(reader, 11);
+                            row.ProgramStartDate = GetValueOrDefault<DateTime?>(reader, 12);
+                            row.ProgramEndDate = GetValueOrDefault<DateTime?>(reader, 13);
 
                             list.Add(row);
 
@@ -1179,7 +1228,7 @@ namespace MCMAutomation.Helpers
                                $"where IsDeleted = 0 and CreationDate between '{start}' and '{end}'";
                 try
                 {
-                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
                     db.Open();
 
@@ -1226,7 +1275,7 @@ namespace MCMAutomation.Helpers
                                $"where UserId = '{userMember.UserId}';";
                 try
                 {
-                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
                     db.Open();
 
@@ -1269,7 +1318,7 @@ namespace MCMAutomation.Helpers
                 {
                     try
                     {
-                        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
                         SqlCommand command = new(query, db);
                         db.Open();
 
@@ -1402,13 +1451,56 @@ namespace MCMAutomation.Helpers
 
             }
 
-            public static void GetLastUsermembershipByUserId(DB.AspNetUsers user, out DB.UserMemberships userMembership)
+            public static void GetLastUsermembershipByUserIdForSubAll(DB.AspNetUsers user, out DB.UserMemberships userMembership)
             {
                 WaitUntil.WaitSomeInterval(5000);
                 userMembership = new();
                 string query = "SELECT TOP(1) * \r\n" +
                                "FROM [dbo].[UserMemberships] \r\n" +
                                $"where UserId = '{user.Id}' or (UserId = '{user.Id}' and ParentSubAllUserMembershipId is not null)";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        userMembership.Id = GetValueOrDefault<int>(reader, 0);
+                        userMembership.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        userMembership.UserId = GetValueOrDefault<string>(reader, 2);
+                        userMembership.StartOn = GetValueOrDefault<DateTime>(reader, 3);
+                        userMembership.Active = GetValueOrDefault<bool>(reader, 4);
+                        userMembership.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        userMembership.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        userMembership.OnPause = GetValueOrDefault<bool>(reader, 7);
+                        userMembership.PauseEnd = GetValueOrDefault<DateTime>(reader, 8);
+                        userMembership.PauseStart = GetValueOrDefault<DateTime>(reader, 9);
+                        userMembership.DisplayedPromotionalPopupId = GetValueOrDefault<bool>(reader, 10);
+                        userMembership.ExpirationDate = GetValueOrDefault<DateTime>(reader, 11);
+                        userMembership.ParentSubAllUserMembershipId = GetValueOrDefault<int>(reader, 12);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+                    SqlConnection.ClearAllPools();
+                }
+
+            }
+
+            public static void GetLastUsermembershipByUserId(DB.AspNetUsers user, out DB.UserMemberships userMembership)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                userMembership = new();
+                string query = "SELECT TOP(1) * \r\n" +
+                               "FROM [dbo].[UserMemberships] \r\n " +
+                               $"where UserId = '{user.Id}' order by Id desc";
                 try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
@@ -1792,7 +1884,7 @@ namespace MCMAutomation.Helpers
                                $"where jue.UserId = '{user.UserId}' and jue.UserMembershipId = '{user.Id}'";
                 try
                 {
-                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
                     db.Open();
 
@@ -1826,6 +1918,44 @@ namespace MCMAutomation.Helpers
                     // Забезпечуємо вивільнення ресурсів
                     SqlConnection.ClearAllPools();
                 }
+
+                return list;
+            }
+
+            public static List<DB.JsonUserExercises> GetJsonUserExercisesByWorkoutExerciseId(int? workoutExerciseId)
+            {
+                var list = new List<DB.JsonUserExercises>();
+                string query = $"select jue.* " +
+                               $"from JsonUserExercises jue\r\n  " +
+                               $"where jue.WorkoutExerciseId = '{workoutExerciseId}';";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new DB.JsonUserExercises();
+                            row.Id = GetValueOrDefault<int>(reader, 0);
+                            row.SetDescription = GetValueOrDefault<string>(reader, 1);
+                            row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 2);
+                            row.UserId = GetValueOrDefault<string>(reader, 3);
+                            row.IsDone = GetValueOrDefault<bool>(reader, 4);
+                            row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                            row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                            row.UpdateDate = GetValueOrDefault<DateTime>(reader, 7);
+                            row.UserMembershipId = GetValueOrDefault<int>(reader, 8);
+
+                            list.Add(row);
+                        }
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
 
                 return list;
             }
