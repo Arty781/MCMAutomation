@@ -49,23 +49,23 @@ namespace MCMAutomation.Helpers
 
         public class Exercises
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public DateTime CreationDate { get; set; }
-            public bool IsDeleted { get; set; }
-            public string VideoURL { get; set; }
-            public int TempoBold { get; set; }
+            public int? Id { get; set; }
+            public string? Name { get; set; }
+            public DateTime? CreationDate { get; set; }
+            public bool? IsDeleted { get; set; }
+            public string? VideoURL { get; set; }
+            public int? TempoBold { get; set; }
         }
 
         public class Workouts
         {
             public int Id { get; set; }
-            public string Name { get; set; }
-            public int WeekDay { get; set; }
-            public int ProgramId { get; set; }
-            public DateTime CreationDate { get; set; }
-            public bool IsDeleted { get; set; }
-            public int Type { get; set; }
+            public string? Name { get; set; }
+            public int? WeekDay { get; set; }
+            public int? ProgramId { get; set; }
+            public DateTime? CreationDate { get; set; }
+            public bool? IsDeleted { get; set; }
+            public int? Type { get; set; }
 
         }
 
@@ -109,16 +109,16 @@ namespace MCMAutomation.Helpers
         public class Programs
         {
             public int Id { get; set; }
-            public int MembershipId { get; set; }
-            public string Name { get; set; }
-            public int NumberOfWeeks { get; set; }
-            public DateTime CreationDate { get; set; }
-            public bool IsDeleted { get; set; }
-            public string Steps { get; set; }
+            public int? MembershipId { get; set; }
+            public string? Name { get; set; }
+            public int? NumberOfWeeks { get; set; }
+            public DateTime? CreationDate { get; set; }
+            public bool? IsDeleted { get; set; }
+            public string? Steps { get; set; }
             public DateTime? AvailableDate { get; set; }
             public int? NextProgramId { get; set; }
             public DateTime? ExpirationDate { get; set; }
-            public int Type { get; set; }
+            public int? Type { get; set; }
 
         }
 
@@ -415,7 +415,7 @@ namespace MCMAutomation.Helpers
         public const string SKU_CHF_FREE = "CHF-FREE";
         public const string SKU_CHM_FREE = "CHM-FREE";
         public const string SKU_YGC3 = "YGC3";
-        public readonly static string SKU_CHALLENGE = $"CH{DateTime.Now.Date}-MS";
+        public readonly static string SKU_CHALLENGE = $"CH{DateTime.Now.Date.TimeOfDay}-MS";
         public readonly static string SKU_SUBALL_MEMBER = $"SUB-ALL-{DateTime.Now.Date}";
 
     }

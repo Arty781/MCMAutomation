@@ -5,8 +5,6 @@ using System.Diagnostics;
 using System;
 using RimuTec.Faker;
 using System.Collections.Generic;
-using Telegram.Bot.Types;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Linq;
 using static MCMAutomation.Helpers.AppDbContext;
 using static MCMAutomation.APIHelpers.Client.Membership.MembershipModel;
@@ -33,7 +31,7 @@ namespace MCMAutomation.APIHelpers
                 3 => 4,
                 4 => 5,
                 5 => 6,
-                6 => (long)7,
+                6 => 7,
                 _ => throw new Exception("Invalid count value"),
             };
             return JsonConvert.SerializeObject(req);
@@ -179,6 +177,19 @@ namespace MCMAutomation.APIHelpers
         private static string JsonSubAllBody(List<DB.Memberships>? memberships, int numberOfMemberships)
         {
             List<SubAllMembershipsReq> body = new();
+            Memberships.GetLastMembership(out DB.Memberships membership);
+            SubAllMembershipsReq ch = new()
+            {
+                SubAllMembershipId = membership.Id,
+                Description = $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+                                  $"<ol>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+                                  $"</ol>"
+
+            };
+            body.Add(ch);
             for (int i=1; i<numberOfMemberships; i++)
             {
                 SubAllMembershipsReq req = new()
@@ -189,51 +200,10 @@ namespace MCMAutomation.APIHelpers
                                     $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
                                     $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
                                     $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
-                                  $"</ol>" +
-                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
-                                  $"<ol>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
-                                  $"</ol>" +
-                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
-                                  $"<ol>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
-                                  $"</ol>" +
-                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
-                                  $"<ol>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
-                                  $"</ol>" +
-                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
-                                  $"<ol>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
-                                  $"</ol>" +
-                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
-                                  $"<ol>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
-                                  $"</ol>" +
-                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
-                                  $"<ol>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
-                                  $"</ol>" +
-                                  $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
-                                  $"<ol>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
                                   $"</ol>"
 
                 };
+                
                 body.Add(req);
             }
 
@@ -316,7 +286,7 @@ namespace MCMAutomation.APIHelpers
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
             req.AddParam("price", "100");
-            req.AddParam("accessWeekLength", "12");
+            req.AddParam("accessWeekLength", "16");
             req.AddParam("url", "https://mcmstaging-ui.azurewebsites.net/programs/all");
             req.AddParam("type", "0");
             req.AddParam("image", "undefined");
@@ -331,6 +301,43 @@ namespace MCMAutomation.APIHelpers
             if (http.LastMethodSuccess != true)
             {
                 throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
+            }
+        }
+
+        public static void CreateProductMembershipWithDate(SignInResponseModel SignIn, string sku)
+        {
+            HttpRequest req = new()
+            {
+                HttpVerb = "POST",
+                Path = "/Admin/AddMembership",
+                ContentType = "multipart/form-data"
+            };
+            req.AddHeader("Connection", "Keep-Alive");
+            req.AddHeader("Accept", "application /json, text/plain, */*");
+            req.AddHeader("Accept-Encoding", "gzip, deflate, br");
+            req.AddHeader("Authorization", $"Bearer {SignIn.AccessToken}");
+
+            req.AddParam("sku", sku);
+            req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d-hh-mm"));
+            req.AddParam("description", Lorem.ParagraphByChars(400));
+            req.AddParam("startDate", DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd'T'HH:mm:ss.fff'z'"));
+            req.AddParam("endDate", DateTime.Now.AddMonths(2).ToString("yyyy-MM-dd'T'HH:mm:ss.fff'z'"));
+            req.AddParam("price", "100");
+            req.AddParam("accessWeekLength", "12");
+            req.AddParam("url", "https://mcmstaging-ui.azurewebsites.net/programs/all");
+            req.AddParam("type", "0");
+            req.AddParam("image", "undefined");
+            req.AddParam("gender", "0");
+            req.AddParam("relatedMembershipIds", "");
+            req.AddParam("forPurchase", "true");
+            //req.AddParam("membershipLevels", "[]");
+
+            Http http = new Http();
+
+            HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
+            if (http.LastMethodSuccess != true)
+            {
+                throw new ArgumentException(resp.Domain + req.Path + "\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
         }
 
@@ -520,6 +527,8 @@ namespace MCMAutomation.APIHelpers
 
         public static void CreatePrograms(SignInResponseModel SignIn, int MembershipId, int countPrograms, out List<DB.Programs> programs)
         {
+
+
             for (int i = 0; i < countPrograms; i++)
             {
                 HttpRequest req = new()
@@ -532,11 +541,11 @@ namespace MCMAutomation.APIHelpers
                 req.AddHeader("accept-encoding", "gzip, deflate, br");
                 req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
 
-                req.AddParam("programName", $"{i+1} Phase " + $"{DateTime.Now:HH-mm-ss -fffff}");
+                req.AddParam("programName", $"{DateTime.Now.AddMonths(i - (countPrograms - 1)):MMMM yyyy}");
                 req.AddParam("numberOfWeeks", "4");
                 req.AddParam("steps", "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
-                req.AddParam("availableDate", String.Empty);
-                req.AddParam("expirationDate", String.Empty);
+                req.AddParam("availableDate", "");
+                req.AddParam("expirationDate", "");
                 req.AddParam("membershipId", $"{MembershipId}");
                 req.AddParam("image", "undefined");
 
@@ -545,11 +554,77 @@ namespace MCMAutomation.APIHelpers
                 HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
                 if (http.LastMethodSuccess != true)
                 {
+                    throw new ArgumentException(resp.Domain + req.Path + "\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
+                }
+            }
+
+
+
+            programs = AppDbContext.Programs.GetLastPrograms(countPrograms);
+
+        }
+
+        public static void CreateProgramsWIthDates(SignInResponseModel SignIn, int MembershipId, int countPrograms, out List<DB.Programs> programs)
+        {
+            
+
+            for (int i = 0; i < countPrograms; i++)
+            {
+                
+                var startDate = i switch
+                {
+                    _ => StartDate(i, countPrograms)
+                };
+                var endDate = i switch
+                {
+                    _ => ExpDate(i, countPrograms)
+                };
+
+                HttpRequest req = new()
+                {
+                    HttpVerb = "POST",
+                    Path = "/Admin/AddProgram",
+                    ContentType = "multipart/form-data"
+                };
+                req.AddHeader("Connection", "Keep-Alive");
+                req.AddHeader("accept-encoding", "gzip, deflate, br");
+                req.AddHeader("authorization", $"Bearer {SignIn.AccessToken}");
+
+                req.AddParam("programName", $"{DateTime.Now.AddMonths(i - (countPrograms-1)):MMMM yyyy}");
+                req.AddParam("numberOfWeeks", "4");
+                req.AddParam("steps", "Refer to the <a href = \"https://guidebooksmc.s3.ap-southeast-2.amazonaws.com/Challenge+OCT21/Welcome+Pack+Challenge+9.0.pdf\">Welcome Pack</a> for your Cardio and Step Requirements");
+                req.AddParam("availableDate", startDate);
+                req.AddParam("expirationDate", endDate);
+                req.AddParam("membershipId", $"{MembershipId}");
+                req.AddParam("image", "undefined");
+                
+
+                Http http = new();
+                HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
+                if (http.LastMethodSuccess != true)
+                {
                     throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
                 }
             }
+
+            
+
             programs = AppDbContext.Programs.GetLastPrograms(countPrograms);
 
+        }
+
+        static string StartDate(int i, int countPrograms)
+        {
+            DateTime firstDayOfMonth = DateTime.Now.AddMonths(i - (countPrograms-1));
+            firstDayOfMonth = new DateTime(firstDayOfMonth.Year, firstDayOfMonth.Month, 1);
+            return firstDayOfMonth.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'z'");
+        }
+
+        static string ExpDate(int i, int countPrograms)
+        {
+            DateTime lastDayOfMonth = DateTime.Now.AddMonths(i - (countPrograms - 2)); // Note the change from -3 to -2
+            lastDayOfMonth = new DateTime(lastDayOfMonth.Year, lastDayOfMonth.Month, 1).AddDays(-1);
+            return lastDayOfMonth.ToString("yyyy-MM-dd'T'HH:mm:ss.fff'z'");
         }
 
         public static void CreateWorkouts(SignInResponseModel SignIn, List<DB.Programs> programs, int programCount, out List<DB.Workouts> workouts)
@@ -561,7 +636,7 @@ namespace MCMAutomation.APIHelpers
             };
             foreach (var program in programs)
             {
-                for (int i = 0; i < programCount; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     HttpResponse resp = http.PostJson2(String.Concat(Endpoints.API_HOST + "/Admin/AddWorkout"), "application/json", JsonBody(i, program.Id));
                     if (!resp.StatusCode.ToString().StartsWith("2"))

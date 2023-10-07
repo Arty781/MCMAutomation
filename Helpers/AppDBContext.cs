@@ -26,6 +26,7 @@ namespace MCMAutomation.Helpers
                 return defaultValue;
             }
         }
+
         public class Exercises
         {
             public static List<JsonUserExercises> GetUserExercisesList(string userEmail, string membershipName)
@@ -322,6 +323,47 @@ namespace MCMAutomation.Helpers
                 }
                 return list;
             }
+
+            public static List<DB.Workouts> GetWorkoutsByProgramId(List<DB.Programs> programs)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                var list = new List<DB.Workouts>();
+                foreach (var program in programs)
+                {
+                    string query = $"SELECT * " +
+                               $"FROM [Workouts] WHERE ProgramId = {program.Id};";
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new DB.Workouts();
+                                row.Id = GetValueOrDefault<int>(reader, 0);
+                                row.Name = GetValueOrDefault<string>(reader, 1);
+                                row.WeekDay = GetValueOrDefault<int>(reader, 2);
+                                row.ProgramId = GetValueOrDefault<int>(reader, 3);
+                                row.CreationDate = GetValueOrDefault<DateTime>(reader, 4);
+                                row.IsDeleted = GetValueOrDefault<bool>(reader, 5);
+                                row.Type = GetValueOrDefault<int>(reader, 6);
+
+                                list.Add(row);
+                            }
+                        }
+                    }
+                    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                    finally { SqlConnection.ClearAllPools(); }
+                }
+
+                return list;
+            }
+
+
         }
 
         public class WorkoutExercises
@@ -414,6 +456,52 @@ namespace MCMAutomation.Helpers
                 }
                 catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
                 finally { SqlConnection.ClearAllPools(); }
+                return list;
+            }
+
+            public static List<DB.WorkoutExercises> GetWorkoutExercisesByWorkoutIds(List<DB.Workouts> workouts)
+            {
+                var list = new List<DB.WorkoutExercises>();
+                foreach (var workout in workouts)
+                {
+                    string query = "SELECT * FROM WorkoutExercises" +
+                        $"\r\nwhere WorkoutId = {workout.Id};";
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new DB.WorkoutExercises();
+                                row.Id = GetValueOrDefault<int>(reader, 0);
+                                row.WorkoutId = GetValueOrDefault<int>(reader, 1);
+                                row.ExerciseId = GetValueOrDefault<int>(reader, 2);
+                                row.Sets = GetValueOrDefault<int>(reader, 3);
+                                row.Reps = GetValueOrDefault<string>(reader, 4);
+                                row.Tempo = GetValueOrDefault<string>(reader, 5);
+                                row.Rest = GetValueOrDefault<int>(reader, 6);
+                                row.CreationDate = GetValueOrDefault<DateTime?>(reader, 7);
+                                row.IsDeleted = GetValueOrDefault<bool>(reader, 8);
+                                row.Series = GetValueOrDefault<string>(reader, 9);
+                                row.Notes = GetValueOrDefault<string>(reader, 10);
+                                row.Week = GetValueOrDefault<int>(reader, 11);
+                                row.SimultaneouslyCreatedIds = GetValueOrDefault<string>(reader, 12);
+                                row.WorkoutExerciseGroupId = GetValueOrDefault<int>(reader, 13);
+
+                                list.Add(row);
+
+                            }
+                        }
+                    }
+                    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                    finally { SqlConnection.ClearAllPools(); }
+                }
+                
                 return list;
             }
         }
@@ -1068,30 +1156,90 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
                         var row = new DB.Programs();
-                        row.Id = reader.GetInt32(0);
-                        row.MembershipId = reader.GetInt32(1);
-                        row.Name = reader.GetString(2);
-                        row.NumberOfWeeks = reader.GetInt32(3);
-                        row.CreationDate = reader.GetDateTime(4);
-                        row.IsDeleted = reader.GetBoolean(5);
-                        row.Steps = reader.GetString(6);
-                        row.AvailableDate = null;
-                        row.NextProgramId = null;
-                        row.ExpirationDate = null;
-                        row.Type = reader.GetInt32(10);
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.NumberOfWeeks = GetValueOrDefault<int>(reader, 3);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 5);
+                        row.Steps = GetValueOrDefault<string>(reader, 6);
+                        row.AvailableDate = GetValueOrDefault<DateTime>(reader, 7);
+                        row.NextProgramId = GetValueOrDefault<int>(reader, 8);
+                        row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 9);
+                        row.Type = GetValueOrDefault<int>(reader, 10);
                         list.Add(row);
                     }
                 }
-                catch (Exception ex)
-                {
-                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
-                }
-                finally
-                {
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
 
-                    // Забезпечуємо вивільнення ресурсів
-                    SqlConnection.ClearAllPools();
+                return list;
+            }
+
+            public static DB.Programs GetLastProgram()
+            {
+                var row = new DB.Programs();
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new($"SELECT TOP(1) * " +
+                                             "FROM [Programs] WHERE IsDeleted=0 " +
+                                             "ORDER BY CreationDate DESC", db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.NumberOfWeeks = GetValueOrDefault<int>(reader, 3);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 5);
+                        row.Steps = GetValueOrDefault<string>(reader, 6);
+                        row.AvailableDate = GetValueOrDefault<DateTime>(reader,7);
+                        row.NextProgramId = GetValueOrDefault<int>(reader,8);
+                        row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 9);
+                        row.Type = GetValueOrDefault<int>(reader, 10);
+                    }
                 }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+
+                return row;
+            }
+
+            public static List<DB.Programs> GetProgramsByMembershipId(int membershipId)
+            {
+                var list = new List<DB.Programs>();
+
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new($"SELECT * " +
+                                             $"FROM [Programs] WHERE MembershipId = {membershipId} ", db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.Programs();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.NumberOfWeeks = GetValueOrDefault<int>(reader, 3);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 5);
+                        row.Steps = GetValueOrDefault<string>(reader, 6);
+                        row.AvailableDate = GetValueOrDefault<DateTime>(reader, 7);
+                        row.NextProgramId = GetValueOrDefault<int>(reader, 8);
+                        row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 9);
+                        row.Type = GetValueOrDefault<int>(reader, 10);
+                        list.Add(row);
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
 
                 return list;
             }

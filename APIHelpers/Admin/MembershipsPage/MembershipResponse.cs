@@ -213,22 +213,22 @@ namespace MCMAutomation.APIHelpers
     public class WorkoutExercises
     {
         [JsonProperty("series")]
-        public string Series { get; set; }
+        public string? Series { get; set; }
 
         [JsonProperty("exerciseId")]
-        public long ExerciseId { get; set; }
+        public long? ExerciseId { get; set; }
 
         [JsonProperty("weekWorkoutExercises")]
         public List<WeekWorkoutExercise> WeekWorkoutExercises { get; set; }
 
         [JsonProperty("notes")]
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
 
         [JsonProperty("workoutId")]
-        public long WorkoutId { get; set; }
+        public long? WorkoutId { get; set; }
 
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
     }
 
     public partial class WeekWorkoutExercise
@@ -252,13 +252,13 @@ namespace MCMAutomation.APIHelpers
     public class WorkoutsModel
     {
         [JsonProperty("programId")]
-        public long ProgramId { get; set; }
+        public long? ProgramId { get; set; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonProperty("weekDay")]
-        public long WeekDay { get; set; }
+        public long? WeekDay { get; set; }
     }
 
 

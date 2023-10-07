@@ -36,7 +36,7 @@ namespace MCMAutomation.APIHelpers
             HttpResponse resp = http.PostJson2(url, "application/json", JsonBody(login, password));
             if (!resp.StatusCode.ToString().StartsWith("2"))
             {
-                Debug.WriteLine(http.LastErrorText);
+                throw new Exception($"{resp.BodyStr}");
             }
 
             Debug.WriteLine("Response status code = " + Convert.ToString(resp.StatusCode));

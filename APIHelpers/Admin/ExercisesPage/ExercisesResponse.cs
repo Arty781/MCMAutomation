@@ -22,10 +22,10 @@ namespace MCMAutomation.APIHelpers
     public class RelatedExerciseRequest
     {
         [JsonProperty("exerciseId")]
-        public int ExerciseId { get; set; }
+        public int? ExerciseId { get; set; }
 
         [JsonProperty("exerciseType")]
-        public int ExerciseType { get; set; }
+        public int? ExerciseType { get; set; }
     }
 
     public class RequestEditExercises
