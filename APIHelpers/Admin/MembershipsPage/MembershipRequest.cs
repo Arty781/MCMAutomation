@@ -178,18 +178,18 @@ namespace MCMAutomation.APIHelpers
         {
             List<SubAllMembershipsReq> body = new();
             Memberships.GetLastMembership(out DB.Memberships membership);
-            SubAllMembershipsReq ch = new()
-            {
-                SubAllMembershipId = membership.Id,
-                Description = $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
-                                  $"<ol>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
-                                    $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
-                                  $"</ol>"
+            //SubAllMembershipsReq ch = new()
+            //{
+            //    SubAllMembershipId = membership.Id,
+            //    Description = $"<br><p><strong>{Lorem.ParagraphByChars(15)}</strong></p>" +
+            //                      $"<ol>" +
+            //                        $"<li><strong><em>{Lorem.ParagraphByChars(25)}</em></strong></li>" +
+            //                        $"<li><strong><em>{Lorem.ParagraphByChars(15)}</em></strong></li>" +
+            //                        $"<li><strong><em>{Lorem.ParagraphByChars(35)}</em></strong></li>" +
+            //                      $"</ol>"
 
-            };
-            body.Add(ch);
+            //};
+            //body.Add(ch);
             for (int i=1; i<numberOfMemberships; i++)
             {
                 SubAllMembershipsReq req = new()
@@ -355,8 +355,8 @@ namespace MCMAutomation.APIHelpers
             req.AddHeader("Authorization", $"Bearer {SignIn.AccessToken}");
 
             req.AddParam("sku", sku);
-            req.AddParam("name", "00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d-hh-mm") + " of SubAll");
-            req.AddParam("description", Lorem.ParagraphByChars(400));
+            req.AddParam("name", "SubAll Membership");
+            req.AddParam("description", Lorem.ParagraphByChars(100));
             req.AddParam("startDate", "");
             req.AddParam("endDate", "");
             req.AddParam("price", "100");
@@ -636,7 +636,7 @@ namespace MCMAutomation.APIHelpers
             };
             foreach (var program in programs)
             {
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     HttpResponse resp = http.PostJson2(String.Concat(Endpoints.API_HOST + "/Admin/AddWorkout"), "application/json", JsonBody(i, program.Id));
                     if (!resp.StatusCode.ToString().StartsWith("2"))

@@ -38,7 +38,7 @@ namespace MCMAutomation.WebTests
         {
             Pages.WebPages.SignUpUser
                 .GoToSignUpPage();
-            string email = RandomHelper.RandomEmail();
+            string email = $"qatesterOutsite@xitroo.com"; //RandomHelper.RandomEmail();
             Pages.WebPages.SignUpUser
                 .EnterData(email)
                 .ClickOnSignUpBtn()
@@ -60,7 +60,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+            //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -162,7 +162,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -255,7 +255,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -348,7 +348,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -446,7 +446,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -544,7 +544,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -642,8 +642,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -738,8 +738,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -836,8 +836,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -933,8 +933,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1031,8 +1031,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1128,8 +1128,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1225,8 +1225,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1323,8 +1323,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1421,8 +1421,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1520,8 +1520,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1619,8 +1619,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1719,8 +1719,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1819,8 +1819,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -1920,8 +1920,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2019,8 +2019,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2119,8 +2119,8 @@ namespace MCMAutomation.WebTests
             #region Postconditions
 
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2220,8 +2220,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
         }
@@ -2351,8 +2351,8 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.Memberships.DeleteMembership(membershipData.Name);
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.Memberships.DeleteMembership(membershipData.Name);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -2467,9 +2467,9 @@ namespace MCMAutomation.WebTests
 
             foreach (var member in membershipList)
             {
-                AppDbContext.Memberships.DeleteMembership(member.Name);
+               //AppDbContext.Memberships.DeleteMembership(member.Name);
             }
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -2534,7 +2534,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -2622,7 +2622,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -2681,7 +2681,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 
@@ -2755,7 +2755,7 @@ namespace MCMAutomation.WebTests
 
             #region Postconditions
 
-            AppDbContext.User.DeleteUser(email);
+           //AppDbContext.User.DeleteUser(email);
 
             #endregion
 

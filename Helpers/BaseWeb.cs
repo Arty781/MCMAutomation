@@ -42,16 +42,16 @@ namespace MCMAutomation.Helpers
             {
 
                 TelegramHelper.SendMessage();
-                AppDbContext.User.DeleteUser($"qatester{DateTime.Now:yyyy-MM}%@xitroo.com");
-                AppDbContext.Memberships.DeleteMembership($"00Created New Membership {DateTime.Now:yyyy-MM}%");
-                AppDbContext.Exercises.DeleteExercises($"Test Exercise{DateTime.Now:yyyy-MM}%");
+                //AppDbContext.User.DeleteUser($"qatester{DateTime.Now:yyyy-MM}%@xitroo.com");
+                //AppDbContext.Memberships.DeleteMembership($"00Created New Membership {DateTime.Now:yyyy-MM}%");
+                //AppDbContext.Exercises.DeleteExercises($"Test Exercise{DateTime.Now:yyyy-MM}%");
                 Browser.Close();
             }
             else if (Browser._Driver != null)
             {
-                AppDbContext.User.DeleteUser($"qatester{DateTime.Now:yyyy-MM}%@xitroo.com");
-                AppDbContext.Memberships.DeleteMembership($"00Created New Membership {DateTime.Now:yyyy-MM}%");
-                AppDbContext.Exercises.DeleteExercises($"Test Exercise{DateTime.Now:yyyy-MM}%");
+                //AppDbContext.User.DeleteUser($"qatester{DateTime.Now:yyyy-MM}%@xitroo.com");
+                //AppDbContext.Memberships.DeleteMembership($"00Created New Membership {DateTime.Now:yyyy-MM}%");
+                //AppDbContext.Exercises.DeleteExercises($"Test Exercise{DateTime.Now:yyyy-MM}%");
                 Browser.Close();
             }
 

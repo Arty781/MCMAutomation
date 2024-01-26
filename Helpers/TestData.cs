@@ -45,7 +45,7 @@ namespace MCMAutomation.Helpers
     public class DB
     {
         public const string GET_CONNECTION_STRING = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethodStaging; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
-        //public const string GET_CONNECTION_STRING_Live = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethod; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
+        public const string GET_CONNECTION_STRING_Live = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethod; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
 
         public class Exercises
         {
@@ -302,6 +302,42 @@ namespace MCMAutomation.Helpers
             public DateTime CreationDate { get; set; }
             public bool IsDeleted { get; set; }
         }
+
+        public class CompletedWorkouts
+        {
+            public int Id { get; set; }
+            public int? WorkoutId { get; set; }
+            public string? UserId { get; set; }
+            public int? WeekNumber { get; set; }
+            public DateTime? CreatedDate { get; set; }
+            public bool? IsDeleted { get; set; }
+            public int? UserMembershipId { get; set; }
+        }
+
+        public class UserRelatedExercises
+        {
+            public int? Id { get; set; }
+            public string? UserId  { get; set; }
+            public int? WeekNumber { get; set; }
+            public int? WorkoutExerciseId   { get; set; }
+            public int? ExerciseId { get; set; }
+            public DateTime? CreationDate    { get; set; }
+            public bool? IsDeleted { get; set; }
+            public int? UserMembershipId    { get; set; }
+            public bool? ExerciseType { get; set; }
+        }
+
+        public class WorkoutUserNotes
+        {
+            public int? Id { get; set; }
+            public string? Notes { get; set; }
+            public int? WorkoutExerciseId { get; set; }
+            public string? UserId   { get; set; }
+            public int? WeekNumber  { get; set; }
+            public DateTime? CreationDate     { get; set; }
+            public bool? IsDeleted  { get; set; }
+            public int? UserMembershipId { get; set; }
+        }
     }
 
     public class UserAccount
@@ -416,7 +452,7 @@ namespace MCMAutomation.Helpers
         public const string SKU_CHM_FREE = "CHM-FREE";
         public const string SKU_YGC3 = "YGC3";
         public readonly static string SKU_CHALLENGE = $"CH{DateTime.Now.Date.TimeOfDay}-MS";
-        public readonly static string SKU_SUBALL_MEMBER = $"SUB-ALL-{DateTime.Now.Date}";
+        public readonly static string SKU_SUBALL_MEMBER = $"SUB_ALL_1";
 
     }
 

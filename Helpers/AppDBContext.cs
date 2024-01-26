@@ -1,9 +1,11 @@
 ﻿using MCMAutomation.APIHelpers;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using RimuTec.Faker;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace MCMAutomation.Helpers
 
     public class AppDbContext
     {
-        private static T GetValueOrDefault<T>(SqlDataReader reader, int index, T defaultValue = default(T))
+        private static T GetValueOrDefault<T>(SqlDataReader reader, int index, T defaultValue = default)
         {
             if (!reader.IsDBNull(index))
             {
@@ -368,11 +370,93 @@ namespace MCMAutomation.Helpers
 
         public class WorkoutExercises
         {
-            public static List<DB.WorkoutExercises> GetWorkoutExercises()
+            public class Insert
+            {
+                public static void InsertWorkoutExercises(int? lastWorkoutExerciseId, List<DB.WorkoutExercises> workoutExercises)
+                {
+                    string query = "SET IDENTITY_INSERT WorkoutExercises ON" +
+                                   "\r\n\r\nInsert WorkoutExercises " +
+                                   "(Id,\tWorkoutId,\tExerciseId,\tSets,\tReps,\tTempo,\tRest,\tCreationDate,\tIsDeleted,\tSeries,\tNotes,\tWeek,\tSimultaneouslyСreatedIds,\tWorkoutExerciseGroupId)" +
+                                   "\r\nValues\r\n" +
+                                   $"{ListHandler(lastWorkoutExerciseId, workoutExercises)}" +
+                                   "\r\n\r\nSET IDENTITY_INSERT WorkoutExercises OFF";
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                        var rowsAffected = command.ExecuteNonQueryAsync();
+                        Console.WriteLine(rowsAffected);
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                    }
+                    finally
+                    {
+
+                        // Забезпечуємо вивільнення ресурсів
+                        SqlConnection.ClearAllPools();
+                    }
+                }
+
+                private static string ListHandler(int? lastWorkoutExerciseId, List<DB.WorkoutExercises> list)
+                {
+                    string row = string.Empty;
+                    int i = 0;
+                    Dictionary<int, int> valueMap = new Dictionary<int, int>
+                    {
+
+                        { 2662, 2662 },
+                        { 2668, 2668 },
+                        { 2669, 2669 },
+                        { 2670, 2670 },
+                        { 2671, 2671 },
+                        { 2672, 2672 },
+                        { 2673, 2673 },
+                        { 2674, 2674 },
+                        { 2675, 2675 },
+                        { 2676, 2676 }
+
+                    };
+
+
+                    foreach (var item in list)
+                    {
+                        ++i;
+                        int result = valueMap.ContainsKey(item.WorkoutId.Value)
+                        ? valueMap[item.WorkoutId.Value]
+                        : item.WorkoutId.Value;
+                        if (item.Id != list.Last().Id)
+                        {
+                            row += string.Concat("(", lastWorkoutExerciseId + i, ",\t", valueMap.ContainsKey(item.WorkoutId.Value) ? valueMap[item.WorkoutId.Value] : default, ",\t", item.ExerciseId, ",\t", item.Sets, ",\t", "\'", item.Reps, "\'", ",\t", "\'", item.Tempo, "\'", ",\t", item.Rest, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\'", ",\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t", "\'", item.Series, "\'", ",\t", "\'", item.Notes, "\'", ",\t", item.Week, ",\t", "\'", item.SimultaneouslyCreatedIds, "\'", ",\t", item.WorkoutExerciseGroupId, "),", "\r\n");
+                        }
+                        else
+                        {
+                            row += string.Concat("(", lastWorkoutExerciseId + i, ",\t", valueMap.ContainsKey(item.WorkoutId.Value) ? valueMap[item.WorkoutId.Value] : default, ",\t", item.ExerciseId, ",\t", item.Sets, ",\t", "\'", item.Reps, "\'", ",\t", "\'", item.Tempo, "\'", ",\t", item.Rest, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\'", ",\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t", "\'", item.Series, "\'", ",\t", "\'", item.Notes, "\'", ",\t", item.Week, ",\t", "\'", item.SimultaneouslyCreatedIds, "\'", ",\t", item.WorkoutExerciseGroupId, ")");
+                        }
+
+
+                    }
+                    return row;
+                }
+            }
+
+            public static List<DB.WorkoutExercises> GetLastWorkoutExercise()
             {
                 var list = new List<DB.WorkoutExercises>();
-                string query = "SELECT *\r\n" +
-                               "FROM WorkoutExercises;";
+                string query = "SELECT TOP(1) *\r\n" +
+                               "FROM WorkoutExercises \r\n" +
+                               "ORDER BY id desc;";
                 try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
@@ -504,6 +588,176 @@ namespace MCMAutomation.Helpers
                 
                 return list;
             }
+
+            //public static List<DB.WorkoutExercises> GetWorkoutExercisesByWorkoutIdsFromLive()
+            //{
+            //    var list = new List<DB.WorkoutExercises>();
+            //      string query = "select * " +
+            //                       "from WorkoutExercises" +
+            //                       " where WorkoutId in " +
+            //                       "(select id from Workouts where ProgramId in " +
+            //                        "(select id from Programs where MembershipId = 178 and id in (691, 696)))";
+            //        try
+            //        {
+            //            SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+            //            SqlCommand command = new(query, db);
+            //            db.Open();
+
+            //            SqlDataReader reader = command.ExecuteReader();
+            //            if (reader.HasRows)
+            //            {
+            //                while (reader.Read())
+            //                {
+            //                    var row = new DB.WorkoutExercises();
+            //                    row.Id = GetValueOrDefault<int>(reader, 0);
+            //                    row.WorkoutId = GetValueOrDefault<int>(reader, 1);
+            //                    row.ExerciseId = GetValueOrDefault<int>(reader, 2);
+            //                    row.Sets = GetValueOrDefault<int>(reader, 3);
+            //                    row.Reps = GetValueOrDefault<string>(reader, 4);
+            //                    row.Tempo = GetValueOrDefault<string>(reader, 5);
+            //                    row.Rest = GetValueOrDefault<int>(reader, 6);
+            //                    row.CreationDate = GetValueOrDefault<DateTime?>(reader, 7);
+            //                    row.IsDeleted = GetValueOrDefault<bool>(reader, 8);
+            //                    row.Series = GetValueOrDefault<string>(reader, 9);
+            //                    row.Notes = GetValueOrDefault<string>(reader, 10);
+            //                    row.Week = GetValueOrDefault<int>(reader, 11);
+            //                    row.SimultaneouslyCreatedIds = GetValueOrDefault<string>(reader, 12);
+            //                    row.WorkoutExerciseGroupId = GetValueOrDefault<int>(reader, 13);
+
+            //                    list.Add(row);
+
+            //                }
+            //            }
+            //        }
+            //        catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+            //        finally { SqlConnection.ClearAllPools(); }
+                
+
+            //    return list;
+            //}
+
+            public static List<DB.WorkoutExercises> GetWorkoutExercisesByProgramId()
+            {
+                var list = new List<DB.WorkoutExercises>();
+                string query = "select * " +
+                               "from WorkoutExercises " +
+                               "where WorkoutId in " +
+                               "(select id from Workouts where ProgramId in " +
+                               "(select id from Programs where MembershipId = 178))";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new DB.WorkoutExercises();
+                            row.Id = GetValueOrDefault<int>(reader, 0);
+                            row.WorkoutId = GetValueOrDefault<int>(reader, 1);
+                            row.ExerciseId = GetValueOrDefault<int>(reader, 2);
+                            row.Sets = GetValueOrDefault<int>(reader, 3);
+                            row.Reps = GetValueOrDefault<string>(reader, 4);
+                            row.Tempo = GetValueOrDefault<string>(reader, 5);
+                            row.Rest = GetValueOrDefault<int>(reader, 6);
+                            row.CreationDate = GetValueOrDefault<DateTime?>(reader, 7);
+                            row.IsDeleted = GetValueOrDefault<bool>(reader, 8);
+                            row.Series = GetValueOrDefault<string>(reader, 9);
+                            row.Notes = GetValueOrDefault<string>(reader, 10);
+                            row.Week = GetValueOrDefault<int>(reader, 11);
+                            row.SimultaneouslyCreatedIds = GetValueOrDefault<string>(reader, 12);
+                            row.WorkoutExerciseGroupId = GetValueOrDefault<int>(reader, 13);
+
+                            list.Add(row);
+
+                        }
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+
+
+                return list;
+            }
+
+            public static List<DB.WorkoutExercises> GetAllWorkoutExercises()
+            {
+                var list = new List<DB.WorkoutExercises>();
+                string query = "SELECT *\r\n" +
+                               "FROM WorkoutExercises \r\n" +
+                               "WHERE IsDeleted = 0 \r\n";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new DB.WorkoutExercises();
+                            row.Id = GetValueOrDefault<int>(reader, 0);
+                            row.WorkoutId = GetValueOrDefault<int>(reader, 1);
+                            row.ExerciseId = GetValueOrDefault<int>(reader, 2);
+                            row.Sets = GetValueOrDefault<int>(reader, 3);
+                            row.Reps = GetValueOrDefault<string>(reader, 4);
+                            row.Tempo = GetValueOrDefault<string>(reader, 5);
+                            row.Rest = GetValueOrDefault<int>(reader, 6);
+                            row.CreationDate = GetValueOrDefault<DateTime?>(reader, 7);
+                            row.IsDeleted = GetValueOrDefault<bool>(reader, 8);
+                            row.Series = GetValueOrDefault<string>(reader, 9);
+                            row.Notes = GetValueOrDefault<string>(reader, 10);
+                            row.Week = GetValueOrDefault<int>(reader, 11);
+                            row.SimultaneouslyCreatedIds = GetValueOrDefault<string>(reader, 12);
+                            row.WorkoutExerciseGroupId = GetValueOrDefault<int>(reader, 13);
+
+                            list.Add(row);
+
+                        }
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+                return list;
+            }
+
+            public static int GetCountWorkoutExercises(DB.UserMemberships userMemebrship)
+            {
+                var row = new int();
+                string query = "select count(id) \r\n " +
+                               "from WorkoutExercises \r\n " +
+                               "where WorkoutId in \r\n " +
+                               "(select id from Workouts \r\n " +
+                               "where ProgramId in \r\n " +
+                               "(select id from Programs \r\n " +
+                               $"where membershipid = {userMemebrship.MembershipId} and IsDeleted = 0)) and isdeleted = 0";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            
+                            row = GetValueOrDefault<int>(reader, 0);
+                        }
+                    }
+                    db.Close();
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+                return row;
+            }
+
         }
 
         public class Memberships
@@ -515,7 +769,7 @@ namespace MCMAutomation.Helpers
                 string query = "SELECT TOP(1)*" +
                                              "FROM [Memberships] " +
                                              "WHERE isDeleted = 0 " +
-                                             "ORDER BY CreationDate DESC";
+                                             "ORDER BY Id DESC";
                 try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
@@ -862,23 +1116,24 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
                         var row = new DB.Memberships();
-                        row.Id = reader.GetInt32(0);
-                        row.Name = reader.GetString(1);
-                        row.Description = reader.GetString(2);
-                        row.StartDate = null;
-                        row.EndDate = null;
-                        row.URL = reader.GetString(5);
-                        row.Price = reader.GetDecimal(6);
-                        row.CreationDate = reader.GetDateTime(7);
-                        row.IsDeleted = reader.GetBoolean(8);
-                        row.IsCustom = reader.GetBoolean(9);
-                        row.ForPurchase = reader.GetBoolean(10);
-                        row.AccessWeekLength = reader.GetInt32(11);
-                        row.RelatedMembershipGroupId = null;
-                        row.Gender = reader.GetInt32(13);
-                        row.PromotionalPopupId = null;
-                        row.Type = reader.GetInt32(15);
-                        row.SKU = reader.GetString(16);
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.SKU = GetValueOrDefault<string>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.Description = GetValueOrDefault<string>(reader, 3);
+                        row.StartDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.EndDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.URL = GetValueOrDefault<string>(reader, 6);
+                        row.Price = GetValueOrDefault<decimal>(reader, 7);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 8);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 9);
+                        row.IsCustom = GetValueOrDefault<bool>(reader, 10);
+                        row.ForPurchase = GetValueOrDefault<bool>(reader, 11);
+                        row.AccessWeekLength = GetValueOrDefault<int>(reader, 12);
+                        row.RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 13);
+                        row.Gender = GetValueOrDefault<int>(reader, 14);
+                        row.PromotionalPopupId = GetValueOrDefault<int>(reader, 15);
+                        row.Type = GetValueOrDefault<int>(reader, 16);
+                        
                         list.Add(row);
                     }
                 }
@@ -902,23 +1157,24 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
                         var row = new DB.Memberships();
-                        row.Id = reader.GetInt32(0);
-                        row.Name = reader.GetString(1);
-                        row.Description = null;
-                        row.StartDate = null;
-                        row.EndDate = null;
-                        row.URL = reader.GetString(5);
-                        row.Price = reader.GetDecimal(6);
-                        row.CreationDate = reader.GetDateTime(7);
-                        row.IsDeleted = reader.GetBoolean(8);
-                        row.IsCustom = reader.GetBoolean(9);
-                        row.ForPurchase = reader.GetBoolean(10);
-                        row.AccessWeekLength = null;
-                        row.RelatedMembershipGroupId = null;
-                        row.Gender = reader.GetInt32(13);
-                        row.PromotionalPopupId = null;
-                        row.Type = reader.GetInt32(15);
-                        row.SKU = reader.GetString(16);
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.SKU = GetValueOrDefault<string>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.Description = GetValueOrDefault<string>(reader, 3);
+                        row.StartDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.EndDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.URL = GetValueOrDefault<string>(reader, 6);
+                        row.Price = GetValueOrDefault<decimal>(reader, 7);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 8);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 9);
+                        row.IsCustom = GetValueOrDefault<bool>(reader, 10);
+                        row.ForPurchase = GetValueOrDefault<bool>(reader, 11);
+                        row.AccessWeekLength = GetValueOrDefault<int>(reader, 12);
+                        row.RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 13);
+                        row.Gender = GetValueOrDefault<int>(reader, 14);
+                        row.PromotionalPopupId = GetValueOrDefault<int>(reader, 15);
+                        row.Type = GetValueOrDefault<int>(reader, 16);
+
                         list.Add(row);
                     }
                 }
@@ -943,23 +1199,24 @@ namespace MCMAutomation.Helpers
                     while (reader.Read())
                     {
                         var row = new DB.Memberships();
-                        row.Id = reader.GetInt32(0);
-                        row.Name = reader.GetString(1);
-                        row.Description = null;
-                        row.StartDate = null;
-                        row.EndDate = null;
-                        row.URL = null;
-                        row.Price = reader.GetDecimal(6);
-                        row.CreationDate = reader.GetDateTime(7);
-                        row.IsDeleted = reader.GetBoolean(8);
-                        row.IsCustom = reader.GetBoolean(9);
-                        row.ForPurchase = reader.GetBoolean(10);
-                        row.AccessWeekLength = reader.GetInt32(11);
-                        row.RelatedMembershipGroupId = null;
-                        row.Gender = reader.GetInt32(13);
-                        row.PromotionalPopupId = null;
-                        row.Type = reader.GetInt32(15);
-                        row.SKU = null;
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.SKU = GetValueOrDefault<string>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.Description = GetValueOrDefault<string>(reader, 3);
+                        row.StartDate = GetValueOrDefault<DateTime>(reader, 4);
+                        row.EndDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.URL = GetValueOrDefault<string>(reader, 6);
+                        row.Price = GetValueOrDefault<decimal>(reader, 7);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 8);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 9);
+                        row.IsCustom = GetValueOrDefault<bool>(reader, 10);
+                        row.ForPurchase = GetValueOrDefault<bool>(reader, 11);
+                        row.AccessWeekLength = GetValueOrDefault<int>(reader, 12);
+                        row.RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 13);
+                        row.Gender = GetValueOrDefault<int>(reader, 14);
+                        row.PromotionalPopupId = GetValueOrDefault<int>(reader, 15);
+                        row.Type = GetValueOrDefault<int>(reader, 16);
+
                         list.Add(row);
                     }
                 }
@@ -1135,6 +1392,8 @@ namespace MCMAutomation.Helpers
                     }
 
                 }
+
+                
             }
         }
 
@@ -1684,6 +1943,99 @@ namespace MCMAutomation.Helpers
                 }
 
             }
+
+            public static void GetListUsermembershipsByDate(out List<DB.UserMemberships> userMemberships)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                userMemberships = new();
+                string query = "Select * " +
+                               "from Usermemberships " +
+                               "where CreationDate > '2023-08-01 00:00:00.0000000' and isdeleted = 0";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.UserMemberships();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        row.UserId = GetValueOrDefault<string>(reader, 2);
+                        row.StartOn = GetValueOrDefault<DateTime>(reader, 3);
+                        row.Active = GetValueOrDefault<bool>(reader, 4);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        row.OnPause = GetValueOrDefault<bool>(reader, 7);
+                        row.PauseEnd = GetValueOrDefault<DateTime>(reader, 8);
+                        row.PauseStart = GetValueOrDefault<DateTime>(reader, 9);
+                        row.DisplayedPromotionalPopupId = GetValueOrDefault<bool>(reader, 10);
+                        row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 11);
+                        row.ParentSubAllUserMembershipId = GetValueOrDefault<int>(reader, 12);
+                        userMemberships.Add(row);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+                    SqlConnection.ClearAllPools();
+                }
+            }
+
+            public static List<DB.UserMemberships> GetAllUsermembershipByDate()
+            {
+                var list = new List<DB.UserMemberships>();
+                string query = "Select  *\r\n  " +
+                               "From UserMemberships\r\n  " +
+                               "where CreationDate > '2023-12-07 00:00:00.0000000'\r\n  " +
+                               "order by userid";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.UserMemberships();
+                        row.Id = GetValueOrDefault<int>(reader, 0);
+                        row.MembershipId = GetValueOrDefault<int>(reader, 1);
+                        row.UserId = GetValueOrDefault<string>(reader, 2);
+                        row.StartOn = GetValueOrDefault<DateTime>(reader, 3);
+                        row.Active = GetValueOrDefault<bool>(reader, 4);
+                        row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+                        row.OnPause = GetValueOrDefault<bool>(reader, 7);
+                        row.PauseEnd = GetValueOrDefault<DateTime>(reader, 8);
+                        row.PauseStart = GetValueOrDefault<DateTime>(reader, 9);
+                        row.DisplayedPromotionalPopupId = GetValueOrDefault<bool>(reader, 10);
+                        row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 11);
+
+                        list.Add(row);
+                    }
+                    db.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+
+                return list;
+            }
         }
 
         public class Progress
@@ -2020,16 +2372,58 @@ namespace MCMAutomation.Helpers
 
         public class JsonUserExercisesReq
         {
-            public static List<DB.JsonUserExercises> GetJsonUserExercisesByUserId(DB.UserMemberships user)
+            //public static List<DB.JsonUserExercises> GetLastJsonUserExercises()
+            //{
+            //    var list = new List<DB.JsonUserExercises>();
+            //    string query = $"select top(1) jue.* " +
+            //                   $"from JsonUserExercises jue\r\n  " +
+            //                   $"order by Id desc";
+            //    try
+            //    {
+            //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+            //        SqlCommand command = new(query, db);
+            //        db.Open();
+
+            //        SqlDataReader reader = command.ExecuteReader();
+            //        if (reader.HasRows)
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                var row = new DB.JsonUserExercises();
+            //                row.Id = GetValueOrDefault<int>(reader, 0);
+            //                row.SetDescription = GetValueOrDefault<string>(reader, 1);
+            //                row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 2);
+            //                row.UserId = GetValueOrDefault<string>(reader, 3);
+            //                row.IsDone = GetValueOrDefault<bool>(reader, 4);
+            //                row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+            //                row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+            //                row.UpdateDate = GetValueOrDefault<DateTime>(reader, 7);
+            //                row.UserMembershipId = GetValueOrDefault<int>(reader, 8);
+
+            //                list.Add(row);
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+            //    }
+            //    finally
+            //    {
+
+            //        // Забезпечуємо вивільнення ресурсів
+            //        SqlConnection.ClearAllPools();
+            //    }
+
+            //    return list;
+            //}
+
+            public static List<DB.JsonUserExercises> GetJsonUserExercisesByUserId(string userId)
             {
                 var list = new List<DB.JsonUserExercises>();
-                string query = $"select distinct jue.* " +
-                               $"from JsonUserExercises jue\r\n  " +
-                               $"inner join WorkoutExercises we on we.Id = jue.WorkoutExerciseId\r\n  " +
-                               $"inner join Workouts w on w.Id = we.WorkoutId\r\n  " +
-                               $"inner join Programs p on p.Id = w.ProgramId\r\n  " +
-                               $"inner join UserMemberships um on um.MembershipId = p.MembershipId\r\n  " +
-                               $"where jue.UserId = '{user.UserId}' and jue.UserMembershipId = '{user.Id}'";
+                string query = $"select jue.* " +
+                               $"from JsonUserExercises jue\r\n  " +                               
+                               $"where jue.UserId = '{userId}'";
                 try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
@@ -2056,19 +2450,50 @@ namespace MCMAutomation.Helpers
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
-                }
-                finally
-                {
-
-                    // Забезпечуємо вивільнення ресурсів
-                    SqlConnection.ClearAllPools();
-                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
 
                 return list;
             }
+
+            //public static List<DB.JsonUserExercises> GetJsonUserExercisesByUserIdLive(string userId)
+            //{
+            //    var list = new List<DB.JsonUserExercises>();
+            //    string query = $"select jue.* " +
+            //                   $"from JsonUserExercises jue\r\n  " +
+            //                   $"where jue.UserId = '{userId}' and usermembershipId =59997";
+            //    try
+            //    {
+            //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+            //        SqlCommand command = new(query, db);
+            //        db.Open();
+
+            //        SqlDataReader reader = command.ExecuteReader();
+            //        if (reader.HasRows)
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                var row = new DB.JsonUserExercises();
+            //                row.Id = GetValueOrDefault<int>(reader, 0);
+            //                row.SetDescription = GetValueOrDefault<string>(reader, 1);
+            //                row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 2);
+            //                row.UserId = GetValueOrDefault<string>(reader, 3);
+            //                row.IsDone = GetValueOrDefault<bool>(reader, 4);
+            //                row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+            //                row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+            //                row.UpdateDate = GetValueOrDefault<DateTime>(reader, 7);
+            //                row.UserMembershipId = GetValueOrDefault<int>(reader, 8);
+
+            //                list.Add(row);
+            //            }
+            //        }
+            //        reader.Close();
+            //    }
+            //    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+            //    finally { SqlConnection.ClearAllPools(); }
+
+            //    return list;
+            //}
 
             public static List<DB.JsonUserExercises> GetJsonUserExercisesByWorkoutExerciseId(int? workoutExerciseId)
             {
@@ -2106,6 +2531,220 @@ namespace MCMAutomation.Helpers
                 finally { SqlConnection.ClearAllPools(); }
 
                 return list;
+            }
+
+            public static List<(int?, int?, string?)> GetUsersIfJsonUserExercisesIsNull(List<DB.UserMemberships> userMemberships)
+            {
+                List<(int?, int?, string?)> list = new List<(int?, int?, string?)>();
+                int i = 0;
+                foreach (var userMembership in userMemberships)
+                {
+                    
+                    if (i < 10)
+                    {
+                        string query = $"select count(id) " +
+                                   $"from JsonUserExercises " +
+                                   $"where UserId = '{userMembership.UserId}' and UsermembershipId = {userMembership.Id}";
+                        try
+                        {
+                            SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                            SqlCommand command = new(query, db);
+                            db.Open();
+
+                            SqlDataReader reader = command.ExecuteReader();
+                            if (reader.HasRows)
+                            {
+
+                                while (reader.Read())
+                                {
+                                    int count = GetValueOrDefault<int>(reader, 0);
+                                    if (count == 0)
+                                    {
+                                        list.Add((userMembership.Id, userMembership.MembershipId, userMembership.UserId));
+                                    }
+                                    
+                                }
+
+
+                            }
+                            WaitUntil.WaitSomeInterval(150);
+                        }
+                        catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}\r\n{userMembership.Id}"); }
+                        finally { SqlConnection.ClearAllPools(); }
+                        i++;
+                        if (i >= 10)
+                        {
+                            i = 0;
+                            WaitUntil.WaitSomeInterval(5000);
+                        }
+                    }
+                    
+                }
+                
+
+                return list;
+            }
+
+            public static int GetCountOfJsonUserExercises(DB.UserMemberships userMembership)
+            {
+                var row = new int();
+                string query = $" Select count(id) " +
+                               $"from JsonUserExercises " +
+                               $"where UserId = '{userMembership.UserId}' and UserMembershipId = {userMembership.Id}";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            row = GetValueOrDefault<int>(reader, 0);
+                        }
+                    }
+                    db.Close();
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+
+                return row;
+            }
+
+            public class Insert
+            {
+                //public static void InsertWorkoutExercises(int? lastJSONExerciseId, List<DB.JsonUserExercises> listOriginal/*, List<DB.WorkoutExercises> listReplace*/)
+                //{
+                //    var str = ListHandler(lastJSONExerciseId, listOriginal/*, listReplace*/);
+                //    string query = string.Empty;
+                //    for (int u =0; u <3; u++)
+                //    {
+                //        if (u == 0) {
+                //            query = "SET IDENTITY_INSERT JsonUserExercises ON" +
+                //                   "\r\n\r\nInsert JsonUserExercises " +
+                //                   "(Id,\tSetDescription,\tWorkoutExerciseId,\tUserId,\tIsDone,\tCreationDate,\tIsDeleted,\tUpdateDate,\tUserMembershipId)" +
+                //                   "\r\nValues\r\n" +
+                //                   $"{str.Item1}" +
+                //                   "\r\n\r\nSET IDENTITY_INSERT JsonUserExercises OFF";
+                //        }
+                //        else if(u == 1) {
+                //            query = "SET IDENTITY_INSERT JsonUserExercises ON" +
+                //                   "\r\n\r\nInsert JsonUserExercises " +
+                //                   "(Id,\tSetDescription,\tWorkoutExerciseId,\tUserId,\tIsDone,\tCreationDate,\tIsDeleted,\tUpdateDate,\tUserMembershipId)" +
+                //                   "\r\nValues\r\n" +
+                //                   $"{str.Item2}" +
+                //                   "\r\n\r\nSET IDENTITY_INSERT JsonUserExercises OFF";
+                //        }
+                //        else if (u == 2)
+                //        {
+                //            query = "SET IDENTITY_INSERT JsonUserExercises ON" +
+                //                   "\r\n\r\nInsert JsonUserExercises " +
+                //                   "(Id,\tSetDescription,\tWorkoutExerciseId,\tUserId,\tIsDone,\tCreationDate,\tIsDeleted,\tUpdateDate,\tUserMembershipId)" +
+                //                   "\r\nValues\r\n" +
+                //                   $"{str.Item3}" +
+                //                   "\r\n\r\nSET IDENTITY_INSERT JsonUserExercises OFF";
+                //        }
+
+                //        try
+                //        {
+                //            SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                //            SqlCommand command = new(query, db);
+
+                //            db.Open();
+
+                //            SqlDataReader reader = command.ExecuteReader();
+                //            while (reader.Read())
+                //            {
+                //                continue;
+                //            }
+                //            reader.Close();
+                //            //var rowsAffected = command.ExecuteNonQueryAsync();
+                //            //Console.WriteLine(rowsAffected.Result);
+                            
+
+
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                //        }
+                //        finally
+                //        {
+                            
+                //            // Забезпечуємо вивільнення ресурсів
+                //            SqlConnection.ClearAllPools();
+                //        }
+                //    }
+                    
+                //}
+
+                private static (string, string, string) ListHandler(int? lastJSONExerciseId, List<DB.JsonUserExercises> listOriginal/*, List<DB.WorkoutExercises> listReplace*/)
+                {
+                    string row = string.Empty;
+                    string row1 = string.Empty;
+                    string row2 = string.Empty;
+                    int i = 0;
+                    //List<int?> originalValues = listOriginal.OrderBy(l=>l.WorkoutExerciseId).Select(l=>l.WorkoutExerciseId).ToList();
+                    //List<int?> replacementValues = listReplace.OrderBy(l => l.Id).Select(l => l.Id).ToList();
+
+                    //Dictionary<int?, int?> valueMap = originalValues
+                    //    .Zip(replacementValues, (original, replacement) => new { Original = original, Replacement = replacement })
+                    //    .ToDictionary(pair => pair.Original, pair => pair.Replacement);
+
+
+                    foreach (var item in listOriginal)
+                    {
+                        ++i;
+                        if (i <= 1000)
+                        {
+                            //int? result = valueMap.ContainsKey(item.WorkoutExerciseId.Value)
+                            //? valueMap[item.WorkoutExerciseId.Value]
+                            //: item.WorkoutExerciseId.Value;
+                            if (i <= 999)
+                            {
+                                row += string.Concat("(", lastJSONExerciseId + i, ",\t\'", item.SetDescription, "\',\t", item.WorkoutExerciseId, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.IsDone.HasValue ? Convert.ToInt32(item.IsDone.Value) : default, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t\'", item.UpdateDate.HasValue ? Convert.ToString(item.UpdateDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff")) : null, "\',\t", 71732, "),\r\n");
+                            }
+                            else
+                            {
+                                row += string.Concat("(", lastJSONExerciseId + i, ",\t\'", item.SetDescription, "\',\t", item.WorkoutExerciseId, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.IsDone.HasValue ? Convert.ToInt32(item.IsDone.Value) : default, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t\'", item.UpdateDate.HasValue ? Convert.ToString(item.UpdateDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff")) : null, "\',\t", 71732, ")\r\n");
+                            }
+                        }
+                        else if (i > 1000 && i<=2000)
+                        {
+                            //int? result = valueMap.ContainsKey(item.WorkoutExerciseId.Value)
+                            //? valueMap[item.WorkoutExerciseId.Value]
+                            //: item.WorkoutExerciseId.Value;
+                            if (i <= 1999)
+                            {
+                                row1 += string.Concat("(", lastJSONExerciseId + i, ",\t\'", item.SetDescription, "\',\t", item.WorkoutExerciseId, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.IsDone.HasValue ? Convert.ToInt32(item.IsDone.Value) : default, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t\'", item.UpdateDate.HasValue ? Convert.ToString(item.UpdateDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff")) : null, "\',\t", 71732, "),\r\n");
+                            }
+                            else
+                            {
+                                row1 += string.Concat("(", lastJSONExerciseId + i, ",\t\'", item.SetDescription, "\',\t", item.WorkoutExerciseId, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.IsDone.HasValue ? Convert.ToInt32(item.IsDone.Value) : default, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t\'", item.UpdateDate.HasValue ? Convert.ToString(item.UpdateDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff")) : null, "\',\t", 71732, ")\r\n");
+                            }
+                        }
+                        else if (i > 2000)
+                        {
+                            //int? result = valueMap.ContainsKey(item.WorkoutExerciseId.Value)
+                            //? valueMap[item.WorkoutExerciseId.Value]
+                            //: item.WorkoutExerciseId.Value;
+                            if (item.Id != listOriginal.Last().Id)
+                            {
+                                row2 += string.Concat("(", lastJSONExerciseId + i, ",\t\'", item.SetDescription, "\',\t", item.WorkoutExerciseId, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.IsDone.HasValue ? Convert.ToInt32(item.IsDone.Value) : default, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t\'", item.UpdateDate.HasValue ? Convert.ToString(item.UpdateDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff")) : null, "\',\t", 71732, "),\r\n");
+                            }
+                            else
+                            {
+                                row2 += string.Concat("(", lastJSONExerciseId + i, ",\t\'", item.SetDescription, "\',\t", item.WorkoutExerciseId, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.IsDone.HasValue ? Convert.ToInt32(item.IsDone.Value) : default, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t\'", item.UpdateDate.HasValue ? Convert.ToString(item.UpdateDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff")) : null, "\',\t", 71732, ")\r\n");
+                            }
+                        }
+
+
+
+                    }
+                    return (row, row1, row2);
+                }
             }
         }
 
@@ -2271,6 +2910,403 @@ namespace MCMAutomation.Helpers
                 catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
                 finally { SqlConnection.ClearAllPools(); }
 
+            }
+        }
+
+        public class CompletedWorkouts
+        {
+            //public static List<DB.JsonUserExercises> GetLastJsonUserExercises()
+            //{
+            //    var list = new List<DB.JsonUserExercises>();
+            //    string query = $"select top(1) jue.* " +
+            //                   $"from CompletedWorkouts jue\r\n  " +
+            //                   $"order by Id desc";
+            //    try
+            //    {
+            //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+            //        SqlCommand command = new(query, db);
+            //        db.Open();
+
+            //        SqlDataReader reader = command.ExecuteReader();
+            //        if (reader.HasRows)
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                var row = new DB.JsonUserExercises();
+            //                row.Id = GetValueOrDefault<int>(reader, 0);
+            //                row.SetDescription = GetValueOrDefault<string>(reader, 1);
+            //                row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 2);
+            //                row.UserId = GetValueOrDefault<string>(reader, 3);
+            //                row.IsDone = GetValueOrDefault<bool>(reader, 4);
+            //                row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+            //                row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+            //                row.UpdateDate = GetValueOrDefault<DateTime>(reader, 7);
+            //                row.UserMembershipId = GetValueOrDefault<int>(reader, 8);
+
+            //                list.Add(row);
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+            //    }
+            //    finally
+            //    {
+
+            //        // Забезпечуємо вивільнення ресурсів
+            //        SqlConnection.ClearAllPools();
+            //    }
+
+            //    return list;
+            //}
+
+            //public static List<DB.CompletedWorkouts> GetCompletedWorkoutsByUserIdLive(string userId)
+            //{
+            //    var list = new List<DB.CompletedWorkouts>();
+            //    string query = $"select * " +
+            //                   $"from CompletedWorkouts \r\n  " +
+            //                   $"where UserId = '{userId}' and usermembershipId =59997";
+            //    try
+            //    {
+            //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+            //        SqlCommand command = new(query, db);
+            //        db.Open();
+
+            //        SqlDataReader reader = command.ExecuteReader();
+            //        if (reader.HasRows)
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                var row = new DB.CompletedWorkouts();
+            //                row.Id = GetValueOrDefault<int>(reader, 0);
+            //                row.WorkoutId = GetValueOrDefault<int>(reader, 1);
+            //                row.UserId = GetValueOrDefault<string>(reader, 2);
+            //                row.WeekNumber = GetValueOrDefault<int>(reader, 3);
+            //                row.CreatedDate = GetValueOrDefault<DateTime>(reader, 4);
+            //                row.IsDeleted = GetValueOrDefault<bool>(reader, 5);
+            //                row.UserMembershipId = GetValueOrDefault<int>(reader, 6);
+
+            //                list.Add(row);
+            //            }
+            //        }
+            //        reader.Close();
+            //    }
+            //    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+            //    finally { SqlConnection.ClearAllPools(); }
+
+            //    return list;
+            //}
+
+            public class Insert
+            {
+                //public static void InsertCompletedWorkouts(int? lastCompletedWorkoutId, List<DB.CompletedWorkouts> listOriginal/*, List<DB.WorkoutExercises> listReplace*/)
+                //{
+                //    var str = ListHandler(lastCompletedWorkoutId, listOriginal);
+                //    string query = "SET IDENTITY_INSERT CompletedWorkouts ON" +
+                //                   "\r\n\r\nInsert CompletedWorkouts " +
+                //                   "(Id,\tWorkoutId,\tUserId,\tWeekNumber,\tCreationDate,\tIsDeleted,\tUserMembershipId)" +
+                //                   "\r\nValues\r\n" +
+                //                   $"{str}" +
+                //                   "\r\n\r\nSET IDENTITY_INSERT CompletedWorkouts OFF";
+
+                //    try
+                //    {
+                //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                //        SqlCommand command = new(query, db);
+
+                //        db.Open();
+
+                //        SqlDataReader reader = command.ExecuteReader();
+                //        while (reader.Read())
+                //        {
+                //            continue;
+                //        }
+                //        reader.Close();
+                //        //var rowsAffected = command.ExecuteNonQueryAsync();
+                //        //Console.WriteLine(rowsAffected.Result);
+
+
+
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                //    }
+                //    finally
+                //    {
+
+                //        // Забезпечуємо вивільнення ресурсів
+                //        SqlConnection.ClearAllPools();
+                //    }
+
+
+                //}
+
+                private static string ListHandler(int? lastCompletedWorkoutId, List<DB.CompletedWorkouts> listOriginal)
+                {
+                    string row = string.Empty;
+                    int i = 0;
+                    //List<int?> originalValues = listOriginal.OrderBy(l=>l.WorkoutExerciseId).Select(l=>l.WorkoutExerciseId).ToList();
+                    //List<int?> replacementValues = listReplace.OrderBy(l => l.Id).Select(l => l.Id).ToList();
+
+                    //Dictionary<int?, int?> valueMap = originalValues
+                    //    .Zip(replacementValues, (original, replacement) => new { Original = original, Replacement = replacement })
+                    //    .ToDictionary(pair => pair.Original, pair => pair.Replacement);
+
+
+                    foreach (var item in listOriginal)
+                    {
+                        ++i;
+
+                        if (item.Id != listOriginal.Last().Id)
+                        {
+                            row += string.Concat("(", lastCompletedWorkoutId + i, ",\t", item.WorkoutId, "\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.WeekNumber, ",\t", "\'", item.CreatedDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t", 71732, "),\r\n");
+                        }
+                        else
+                        {
+                            row += string.Concat("(", lastCompletedWorkoutId + i, ",\t", item.WorkoutId, "\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.WeekNumber, ",\t", "\'", item.CreatedDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t", 71732, ")\r\n");
+                        }
+
+
+                    }
+                    return row;
+                }
+            }
+        }
+
+        public class UserRelatedExercises
+        {
+            //public static List<DB.UserRelatedExercises> GetUserRelatedExercisesByUserIdLive(string userId)
+            //{
+            //    var list = new List<DB.UserRelatedExercises>();
+            //    string query = $"select * " +
+            //                   $"from UserRelatedExercises \r\n  " +
+            //                   $"where UserId = '{userId}' and usermembershipId =59997";
+            //    try
+            //    {
+            //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+            //        SqlCommand command = new(query, db);
+            //        db.Open();
+
+            //        SqlDataReader reader = command.ExecuteReader();
+            //        if (reader.HasRows)
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                var row = new DB.UserRelatedExercises();
+            //                row.Id = GetValueOrDefault<int>(reader, 0);
+            //                row.UserId = GetValueOrDefault<string>(reader, 1);
+            //                row.WeekNumber = GetValueOrDefault<int>(reader, 2);
+            //                row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 3);
+            //                row.ExerciseId = GetValueOrDefault<int>(reader, 4);
+            //                row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+            //                row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+            //                row.UserMembershipId = GetValueOrDefault<int>(reader, 7);
+            //                row.ExerciseType = GetValueOrDefault<bool>(reader, 8);
+
+            //                list.Add(row);
+            //            }
+            //        }
+            //        reader.Close();
+            //    }
+            //    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+            //    finally { SqlConnection.ClearAllPools(); }
+
+            //    return list;
+            //}
+
+            public class Insert
+            {
+                //public static void InsertUserRelatedExercises(int? lastUserRelatedExerciseId, List<DB.UserRelatedExercises> listOriginal/*, List<DB.WorkoutExercises> listReplace*/)
+                //{
+                //    var str = ListHandler(lastUserRelatedExerciseId, listOriginal);
+                //    string query = "SET IDENTITY_INSERT UserRelatedExercises ON" +
+                //                   "\r\n\r\nInsert UserRelatedExercises " +
+                //                   "(Id,\tUserId,\tWeekNumber,\tWorkoutExerciseId,\tExerciseId,\tCreationDate,\tIsDeleted,\tUserMembershipId,\tExerciseType)" +
+                //                   "\r\nValues\r\n" +
+                //                   $"{str}" +
+                //                   "\r\n\r\nSET IDENTITY_INSERT UserRelatedExercises OFF";
+
+                //    try
+                //    {
+                //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                //        SqlCommand command = new(query, db);
+
+                //        db.Open();
+
+                //        SqlDataReader reader = command.ExecuteReader();
+                //        while (reader.Read())
+                //        {
+                //            continue;
+                //        }
+                //        reader.Close();
+                //        //var rowsAffected = command.ExecuteNonQueryAsync();
+                //        //Console.WriteLine(rowsAffected.Result);
+
+
+
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                //    }
+                //    finally
+                //    {
+
+                //        // Забезпечуємо вивільнення ресурсів
+                //        SqlConnection.ClearAllPools();
+                //    }
+
+
+                //}
+
+                private static string ListHandler(int? lastUserRelatedExerciseId, List<DB.UserRelatedExercises> listOriginal)
+                {
+                    string row = string.Empty;
+                    int i = 0;
+                    //List<int?> originalValues = listOriginal.OrderBy(l=>l.WorkoutExerciseId).Select(l=>l.WorkoutExerciseId).ToList();
+                    //List<int?> replacementValues = listReplace.OrderBy(l => l.Id).Select(l => l.Id).ToList();
+
+                    //Dictionary<int?, int?> valueMap = originalValues
+                    //    .Zip(replacementValues, (original, replacement) => new { Original = original, Replacement = replacement })
+                    //    .ToDictionary(pair => pair.Original, pair => pair.Replacement);
+
+
+                    foreach (var item in listOriginal)
+                    {
+                        ++i;
+
+                        if (item.Id != listOriginal.Last().Id)
+                        {
+                            row += string.Concat("(", lastUserRelatedExerciseId + i, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.WeekNumber, ",\t", item.WorkoutExerciseId, ",\t", item.ExerciseId, "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t", 71732, ",\t", item.ExerciseType.HasValue ? Convert.ToInt32(item.ExerciseType.Value) : default, "),\r\n");
+                        }
+                        else
+                        {
+                            row += string.Concat("(", lastUserRelatedExerciseId + i, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.WeekNumber, ",\t", item.WorkoutExerciseId, ",\t", item.ExerciseId, "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t", 71732, ",\t", item.ExerciseType.HasValue ? Convert.ToInt32(item.ExerciseType.Value) : default, ")\r\n");
+                        }
+
+
+                    }
+                    return row;
+                }
+            }
+        }
+
+        public class WorkoutUserNotes
+        {
+            //public static List<DB.WorkoutUserNotes> GetUserRelatedExercisesByUserIdLive(string userId)
+            //{
+            //    var list = new List<DB.WorkoutUserNotes>();
+            //    string query = $"select * " +
+            //                   $"from WorkoutUserNotes \r\n  " +
+            //                   $"where UserId = '{userId}' and usermembershipId =59997";
+            //    try
+            //    {
+            //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+            //        SqlCommand command = new(query, db);
+            //        db.Open();
+
+            //        SqlDataReader reader = command.ExecuteReader();
+            //        if (reader.HasRows)
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                var row = new DB.WorkoutUserNotes();
+            //                row.Id = GetValueOrDefault<int>(reader, 0);
+            //                row.Notes = GetValueOrDefault<string>(reader, 1);
+            //                row.WorkoutExerciseId = GetValueOrDefault<int>(reader, 2);
+            //                row.UserId = GetValueOrDefault<string>(reader, 3);
+            //                row.WeekNumber = GetValueOrDefault<int>(reader, 4);
+            //                row.CreationDate = GetValueOrDefault<DateTime>(reader, 5);
+            //                row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+            //                row.UserMembershipId = GetValueOrDefault<int>(reader, 7);
+
+            //                list.Add(row);
+            //            }
+            //        }
+            //        reader.Close();
+            //    }
+            //    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+            //    finally { SqlConnection.ClearAllPools(); }
+
+            //    return list;
+            //}
+
+            public class Insert
+            {
+                //public static void InsertUserRelatedExercises(int? lastWorkoutUserNoteId, List<DB.WorkoutUserNotes> listOriginal/*, List<DB.WorkoutExercises> listReplace*/)
+                //{
+                //    var str = ListHandler(lastWorkoutUserNoteId, listOriginal);
+                //    string query = "SET IDENTITY_INSERT WorkoutUserNotes ON" +
+                //                   "\r\n\r\nInsert WorkoutUserNotes " +
+                //                   "(Id,\tNotes,\tWorkoutExerciseId,\tUserId,\tWeekNumber,\tCreationDate,\tIsDeleted,\tUserMembershipId)" +
+                //                   "\r\nValues\r\n" +
+                //                   $"{str}" +
+                //                   "\r\n\r\nSET IDENTITY_INSERT WorkoutUserNotes OFF";
+
+                //    try
+                //    {
+                //        SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                //        SqlCommand command = new(query, db);
+
+                //        db.Open();
+
+                //        SqlDataReader reader = command.ExecuteReader();
+                //        while (reader.Read())
+                //        {
+                //            continue;
+                //        }
+                //        reader.Close();
+                //        //var rowsAffected = command.ExecuteNonQueryAsync();
+                //        //Console.WriteLine(rowsAffected.Result);
+
+
+
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                //    }
+                //    finally
+                //    {
+
+                //        // Забезпечуємо вивільнення ресурсів
+                //        SqlConnection.ClearAllPools();
+                //    }
+
+
+                //}
+
+                private static string ListHandler(int? lastWorkoutUserNoteId, List<DB.WorkoutUserNotes> listOriginal)
+                {
+                    string row = string.Empty;
+                    int i = 0;
+                    //List<int?> originalValues = listOriginal.OrderBy(l=>l.WorkoutExerciseId).Select(l=>l.WorkoutExerciseId).ToList();
+                    //List<int?> replacementValues = listReplace.OrderBy(l => l.Id).Select(l => l.Id).ToList();
+
+                    //Dictionary<int?, int?> valueMap = originalValues
+                    //    .Zip(replacementValues, (original, replacement) => new { Original = original, Replacement = replacement })
+                    //    .ToDictionary(pair => pair.Original, pair => pair.Replacement);
+
+
+                    foreach (var item in listOriginal)
+                    {
+                        ++i;
+
+                        if (item.Id != listOriginal.Last().Id)
+                        {
+                            row += string.Concat("(", lastWorkoutUserNoteId + i, ",\t\'", item.Notes, "\',\t", item.WorkoutExerciseId, ",\t", ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.WeekNumber, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t", 71732, "),\r\n");
+                        }
+                        else
+                        {
+                            row += string.Concat("(", lastWorkoutUserNoteId + i, ",\t\'", item.Notes, "\',\t", item.WorkoutExerciseId, ",\t", ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.WeekNumber, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t", 71732, ")\r\n");
+                        }
+
+
+                    }
+                    return row;
+                }
             }
         }
     }

@@ -364,3 +364,5 @@ FodyWeavers.xsd
 /ErrorImages/
 /allure-results
 /MCMAdminTests/allure serve.bat
+/inconsistent_entries.csv
+/nonMatchingNames.csv
