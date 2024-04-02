@@ -691,7 +691,7 @@ namespace MCMAutomation.Helpers
                                "WHERE IsDeleted = 0 \r\n";
                 try
                 {
-                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
                     db.Open();
 
@@ -738,7 +738,7 @@ namespace MCMAutomation.Helpers
                                $"where membershipid = {userMemebrship.MembershipId} and IsDeleted = 0)) and isdeleted = 0";
                 try
                 {
-                    SqlConnection db = new(DB.GET_CONNECTION_STRING_Live);
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
                     db.Open();
 

@@ -43,7 +43,7 @@ namespace AdminSiteTests
                 .EnterMembershipData();
             Pages.CommonPages.Common
                 .ClickSaveBtn();
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             Pages.AdminPages.MembershipAdmin
                 .SearchMembership(membership.Name)
                 .VerifyMembershipName(membership.Name);
@@ -73,7 +73,7 @@ namespace AdminSiteTests
             
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
 
             #endregion
 
@@ -118,7 +118,7 @@ namespace AdminSiteTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
@@ -165,7 +165,7 @@ namespace AdminSiteTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
@@ -188,7 +188,7 @@ namespace AdminSiteTests
             Pages.CommonPages.Common
                 .ClickSaveBtn();
             WaitUntil.WaitForElementToAppear(Pages.AdminPages.MembershipAdmin.searchUserInput, 30);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipDataAfterEditing);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membershipDataAfterEditing);
             Pages.AdminPages.MembershipAdmin
                 .SearchMembership(membershipDataAfterEditing.Name)
                 .VerifyMembershipName(membership.Name, membershipDataAfterEditing.Name);
@@ -217,7 +217,7 @@ namespace AdminSiteTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
@@ -283,7 +283,7 @@ namespace AdminSiteTests
             #endregion
 
             #region Add Programs and Workouts to Product membership
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
@@ -355,7 +355,7 @@ namespace AdminSiteTests
             
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
@@ -472,7 +472,7 @@ namespace AdminSiteTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateSubscriptionMembership(responseLoginAdmin);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
@@ -544,7 +544,7 @@ namespace AdminSiteTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateCustomMembership(responseLoginAdmin, userId);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
@@ -604,7 +604,7 @@ namespace AdminSiteTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             const int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);

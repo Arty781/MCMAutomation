@@ -46,7 +46,7 @@ namespace MCMApiTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membershipData);
             const int programCount = 6;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
@@ -78,7 +78,7 @@ namespace MCMApiTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membershipData);
             const int programCount = 3;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
@@ -114,7 +114,7 @@ namespace MCMApiTests
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 5;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
@@ -141,10 +141,10 @@ namespace MCMApiTests
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             var listOfMemberships = AppDbContext.Memberships.GetAllMemberships().Where(x => x.Type == 0 && x.IsDeleted == false).ToList();
             MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 6);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             var subAllMemberships = AppDbContext.SubAllMemberships.GetSubAllMembershipsGroup(membership.Id);
             MembershipRequest.EditSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, membership.Id, subAllMemberships);
-            AppDbContext.Memberships.GetLastMembership(out membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out membership);
             AppDbContext.Memberships.DeleteMembership(membership.Name);
 
         }
@@ -512,7 +512,7 @@ namespace MCMApiTests
                                                                     && x.StartDate == DateTime.Parse("1/1/0001 12:00:00 AM"))
                                                                 .ToList();
             MembershipRequest.CreateSubAllMembership(responseLoginAdmin, MembershipsSKU.SKU_SUBALL_MEMBER, listOfMemberships, 3);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membershipData);
             MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipData.Id, user.Id);
 
             #endregion
@@ -544,7 +544,7 @@ namespace MCMApiTests
 
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipData);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membershipData);
             const int programCount = 4;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membershipData.Id, programCount, out List<DB.Programs> programs);
             MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
@@ -615,7 +615,7 @@ namespace MCMApiTests
 
             #region Add and Activate membership to User
             string userId = AppDbContext.User.GetUserData(email).Id;
-            //AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipId);
+            //AppDbContext.Memberships.GetLastMembership("BBB4",out DB.Memberships membershipId);
             //var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             //MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.Id, userId);
             //int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);

@@ -177,7 +177,7 @@ namespace MCMAutomation.APIHelpers
         private static string JsonSubAllBody(List<DB.Memberships>? memberships, int numberOfMemberships)
         {
             List<SubAllMembershipsReq> body = new();
-            Memberships.GetLastMembership(out DB.Memberships membership);
+            Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             //SubAllMembershipsReq ch = new()
             //{
             //    SubAllMembershipId = membership.Id,
@@ -741,7 +741,7 @@ namespace MCMAutomation.APIHelpers
         {
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
             MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             var exercises = AppDbContext.Exercises.GetExercisesData();
             int programCount = 1;
             MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
