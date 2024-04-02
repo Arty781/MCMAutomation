@@ -24,6 +24,7 @@ namespace MCMAutomation.Helpers
             AllureConfigFilesHelper.CreateJsonConfigFile();
             new DriverManager().SetUpDriver(new ChromeConfig());
             var options = new ChromeOptions();
+            //options.AddArgument("--headless=new");
             driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             driver.Manage().Cookies.DeleteAllCookies();
