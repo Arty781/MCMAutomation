@@ -762,13 +762,13 @@ namespace MCMAutomation.Helpers
 
         public class Memberships
         {
-            public static void GetLastMembership(out DB.Memberships membership)
+            public static void GetLastMembership(string sku, out DB.Memberships membership)
             {
                 WaitUntil.WaitSomeInterval(5000);
                 membership = new();
                 string query = "SELECT TOP(1)*" +
                                              "FROM [Memberships] " +
-                                             "WHERE isDeleted = 0 " +
+                                             $"WHERE isDeleted = 0 AND SKU = {sku}" +
                                              "ORDER BY Id DESC";
                 try
                 {

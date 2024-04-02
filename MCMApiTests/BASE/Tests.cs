@@ -580,9 +580,9 @@ namespace MCMApiTests
 
             #region Add and Activate membership to User
             string userId = AppDbContext.User.GetUserData(email).Id;
-            AppDbContext.Memberships.GetLastMembership(out DB.Memberships membershipId);
+            DB.Memberships membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("BBB4");
             var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membershipId.Id, userId);
+            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
             int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
             MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
             const int conversionSystem = ConversionSystem.METRIC;
