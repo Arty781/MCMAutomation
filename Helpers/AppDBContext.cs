@@ -1,5 +1,6 @@
 ﻿using MCMAutomation.APIHelpers;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using Npgsql;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using RimuTec.Faker;
@@ -11,6 +12,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using static Chilkat.Http;
+using static MCMAutomation.APIHelpers.Client.Membership.MembershipModel;
 
 namespace MCMAutomation.Helpers
 {
@@ -27,6 +29,141 @@ namespace MCMAutomation.Helpers
             {
                 return defaultValue;
             }
+        }
+        private static T GetValueOrDefault<T>(NpgsqlDataReader reader, int index, T defaultValue = default)
+        {
+            if (!reader.IsDBNull(index))
+            {
+                return (T)reader.GetValue(index);
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+
+        public class LsfDb
+        {
+            public class UserWorkoutDay
+            {
+                public static List<DB.LsfDbModels.ApiUserWorkoutDay> GetApiUserWorkoutDayByWorkoutIdAndDay(string workoutId, string day, bool isForGym)
+                {
+                    var list = new List<DB.LsfDbModels.ApiUserWorkoutDay>();
+                    string query = $"Select distinct * " +
+                                                 $"FROM api_userworkoutday " +
+                                                 $"where workout_id = '{workoutId}' and \"day\" in ('{day}') AND for_gym = {isForGym} and user_id not in (\r\n'ade3829b-22d4-4343-be5e-2d01758baba7',\r\n'ca26375b-3e5b-4cfe-ab0b-c74dea63e9c8',\r\n'f9a24549-2433-4644-b069-7773bbb6f743') order by id;";
+                    using NpgsqlConnection db = new(DB.GET_CONNECTION_STRING_LSF);
+
+                    using NpgsqlCommand command = new(query, db);
+                    try
+                    {
+                        db.Open();
+                        using NpgsqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            var row = new DB.LsfDbModels.ApiUserWorkoutDay();
+
+                            row.Id = GetValueOrDefault<Guid>(reader, 0);
+                            row.Created_at = GetValueOrDefault<DateTime>(reader, 1);
+                            row.Modified_at = GetValueOrDefault<DateTime>(reader, 2);
+                            row.Date = GetValueOrDefault<DateTime>(reader, 3);
+                            row.Completed = GetValueOrDefault<bool>(reader, 4);
+                            row.Name = GetValueOrDefault<string>(reader, 5);
+                            row.Day = GetValueOrDefault<string>(reader, 6);
+                            row.Approx_time = GetValueOrDefault<string>(reader, 7);
+                            row.Step_target = GetValueOrDefault<int>(reader, 8);
+                            row.Level = GetValueOrDefault<string>(reader, 9);
+                            row.For_gym = GetValueOrDefault<bool>(reader, 10);
+                            row.For_home = GetValueOrDefault<bool>(reader, 11);
+                            row.Image = GetValueOrDefault<string>(reader, 12);
+                            row.User_id = GetValueOrDefault<Guid>(reader, 13);
+                            row.Workout_id = GetValueOrDefault<Guid>(reader, 14);
+                            row.Steps_covered = GetValueOrDefault<int>(reader, 15);
+                            row.Challenge_id = GetValueOrDefault<Guid>(reader, 16);
+                            row.Challenge_ends_on = GetValueOrDefault<DateTime>(reader, 17);
+                            row.A_o_p_id = GetValueOrDefault<Guid>(reader, 18);
+                            row.Program = GetValueOrDefault<string>(reader, 19);
+                            list.Add(row);
+                        }
+
+                    }
+                    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                    
+
+                    return list;
+                }
+
+                public static List<DB.LsfDbModels.ApiUserWorkoutDay> GetApiUserWorkoutDayForFirstDay(int workout_category, int orderNum, string workoutId, string day, bool isForGym)
+                {
+                    var list = new List<DB.LsfDbModels.ApiUserWorkoutDay>();
+                    string query = $"Select distinct *  " +
+                                   $"FROM api_userworkoutday  " +
+                                   $"where id in " +
+                                   $"(Select workout_day_id from api_userworkoutdayexerciseset where workout_category = '{workout_category}' and \"order\"= '{orderNum}' and workout_day_id in " +
+                                   $"(Select id FROM api_userworkoutday where workout_id = '{workoutId}' and \"day\" in ('{day}') AND for_gym = {isForGym} and user_id not in ('ade3829b-22d4-4343-be5e-2d01758baba7','ca26375b-3e5b-4cfe-ab0b-c74dea63e9c8','f9a24549-2433-4644-b069-7773bbb6f743'))) order by id;";
+                    using NpgsqlConnection db = new(DB.GET_CONNECTION_STRING_LSF);
+
+                    using NpgsqlCommand command = new(query, db);
+                    try
+                    {
+                        db.Open();
+                        using NpgsqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            var row = new DB.LsfDbModels.ApiUserWorkoutDay();
+
+                            row.Id = GetValueOrDefault<Guid>(reader, 0);
+                            row.Created_at = GetValueOrDefault<DateTime>(reader, 1);
+                            row.Modified_at = GetValueOrDefault<DateTime>(reader, 2);
+                            row.Date = GetValueOrDefault<DateTime>(reader, 3);
+                            row.Completed = GetValueOrDefault<bool>(reader, 4);
+                            row.Name = GetValueOrDefault<string>(reader, 5);
+                            row.Day = GetValueOrDefault<string>(reader, 6);
+                            row.Approx_time = GetValueOrDefault<string>(reader, 7);
+                            row.Step_target = GetValueOrDefault<int>(reader, 8);
+                            row.Level = GetValueOrDefault<string>(reader, 9);
+                            row.For_gym = GetValueOrDefault<bool>(reader, 10);
+                            row.For_home = GetValueOrDefault<bool>(reader, 11);
+                            row.Image = GetValueOrDefault<string>(reader, 12);
+                            row.User_id = GetValueOrDefault<Guid>(reader, 13);
+                            row.Workout_id = GetValueOrDefault<Guid>(reader, 14);
+                            row.Steps_covered = GetValueOrDefault<int>(reader, 15);
+                            row.Challenge_id = GetValueOrDefault<Guid>(reader, 16);
+                            row.Challenge_ends_on = GetValueOrDefault<DateTime>(reader, 17);
+                            row.A_o_p_id = GetValueOrDefault<Guid>(reader, 18);
+                            row.Program = GetValueOrDefault<string>(reader, 19);
+                            list.Add(row);
+                        }
+
+                    }
+                    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                    
+
+                    return list;
+                }
+
+                public static void UpdateApiUserWorkoutDayExerciseSetById(int workout_category, int orderNum, Guid workout_day_id, Guid new_workout_day_id)
+                {
+                    var list = new List<DB.LsfDbModels.ApiUserWorkoutDay>();
+                    string query = $"Update api_userworkoutdayexerciseset " +
+                                   $"set workout_day_id = '{new_workout_day_id}' " +
+                                   $"where workout_category = '{workout_category}' " +
+                                   $"AND \"order\" = '{orderNum}' and workout_day_id = '{workout_day_id}';";
+                    using NpgsqlConnection db = new(DB.GET_CONNECTION_STRING_LSF);
+                    using NpgsqlCommand command = new(query, db);
+                    try
+                    {
+                        db.Open();
+                        using NpgsqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                    }
+                    catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                    
+                }
+            } 
         }
 
         public class Exercises
@@ -108,6 +245,47 @@ namespace MCMAutomation.Helpers
                         row.IsDeleted = GetValueOrDefault<bool>(reader, 3);
                         row.VideoURL = GetValueOrDefault<string>(reader, 4);
                         row.TempoBold = GetValueOrDefault<int>(reader, 5);
+                        list.Add(row);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+                return list;
+            }
+
+            public static List<DB.ExercisesNewApp> GetExercisesDataNewApp()
+            {
+                var list = new List<DB.ExercisesNewApp>();
+                string query = "SELECT * " +
+                               "FROM [Exercises] WHERE IsDeleted=0";
+
+                try
+                {
+                    using SqlConnection connection = new(DB.GET_CONNECTION_STRING);
+                    using SqlCommand command = new(query, connection);
+                    connection.Open();
+
+                    using SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.ExercisesNewApp();
+                        row.Id = GetValueOrDefault<Guid>(reader, 0);
+                        row.Name = GetValueOrDefault<string>(reader, 1);
+                        row.VideoURL = GetValueOrDefault<string>(reader, 2);
+                        row.TempoBold = GetValueOrDefault<int>(reader, 3);
+                        row.CreatedAt = GetValueOrDefault<DateTime>(reader, 4);
+                        row.ModifiedAt = GetValueOrDefault<DateTime>(reader, 5);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+
                         list.Add(row);
                     }
 
@@ -279,6 +457,51 @@ namespace MCMAutomation.Helpers
 
                 return list;
             }
+
+            public static List<DB.WorkoutsNewApp> GetLastWorkoutsDataNewApp(int numWorkouts)
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                var list = new List<DB.WorkoutsNewApp>();
+                string query = $"SELECT TOP({numWorkouts}) * " +
+                               $"FROM [Workouts] " +
+                               "ORDER BY CreatedAt DESC";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new DB.WorkoutsNewApp();
+                            row.Id = GetValueOrDefault<Guid>(reader, 0);
+                            row.Name = GetValueOrDefault<string>(reader, 1);
+                            row.WeekDay = GetValueOrDefault<int>(reader, 2);
+                            row.ProgramId = GetValueOrDefault<Guid>(reader, 3);
+                            row.CreatedAt = GetValueOrDefault<DateTime>(reader, 4);
+                            row.ModifiedAt = GetValueOrDefault<DateTime>(reader, 5);
+                            row.IsDeleted = GetValueOrDefault<bool>(reader, 6);
+
+                            list.Add(row);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+
+                return list;
+            }
+
             public static List<DB.CopyMembershipPrograms> GetMembershipProgramWorkoutData()
             {
                 var list = new List<DB.CopyMembershipPrograms>();
@@ -365,7 +588,81 @@ namespace MCMAutomation.Helpers
                 return list;
             }
 
+            public class Insert
+            {
+                public static void InsertWorkoutNewApp(List<DB.ProgramsNewApp> programs, int daysCount)
+                {
+                    string query;
+                    query = //"SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
+                        "INSERT INTO [dbo].[Workouts] ([Id], [Name], [WeekDay], [ProgramId], [CreatedAt], [ModifiedAt], [IsDeleted]) \r\n" +
+                        $"VALUES {WorkoutHandler(programs, daysCount)}";
+                    //"SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
 
+
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                        var rowsAffected = command.ExecuteNonQueryAsync();
+                        Console.WriteLine(rowsAffected);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                    }
+                    finally
+                    {
+                        // Забезпечуємо вивільнення ресурсів
+                        SqlConnection.ClearAllPools();
+                    }
+
+                }
+
+                static string WorkoutHandler(List<DB.ProgramsNewApp> programs, int daysCount)
+                {
+                    string query = string.Empty;
+                    bool isFirstRow = true;
+
+                    foreach (var program in programs)
+                    {
+                        for (int i = 0; i <= daysCount; i++)
+                        {
+                            if (i < daysCount || (i == daysCount && program.Id != programs.LastOrDefault().Id))
+                            {
+                                query += string.Format("('{0}', \'Workout Test {1}\', \'{2}\', '{3}', \'{4}\', \'{5}\', {6}),\r\n",
+                                    System.Guid.NewGuid(), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), i, program.Id, DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), 0);
+                            }
+                            else
+                            {
+                                // Only remove comma for the last row of the current program
+                                if (isFirstRow)
+                                {
+                                    query += string.Format("('{0}', \'Workout Test {1}\', \'{2}\', '{3}', \'{4}\', \'{5}\', {6})\r\n",
+                                        System.Guid.NewGuid(), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), i, program.Id, DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), 0);
+                                    isFirstRow = false;
+                                }
+                                else
+                                {
+                                    query += string.Format("('{0}', \'Workout Test {1}\', \'{2}\', '{3}', \'{4}\', \'{5}\', {6}),\r\n",
+                                        System.Guid.NewGuid(), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), i, program.Id, DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), 0);
+                                }
+                            }
+                        }
+                        isFirstRow = true; // Reset for the next program
+                    }
+
+                    return query;
+                }
+
+            }
         }
 
         public class WorkoutExercises
@@ -449,6 +746,138 @@ namespace MCMAutomation.Helpers
                     }
                     return row;
                 }
+
+                public static void InsertWorkoutExercisesNewApp(int maxCount, int programWeekNumber, List<DB.WorkoutsNewApp> workouts, List<DB.ExercisesNewApp> exercises)
+                {
+                    int i = 0;
+                    string query;
+                    query = //"SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
+                        "INSERT INTO [dbo].[WorkoutExercises] ([Id] ,[WorkoutId] ,[ExerciseId] ,[WeekNumber] ,[Series] ,[Sets] ,[Reps] ,[Tempo] ,[Rest] ,[Notes] ,[CreatedAt] ,[ModifiedAt] ,[IsDeleted])\r\n " +
+                        $"VALUES {WorkoutExercisesHandler(maxCount, programWeekNumber, workouts, exercises)}";
+                    //"SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
+
+
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                        var rowsAffected = command.ExecuteNonQueryAsync();
+                        Console.WriteLine(rowsAffected);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                    }
+                    finally
+                    {
+                        // Забезпечуємо вивільнення ресурсів
+                        SqlConnection.ClearAllPools();
+                    }
+
+                }
+
+                static string WorkoutExercisesHandler(int maxCount, int? weekNumber, List<DB.WorkoutsNewApp> workouts, List<DB.ExercisesNewApp> exercises)
+                {
+                    string query = string.Empty;
+                    bool isFirstRow = true;
+                    int seriesNum = 0;
+
+                    foreach (var workout in workouts)
+                    {
+                        for (int i = 1; i <= maxCount; i++)
+                        {
+                            if (i < weekNumber)
+                            {
+                                List<DB.WorkoutExercisesNewApp> squery = Enumerable.Range(1, 4).Select(str => new DB.WorkoutExercisesNewApp
+                                {
+                                    Id = Guid.NewGuid(),
+                                    WorkoutId = workout.Id,
+                                    ExerciseId = exercises[RandomHelper.RandomExercise(exercises.Count)].Id,
+                                    WeekNumber = i,
+                                    Series = SeriesHandler(seriesNum),
+                                    Sets = 3,
+                                    Reps = "10",
+                                    Tempo = "2010",
+                                    Rest = int.Parse(RandomHelper.RandomNumber(120)),
+                                    Notes = Lorem.ParagraphByChars(15),
+                                    CreatedAt = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")),
+                                    ModifiedAt = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")),
+                                    IsDeleted = false
+                                    //string.Format("(\'{0}\' , \'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', '{11}', {12}),\r\n",
+                                    //    Guid.NewGuid(), workout.Id, exercises[RandomHelper.RandomExercise(exercises.Count)].Id, i, SeriesHandler(seriesNum), 3, 10, 2010, RandomHelper.RandomNumber(120), Lorem.ParagraphByChars(15), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), 0)
+                                }).ToList();
+                            }
+                            else
+                            {
+                                // Only remove comma for the last row of the current workout
+                                if (isFirstRow)
+                                {
+                                    query += Enumerable.Range(1, 4).Select(str => new String[]
+                                    {
+                                        string.Format("(\'{0}\' , \'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', '{11}', {12})\r\n",
+                                        Guid.NewGuid(), workout.Id, exercises[RandomHelper.RandomExercise(exercises.Count)].Id, i, SeriesHandler(seriesNum), 3, 10, 2010, RandomHelper.RandomNumber(120), Lorem.ParagraphByChars(15), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), 0)
+                                    }).ToList();
+                                    isFirstRow = false;
+                                    seriesNum++;
+                                }
+                                else
+                                {
+                                    query += Enumerable.Range(1, 4).Select(str => new String[]
+                                    {
+                                        string.Format("(\'{0}\' , \'{1}\', \'{2}\', \'{3}\', \'{4}\', \'{5}\', \'{6}\', \'{7}\', \'{8}\', \'{9}\', \'{10}\', '{11}', {12})\r\n",
+                                        Guid.NewGuid(), workout.Id, exercises[RandomHelper.RandomExercise(exercises.Count)].Id, i, SeriesHandler(seriesNum), 3, 10, 2010, RandomHelper.RandomNumber(120), Lorem.ParagraphByChars(15), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff"), 0)
+
+                                    }).ToList();
+
+                                }
+                            }
+                        }
+
+
+
+
+                        isFirstRow = true; // Reset for the next workout
+                        seriesNum = 0;
+                    }
+
+                    return query;
+                }
+
+
+
+                static string SeriesHandler(int seriesNum)
+                {
+                    string serie = string.Empty;
+                    switch (seriesNum)
+                    {
+                        case 0:
+                            serie = "A";
+                            break;
+
+                        case 1:
+                            serie = "B";
+                            break;
+                        case 2:
+                            serie = "C";
+                            break;
+                        case 3:
+                            serie = "D";
+                            break;
+                        case 4:
+                            serie = "E";
+                            break;
+                        default: return "t";
+                    }
+                    return serie;
+                }
             }
 
             public static List<DB.WorkoutExercises> GetLastWorkoutExercise()
@@ -522,7 +951,7 @@ namespace MCMAutomation.Helpers
                             row.WorkoutId = GetValueOrDefault<int>(reader, 1);
                             row.ExerciseId = GetValueOrDefault<int>(reader, 2);
                             row.IsDeleted = GetValueOrDefault<bool>(reader, 3);
-                            row.Series = GetValueOrDefault<string>(reader, 4);                            
+                            row.Series = GetValueOrDefault<string>(reader, 4);
                             row.WorkoutExerciseGroupId = GetValueOrDefault<int>(reader, 5);
                             row.WorkoutExercisesCreationDate = GetValueOrDefault<DateTime?>(reader, 6);
                             row.MembershipId = GetValueOrDefault<int>(reader, 7);
@@ -585,7 +1014,7 @@ namespace MCMAutomation.Helpers
                     catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
                     finally { SqlConnection.ClearAllPools(); }
                 }
-                
+
                 return list;
             }
 
@@ -631,7 +1060,7 @@ namespace MCMAutomation.Helpers
             //        }
             //        catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
             //        finally { SqlConnection.ClearAllPools(); }
-                
+
 
             //    return list;
             //}
@@ -747,7 +1176,7 @@ namespace MCMAutomation.Helpers
                     {
                         while (reader.Read())
                         {
-                            
+
                             row = GetValueOrDefault<int>(reader, 0);
                         }
                     }
@@ -814,7 +1243,7 @@ namespace MCMAutomation.Helpers
             {
                 WaitUntil.WaitSomeInterval(5000);
                 List<DB.Memberships>? list = new();
-                
+
                 string query = "SELECT *" +
                                              "FROM [Memberships] " +
                                              "WHERE isDeleted = 0 " +
@@ -861,6 +1290,60 @@ namespace MCMAutomation.Helpers
 
                 return list;
             }
+
+            public static List<DB.MembershipsNewApp>? GetAllMembershipsNewApp()
+            {
+                WaitUntil.WaitSomeInterval(5000);
+                List<DB.MembershipsNewApp>? list = new();
+
+                string query = "SELECT *" +
+                               "FROM [Memberships] " +
+                               "WHERE isDeleted = 0 " +
+                               "ORDER BY CreatedAt ASC";
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new(query, db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.MembershipsNewApp();
+                        row.Id = GetValueOrDefault<Guid>(reader, 0);
+                        row.SKU = GetValueOrDefault<string>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.Type = GetValueOrDefault<int>(reader, 3);
+                        row.AccessWeekLength = GetValueOrDefault<int>(reader, 4);
+                        row.StartDate = GetValueOrDefault<DateTime>(reader, 5);
+                        row.EndDate = GetValueOrDefault<DateTime>(reader, 6);
+                        row.Description = GetValueOrDefault<string>(reader, 7);
+                        row.URL = GetValueOrDefault<string>(reader, 8);
+                        row.Price = GetValueOrDefault<decimal>(reader, 9);
+                        row.IsCustom = GetValueOrDefault<bool>(reader, 10);
+                        row.ForPurchase = GetValueOrDefault<bool>(reader, 11);
+                        row.Gender = GetValueOrDefault<int>(reader, 12);
+                        row.CreatedAt = GetValueOrDefault<DateTime>(reader, 13);
+                        row.ModifiedAt = GetValueOrDefault<DateTime>(reader, 14);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 15);
+                        row.MediaId = GetValueOrDefault<Guid>(reader, 16);
+
+                        list.Add(row);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                }
+                finally
+                {
+                    // Забезпечуємо вивільнення ресурсів
+                    SqlConnection.ClearAllPools();
+                }
+
+                return list;
+            }
+
             public static DB.Memberships GetActiveMembershipsNameAndSkuByEmail(string email)
             {
 
@@ -899,7 +1382,7 @@ namespace MCMAutomation.Helpers
                             Gender = GetValueOrDefault<int>(reader, 14),
                             PromotionalPopupId = GetValueOrDefault<int>(reader, 15),
                             Type = GetValueOrDefault<int>(reader, 16)
-                    };
+                        };
                     }
 
                 }
@@ -937,9 +1420,9 @@ namespace MCMAutomation.Helpers
                         membership.SKU = GetValueOrDefault<string>(reader, 1);
                         membership.Name = GetValueOrDefault<string>(reader, 2);
 
-                        membership.Description = GetValueOrDefault<string>(reader,3);
-                        membership.StartDate = GetValueOrDefault<DateTime>(reader,4);
-                        membership.EndDate = GetValueOrDefault<DateTime>(reader,5);
+                        membership.Description = GetValueOrDefault<string>(reader, 3);
+                        membership.StartDate = GetValueOrDefault<DateTime>(reader, 4);
+                        membership.EndDate = GetValueOrDefault<DateTime>(reader, 5);
                         membership.URL = GetValueOrDefault<string>(reader, 6);
                         membership.Price = GetValueOrDefault<decimal>(reader, 7);
                         membership.CreationDate = GetValueOrDefault<DateTime>(reader, 8);
@@ -947,11 +1430,11 @@ namespace MCMAutomation.Helpers
                         membership.IsCustom = GetValueOrDefault<bool>(reader, 10);
                         membership.ForPurchase = GetValueOrDefault<bool>(reader, 11);
                         membership.AccessWeekLength = GetValueOrDefault<int>(reader, 12);
-                        membership.RelatedMembershipGroupId = GetValueOrDefault<int>(reader,13);
+                        membership.RelatedMembershipGroupId = GetValueOrDefault<int>(reader, 13);
                         membership.Gender = GetValueOrDefault<int>(reader, 14);
-                        membership.PromotionalPopupId = GetValueOrDefault<int>(reader,15);
+                        membership.PromotionalPopupId = GetValueOrDefault<int>(reader, 15);
                         membership.Type = GetValueOrDefault<int>(reader, 16);
-                        
+
                     }
                 }
                 catch (Exception ex)
@@ -1133,7 +1616,7 @@ namespace MCMAutomation.Helpers
                         row.Gender = GetValueOrDefault<int>(reader, 14);
                         row.PromotionalPopupId = GetValueOrDefault<int>(reader, 15);
                         row.Type = GetValueOrDefault<int>(reader, 16);
-                        
+
                         list.Add(row);
                     }
                 }
@@ -1316,7 +1799,7 @@ namespace MCMAutomation.Helpers
                 public static void InsertMembership(int lastMemberId, string membershipSKU, bool eightWeeks)
                 {
                     string query;
-                    if(eightWeeks == true)
+                    if (eightWeeks == true)
                     {
                         query = "SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
                         "INSERT [Memberships] (Id, SKU, Name, Description, StartDate, EndDate, URL, Price, CreationDate, IsDeleted, IsCustom, ForPurchase, AccessWeekLength, RelatedMembershipGroupId, Gender, PromotionalPopupId, Type)\r\n" +
@@ -1330,7 +1813,7 @@ namespace MCMAutomation.Helpers
                                        $"VALUES (\'{lastMemberId + 1}\', \'{membershipSKU}\', \'{"00Created New Membership " + DateTime.Now.ToString("yyyy-MM-d hh-mm-ss")}\', \'{Lorem.ParagraphByChars(300)}\', {"null"}, {"null"}, \'{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}\', \'{100}\', \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\', \'{false}\', \'{false}\', \'{true}\', \'{12}\', {"null"}, \'{0}\', {"null"}, \'{0}\')\r\n" +
                                        "SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
                     }
-                    
+
                     try
                     {
                         SqlConnection db = new(DB.GET_CONNECTION_STRING);
@@ -1393,7 +1876,43 @@ namespace MCMAutomation.Helpers
 
                 }
 
-                
+                public static void InsertMembershipNewApp(string membershipSKU)
+                {
+                    string query;
+                    query = //"SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
+                        "INSERT [Memberships] ([Id] ,[SKU] ,[Name] ,[Type] ,[AccessWeekLength] ,[StartDate] ,[EndDate] ,[Description] ,[URL] ,[Price] ,[IsCustom] ,[ForPurchase] ,[Gender] ,[CreatedAt] ,[ModifiedAt] ,[IsDeleted] ,[MediaId])\r\n" +
+                        $"VALUES (\'{System.Guid.NewGuid()}\', \'{membershipSKU}\', \'{"0000Created New Membership " + "product " + RandomHelper.RandomNumber(25)}\', {0}, {16}, {"null"}, {"null"}, \'{Lorem.ParagraphByChars(300)}\', '{$"https://mcmstaging-ui.azurewebsites.net/programs/all"}', '{100}', '{false}', '{false}', '{0}', '{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}', '{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}', '{0}', {"null"})\r\n";
+                    //"SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n";
+
+
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                        var rowsAffected = command.ExecuteNonQueryAsync();
+                        Console.WriteLine(rowsAffected);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                    }
+                    finally
+                    {
+                        // Забезпечуємо вивільнення ресурсів
+                        SqlConnection.ClearAllPools();
+                    }
+
+                }
+
+
             }
         }
 
@@ -1402,7 +1921,7 @@ namespace MCMAutomation.Helpers
             public static List<DB.Programs> GetLastPrograms(int programsCount)
             {
                 var list = new List<DB.Programs>();
-                
+
                 try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
@@ -1435,6 +1954,45 @@ namespace MCMAutomation.Helpers
                 return list;
             }
 
+            public static List<DB.ProgramsNewApp> GetLastProgramsNewApp(int programsCount)
+            {
+                var list = new List<DB.ProgramsNewApp>();
+
+                try
+                {
+                    SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                    SqlCommand command = new($"SELECT TOP({programsCount}) * " +
+                                             "FROM [Programs] WHERE IsDeleted=0 " +
+                                             "ORDER BY CreatedAt DESC", db);
+                    db.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var row = new DB.ProgramsNewApp();
+                        row.Id = GetValueOrDefault<Guid>(reader, 0);
+                        row.MembershipId = GetValueOrDefault<Guid>(reader, 1);
+                        row.Name = GetValueOrDefault<string>(reader, 2);
+                        row.NumberOfWeeks = GetValueOrDefault<int>(reader, 3);
+                        row.NextProgramId = GetValueOrDefault<Guid>(reader, 4);
+                        row.Type = GetValueOrDefault<int>(reader, 5);
+                        row.Steps = GetValueOrDefault<string>(reader, 6);
+                        row.AvailableDate = GetValueOrDefault<DateTime>(reader, 7);
+                        row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 8);
+                        row.CreatedAt = GetValueOrDefault<DateTime>(reader, 9);
+                        row.ModifiedAt = GetValueOrDefault<DateTime>(reader, 10);
+                        row.IsDeleted = GetValueOrDefault<bool>(reader, 11);
+                        row.MediaId = GetValueOrDefault<Guid>(reader, 12);
+
+                        list.Add(row);
+                    }
+                }
+                catch (Exception ex) { throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}"); }
+                finally { SqlConnection.ClearAllPools(); }
+
+                return list;
+            }
+
             public static DB.Programs GetLastProgram()
             {
                 var row = new DB.Programs();
@@ -1456,8 +2014,8 @@ namespace MCMAutomation.Helpers
                         row.CreationDate = GetValueOrDefault<DateTime>(reader, 4);
                         row.IsDeleted = GetValueOrDefault<bool>(reader, 5);
                         row.Steps = GetValueOrDefault<string>(reader, 6);
-                        row.AvailableDate = GetValueOrDefault<DateTime>(reader,7);
-                        row.NextProgramId = GetValueOrDefault<int>(reader,8);
+                        row.AvailableDate = GetValueOrDefault<DateTime>(reader, 7);
+                        row.NextProgramId = GetValueOrDefault<int>(reader, 8);
                         row.ExpirationDate = GetValueOrDefault<DateTime>(reader, 9);
                         row.Type = GetValueOrDefault<int>(reader, 10);
                     }
@@ -1502,6 +2060,64 @@ namespace MCMAutomation.Helpers
 
                 return list;
             }
+
+            public class Insert
+            {
+                public static void InsertProgramsNewApp(Guid? memberGuid, int weeksNumber, int maxCount)
+                {
+                    string query;
+                    query = //"SET IDENTITY_INSERT [dbo].[Memberships] ON\r\n" +
+                        "INSERT INTO [dbo].[Programs]\r\n ([Id], [MembershipId], [Name], [NumberOfWeeks], [NextProgramId], [Type], [Steps], [AvailableDate], [ExpirationDate], [CreatedAt], [ModifiedAt], [IsDeleted], [MediaId])\r\n" +
+                        $"VALUES {ProgramsHandler(maxCount, memberGuid, weeksNumber)}";
+                    /*"SET IDENTITY_INSERT [dbo].[Memberships] OFF\r\n"*/
+
+
+                    try
+                    {
+                        SqlConnection db = new(DB.GET_CONNECTION_STRING);
+                        SqlCommand command = new(query, db);
+
+                        db.Open();
+
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            continue;
+                        }
+                        var rowsAffected = command.ExecuteNonQueryAsync();
+                        Console.WriteLine(rowsAffected);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ArgumentException($"Error: {ex.Message}\r\n{ex.StackTrace}");
+                    }
+                    finally
+                    {
+                        // Забезпечуємо вивільнення ресурсів
+                        SqlConnection.ClearAllPools();
+                    }
+
+                }
+
+                static string ProgramsHandler(int maxCount, Guid? memberGuid, int weeksNumber)
+                {
+                    string query = string.Empty;
+                    for (int i = 0; i < maxCount; i++)
+                    {
+
+                        if (i < maxCount - 1)
+                        {
+                            query += string.Concat($"(\'{System.Guid.NewGuid()}\', \'{memberGuid}\',\'ProgramName{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\',\'{weeksNumber}\', {"null"}, 1,\'{Lorem.ParagraphByChars(50)}\', {"null"}, {"null"}, \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\',{"null"}, {0}, {"null"}),\r\n");
+                        }
+                        else
+                        {
+                            query += string.Concat($"(\'{System.Guid.NewGuid()}\', \'{memberGuid}\',\'ProgramName{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\',\'{weeksNumber}\', {"null"}, 1,\'{Lorem.ParagraphByChars(50)}\', {"null"}, {"null"}, \'{DateTime.Now.ToString("yyyy-MM-d hh:mm:ss.fffffff")}\',{"null"}, {0}, {"null"})\r\n");
+                        }
+                    }
+
+                    return query;
+                }
+            }
         }
 
         public class UserMemberships
@@ -1544,7 +2160,7 @@ namespace MCMAutomation.Helpers
                 string query = "Select top(2) id from UserMemberships\r\n" +
                                "where UserId in (Select id FROM AspNetUsers where Email = @email)\r\n" +
                                "order by CreationDate ASC";
-                try 
+                try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
@@ -1553,9 +2169,9 @@ namespace MCMAutomation.Helpers
 
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
-                        {
-                            str.Add(reader.GetInt32(0));
-                        }
+                    {
+                        str.Add(reader.GetInt32(0));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1604,7 +2220,7 @@ namespace MCMAutomation.Helpers
                 List<int> str = new List<int>();
                 string query = "Update UserMemberships set StartOn = DateAdd(MM, 5, StartOn) " +
                                "where Id = @usermembershipId and isDeleted = 0";
-                try 
+                try
                 {
                     SqlConnection db = new(DB.GET_CONNECTION_STRING);
                     SqlCommand command = new(query, db);
@@ -1613,9 +2229,9 @@ namespace MCMAutomation.Helpers
 
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
-                        {
-                            continue;
-                        }
+                    {
+                        continue;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1837,7 +2453,7 @@ namespace MCMAutomation.Helpers
                         userMemberships.Add(row);
                     }
                     var nonNullParentIds = userMemberships
-                        .Where(x => x.ParentSubAllUserMembershipId != null && x.ParentSubAllUserMembershipId !=0)
+                        .Where(x => x.ParentSubAllUserMembershipId != null && x.ParentSubAllUserMembershipId != 0)
                         .Select(x => x.ParentSubAllUserMembershipId.Value)
                         .ToList();
 
@@ -2208,7 +2824,7 @@ namespace MCMAutomation.Helpers
                         user.DateTime = GetValueOrDefault<DateTime>(reader, 13);
                         user.UserName = GetValueOrDefault<string>(reader, 14);
                         user.NormalizedUserName = GetValueOrDefault<string>(reader, 15);
-                        user.NormalizedEmail =  GetValueOrDefault<string>(reader, 16);
+                        user.NormalizedEmail = GetValueOrDefault<string>(reader, 16);
                         user.EmailConfirmed = GetValueOrDefault<bool>(reader, 17);
                         user.PasswordHash = GetValueOrDefault<string>(reader, 18);
                         user.SecurityStamp = GetValueOrDefault<string>(reader, 19);
@@ -2367,7 +2983,7 @@ namespace MCMAutomation.Helpers
                 }
             }
 
-            
+
         }
 
         public class JsonUserExercisesReq
@@ -2422,7 +3038,7 @@ namespace MCMAutomation.Helpers
             {
                 var list = new List<DB.JsonUserExercises>();
                 string query = $"select jue.* " +
-                               $"from JsonUserExercises jue\r\n  " +                               
+                               $"from JsonUserExercises jue\r\n  " +
                                $"where jue.UserId = '{userId}'";
                 try
                 {
@@ -2539,7 +3155,7 @@ namespace MCMAutomation.Helpers
                 int i = 0;
                 foreach (var userMembership in userMemberships)
                 {
-                    
+
                     if (i < 10)
                     {
                         string query = $"select count(id) " +
@@ -2562,7 +3178,7 @@ namespace MCMAutomation.Helpers
                                     {
                                         list.Add((userMembership.Id, userMembership.MembershipId, userMembership.UserId));
                                     }
-                                    
+
                                 }
 
 
@@ -2578,9 +3194,9 @@ namespace MCMAutomation.Helpers
                             WaitUntil.WaitSomeInterval(5000);
                         }
                     }
-                    
+
                 }
-                
+
 
                 return list;
             }
@@ -2662,7 +3278,7 @@ namespace MCMAutomation.Helpers
                 //            reader.Close();
                 //            //var rowsAffected = command.ExecuteNonQueryAsync();
                 //            //Console.WriteLine(rowsAffected.Result);
-                            
+
 
 
                 //        }
@@ -2672,12 +3288,12 @@ namespace MCMAutomation.Helpers
                 //        }
                 //        finally
                 //        {
-                            
+
                 //            // Забезпечуємо вивільнення ресурсів
                 //            SqlConnection.ClearAllPools();
                 //        }
                 //    }
-                    
+
                 //}
 
                 private static (string, string, string) ListHandler(int? lastJSONExerciseId, List<DB.JsonUserExercises> listOriginal/*, List<DB.WorkoutExercises> listReplace*/)
@@ -2711,7 +3327,7 @@ namespace MCMAutomation.Helpers
                                 row += string.Concat("(", lastJSONExerciseId + i, ",\t\'", item.SetDescription, "\',\t", item.WorkoutExerciseId, ",\t\'", "39cf9d72-62a0-4936-a5a5-0edd1246b595", "\',\t", item.IsDone.HasValue ? Convert.ToInt32(item.IsDone.Value) : default, ",\t", "\'", item.CreationDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff"), "\',\t", item.IsDeleted.HasValue ? Convert.ToInt32(item.IsDeleted.Value) : default, ",\t\'", item.UpdateDate.HasValue ? Convert.ToString(item.UpdateDate.Value.ToString("yyyy-MM-dd hh:mm:ss.fffffff")) : null, "\',\t", 71732, ")\r\n");
                             }
                         }
-                        else if (i > 1000 && i<=2000)
+                        else if (i > 1000 && i <= 2000)
                         {
                             //int? result = valueMap.ContainsKey(item.WorkoutExerciseId.Value)
                             //? valueMap[item.WorkoutExerciseId.Value]

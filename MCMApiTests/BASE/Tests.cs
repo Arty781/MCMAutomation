@@ -17,6 +17,8 @@ using System.Globalization;
 using System.IO;
 using Telegram.Bot.Types;
 using static MCMAutomation.APIHelpers.Admin.VideosPage.Videos;
+using MCMAutomation.APIHelpers.NewAppAPI;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MCMApiTests
 {
@@ -123,6 +125,22 @@ namespace MCMApiTests
                 
 
             
+        }
+
+        [Test, Category("Memberships")]
+        public void CreateProductMembershipNewApp()
+        {
+            //var responseLoginAdmin = SignInRequest.MakeSignIn(CredentialsNewApp.LOGIN_ADMIN, CredentialsNewApp.PASSWORD_ADMIN);
+            //MembershipRequest.CreateProductMembership(responseLoginAdmin, MembershipsSKU.SKU_PRODUCT);
+            //AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
+            //var exercises = AppDbContext.Exercises.GetExercisesData();
+            //int programCount = 5;
+            //MembershipRequest.CreatePrograms(responseLoginAdmin, membership.Id, programCount, out List<DB.Programs> programs);
+            //MembershipRequest.CreateWorkouts(responseLoginAdmin, programs, programCount, out List<DB.Workouts> workouts);
+            //MembershipRequest.AddExercisesToMembership(responseLoginAdmin, workouts, exercises);
+
+
+
         }
 
         [Test, Category("Memberships")]
@@ -571,30 +589,104 @@ namespace MCMApiTests
 
         public void DemoS()
         {
-            #region Register New User
-            string email = RandomHelper.RandomEmail();
-            SignUpRequest.RegisterNewUser(email);
-            var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
-            EditUserRequest.EditUser(responseLoginUser);
-            #endregion
+            //#region Register New User
+            //string email = RandomHelper.RandomEmail();
+            //SignUpRequest.RegisterNewUser(email);
+            //var responseLoginUser = SignInRequest.MakeSignIn(email, Credentials.PASSWORD);
+            //EditUserRequest.EditUser(responseLoginUser);
+            //#endregion
 
-            #region Add and Activate membership to User
-            string userId = AppDbContext.User.GetUserData(email).Id;
-            DB.Memberships membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("BBB4");
-            var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
-            MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
-            int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
-            MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
-            const int conversionSystem = ConversionSystem.METRIC;
-            #endregion
+            //#region Add and Activate membership to User
+            //string userId = AppDbContext.User.GetUserData(email).Id;
+            //DB.Memberships membership = AppDbContext.Memberships.GetActiveMembershipNameBySKU("BBB4");
+            //var responseLoginAdmin = SignInRequest.MakeSignIn(Credentials.LOGIN_ADMIN, Credentials.PASSWORD_ADMIN);
+            //MembershipRequest.AddUsersToMembership(responseLoginAdmin, membership.Id, userId);
+            //int userMembershipId = AppDbContext.UserMemberships.GetLastUsermembershipId(email);
+            //MembershipRequest.ActivateUserMembership(responseLoginAdmin, userMembershipId, userId);
+            //const int conversionSystem = ConversionSystem.METRIC;
+            //#endregion
 
-            #region Add Progress as User
-            for (int i = 0; i < 60; i++)
+            //#region Add Progress as User
+            //for (int i = 0; i < 60; i++)
+            //{
+            //    ProgressRequest.AddProgress(responseLoginUser, conversionSystem);
+            //    AppDbContext.Progress.UpdateUserProgressDate(userId);
+            //}
+            //#endregion
+            //int programCount = 5;
+            //int weeksNumber = 4;
+            //int workoutDaysCount = 5;
+            //int exercisesCount = 4;
+            //List<DB.ExercisesNewApp> exercises = AppDbContext.Exercises.GetExercisesDataNewApp();
+            //AppDbContext.Memberships.Insert.InsertMembershipNewApp("TestMember");
+            //DB.MembershipsNewApp membership = AppDbContext.Memberships.GetAllMembershipsNewApp().LastOrDefault();
+            //AppDbContext.Programs.Insert.InsertProgramsNewApp(membership.Id, weeksNumber, programCount);            
+            //List<DB.ProgramsNewApp> programs = AppDbContext.Programs.GetLastProgramsNewApp(programCount);
+            //AppDbContext.Workouts.Insert.InsertWorkoutNewApp(programs, workoutDaysCount);
+            //List<DB.WorkoutsNewApp> workouts = AppDbContext.Workouts.GetLastWorkoutsDataNewApp(programCount*workoutDaysCount);
+            //AppDbContext.WorkoutExercises.Insert.InsertWorkoutExercisesNewApp(exercisesCount, weeksNumber, workouts, exercises);
+
+            string filepathMembership = @"D:\New Memberships\Memberships list.csv";
+            string filepathPrograms = @"D:\New Memberships\Programs list.csv";
+            string filepathWorkouts = @"D:\New Memberships\Workouts list.csv";
+            string filepathWorkoutExercises = @"D:\New Memberships\WorkoutExercises list.csv";
+            string filepathExercises = @"D:\New Memberships\Exercises list to replace id.csv";
+
+            List<MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.MembershipForPrograms> membershipsForProgram = new();
+            List<MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.MembershipForPrograms> programsForWorkouts = new();
+            List<MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.MembershipForPrograms> workoutsForWorkoutExercises = new();
+            List<MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.MembershipForPrograms> exercisesList = MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.GetExerciseDataFromCSV(filepathExercises);
+
+            var token = MCMAutomation.APIHelpers.NewAppAPI.SignIn.SignInRequest.MakeSignIn("ADMIN@COACHMARKCARROLL.COM", "Qwerty123!").Content.AccessToken;
+
+            List<MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.MembershipModel> membershipList = MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.GetMembershipDataFromCSV(filepathMembership);
+            List<MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.ProgramModel> programList = MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.GetProgramDataFromCSV(filepathPrograms);
+            List<MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.WorkoutModel> workoutList = MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.GetWorkoutDataFromCSV(filepathWorkouts);
+            List<MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.WorkoutExerciseModelCsv> workoutExercisesList = MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.GetWorkoutExerciseDataFromCSV(filepathWorkoutExercises);
+
+            foreach (var membership in membershipList)
             {
-                ProgressRequest.AddProgress(responseLoginUser, conversionSystem);
-                AppDbContext.Progress.UpdateUserProgressDate(userId);
+                var record = new MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.MembershipForPrograms();
+                record.Name = membership.Name;
+                var resp = MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.CreateMembership(token, membership).Result;
+                record.Id = resp.Content.ToString();
+
+                membershipsForProgram.Add(record);
             }
-            #endregion
+            MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.ReplaceMembershipId(programList, membershipsForProgram);
+            foreach (var program in programList)
+            {
+                var record = new MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.MembershipForPrograms();
+                record.Name = program.ProgramId;
+                var resp = MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.CreateProgram(token, program).Result;
+                record.Id = resp.Content.ToString();
+
+                programsForWorkouts.Add(record);
+            }
+            MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.ReplaceProgramId(workoutList, programsForWorkouts);
+            foreach (var workout in workoutList)
+            {
+                var record = new MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.MembershipForPrograms();
+                record.Name = workout.WorkoutId; 
+                var resp = MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.CreateWorkout(token, workout).Result;
+                record.Id = resp.Content.ToString();
+
+                workoutsForWorkoutExercises.Add(record);
+            }
+            MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.ReplaceWorkoutsId(workoutExercisesList, workoutsForWorkoutExercises);
+            MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.ReplaceExerciseId(workoutExercisesList, exercisesList);
+            foreach (var workoutExercise in workoutExercisesList)
+            {
+                
+                MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership.MembershipsRequest.CreateWorkoutExercise(token, workoutExercise);
+            }
+
+            var m = membershipList;
+            var p = programList;
+            var w = workoutList;
+            var we = workoutExercisesList;
+
+
 
 
         }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static MCMAutomation.Helpers.AppDbContext;
 using static MCMAutomation.APIHelpers.Client.Membership.MembershipModel;
+using static MCMAutomation.Helpers.DB;
 
 namespace MCMAutomation.APIHelpers
 {
@@ -177,7 +178,7 @@ namespace MCMAutomation.APIHelpers
         private static string JsonSubAllBody(List<DB.Memberships>? memberships, int numberOfMemberships)
         {
             List<SubAllMembershipsReq> body = new();
-            Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
+            AppDbContext.Memberships.GetLastMembership("BBB4", out DB.Memberships membership);
             //SubAllMembershipsReq ch = new()
             //{
             //    SubAllMembershipId = membership.Id,
@@ -423,6 +424,51 @@ namespace MCMAutomation.APIHelpers
             }
         }
 
+        //public static void EditMembershipNewApp(SignInResponseModel SignIn, DB.MembershipsNewApp membership)
+        //{
+        //    HttpRequest req = new()
+        //    {
+        //        HttpVerb = "PUT",
+        //        Path = "/workout/admin/membership/edit",
+        //        ContentType = "multipart/form-data"
+        //    };
+        //    req.AddHeader("Connection", "Keep-Alive");
+        //    req.AddHeader("Accept", "application /json, text/plain, */*");
+        //    req.AddHeader("Accept-Encoding", "gzip, deflate, br");
+        //    req.AddHeader("Authorization", $"Bearer {SignIn.AccessToken}");
+
+        //    req.AddParam("id", $"{membership.Id}");
+        //    req.AddParam("sku", membership.SKU);
+        //    req.AddParam("name", $"{membership.Name}");
+        //    req.AddParam("description", $"{membership.Description}");
+        //    req.AddParam("startDate", $"");
+        //    req.AddParam("endDate", $"");
+        //    req.AddParam("price", $"100");
+        //    req.AddParam("accessWeekLength", $"");
+        //    req.AddParam("url", $"https://mcmstaging-ui.azurewebsites.net/programs/all");
+        //    req.AddParam("type", $"2");
+        //    req.AddParam("image", $"undefined");
+        //    req.AddParam("gender", $"0");
+        //    req.AddParam("relatedMembershipIds", "");
+        //    req.AddParam("forPurchase", "true");
+        //    req.AddParam("SubAllMemberships", "[" +
+        //        $"{{\r\n\"id\": {subAllmemberships[0].Id}, \r\n\"subAllMembershipId\": 53,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+        //        $"\r\n{{\r\n\"id\": {subAllmemberships[1].Id}, \r\n\"subAllMembershipId\": 54,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+        //        $"\r\n{{\r\n\"id\": {subAllmemberships[2].Id}, \r\n\"subAllMembershipId\": 55,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+        //        $"\r\n{{\r\n\"subAllMembershipId\": 241,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+        //        $"\r\n{{\r\n\"subAllMembershipId\": 242,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}," +
+        //        $"\r\n{{\r\n\"subAllMembershipId\": 243,\r\n\"description\": \"{Lorem.ParagraphByChars(50)}\"\r\n}}" +
+        //        "]");
+
+        //    Http http = new Http();
+
+        //    HttpResponse resp = http.SynchronousRequest(Endpoints.API_HOST_GET, 443, true, req);
+        //    if (http.LastMethodSuccess != true)
+        //    {
+        //        throw new ArgumentException(resp.Domain + req.Path + "\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
+        //    }
+        //}
+
         public static void CreateSubscriptionMembership(SignInResponseModel SignIn)
         {
             HttpRequest req = new HttpRequest
@@ -524,6 +570,7 @@ namespace MCMAutomation.APIHelpers
                 throw new ArgumentException(resp.Domain + req.Path +"\r\n" + resp.StatusCode.ToString() + "\r\n" + resp.StatusText);
             }
         }
+
 
         public static void CreatePrograms(SignInResponseModel SignIn, int MembershipId, int countPrograms, out List<DB.Programs> programs)
         {

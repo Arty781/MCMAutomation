@@ -23,7 +23,8 @@ namespace MCMAutomation.Helpers
     {
         public const string WEBSITE_HOST = "https://mcmstaging-ui.azurewebsites.net/";
         public const string API_HOST = "https://mcmstaging-api.azurewebsites.net";
-        public const string API_HOST_GET = "mcmstaging-api.azurewebsites.net";
+        //public const string API_HOST_GET = "mcmstaging-api.azurewebsites.net";
+        public const string API_HOST_GET = "mcm-gateway-dev.azurewebsites.net";
     }
 
     public class Credentials
@@ -35,6 +36,15 @@ namespace MCMAutomation.Helpers
         public const string PASSWORD_ADMIN = "Upgr@de21";
     }
 
+    public class CredentialsNewApp
+    {
+        public const string LOGIN = "qatester91311@gmail.com";
+        public const string PASSWORD = "Qaz11111!";
+
+        public const string LOGIN_ADMIN = "admin@coachmarkcarroll.com";
+        public const string PASSWORD_ADMIN = "Qwerty123!";
+    }
+
     public class UploadedImages
     {
         public const string CREATE_MEMBER_IMG =  @"\Images\alone-with-his-thoughts-1080x720.jpg";
@@ -44,8 +54,11 @@ namespace MCMAutomation.Helpers
 
     public class DB
     {
-        public const string GET_CONNECTION_STRING = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethodStaging; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
-        //public const string GET_CONNECTION_STRING_Live = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethod; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
+        //public const string GET_CONNECTION_STRING = "Data Source=tcp:markcarrollmethoddbserver.database.windows.net,1433;Initial Catalog=MarkCarrollMethodStaging; User Id=jps@coachmarkcarroll.com@markcarrollmethoddbserver;Password=Upgr@de21";
+        public const string GET_CONNECTION_STRING = "Data Source=tcp:mcm-lsf.database.windows.net,1433;Initial Catalog=WorkoutDb;Persist Security Info=False;User ID=MCMUser;Password=XYyAhs74TRvgm5SD!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        public const string GET_CONNECTION_STRING_LSF = "Host=lsf-new-db.c1way4648chm.us-east-1.rds.amazonaws.com;Port=5432;Username=access_db;Password=WfgFm8mT3Fa5haSD3VGb;Database=access_production;";
+        //public const string GET_CONNECTION_STRING_LSF = "Host=lsf-test-db.c1way4648chm.us-east-1.rds.amazonaws.com;Port=5432;Username=access_db;Password=WfgFm8mT3Fa5haSD3VGb;Database=access_production;";
+
 
         public class Exercises
         {
@@ -57,6 +70,17 @@ namespace MCMAutomation.Helpers
             public int? TempoBold { get; set; }
         }
 
+        public class ExercisesNewApp
+        {
+            public Guid? Id { get; set; }
+            public string? Name { get; set; }
+            public string? VideoURL { get; set; }
+            public int? TempoBold { get; set; }
+            public DateTime? CreatedAt { get; set; }
+            public DateTime? ModifiedAt { get; set; }
+            public bool? IsDeleted { get; set; }
+        }
+
         public class Workouts
         {
             public int Id { get; set; }
@@ -66,6 +90,18 @@ namespace MCMAutomation.Helpers
             public DateTime? CreationDate { get; set; }
             public bool? IsDeleted { get; set; }
             public int? Type { get; set; }
+
+        }
+
+        public class WorkoutsNewApp
+        {
+            public Guid Id { get; set; }
+            public string? Name { get; set; }
+            public int? WeekDay { get; set; }
+            public Guid? ProgramId { get; set; }
+            public DateTime? CreatedAt { get; set; }
+            public DateTime? ModifiedAt { get; set; }
+            public bool? IsDeleted { get; set; }
 
         }
 
@@ -85,6 +121,23 @@ namespace MCMAutomation.Helpers
             public int? Week { get; set; }
             public string? SimultaneouslyCreatedIds { get; set; }
             public int? WorkoutExerciseGroupId { get; set; }
+        }
+
+        public class WorkoutExercisesNewApp
+        {
+            public Guid? Id { get; set; }
+            public Guid? WorkoutId { get; set; }
+            public Guid? ExerciseId { get; set; }
+            public int? WeekNumber { get; set; }
+            public string? Series { get; set; }
+            public int? Sets { get; set; }
+            public string? Reps { get; set; }
+            public string? Tempo { get; set; }
+            public int? Rest { get; set; }
+            public string? Notes { get; set; }
+            public DateTime? CreatedAt { get; set; }
+            public DateTime? ModifiedAt { get; set; }
+            public bool? IsDeleted { get; set; }
         }
 
         public class CombinedWorkoutExercisesData
@@ -122,6 +175,24 @@ namespace MCMAutomation.Helpers
 
         }
 
+        public class ProgramsNewApp
+        {
+            public Guid Id { get; set; }
+            public Guid? MembershipId { get; set; }
+            public string? Name { get; set; }
+            public int? NumberOfWeeks { get; set; }
+            public Guid? NextProgramId { get; set; }
+            public int? Type { get; set; }
+            public string? Steps { get; set; }
+            public DateTime? AvailableDate { get; set; }
+            public DateTime? ExpirationDate { get; set; }
+            public DateTime? CreatedAt { get; set; }
+            public DateTime? ModifiedAt { get; set; }
+            public bool? IsDeleted { get; set; }
+            public Guid? MediaId { get; set; }
+
+        }
+
         public class Memberships
         {
             public int Id { get; set; }
@@ -141,6 +212,27 @@ namespace MCMAutomation.Helpers
             public int Gender { get; set; }
             public int? PromotionalPopupId { get; set; }
             public int Type { get; set; }
+        }
+
+        public class MembershipsNewApp
+        {
+            public Guid? Id { get; set; }
+            public string? SKU { get; set; }
+            public string? Name { get; set; }
+            public int Type { get; set; }
+            public int? AccessWeekLength { get; set; }
+            public DateTime? StartDate { get; set; }
+            public DateTime? EndDate { get; set; }
+            public string? Description { get; set; }
+            public string? URL { get; set; }
+            public decimal? Price { get; set; }
+            public bool IsCustom { get; set; }
+            public bool ForPurchase { get; set; }
+            public int Gender { get; set; }
+            public DateTime CreatedAt { get; set; }
+            public DateTime ModifiedAt { get; set; }
+            public bool IsDeleted { get; set; }
+            public Guid? MediaId { get; set; }
         }
 
         public class CopyMembershipPrograms
@@ -337,6 +429,48 @@ namespace MCMAutomation.Helpers
             public DateTime? CreationDate     { get; set; }
             public bool? IsDeleted  { get; set; }
             public int? UserMembershipId { get; set; }
+        }
+
+        public class LsfDbModels
+        {
+            public class ApiUserWorkoutDay
+            {
+                public Guid Id { get; set; }
+                public DateTime? Created_at { get; set; }
+                public DateTime? Modified_at { get; set; }
+                public DateTime? Date { get; set; }
+                public bool Completed { get; set; }
+                public string? Name { get; set; }
+                public string? Day { get; set; }
+                public string? Approx_time { get; set; }
+                public int? Step_target { get; set; }
+                public string? Level { get; set; }
+                public bool For_gym { get; set; }
+                public bool For_home { get; set; }
+                public string? Image { get; set; }
+                public Guid User_id { get; set; }
+                public Guid Workout_id { get; set; }
+                public int? Steps_covered { get; set; }
+                public Guid? Challenge_id { get; set; }
+                public DateTime Challenge_ends_on { get; set; }
+                public Guid? A_o_p_id { get; set; }
+                public string? Program { get; set; }
+
+            }
+
+            public class ApiUserWorkoutDayExerciseSet
+            {
+                public Guid Id { get; set;}
+                public DateTime? Created_at  { get; set;}
+                public DateTime? Modified_at { get; set;}
+                public string? Workout_category    { get; set;}
+                public int? Order { get; set;}
+                public bool? Completed   { get; set;}
+                public Guid? Workout_day_id { get; set;}
+                public int? Completed_sets  { get; set;}
+                public int? Exercise_sets { get; set;}
+                public int? Tempo{ get; set;}
+            }
         }
     }
 
