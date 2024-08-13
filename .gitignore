@@ -366,3 +366,6 @@ FodyWeavers.xsd
 /MCMAdminTests/allure serve.bat
 /inconsistent_entries.csv
 /nonMatchingNames.csv
+/Helpers/AppDBContext.cs
+/Helpers/TelegramHelper.cs
+/Helpers/TestData.cs
