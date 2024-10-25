@@ -24,10 +24,10 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
             }
         }
 
-        public static string csvFilePath = @"D:\RecipesResponse.csv";
+        //public static string csvFilePath = @"D:\RecipesResponse.csv";
         public static async System.Threading.Tasks.Task<AddMembership> CreateMembership(string token, MembershipModel membership)
         {
-            string url = $"mcm-gateway-dev.azurewebsites.net/";
+            string url = $"mcm-gateway-dev.azurewebsites.net";
             HttpRequest req = new()
             {
                 HttpVerb = "POST",
@@ -38,11 +38,12 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
             req.AddHeader("accept-encoding", "gzip, deflate, br");
             req.AddHeader("Authorization", $"Bearer {token}");
 
+            
 
 
             Http http = new();
             var resp = http.SynchronousRequest(url, 443, true, CreateMultiPartFormBody(req, membership));
-            var respons = http.LastMethodSuccess
+            var respons = resp.StatusCode.ToString().StartsWith("2")
                 ? JsonConvert.DeserializeObject <AddMembership>(resp.BodyStr) ?? throw new Exception("Response body is null.")
                 : throw new ArgumentException(http.LastErrorText);
 
@@ -51,7 +52,7 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
 
         public static async System.Threading.Tasks.Task<AddMembership> CreateProgram(string token, ProgramModel program)
         {
-            string url = $"mcm-recipe-dev.azurewebsites.net";
+            string url = $"mcm-gateway-dev.azurewebsites.net";
             HttpRequest req = new()
             {
                 HttpVerb = "POST",
@@ -66,7 +67,7 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
 
             Http http = new();
             var resp = http.SynchronousRequest(url, 443, true, CreateMultiPartFormBody(req, program));
-            var respons = http.LastMethodSuccess
+            var respons = resp.StatusCode.ToString().StartsWith("2")
                 ? JsonConvert.DeserializeObject<AddMembership>(resp.BodyStr) ?? throw new Exception("Response body is null.")
                 : throw new ArgumentException(http.LastErrorText);
 
@@ -75,7 +76,7 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
 
         public static async System.Threading.Tasks.Task<AddMembership> CreateWorkout(string token, WorkoutModel program)
         {
-            string url = $"mcm-recipe-dev.azurewebsites.net";
+            string url = $"mcm-gateway-dev.azurewebsites.net";
             HttpRequest req = new()
             {
                 HttpVerb = "POST",
@@ -90,7 +91,7 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
 
             Http http = new();
             HttpResponse resp = http.SynchronousRequest(url, 443, true, req);
-            var respons = http.LastMethodSuccess
+            var respons = resp.StatusCode.ToString().StartsWith("2")
                 ? JsonConvert.DeserializeObject<AddMembership>(resp.BodyStr) ?? throw new Exception("Response body is null.")
                 : throw new ArgumentException(http.LastErrorText);
 
@@ -99,7 +100,7 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
 
         public static async System.Threading.Tasks.Task<AddMembership> CreateWorkoutExercise(string token, WorkoutExerciseModelCsv program)
         {
-            string url = $"mcm-recipe-dev.azurewebsites.net";
+            string url = $"mcm-gateway-dev.azurewebsites.net";
             HttpRequest req = new()
             {
                 HttpVerb = "POST",
@@ -114,7 +115,7 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
 
             Http http = new();
             HttpResponse resp = http.SynchronousRequest(url, 443, true, req);
-            var respons = http.LastMethodSuccess
+            var respons = resp.StatusCode.ToString().StartsWith("2")
                 ? JsonConvert.DeserializeObject<AddMembership>(resp.BodyStr) ?? throw new Exception("Response body is null.")
                 : throw new ArgumentException(http.LastErrorText);
 
@@ -124,18 +125,20 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
         private static HttpRequest CreateMultiPartFormBody(HttpRequest req, MembershipModel membership)
         {
             
-            req.AddParam("Name", membership.Name);
-            req.AddParam("Sku", membership.SKU);
-            req.AddParam("Description", membership.Description);
-            req.AddParam("Url", membership.URL);
-            req.AddParam("Type", membership.Type.ToString());
-            req.AddParam("AccessWeekLength", membership.AccessWeekLength.ToString());
-            req.AddParam("Price", membership.Price.ToString());
-            req.AddParam("ForPurchase", membership.ForPurchase.ToString());
-            req.AddParam("Gender", membership.Gender.ToString());
-            //req.AddParam("RelatedMembershipIds", membership.RelatedMembershipIds.ToString());
-            //req.AddParam("SubAllMemberships", membership.SubAllMemberships.ToString());
-            
+            req.AddParam("name", membership.Name);
+            req.AddParam("sku", membership.SKU + 1);
+            req.AddParam("description", membership.Description);
+            req.AddParam("url", membership.URL.ToLower());
+            req.AddParam("type", membership.Type.ToString());
+            req.AddParam("accessWeekLength", membership.AccessWeekLength.ToString());
+            req.AddParam("price", membership.Price.ToString());
+            req.AddParam("forPurchase", membership.ForPurchase.ToString().ToLower());
+            req.AddParam("gender", membership.Gender.ToString());
+            req.AddParam("relatedMembershipIds", membership.RelatedMembershipIds.ToString());
+            req.AddParam("subAllMemberships", membership.SubAllMemberships.ToString());
+
+           
+
 
             return req;
         }
@@ -143,11 +146,11 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
         private static HttpRequest CreateMultiPartFormBody(HttpRequest req, ProgramModel program)
         {
 
-            req.AddParam("Name", program.MembershipId);
-            req.AddParam("Sku", program.Name);
-            req.AddParam("Description", program.NumberOfWeeks);
-            req.AddParam("Url", program.Steps);
-            req.AddParam("Type", program.Type.ToString());
+            req.AddParam("membershipId", program.MembershipId);
+            req.AddParam("name", program.Name);
+            req.AddParam("numberOfWeeks", program.NumberOfWeeks);
+            req.AddParam("steps", program.Steps);
+            req.AddParam("type", program.Type.ToString());
 
 
             return req;
@@ -156,9 +159,9 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
         private static HttpRequest CreateMultiPartFormBody(HttpRequest req, WorkoutModel workout)
         {
 
-            req.AddParam("Name", workout.Name);
-            req.AddParam("Sku", workout.WeekDay);
-            req.AddParam("Description", workout.ProgramId);
+            req.AddParam("name", workout.Name);
+            req.AddParam("weekDay", workout.WeekDay);
+            req.AddParam("programId", workout.ProgramId);
 
 
             return req;
@@ -405,7 +408,15 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
 
         public static void ReplaceWorkoutsId(List<WorkoutExerciseModelCsv> workoutList, List<MembershipForPrograms> programList)
         {
-            var membershipDict = programList.ToDictionary(m => m.Name, m => m.Id);
+            var membershipDict = new Dictionary<string, string>();
+
+            foreach (var program in programList)
+            {
+                if (!membershipDict.ContainsKey(program.Name))
+                {
+                    membershipDict[program.Name] = program.Id;
+                }
+            }
 
             foreach (var workout in workoutList)
             {
@@ -415,6 +426,7 @@ namespace MCMAutomation.APIHelpers.NewAppAPI.Admin.Membership
                 }
             }
         }
+
 
         public static void ReplaceExerciseId(List<WorkoutExerciseModelCsv> workoutList, List<MembershipForPrograms> programList)
         {

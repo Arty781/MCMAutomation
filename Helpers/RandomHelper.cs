@@ -20,6 +20,11 @@ namespace MCMAutomation.Helpers
             return Random.Next(0, maxNum);
         }
 
+        public static bool RandomBool()
+        {
+            return Random.Next(2) < 1;
+        }
+
         public static int RandomNumFromOne(int maxNumber = 99)
         {
             return Random.Next(1, maxNumber);
